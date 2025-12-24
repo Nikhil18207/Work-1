@@ -1,0 +1,356 @@
+{
+  "rule_book_version": "1.0",
+  "last_updated": "2024-09-01",
+  "description": "Business rules and constraints for LLM-based procurement recommendations",
+  
+  "hard_constraints": {
+    "description": "MUST be satisfied - recommendations violating these are rejected",
+    "rules": [
+      {
+        "rule_id": "HC001",
+        "category": "food_safety",
+        "name": "Mandatory Food Safety Certification",
+        "condition": "supplier.certifications MUST contain 'ISO 22000' OR 'HACCP'",
+        "rationale": "Food safety is non-negotiable for all food products",
+        "penalty_if_violated": "REJECT_RECOMMENDATION"
+      },
+      {
+        "rule_id": "HC002",
+        "category": "quality",
+        "name": "Minimum Quality Rating",
+        "condition": "supplier.quality_rating >= 4.0",
+        "rationale": "Quality standards must be maintained",
+        "penalty_if_violated": "REJECT_RECOMMENDATION"
+      },
+      {
+        "rule_id": "HC003",
+        "category": "delivery",
+        "name": "Minimum Delivery Reliability",
+        "condition": "supplier.delivery_reliability_pct >= 90",
+        "rationale": "Supply chain reliability is critical",
+        "penalty_if_violated": "REJECT_RECOMMENDATION"
+      },
+      {
+        "rule_id": "HC004",
+        "category": "sustainability",
+        "name": "Palm Oil RSPO Certification",
+        "condition": "IF product_category == 'Palm Oil' THEN supplier.certifications MUST contain 'RSPO'",
+        "rationale": "Sustainability commitment for palm oil products",
+        "penalty_if_violated": "REJECT_RECOMMENDATION"
+      },
+      {
+        "rule_id": "HC005",
+        "category": "pricing",
+        "name": "Maximum Price Deviation",
+        "condition": "ABS(quoted_price - benchmark_price) / benchmark_price <= 0.15",
+        "rationale": "Prices must be within 15% of market benchmark",
+        "penalty_if_violated": "REQUIRE_APPROVAL"
+      },
+      {
+        "rule_id": "HC006",
+        "category": "compliance",
+        "name": "Client-Specific Certifications",
+        "condition": "supplier.certifications MUST contain ALL client.certifications_required",
+        "rationale": "Client-specific requirements are mandatory",
+        "penalty_if_violated": "REJECT_RECOMMENDATION"
+      },
+      {
+        "rule_id": "HC007",
+        "category": "financial",
+        "name": "Payment Terms Compatibility",
+        "condition": "supplier.payment_terms_offered <= client.payment_terms",
+        "rationale": "Supplier must accept client's payment terms",
+        "penalty_if_violated": "REQUIRE_NEGOTIATION"
+      },
+      {
+        "rule_id": "HC008",
+        "category": "capacity",
+        "name": "Minimum Order Quantity Feasibility",
+        "condition": "client.order_quantity >= supplier.min_order_quantity",
+        "rationale": "Order must meet supplier's minimum requirements",
+        "penalty_if_violated": "REJECT_RECOMMENDATION"
+      }
+    ]
+  },
+  
+  "soft_preferences": {
+    "description": "SHOULD be satisfied - recommendations are scored/ranked based on these",
+    "rules": [
+      {
+        "rule_id": "SP001",
+        "category": "sustainability",
+        "name": "High Sustainability Score",
+        "condition": "supplier.sustainability_score >= 8.0",
+        "weight": 15,
+        "confidence_boost": 0.08,
+        "rationale": "Prefer suppliers with strong sustainability practices"
+      },
+      {
+        "rule_id": "SP002",
+        "category": "quality",
+        "name": "Premium Quality Rating",
+        "condition": "supplier.quality_rating >= 4.5",
+        "weight": 20,
+        "confidence_boost": 0.10,
+        "rationale": "Higher quality reduces risk and improves product outcomes"
+      },
+      {
+        "rule_id": "SP003",
+        "category": "delivery",
+        "name": "Excellent Delivery Reliability",
+        "condition": "supplier.delivery_reliability_pct >= 95",
+        "weight": 15,
+        "confidence_boost": 0.07,
+        "rationale": "Reliable delivery reduces supply chain disruptions"
+      },
+      {
+        "rule_id": "SP004",
+        "category": "pricing",
+        "name": "Below Benchmark Pricing",
+        "condition": "quoted_price < benchmark_price",
+        "weight": 25,
+        "confidence_boost": 0.12,
+        "rationale": "Cost savings are a primary procurement objective"
+      },
+      {
+        "rule_id": "SP005",
+        "category": "experience",
+        "name": "Established Supplier",
+        "condition": "supplier.years_in_business >= 20",
+        "weight": 10,
+        "confidence_boost": 0.05,
+        "rationale": "Experience indicates stability and reliability"
+      },
+      {
+        "rule_id": "SP006",
+        "category": "logistics",
+        "name": "Short Lead Time",
+        "condition": "supplier.lead_time_days <= 14",
+        "weight": 10,
+        "confidence_boost": 0.05,
+        "rationale": "Faster delivery improves inventory management"
+      },
+      {
+        "rule_id": "SP007",
+        "category": "geography",
+        "name": "Regional Preference",
+        "condition": "supplier.region == client.region",
+        "weight": 5,
+        "confidence_boost": 0.03,
+        "rationale": "Local sourcing reduces logistics costs and carbon footprint"
+      }
+    ]
+  },
+  
+  "risk_assessment_rules": {
+    "description": "Rules for assessing and flagging risks in recommendations",
+    "rules": [
+      {
+        "rule_id": "RA001",
+        "risk_type": "supply_chain",
+        "name": "Single Supplier Dependency",
+        "condition": "client.current_suppliers_for_category == 1",
+        "risk_level": "HIGH",
+        "mitigation": "Recommend dual sourcing strategy",
+        "confidence_penalty": 0.10
+      },
+      {
+        "rule_id": "RA002",
+        "risk_type": "quality",
+        "name": "Historical Quality Issues",
+        "condition": "COUNT(transactions WHERE quality_issues == 'Yes') > 0",
+        "risk_level": "MEDIUM",
+        "mitigation": "Implement enhanced quality controls and pre-shipment testing",
+        "confidence_penalty": 0.08
+      },
+      {
+        "rule_id": "RA003",
+        "risk_type": "delivery",
+        "name": "Historical Delivery Issues",
+        "condition": "COUNT(transactions WHERE delivery_issues == 'Yes') > 1",
+        "risk_level": "MEDIUM",
+        "mitigation": "Negotiate delivery guarantees and penalties",
+        "confidence_penalty": 0.07
+      },
+      {
+        "rule_id": "RA004",
+        "risk_type": "pricing",
+        "name": "High Price Volatility",
+        "condition": "product.volatility_index == 'High'",
+        "risk_level": "MEDIUM",
+        "mitigation": "Consider price hedging or fixed-price contracts",
+        "confidence_penalty": 0.05
+      },
+      {
+        "rule_id": "RA005",
+        "risk_type": "sustainability",
+        "name": "Low Sustainability Score",
+        "condition": "supplier.sustainability_score < 7.0",
+        "risk_level": "LOW",
+        "mitigation": "Request sustainability improvement plan",
+        "confidence_penalty": 0.04
+      },
+      {
+        "rule_id": "RA006",
+        "risk_type": "capacity",
+        "name": "Order Size Near Supplier Capacity",
+        "condition": "client.order_quantity > (supplier.annual_capacity_tons * 0.8)",
+        "risk_level": "HIGH",
+        "mitigation": "Verify supplier capacity and backup plans",
+        "confidence_penalty": 0.12
+      }
+    ]
+  },
+  
+  "data_completeness_rules": {
+    "description": "Rules for assessing data gaps and their impact on confidence",
+    "critical_data_points": [
+      {
+        "data_point": "supplier.quality_rating",
+        "importance": "CRITICAL",
+        "confidence_impact": 0.15,
+        "question_if_missing": "What is the supplier's quality rating or quality performance history?"
+      },
+      {
+        "data_point": "supplier.certifications",
+        "importance": "CRITICAL",
+        "confidence_impact": 0.15,
+        "question_if_missing": "What food safety and quality certifications does the supplier hold?"
+      },
+      {
+        "data_point": "pricing_benchmark",
+        "importance": "CRITICAL",
+        "confidence_impact": 0.12,
+        "question_if_missing": "What is the current market benchmark price for this product?"
+      },
+      {
+        "data_point": "supplier.delivery_reliability_pct",
+        "importance": "HIGH",
+        "confidence_impact": 0.10,
+        "question_if_missing": "What is the supplier's on-time delivery performance?"
+      },
+      {
+        "data_point": "historical_transactions",
+        "importance": "HIGH",
+        "confidence_impact": 0.10,
+        "question_if_missing": "Do you have historical transaction data with this supplier?"
+      },
+      {
+        "data_point": "supplier.sustainability_score",
+        "importance": "MEDIUM",
+        "confidence_impact": 0.08,
+        "question_if_missing": "What is the supplier's sustainability rating or environmental performance?"
+      },
+      {
+        "data_point": "supplier.lead_time_days",
+        "importance": "MEDIUM",
+        "confidence_impact": 0.06,
+        "question_if_missing": "What is the typical lead time for this supplier?"
+      },
+      {
+        "data_point": "product.seasonal_factor",
+        "importance": "LOW",
+        "confidence_impact": 0.04,
+        "question_if_missing": "Are there seasonal price variations for this product?"
+      }
+    ]
+  },
+  
+  "recommendation_logic": {
+    "description": "Logic for generating and scoring recommendations",
+    "scoring_formula": "base_score + SUM(soft_preference_weights) - SUM(risk_penalties) - SUM(data_gap_penalties)",
+    "confidence_formula": "base_confidence + SUM(confidence_boosts) - SUM(confidence_penalties) - SUM(data_gap_impacts)",
+    "base_confidence": 0.50,
+    "minimum_confidence_threshold": 0.60,
+    "high_confidence_threshold": 0.85,
+    
+    "output_requirements": {
+      "must_include": [
+        "recommended_supplier",
+        "confidence_score",
+        "confidence_explanation",
+        "pricing_comparison",
+        "savings_calculation",
+        "risk_assessment",
+        "missing_data_impact",
+        "next_steps"
+      ],
+      "reasoning_transparency": "FULL",
+      "source_citations": "MANDATORY"
+    }
+  },
+  
+  "escalation_rules": {
+    "description": "When to escalate recommendations for human review",
+    "escalation_triggers": [
+      {
+        "trigger_id": "ESC001",
+        "condition": "confidence_score < 0.70",
+        "action": "FLAG_FOR_REVIEW",
+        "reason": "Low confidence - requires human judgment"
+      },
+      {
+        "trigger_id": "ESC002",
+        "condition": "price_deviation > 0.10",
+        "action": "REQUIRE_APPROVAL",
+        "reason": "Significant price deviation from benchmark"
+      },
+      {
+        "trigger_id": "ESC003",
+        "condition": "new_supplier == true AND order_value > 100000",
+        "action": "REQUIRE_APPROVAL",
+        "reason": "Large order with untested supplier"
+      },
+      {
+        "trigger_id": "ESC004",
+        "condition": "risk_level == 'HIGH'",
+        "action": "REQUIRE_RISK_REVIEW",
+        "reason": "High-risk recommendation needs risk assessment"
+      },
+      {
+        "trigger_id": "ESC005",
+        "condition": "hard_constraint_violations > 0",
+        "action": "REJECT_OR_ESCALATE",
+        "reason": "Hard constraints violated - may need policy exception"
+      }
+    ]
+  },
+  
+  "client_specific_overrides": {
+    "description": "Client-specific rule modifications",
+    "C004": {
+      "client_name": "HealthPlus Organics",
+      "overrides": [
+        {
+          "rule_id": "HC_ORGANIC",
+          "condition": "supplier.certifications MUST contain 'USDA Organic' OR 'EU Organic'",
+          "rationale": "Organic-only retailer requires organic certification"
+        },
+        {
+          "rule_id": "SP_FAIR_TRADE",
+          "condition": "supplier.certifications contains 'Fair Trade'",
+          "weight": 20,
+          "confidence_boost": 0.10,
+          "rationale": "Fair Trade aligns with brand values"
+        }
+      ]
+    },
+    "C008": {
+      "client_name": "PureOil Industries",
+      "overrides": [
+        {
+          "rule_id": "HC_INDUSTRIAL_GRADE",
+          "condition": "product.quality_tier == 'Industrial'",
+          "rationale": "Industrial refinery requires crude/industrial grade oils"
+        },
+        {
+          "rule_id": "SP_VOLUME_CAPACITY",
+          "condition": "supplier.annual_capacity_tons >= 100000",
+          "weight": 30,
+          "confidence_boost": 0.15,
+          "rationale": "Large-scale operations require high-capacity suppliers"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+Category,Metric,Industry_Benchmark,Our_Performance,Gap,Unit,Benchmark_Source,Last_Updated
+Rice Bran Oil,Average_Unit_Price,1250,1285,35,USD_per_MT,Industry_Survey_2024,2024-01-15
+Rice Bran Oil,On_Time_Delivery_Rate,95.0,97.8,2.8,Percentage,Supply_Chain_Council,2024-01-15
+Rice Bran Oil,Quality_Rejection_Rate,2.0,1.1,-0.9,Percentage,Quality_Standards_Board,2024-01-15
+Rice Bran Oil,Supplier_Diversity_Index,3.5,1.2,-2.3,Number_of_Regions,Procurement_Best_Practices,2024-01-15
+Rice Bran Oil,ESG_Score,75,68,-7,Score_0_to_100,Sustainability_Index,2024-01-15
+Rice Bran Oil,Payment_Terms,45,52,7,Days,Industry_Average,2024-01-15
+Rice Bran Oil,Contract_Compliance,98.0,99.2,1.2,Percentage,Contract_Management_Study,2024-01-15
+Rice Bran Oil,Lead_Time,18,15,-3,Days,Logistics_Benchmark,2024-01-15
+Rice Bran Oil,Inventory_Turnover,8.5,9.2,0.7,Times_per_Year,Supply_Chain_Metrics,2024-01-15
+Rice Bran Oil,Cost_Savings_YoY,5.0,3.2,-1.8,Percentage,Procurement_Analytics,2024-01-15
+Olive Oil,Average_Unit_Price,4200,4150,-50,USD_per_MT,Industry_Survey_2024,2024-01-15
+Olive Oil,Supplier_Diversity_Index,4.2,3.8,-0.4,Number_of_Regions,Procurement_Best_Practices,2024-01-15
+Olive Oil,ESG_Score,78,82,4,Score_0_to_100,Sustainability_Index,2024-01-15
+Sunflower Oil,Average_Unit_Price,1180,1195,15,USD_per_MT,Industry_Survey_2024,2024-01-15
+Sunflower Oil,Price_Volatility,High,Very_High,Worse,Categorical,Market_Analysis,2024-01-15

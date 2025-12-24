@@ -1,0 +1,26 @@
+Proof_Point_ID,Category,Supplier_ID,Supplier_Name,Metric_Type,Metric_Value,Unit,Date_Recorded,Verification_Status,Source_Document
+PP001,Rice Bran Oil,S001,Malaya Agri Oils,On_Time_Delivery,98.5,Percentage,2024-01-15,Verified,Delivery_Report_Q1_2024
+PP002,Rice Bran Oil,S001,Malaya Agri Oils,Quality_Rejection_Rate,0.8,Percentage,2024-01-15,Verified,Quality_Audit_Q1_2024
+PP003,Rice Bran Oil,S002,Borneo Nutrients,On_Time_Delivery,97.2,Percentage,2024-01-15,Verified,Delivery_Report_Q1_2024
+PP004,Rice Bran Oil,S002,Borneo Nutrients,Quality_Rejection_Rate,1.2,Percentage,2024-01-15,Verified,Quality_Audit_Q1_2024
+PP005,Rice Bran Oil,S003,KL Edible Oils,On_Time_Delivery,96.8,Percentage,2024-01-15,Verified,Delivery_Report_Q1_2024
+PP006,Rice Bran Oil,S003,KL Edible Oils,Quality_Rejection_Rate,1.5,Percentage,2024-01-15,Verified,Quality_Audit_Q1_2024
+PP007,Rice Bran Oil,S011,EuroSeed GmbH,On_Time_Delivery,99.2,Percentage,2024-01-15,Verified,Delivery_Report_Q1_2024
+PP008,Rice Bran Oil,S011,EuroSeed GmbH,Quality_Rejection_Rate,0.3,Percentage,2024-01-15,Verified,Quality_Audit_Q1_2024
+PP009,Rice Bran Oil,S012,AgriSource BV,On_Time_Delivery,98.9,Percentage,2024-01-15,Verified,Delivery_Report_Q1_2024
+PP010,Rice Bran Oil,S012,AgriSource BV,Quality_Rejection_Rate,0.5,Percentage,2024-01-15,Verified,Quality_Audit_Q1_2024
+PP011,Rice Bran Oil,S001,Malaya Agri Oils,Lead_Time_Days,14,Days,2024-01-15,Verified,Logistics_Report_Q1
+PP012,Rice Bran Oil,S002,Borneo Nutrients,Lead_Time_Days,16,Days,2024-01-15,Verified,Logistics_Report_Q1
+PP013,Rice Bran Oil,S003,KL Edible Oils,Lead_Time_Days,15,Days,2024-01-15,Verified,Logistics_Report_Q1
+PP014,Rice Bran Oil,S011,EuroSeed GmbH,Lead_Time_Days,21,Days,2024-01-15,Verified,Logistics_Report_Q1
+PP015,Rice Bran Oil,S012,AgriSource BV,Lead_Time_Days,22,Days,2024-01-15,Verified,Logistics_Report_Q1
+PP016,Rice Bran Oil,S001,Malaya Agri Oils,Cost_Savings_Delivered,125000,USD,2024-01-15,Verified,Savings_Report_2024
+PP017,Rice Bran Oil,S002,Borneo Nutrients,Cost_Savings_Delivered,98000,USD,2024-01-15,Verified,Savings_Report_2024
+PP018,Rice Bran Oil,S011,EuroSeed GmbH,Cost_Savings_Delivered,0,USD,2024-01-15,Projected,Proposal_Document
+PP019,Rice Bran Oil,S012,AgriSource BV,Cost_Savings_Delivered,0,USD,2024-01-15,Projected,Proposal_Document
+PP020,Rice Bran Oil,S001,Malaya Agri Oils,Carbon_Footprint,2.8,kg_CO2_per_kg,2024-01-15,Verified,ESG_Report_2024
+PP021,Rice Bran Oil,S011,EuroSeed GmbH,Carbon_Footprint,1.9,kg_CO2_per_kg,2024-01-15,Verified,ESG_Report_2024
+PP022,Rice Bran Oil,S012,AgriSource BV,Carbon_Footprint,2.1,kg_CO2_per_kg,2024-01-15,Verified,ESG_Report_2024
+PP023,Rice Bran Oil,S001,Malaya Agri Oils,Supplier_Responsiveness,4.2,Rating_1_to_5,2024-01-15,Verified,Supplier_Survey_Q1
+PP024,Rice Bran Oil,S011,EuroSeed GmbH,Supplier_Responsiveness,4.8,Rating_1_to_5,2024-01-15,Verified,Supplier_Survey_Q1
+PP025,Rice Bran Oil,S012,AgriSource BV,Supplier_Responsiveness,4.6,Rating_1_to_5,2024-01-15,Verified,Supplier_Survey_Q1

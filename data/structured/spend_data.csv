@@ -1,0 +1,45 @@
+Client_ID,Category,Supplier_ID,Supplier_Name,Supplier_Country,Supplier_Region,Transaction_Date,Spend_USD
+C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2024-01-15,620000
+C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2024-03-22,715000
+C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2024-06-11,540000
+C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2024-09-19,680000
+C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2024-11-05,445000
+C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2024-12-18,500000
+C001,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,2024-02-03,710000
+C001,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,2024-04-27,640000
+C001,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,2024-07-14,590000
+C001,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,2024-08-30,720000
+C001,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,2024-10-09,480000
+C001,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,2024-12-02,360000
+C001,Rice Bran Oil,S003,KL Edible Oils,Malaysia,APAC,2024-01-28,650000
+C001,Rice Bran Oil,S003,KL Edible Oils,Malaysia,APAC,2024-03-09,730000
+C001,Rice Bran Oil,S003,KL Edible Oils,Malaysia,APAC,2024-05-18,610000
+C001,Rice Bran Oil,S003,KL Edible Oils,Malaysia,APAC,2024-07-25,500000
+C001,Rice Bran Oil,S003,KL Edible Oils,Malaysia,APAC,2024-10-16,410000
+C001,Rice Bran Oil,S003,KL Edible Oils,Malaysia,APAC,2024-11-29,350000
+C001,Rice Bran Oil,S004,Penang Bio Extracts,Malaysia,APAC,2024-02-14,600000
+C001,Rice Bran Oil,S004,Penang Bio Extracts,Malaysia,APAC,2024-04-06,580000
+C001,Rice Bran Oil,S004,Penang Bio Extracts,Malaysia,APAC,2024-06-23,530000
+C001,Rice Bran Oil,S004,Penang Bio Extracts,Malaysia,APAC,2024-08-11,470000
+C001,Rice Bran Oil,S004,Penang Bio Extracts,Malaysia,APAC,2024-10-28,420000
+C001,Rice Bran Oil,S004,Penang Bio Extracts,Malaysia,APAC,2024-12-21,445000
+C001,Rice Bran Oil,S005,VietAgro Oils,Vietnam,APAC,2024-03-01,85000
+C001,Rice Bran Oil,S006,Thai Harvest Co,Thailand,APAC,2024-02-19,72000
+C001,Rice Bran Oil,S007,Indo BioFoods,Indonesia,APAC,2024-04-14,91000
+C001,Rice Bran Oil,S008,Sunrise Oils,India,APAC,2024-05-06,78000
+C001,Rice Bran Oil,S009,Golden Grain Ltd,China,APAC,2024-06-02,64000
+C001,Rice Bran Oil,S010,Nippon Nutrients,Japan,APAC,2024-07-07,83000
+C001,Rice Bran Oil,S011,EuroSeed GmbH,Germany,EU,2024-08-15,96000
+C001,Rice Bran Oil,S012,AgriSource BV,Netherlands,EU,2024-09-04,74000
+C001,Rice Bran Oil,S013,Baltic Oils,Latvia,EU,2024-10-02,58000
+C001,Rice Bran Oil,S014,Danube Agro,Hungary,EU,2024-11-08,69000
+C001,Rice Bran Oil,S015,Pacific Rim Oils,Australia,APAC,2024-12-05,81000
+C001,Rice Bran Oil,S016,SoyNova,USA,Americas,2024-01-09,90000
+C001,Rice Bran Oil,S017,Andes BioExtracts,Peru,Americas,2024-02-27,67000
+C001,Rice Bran Oil,S018,GreenField Oils,UK,EU,2024-03-30,72000
+C001,Rice Bran Oil,S019,Atlas Commodities,Morocco,MEA,2024-04-21,61000
+C001,Rice Bran Oil,S020,Delta Agri Oils,Egypt,MEA,2024-05-27,76000
+C001,Rice Bran Oil,S021,SilkRoute Foods,Kazakhstan,Central Asia,2024-06-19,84000
+C001,Rice Bran Oil,S022,Caspian Naturals,Azerbaijan,Central Asia,2024-07-28,69000
+C001,Rice Bran Oil,S023,Aegean Bio Oils,Greece,EU,2024-08-22,74000
+C001,Rice Bran Oil,S024,Savanna Extracts,Kenya,Africa,2024-09-17,65000

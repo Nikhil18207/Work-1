@@ -1,0 +1,33 @@
+product_category,product_name,region,benchmark_price_usd_per_kg,price_range_min,price_range_max,quality_tier,last_updated,volatility_index,seasonal_factor,market_trend
+Vegetable Oils,Sunflower Oil,Global,2.35,2.10,2.80,Standard,2024-09-01,Medium,Low,Stable
+Vegetable Oils,Sunflower Oil,Europe,2.55,2.30,2.95,Standard,2024-09-01,Medium,Low,Increasing
+Vegetable Oils,Sunflower Oil,Asia Pacific,2.25,2.00,2.65,Standard,2024-09-01,High,Low,Stable
+Vegetable Oils,Organic Sunflower Oil,Global,3.40,3.10,3.85,Premium,2024-09-01,Low,Low,Stable
+Vegetable Oils,Canola Oil,Global,2.75,2.50,3.10,Standard,2024-09-01,Medium,Low,Stable
+Vegetable Oils,Organic Canola Oil,Global,3.10,2.85,3.45,Premium,2024-09-01,Low,Low,Increasing
+Vegetable Oils,Palm Oil,Global,1.75,1.55,2.05,Standard,2024-09-01,High,Medium,Decreasing
+Vegetable Oils,Crude Palm Oil,Global,1.60,1.45,1.85,Industrial,2024-09-01,High,Medium,Decreasing
+Vegetable Oils,Rapeseed Oil,Europe,2.70,2.45,3.00,Standard,2024-09-01,Medium,Low,Stable
+Olive Oil,Extra Virgin Olive Oil,Europe,8.20,7.50,9.50,Premium,2024-09-01,Low,High,Stable
+Olive Oil,Extra Virgin Olive Oil,Mediterranean,7.80,7.00,9.00,Premium,2024-09-01,Low,High,Stable
+Olive Oil,Refined Olive Oil,Global,5.50,4.80,6.20,Standard,2024-09-01,Medium,Medium,Stable
+Grains & Flours,Wheat Flour,Global,0.62,0.55,0.75,Standard,2024-09-01,Medium,High,Increasing
+Grains & Flours,Organic Wheat Flour,Global,0.95,0.85,1.15,Premium,2024-09-01,Low,High,Stable
+Grains & Flours,Corn Flour,Global,0.72,0.65,0.85,Standard,2024-09-01,Medium,Medium,Stable
+Grains & Flours,Rye Flour,Europe,0.82,0.75,0.95,Standard,2024-09-01,Low,Medium,Stable
+Spices & Seasonings,Turmeric Powder,Asia Pacific,11.50,10.00,14.00,Standard,2024-09-01,High,Low,Increasing
+Spices & Seasonings,Organic Turmeric,Global,16.80,15.00,19.50,Premium,2024-09-01,Medium,Low,Stable
+Spices & Seasonings,Paprika Powder,Europe,13.50,12.00,16.00,Standard,2024-09-01,Medium,Low,Stable
+Dairy Products,Organic Butter,Europe,7.90,7.20,8.80,Premium,2024-09-01,Low,Medium,Stable
+Dairy Products,Regular Butter,Global,5.50,4.80,6.20,Standard,2024-09-01,Medium,Medium,Stable
+Sweeteners,Cane Sugar,Global,0.52,0.45,0.62,Standard,2024-09-01,Medium,Low,Stable
+Sweeteners,Organic Cane Sugar,Global,0.88,0.75,1.05,Premium,2024-09-01,Low,Low,Stable
+Nuts & Seeds,Organic Almonds,Global,17.50,15.50,20.00,Premium,2024-09-01,Medium,Medium,Increasing
+Nuts & Seeds,Regular Almonds,Global,12.80,11.00,15.00,Standard,2024-09-01,Medium,Medium,Increasing
+Seafood,Frozen Salmon,Global,14.50,12.50,17.50,Standard,2024-09-01,High,High,Stable
+Seafood,Organic Salmon,Global,19.80,17.00,23.00,Premium,2024-09-01,Medium,High,Increasing
+Fresh Vegetables,Organic Lettuce,North America,3.20,2.80,3.80,Premium,2024-09-01,High,High,Stable
+Fresh Vegetables,Organic Tomatoes,Global,2.65,2.20,3.20,Premium,2024-09-01,High,High,Stable
+Dried Fruits,Dried Mangoes,Asia Pacific,9.20,8.00,11.00,Standard,2024-09-01,Medium,Medium,Stable
+Soy Products,Soy Protein Isolate,Asia Pacific,4.30,3.80,5.00,Standard,2024-09-01,Medium,Low,Stable
+Food Additives,Emulsifiers,Europe,21.00,18.50,24.50,Industrial,2024-09-01,Low,Low,Stable

@@ -1,0 +1,12 @@
+Supplier_ID,Supplier_Name,Region,Product_Type,Contract_Start,Contract_End,Payment_Terms_Days,ESG_Score
+S001,Malaya Agri Oils,APAC,Vegetable Oil,2022-01-01,2025-12-31,60,62
+S002,Borneo Nutrients,APAC,Vegetable Oil,2021-06-01,2024-12-31,45,58
+S003,KL Edible Oils,APAC,Vegetable Oil,2023-01-01,2026-12-31,60,65
+S004,Penang Bio Extracts,APAC,Vegetable Oil,2022-03-01,2025-02-28,30,55
+S005,VietAgro Oils,APAC,Vegetable Oil,2023-05-01,2024-10-31,30,70
+S006,Thai Harvest Co,APAC,Vegetable Oil,2023-07-01,2024-12-31,30,68
+S007,Indo BioFoods,APAC,Vegetable Oil,2022-08-01,2025-07-31,45,66
+S008,Sunrise Oils,APAC,Vegetable Oil,2023-04-01,2024-09-30,30,72
+S011,EuroSeed GmbH,EU,Vegetable Oil,2023-01-01,2025-12-31,60,82
+S012,AgriSource BV,EU,Vegetable Oil,2022-06-01,2025-05-31,60,80
+S015,Pacific Rim Oils,APAC,Vegetable Oil,2023-03-01,2026-02-28,45,75
