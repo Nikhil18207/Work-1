@@ -112,62 +112,127 @@ class ConversationalAI:
 
     def answer_question(self, question: str) -> str:
         """
-        Answer a question by fetching from data corpus, RAG, or web search
+        Answer a question by intelligently routing to appropriate data source
+        PRIORITY: YOUR Data → YOUR Policies (RAG) → Web Search → LLM
         
         Args:
             question: User's question
             
         Returns:
-            AI-generated answer
+            AI-generated answer from YOUR data/policies first
         """
-        question_lower = question.lower()
+        q_lower = question.lower()
         
-        # Check if it's a knowledge base question (policies, best practices, etc.)
-        knowledge_keywords = ['policy', 'guideline', 'best practice', 'how to', 'what is', 
-                             'criteria', 'requirement', 'standard', 'procedure', 'process']
-        if any(keyword in question_lower for keyword in knowledge_keywords) and self.enable_rag and self.rag_engine:
-            return self._answer_with_rag(question)
+        # ========== CONTEXT-AWARE PARSING (Use Case Understanding) ==========
+        # Extract actual procurement need from use case descriptions
         
-        # Check if it's a market/supplier research question
-        market_keywords = ['find suppliers', 'top suppliers', 'market', 'industry', 'news', 
-                          'latest', 'current', 'recent', 'search for']
-        if any(keyword in question_lower for keyword in market_keywords) and self.enable_web_search and self.web_search:
-            return self._answer_with_web_search(question)
+        # Use case → Material mapping
+        use_case_materials = {
+            'car': ['aluminum', 'steel', 'plastics', 'rubber', 'electronics'],
+            'automobile': ['aluminum', 'steel', 'plastics', 'rubber'],
+            'vehicle': ['aluminum', 'steel', 'plastics'],
+            'data center': ['servers', 'network equipment', 'cooling systems'],
+            'building': ['construction materials', 'steel', 'concrete', 'lumber'],
+            'construction': ['construction materials', 'steel', 'concrete'],
+            'hospital': ['medical devices', 'pharmaceuticals', 'medical supplies'],
+            'clinic': ['medical devices', 'pharmaceuticals'],
+            'software': ['cloud services', 'saas', 'software licenses'],
+            'app': ['cloud services', 'saas'],
+            'website': ['cloud services', 'hosting'],
+            'manufacturing': ['raw materials', 'equipment', 'machinery'],
+            'factory': ['equipment', 'machinery', 'raw materials']
+        }
         
-        # Pattern matching for data-specific questions
-        if any(word in question_lower for word in ['risk', 'problem', 'issue', 'concern']):
+        # Check if question contains use case context
+        detected_materials = []
+        for use_case, materials in use_case_materials.items():
+            if use_case in q_lower:
+                detected_materials.extend(materials)
+        
+        # If materials detected from use case, search for those suppliers
+        if detected_materials and ('supplier' in q_lower or 'need' in q_lower or 'looking for' in q_lower or 'want' in q_lower):
+            # Use web search for finding suppliers based on use case
+            if self.enable_web_search and self.web_search:
+                # Enhance query with detected materials
+                enhanced_query = f"Find suppliers for {', '.join(set(detected_materials[:3]))} for {question}"
+                return self._answer_with_web_search(enhanced_query)
+            else:
+                # Search in our data for matching suppliers
+                return self._answer_about_suppliers_by_category(detected_materials)
+        
+        # ========== PRIORITY 1: YOUR DATA (CSV Files) ==========
+        
+        # 1. RISK ANALYSIS - From YOUR data
+        if any(word in q_lower for word in ['risk', 'risks', 'risky', 'danger', 'threat', 'vulnerability', 'exposure']):
             return self._answer_about_risks()
         
-        elif any(word in question_lower for word in ['supplier', 'vendor', 'recommend', 'suggest']):
+        # 2. SUPPLIER/VENDOR QUERIES - From YOUR data
+        elif any(word in q_lower for word in ['supplier', 'suppliers', 'vendor', 'vendors', 'provider', 'contractor']):
+            # Check if it's a "find" query (web search) or analysis query (your data)
+            if any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest']):
+                # Only use web search if explicitly requested
+                if self.enable_web_search and self.web_search:
+                    return self._answer_with_web_search(question)
             return self._answer_about_suppliers()
         
-        elif any(word in question_lower for word in ['spend', 'cost', 'money', 'budget']):
+        # 3. SPEND/COST ANALYSIS - From YOUR data
+        elif any(word in q_lower for word in ['spend', 'spending', 'cost', 'costs', 'expense', 'budget', 'price', 'pricing']):
             return self._answer_about_spend()
         
-        elif any(word in question_lower for word in ['region', 'country', 'geographic', 'location']):
+        # 4. REGIONAL/GEOGRAPHIC ANALYSIS - From YOUR data
+        elif any(word in q_lower for word in ['region', 'regional', 'geography', 'geographic', 'location', 'country', 'continent']):
             return self._answer_about_regions()
         
-        elif any(word in question_lower for word in ['rule', 'threshold']):
-            return self._answer_about_rules()
+        # 5. CATEGORY/PRODUCT ANALYSIS - From YOUR data
+        elif any(word in q_lower for word in ['category', 'categories', 'product', 'products', 'item', 'commodity', 'service']):
+            return self._answer_about_categories()
         
-        elif any(word in question_lower for word in ['action', 'do', 'next']):
-            return self._answer_about_actions()
+        # 6. CONTRACT/AGREEMENT QUERIES - From YOUR data
+        elif any(word in q_lower for word in ['contract', 'agreement', 'terms', 'conditions', 'sla', 'payment terms']):
+            return self._answer_about_contracts()
         
-        elif any(word in question_lower for word in ['esg', 'sustainability', 'green']):
-            return self._answer_about_esg()
+        # ========== PRIORITY 2: YOUR POLICIES (RAG) ==========
         
-        elif any(word in question_lower for word in ['timeline', 'when', 'how long']):
-            return self._answer_about_timeline()
-        
-        else:
-            # Try RAG first for general questions
+        # 7. RULES/POLICY/COMPLIANCE - From YOUR policies via RAG
+        elif any(word in q_lower for word in ['rule', 'rules', 'policy', 'policies', 'compliance', 'regulation', 'guideline']):
+            # Try RAG first for policy questions
             if self.enable_rag and self.rag_engine:
                 return self._answer_with_rag(question)
-            # Fall back to LLM
-            elif self.enable_llm and self.llm_engine:
-                return self._answer_with_llm(question)
             else:
-                return self._answer_general()
+                return self._answer_about_rules()
+        
+        # 8. KNOWLEDGE BASE QUERIES - From YOUR documents via RAG
+        elif self.enable_rag and self.rag_engine and any(word in q_lower for word in ['what', 'how', 'why', 'explain', 'define', 'describe', 'criteria', 'requirement', 'standard', 'procedure', 'process']):
+            return self._answer_with_rag(question)
+        
+        # 9. RECOMMENDATIONS/ACTIONS - From YOUR data + rules
+        elif any(word in q_lower for word in ['action', 'actions', 'recommend', 'recommendation', 'suggest', 'advice', 'should']):
+            return self._answer_about_actions()
+        
+        # 10. ESG/SUSTAINABILITY - From YOUR data
+        elif any(word in q_lower for word in ['esg', 'sustainability', 'sustainable', 'environment', 'green', 'carbon', 'ethical']):
+            return self._answer_about_esg()
+        
+        # 11. TIMELINE/DELIVERY - From YOUR data
+        elif any(word in q_lower for word in ['timeline', 'delivery', 'lead time', 'schedule', 'deadline', 'when']):
+            return self._answer_about_timeline()
+        
+        # ========== PRIORITY 3: WEB SEARCH (Only for external market intelligence) ==========
+        
+        # 12. WEB SEARCH - ONLY for explicit "find/search" queries
+        elif self.enable_web_search and self.web_search and any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest', 'news', 'market', 'trend', 'forecast']):
+            return self._answer_with_web_search(question)
+        
+        # ========== PRIORITY 4: LLM (Only as last resort) ==========
+        
+        # 13. LLM - ONLY for complex questions not covered above
+        elif self.enable_llm and self.llm_engine:
+            # LLM still uses YOUR data as context
+            return self._answer_with_llm(question)
+        
+        # 14. FINAL FALLBACK
+        else:
+            return self._answer_general()
 
     def _answer_about_risks(self) -> str:
         """Answer questions about risks"""
@@ -326,6 +391,55 @@ class ConversationalAI:
         
         return answer
 
+    def _answer_about_categories(self) -> str:
+        """Answer questions about product categories - Universal for any industry"""
+        answer = "📦 **CATEGORY ANALYSIS:**\n\n"
+        
+        # Get unique categories from spend data
+        if 'Category' in self.spend_data.columns:
+            category_spend = self.spend_data.groupby('Category')['Spend_USD'].agg(['sum', 'count', 'mean'])
+            category_spend = category_spend.sort_values('sum', ascending=False)
+            
+            answer += "**Procurement Categories:**\n"
+            for category, row in category_spend.iterrows():
+                pct = (row['sum'] / self.spend_data['Spend_USD'].sum() * 100)
+                answer += f"- {category}:\n"
+                answer += f"  Total Spend: ${row['sum']:,.0f} ({pct:.1f}%)\n"
+                answer += f"  Transactions: {int(row['count'])}\n"
+                answer += f"  Avg Transaction: ${row['mean']:,.0f}\n\n"
+        else:
+            answer += "Category information not available in current data.\n"
+        
+        return answer
+
+    def _answer_about_contracts(self) -> str:
+        """Answer questions about contracts - Universal for any industry"""
+        answer = "📄 **CONTRACT ANALYSIS:**\n\n"
+        
+        if not self.contracts.empty:
+            answer += f"**Total Active Contracts:** {len(self.contracts)}\n\n"
+            
+            # Payment terms analysis
+            if 'Payment_Terms_Days' in self.contracts.columns:
+                avg_payment_terms = self.contracts['Payment_Terms_Days'].mean()
+                answer += f"**Average Payment Terms:** {avg_payment_terms:.0f} days\n\n"
+            
+            # Contract regions
+            if 'Region' in self.contracts.columns:
+                regions = self.contracts['Region'].value_counts()
+                answer += "**Contracts by Region:**\n"
+                for region, count in regions.items():
+                    answer += f"- {region}: {count} contracts\n"
+            
+            # ESG scores
+            if 'ESG_Score' in self.contracts.columns:
+                avg_esg = self.contracts['ESG_Score'].mean()
+                answer += f"\n**Average ESG Score:** {avg_esg:.1f}/100\n"
+        else:
+            answer += "No contract data available.\n"
+        
+        return answer
+
     def _answer_with_llm(self, question: str) -> str:
         """Answer using LLM"""
         # Build context from data
@@ -385,21 +499,15 @@ Provide a clear, specific answer with numbers and facts from the data.
     def _answer_with_web_search(self, question: str) -> str:
         """Answer using web search"""
         try:
-            # Extract product and region from question if possible
-            # Simple extraction - can be enhanced
-            results = self.web_search.search(question)
+            # Use intelligent_search method which returns formatted results
+            result = self.web_search.intelligent_search(question, max_results=5)
             
-            if not results:
+            if not result or not result.get('results'):
                 return "🔍 No web results found. Try rephrasing your question."
             
-            answer = "🌐 **LIVE MARKET INTELLIGENCE:**\n\n"
+            # Return the pre-formatted output from intelligent search
+            return result.get('formatted_output', "No results found.")
             
-            for i, result in enumerate(results[:5], 1):
-                answer += f"**{i}. {result.get('title', 'N/A')}**\n"
-                answer += f"{result.get('snippet', 'No description')}\n"
-                answer += f"Source: {result.get('link', 'N/A')}\n\n"
-            
-            return answer
         except Exception as e:
             return f"Web Search Error: {e}\n\nTrying alternative method..."
 
