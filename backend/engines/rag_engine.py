@@ -154,7 +154,7 @@ class RAGEngine:
         # Step 2: Generate answer with LLM
         try:
             if verbose:
-                print(f"\n🤖 Generating answer with {self.model}...")
+                print(f"\n🤖 Generating answer with {self.model_name}...")
             
             answer = self._generate_answer(question, context, verbose=verbose)
             
@@ -164,7 +164,7 @@ class RAGEngine:
                 'question': question,
                 'context_found': True,
                 'num_sources': len(search_results),
-                'model': self.model,
+                'model': self.model_name,
                 'timestamp': datetime.now().isoformat()
             }
             
