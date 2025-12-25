@@ -1,7 +1,19 @@
-# 🧠 LLM Recommendation System - Food Procurement
+# 🧠 Universal Procurement AI - Multi-Industry Recommendation System
 
 ## Overview
-Enterprise-grade LLM-powered recommendation system for food procurement decisions, focusing on vegetable oils and food items. Built with strict data governance, rule-based constraints, RAG capabilities, and full traceability.
+Enterprise-grade **LLM-powered procurement recommendation system** that works for **ANY industry and ANY category**. Built with strict data governance, rule-based constraints, RAG capabilities, and full traceability.
+
+### 🌐 Supported Industries
+- ✅ **Food & Beverage** - Vegetable oils, ingredients, packaged goods
+- ✅ **IT & Technology** - Hardware, software, cloud services
+- ✅ **Manufacturing** - Raw materials, equipment, components
+- ✅ **Services** - Marketing, consulting, professional services
+- ✅ **Healthcare** - Pharmaceuticals, medical devices, supplies
+- ✅ **Construction** - Materials, equipment, contractors
+- ✅ **Energy & Utilities** - Equipment, services, commodities
+- ✅ **And ANY other procurement category!**
+
+The system is **100% category-agnostic** - simply provide your data and policies, and it adapts automatically!
 
 ## 🎯 Core Features
 - **Three Data Corpuses**: Structured, Unstructured, and Calculated/Derived data
