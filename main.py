@@ -1,6 +1,11 @@
 import sys
 import os
+import warnings
 from pathlib import Path
+
+# Suppress FutureWarnings from deprecated packages
+warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore', category=DeprecationWarning)
 
 root_path = Path(__file__).parent
 sys.path.insert(0, str(root_path))

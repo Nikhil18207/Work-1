@@ -166,13 +166,26 @@ class ConversationalAI:
         if any(word in q_lower for word in ['risk', 'risks', 'risky', 'danger', 'threat', 'vulnerability', 'exposure']):
             return self._answer_about_risks()
         
-        # 2. SUPPLIER/VENDOR QUERIES - From YOUR data
+        # 2. SUPPLIER/VENDOR QUERIES - From YOUR data OR web search
         elif any(word in q_lower for word in ['supplier', 'suppliers', 'vendor', 'vendors', 'provider', 'contractor']):
-            # Check if it's a "find" query (web search) or analysis query (your data)
-            if any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest']):
-                # Only use web search if explicitly requested
+            # Detect if user is asking about specific materials/categories
+            materials_keywords = ['steel', 'aluminum', 'plastic', 'rubber', 'concrete', 'lumber', 'oil', 
+                                'pharmaceutical', 'medical', 'it', 'software', 'cloud', 'hardware',
+                                'food', 'beverage', 'energy', 'construction', 'manufacturing']
+            
+            has_material = any(material in q_lower for material in materials_keywords)
+            has_location = any(loc in q_lower for loc in ['in ', 'from ', 'usa', 'india', 'china', 'europe', 'asia', 'america'])
+            is_search_query = any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest', 'new', 'looking for'])
+            
+            # Use web search if:
+            # 1. Explicitly asking to find/search, OR
+            # 2. Asking about specific material + location (e.g., "steel suppliers in USA")
+            # 3. Asking about specific material not in our current data
+            if (is_search_query or (has_material and has_location) or (has_material and 'who' in q_lower)):
                 if self.enable_web_search and self.web_search:
                     return self._answer_with_web_search(question)
+            
+            # Otherwise, analyze YOUR existing suppliers
             return self._answer_about_suppliers()
         
         # 3. SPEND/COST ANALYSIS - From YOUR data
