@@ -151,9 +151,9 @@ class DocumentProcessor:
                 try:
                     documents = self.load_document(str(file_path))
                     all_documents.extend(documents)
-                    print(f"✓ Loaded: {file_path.name} ({len(documents)} chunks)")
+                    print(f" Loaded: {file_path.name} ({len(documents)} chunks)")
                 except Exception as e:
-                    print(f"✗ Failed: {file_path.name} - {e}")
+                    print(f" Failed: {file_path.name} - {e}")
         
         return all_documents
     
@@ -198,7 +198,7 @@ class DocumentProcessor:
             return []
         
         print("\n" + "="*60)
-        print("📚 PROCESSING UNSTRUCTURED CORPUS")
+        print(" PROCESSING UNSTRUCTURED CORPUS")
         print("="*60)
         
         all_documents = []
@@ -208,7 +208,7 @@ class DocumentProcessor:
         
         for subdir in subdirs:
             subdir_path = unstructured_dir / subdir
-            print(f"\n📁 Processing category: {subdir}/")
+            print(f"\n Processing category: {subdir}/")
             docs = self.load_directory(
                 str(subdir_path),
                 recursive=True,
@@ -223,14 +223,14 @@ class DocumentProcessor:
             print(f"   Total: {len(docs)} documents loaded for {subdir}")
         
         if not all_documents:
-            print("\n⚠️  No documents found in any subdirectory!")
+            print("\n  No documents found in any subdirectory!")
             return []
             
         # Chunk all documents
-        print(f"\n✂️  Chunking {len(all_documents)} documents...")
+        print(f"\n  Chunking {len(all_documents)} documents...")
         chunked_documents = self.chunk_documents(all_documents)
         
-        print(f"\n✅ Processing Complete!")
+        print(f"\n Processing Complete!")
         print(f"   Documents: {len(all_documents)}")
         print(f"   Chunks: {len(chunked_documents)}")
         if len(all_documents) > 0:
@@ -251,7 +251,7 @@ class DocumentProcessor:
         if not structured_dir.exists():
             return []
         
-        print("\n📊 Processing structured data (CSV files)...")
+        print("\n Processing structured data (CSV files)...")
         
         # All structured CSV files
         policy_files = [
@@ -278,9 +278,9 @@ class DocumentProcessor:
                         doc.metadata['category'] = 'structured_data'
                         doc.metadata['data_type'] = file_name.replace('.csv', '')
                     documents.extend(docs)
-                    print(f"   ✓ {file_name} ({len(docs)} rows)")
+                    print(f"    {file_name} ({len(docs)} rows)")
                 except Exception as e:
-                    print(f"   ✗ {file_name}: {e}")
+                    print(f"    {file_name}: {e}")
         
         return documents
     
@@ -296,7 +296,7 @@ class DocumentProcessor:
         if not calculated_dir.exists():
             return []
         
-        print("\n📈 Processing calculated/derived data...")
+        print("\n Processing calculated/derived data...")
         
         # All calculated CSV files
         calculated_files = [
@@ -320,9 +320,9 @@ class DocumentProcessor:
                         doc.metadata['category'] = 'calculated_data'
                         doc.metadata['data_type'] = file_name.replace('.csv', '')
                     documents.extend(docs)
-                    print(f"   ✓ {file_name} ({len(docs)} rows)")
+                    print(f"    {file_name} ({len(docs)} rows)")
                 except Exception as e:
-                    print(f"   ✗ {file_name}: {e}")
+                    print(f"    {file_name}: {e}")
         
         return documents
     
@@ -383,7 +383,7 @@ if __name__ == "__main__":
     # Get statistics
     stats = processor.get_document_stats(documents)
     
-    print("\n📈 DOCUMENT STATISTICS")
+    print("\n DOCUMENT STATISTICS")
     print("="*60)
     for key, value in stats.items():
         print(f"{key}: {value}")

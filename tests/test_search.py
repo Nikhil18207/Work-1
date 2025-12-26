@@ -15,7 +15,7 @@ print("=" * 80)
 engine = IntelligentSearchEngine()
 
 print(f"\nSearch Provider: {engine.search_provider}")
-print(f"Serper API Key: {'✅ Configured' if engine.serper_api_key else '❌ Missing'}")
+print(f"Serper API Key: {' Configured' if engine.serper_api_key else ' Missing'}")
 
 print("\n" + "=" * 80)
 print("TESTING SEARCH: Top 3 suppliers of Rice Bran Oil in Malaysia")
@@ -31,21 +31,21 @@ try:
     print(f"Results found: {len(result['results'])}")
     
     if result['results']:
-        print("\n✅ SEARCH SUCCESSFUL!")
+        print("\n SEARCH SUCCESSFUL!")
         print("\nTop 3 Results:")
         for i, res in enumerate(result['results'][:3], 1):
             print(f"\n{i}. {res['title']}")
             print(f"   Score: {res.get('relevance_score', 0)}")
             print(f"   {res['snippet'][:100]}...")
     else:
-        print("\n❌ No results returned")
+        print("\n No results returned")
         print("This might mean:")
         print("  1. API key is invalid")
         print("  2. API quota exceeded")
         print("  3. Network issue")
         
 except Exception as e:
-    print(f"\n❌ ERROR: {e}")
+    print(f"\n ERROR: {e}")
     import traceback
     traceback.print_exc()
 

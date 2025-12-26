@@ -14,7 +14,7 @@ def demo_conversation():
     """Demonstrate the conversational AI with example questions"""
     
     print("=" * 80)
-    print("🤖 CONVERSATIONAL AI - DEMO")
+    print(" CONVERSATIONAL AI - DEMO")
     print("=" * 80)
     print("\nInitializing AI...\n")
     
@@ -38,15 +38,15 @@ def demo_conversation():
     print("=" * 80 + "\n")
     
     for question in questions:
-        print(f"👤 You: {question}")
+        print(f" You: {question}")
         print()
         
         answer = ai.answer_question(question)
-        print(f"🤖 AI:\n{answer}")
+        print(f" AI:\n{answer}")
         print("\n" + "-" * 80 + "\n")
     
     print("=" * 80)
-    print("✅ DEMO COMPLETE!")
+    print(" DEMO COMPLETE!")
     print("=" * 80)
     print("\nTo start your own conversation, run:")
     print("  python backend/conversational_ai.py")

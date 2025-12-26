@@ -28,11 +28,11 @@ from backend.engines.rag_engine import RAGEngine
 
 def setup_rag_gemini(reset: bool = False):
     print("\n" + "="*70)
-    print("🚀 RAG PIPELINE SETUP (GOOGLE GEMINI)")
+    print(" RAG PIPELINE SETUP (GOOGLE GEMINI)")
     print("="*70)
     
     # Step 1: Process Documents
-    print("\n📚 STEP 1: Processing Documents")
+    print("\n STEP 1: Processing Documents")
     print("-"*70)
     
     processor = DocumentProcessor(
@@ -46,14 +46,14 @@ def setup_rag_gemini(reset: bool = False):
     documents.extend(policy_docs)
     
     if not documents:
-        print("\n❌ No documents found!")
+        print("\n No documents found!")
         return False
         
-    print(f"\n📊 Total chunks to embed: {len(documents)}")
+    print(f"\n Total chunks to embed: {len(documents)}")
     
     # Step 2: Create Vector Store
     print("\n" + "-"*70)
-    print("🔮 STEP 2: Creating Vector Store (Gemini Embeddings)")
+    print(" STEP 2: Creating Vector Store (Gemini Embeddings)")
     print("-"*70)
     
     try:
@@ -71,15 +71,15 @@ def setup_rag_gemini(reset: bool = False):
         )
         
         vector_store.create_collection(documents, reset=reset)
-        print("\n✅ Vector store created successfully with Gemini!")
+        print("\n Vector store created successfully with Gemini!")
         
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
         return False
         
     # Step 3: Test RAG Engine
     print("\n" + "-"*70)
-    print("🧪 STEP 3: Testing RAG Engine (Gemini Pro)")
+    print(" STEP 3: Testing RAG Engine (Gemini Pro)")
     print("-"*70)
     
     try:
@@ -90,16 +90,16 @@ def setup_rag_gemini(reset: bool = False):
         )
         
         test_question = "What are the key supplier selection criteria?"
-        print(f"\n🔍 Test Query: {test_question}")
+        print(f"\n Test Query: {test_question}")
         
         response = rag.query(question=test_question)
-        print(f"\n💬 Answer:\n{response['answer']}")
+        print(f"\n Answer:\n{response['answer']}")
         
     except Exception as e:
-        print(f"\n⚠️ Test failed: {e}")
+        print(f"\n Test failed: {e}")
         
     print("\n" + "="*70)
-    print("✅ GEMINI RAG SETUP COMPLETE!")
+    print(" GEMINI RAG SETUP COMPLETE!")
     print("="*70)
     return True
 

@@ -71,7 +71,7 @@ class LLMEngine:
                 from openai import OpenAI
                 return OpenAI(api_key=self.api_key)
             except ImportError:
-                print("⚠️ OpenAI not installed. Run: pip install openai")
+                print(" OpenAI not installed. Run: pip install openai")
                 return None
         elif self.provider == LLMProvider.GEMINI:
             try:
@@ -79,7 +79,7 @@ class LLMEngine:
                 genai.configure(api_key=self.api_key)
                 return genai.GenerativeModel(self.model)
             except ImportError:
-                print("⚠️ Google Generative AI not installed. Run: pip install google-generativeai")
+                print(" Google Generative AI not installed. Run: pip install google-generativeai")
                 return None
         return None
 
@@ -113,7 +113,7 @@ class LLMEngine:
             elif self.provider == LLMProvider.GEMINI:
                 return self._generate_gemini(prompt)
         except Exception as e:
-            print(f"⚠️ LLM generation failed: {e}")
+            print(f" LLM generation failed: {e}")
             return self._generate_fallback_explanation(scenario, recommendation)
 
     def _build_explanation_prompt(
@@ -187,7 +187,7 @@ Write in a professional but conversational tone suitable for procurement executi
                         return content[start:end].strip()
             return self._get_default_system_prompt()
         except Exception as e:
-            print(f"⚠️ Could not load system prompt: {e}")
+            print(f" Could not load system prompt: {e}")
             return self._get_default_system_prompt()
     
     def _get_default_system_prompt(self) -> str:
@@ -414,13 +414,13 @@ if __name__ == "__main__":
     
     # Generate explanation
     explanation = llm.generate_explanation(scenario, recommendation, {})
-    print("\n📝 EXPLANATION:")
+    print("\n EXPLANATION:")
     print(explanation)
     
     # Generate confidence score
     confidence = llm.generate_confidence_score(scenario, recommendation)
     print("\n" + "=" * 80)
-    print("📊 CONFIDENCE SCORE")
+    print(" CONFIDENCE SCORE")
     print("=" * 80)
     print(f"Score: {confidence['confidence_score']}%")
     print(f"Level: {confidence['confidence_level']}")

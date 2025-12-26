@@ -32,11 +32,11 @@ def setup_rag_pipeline(reset: bool = False):
         reset: Reset existing vector store
     """
     print("\n" + "="*70)
-    print("🚀 RAG PIPELINE SETUP")
+    print(" RAG PIPELINE SETUP")
     print("="*70)
     
     # Step 1: Process Documents
-    print("\n📚 STEP 1: Processing Documents")
+    print("\n STEP 1: Processing Documents")
     print("-"*70)
     
     processor = DocumentProcessor(
@@ -57,13 +57,13 @@ def setup_rag_pipeline(reset: bool = False):
     documents.extend(calculated_docs)
     
     if not documents:
-        print("\n❌ No documents found to process!")
+        print("\n No documents found to process!")
         print("   Make sure you have documents in data/unstructured/")
         return False
     
     # Show statistics
     stats = processor.get_document_stats(documents)
-    print("\n📊 Document Statistics:")
+    print("\n Document Statistics:")
     print(f"   Total Documents: {stats['total_documents']}")
     print(f"   Total Characters: {stats['total_characters']:,}")
     print(f"   Average Chunk Size: {stats['average_chunk_size']}")
@@ -71,7 +71,7 @@ def setup_rag_pipeline(reset: bool = False):
     
     # Step 2: Create Vector Store
     print("\n" + "-"*70)
-    print("🔮 STEP 2: Creating Vector Store")
+    print(" STEP 2: Creating Vector Store")
     print("-"*70)
     
     try:
@@ -79,7 +79,7 @@ def setup_rag_pipeline(reset: bool = False):
         import shutil
         old_path = Path("./data/vector_db")
         if old_path.exists():
-            print("🗑️  Removing old vector database...")
+            print("  Removing old vector database...")
             shutil.rmtree(old_path, ignore_errors=True)
         
         vector_store = VectorStoreManager(
@@ -93,17 +93,17 @@ def setup_rag_pipeline(reset: bool = False):
         
         # Show statistics
         vs_stats = vector_store.get_statistics()
-        print("\n📊 Vector Store Statistics:")
+        print("\n Vector Store Statistics:")
         for key, value in vs_stats.items():
             print(f"   {key}: {value}")
         
     except Exception as e:
-        print(f"\n❌ Error creating vector store: {e}")
+        print(f"\n Error creating vector store: {e}")
         return False
     
     # Step 3: Test RAG Engine
     print("\n" + "-"*70)
-    print("🧪 STEP 3: Testing RAG Engine")
+    print(" STEP 3: Testing RAG Engine")
     print("-"*70)
     
     try:
@@ -114,7 +114,7 @@ def setup_rag_pipeline(reset: bool = False):
         
         # Test query
         test_question = "What are the key supplier selection criteria?"
-        print(f"\n🔍 Test Query: {test_question}")
+        print(f"\n Test Query: {test_question}")
         
         response = rag.query(
             question=test_question,
@@ -122,21 +122,21 @@ def setup_rag_pipeline(reset: bool = False):
             verbose=False
         )
         
-        print(f"\n💬 Answer:")
+        print(f"\n Answer:")
         print(f"   {response['answer'][:200]}...")
         
         if response.get('sources'):
-            print(f"\n📚 Sources: {len(response['sources'])} documents")
+            print(f"\n Sources: {len(response['sources'])} documents")
         
     except Exception as e:
-        print(f"\n⚠️  RAG engine test failed: {e}")
+        print(f"\n  RAG engine test failed: {e}")
         print("   (This is OK if you don't have OpenAI API key set)")
     
     # Success!
     print("\n" + "="*70)
-    print("✅ RAG PIPELINE SETUP COMPLETE!")
+    print(" RAG PIPELINE SETUP COMPLETE!")
     print("="*70)
-    print("\n📝 Next Steps:")
+    print("\n Next Steps:")
     print("   1. Run demos/demo_rag.py to test the system")
     print("   2. Integrate RAG into backend/llm_recommendation_system.py")
     print("   3. Add RAG endpoints to backend/api/routes.py")
@@ -161,8 +161,8 @@ if __name__ == "__main__":
     success = setup_rag_pipeline(reset=args.reset)
     
     if success:
-        print("✅ Setup completed successfully!")
+        print(" Setup completed successfully!")
         sys.exit(0)
     else:
-        print("❌ Setup failed!")
+        print(" Setup failed!")
         sys.exit(1)

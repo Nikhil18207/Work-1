@@ -100,7 +100,7 @@ if __name__ == "__main__":
     system = RecommendationSystem()
     
     print("=" * 80)
-    print("🚀 SUPPLY CHAIN LLM RECOMMENDATION SYSTEM")
+    print(" SUPPLY CHAIN LLM RECOMMENDATION SYSTEM")
     print("=" * 80)
     
     # Get recommendation
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     
     # Print JSON summary
     print("\n" + "=" * 80)
-    print("📊 COMPLETE ANALYSIS (JSON)")
+    print(" COMPLETE ANALYSIS (JSON)")
     print("=" * 80)
     print(json.dumps({
         "category": result['category'],

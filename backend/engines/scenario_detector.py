@@ -213,19 +213,19 @@ class ScenarioDetector:
             Formatted description string
         """
         lines = []
-        lines.append(f"📊 SCENARIO: {scenario.details['pattern']}")
+        lines.append(f" SCENARIO: {scenario.details['pattern']}")
         lines.append(f"Category: {scenario.category}")
         lines.append(f"Risk Level: {scenario.risk_level.value}")
         lines.append(f"\nDescription: {scenario.details['description']}")
         
         if scenario.triggered_rules:
-            lines.append(f"\n⚠️ Triggered Rules:")
+            lines.append(f"\n Triggered Rules:")
             for rule in scenario.triggered_rules:
                 lines.append(f"  - {rule.rule_id}: {rule.rule_name}")
                 lines.append(f"    Actual: {rule.actual_value:.2f} | Threshold: {rule.threshold_value}")
         
-        lines.append(f"\n🎯 Primary Concern: {scenario.details['primary_concern']}")
-        lines.append(f"📋 Recommended Strategy: {scenario.details['recommended_strategy']}")
+        lines.append(f"\n Primary Concern: {scenario.details['primary_concern']}")
+        lines.append(f" Recommended Strategy: {scenario.details['recommended_strategy']}")
         
         return "\n".join(lines)
 

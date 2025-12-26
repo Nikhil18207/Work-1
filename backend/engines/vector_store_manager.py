@@ -127,7 +127,7 @@ class VectorStoreManager:
         self.vector_store = None
         self.collection = None
         
-        print(f"✓ Vector Store initialized")
+        print(f" Vector Store initialized")
         print(f"  Persist Directory: {self.persist_directory}")
         print(f"  Collection: {collection_name}")
         print(f"  Embedding Model: {embedding_model}")
@@ -145,18 +145,18 @@ class VectorStoreManager:
             return
         
         print("\n" + "="*60)
-        print("🔮 CREATING VECTOR STORE")
+        print(" CREATING VECTOR STORE")
         print("="*60)
         print(f"Documents to embed: {len(documents)}")
         print(f"Embedding model: {self.embedding_model}")
         
         # Reset if requested
         if reset and self.collection_exists():
-            print("\n⚠️  Resetting existing collection...")
+            print("\n  Resetting existing collection...")
             self.reset_collection()
         
         # Create vector store
-        print("\n📊 Generating embeddings...")
+        print("\n Generating embeddings...")
         print("   (This may take a few minutes for large corpora)")
         
         try:
@@ -174,13 +174,13 @@ class VectorStoreManager:
             # Save metadata
             self._save_metadata(documents)
             
-            print("\n✅ Vector store created successfully!")
+            print("\n Vector store created successfully!")
             print(f"   Total embeddings: {self.collection.count()}")
             print(f"   Persisted to: {self.persist_directory}")
             print("="*60 + "\n")
             
         except Exception as e:
-            print(f"\n❌ Error creating vector store: {e}")
+            print(f"\n Error creating vector store: {e}")
             raise
     
     def load_collection(self) -> bool:
@@ -206,7 +206,7 @@ class VectorStoreManager:
             # Get collection reference
             self.collection = self.client.get_collection(self.collection_name)
             
-            print(f"✓ Loaded collection: {self.collection_name}")
+            print(f" Loaded collection: {self.collection_name}")
             print(f"  Total embeddings: {self.collection.count()}")
             
             return True
@@ -227,7 +227,7 @@ class VectorStoreManager:
         """Delete existing collection"""
         try:
             self.client.delete_collection(self.collection_name)
-            print(f"✓ Deleted collection: {self.collection_name}")
+            print(f" Deleted collection: {self.collection_name}")
         except Exception as e:
             print(f"Error deleting collection: {e}")
     
@@ -242,11 +242,11 @@ class VectorStoreManager:
             print("Error: Vector store not initialized. Create or load collection first.")
             return
         
-        print(f"\n➕ Adding {len(documents)} documents to collection...")
+        print(f"\n Adding {len(documents)} documents to collection...")
         
         try:
             self.vector_store.add_documents(documents)
-            print(f"✓ Added successfully. Total: {self.collection.count()}")
+            print(f" Added successfully. Total: {self.collection.count()}")
         except Exception as e:
             print(f"Error adding documents: {e}")
     
@@ -429,14 +429,14 @@ class VectorStoreManager:
         with open(metadata_file, 'w') as f:
             json.dump(metadata, f, indent=2)
         
-        print(f"✓ Metadata saved: {metadata_file}")
+        print(f" Metadata saved: {metadata_file}")
 
 
 if __name__ == "__main__":
     # Demo usage
     from document_processor import DocumentProcessor
     
-    print("\n🚀 VECTOR STORE DEMO\n")
+    print("\n VECTOR STORE DEMO\n")
     
     # Process documents
     processor = DocumentProcessor()
@@ -453,7 +453,7 @@ if __name__ == "__main__":
         vector_store.create_collection(documents, reset=True)
         
         # Test search
-        print("\n🔍 Testing semantic search...")
+        print("\n Testing semantic search...")
         results = vector_store.semantic_search(
             query="What are the supplier selection criteria?",
             k=3,
@@ -462,7 +462,7 @@ if __name__ == "__main__":
         
         # Show statistics
         stats = vector_store.get_statistics()
-        print("\n📊 STATISTICS")
+        print("\n STATISTICS")
         print("="*60)
         for key, value in stats.items():
             print(f"{key}: {value}")

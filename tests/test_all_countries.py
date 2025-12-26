@@ -59,7 +59,7 @@ for country, query in test_queries:
     parsed = result['parsed_query']
     results_count = len(result['results'])
     
-    status = "✅" if results_count > 0 else "⚠️"
+    status = "" if results_count > 0 else ""
     
     print(f"{status} {country:20} | Query: {query[:50]:50} | Results: {results_count}")
 
@@ -67,9 +67,9 @@ print("\n" + "=" * 80)
 print("PROOF: System works for ALL countries, not just Malaysia!")
 print("=" * 80)
 print("\nKey Points:")
-print("✅ No hardcoded regions - works for ANY country")
-print("✅ Google Search understands ALL 195 countries")
-print("✅ Works for cities, states, provinces globally")
-print("✅ Supports small countries (Luxembourg, Brunei, etc.)")
-print("✅ Handles ANY geographic location worldwide")
+print(" No hardcoded regions - works for ANY country")
+print(" Google Search understands ALL 195 countries")
+print(" Works for cities, states, provinces globally")
+print(" Supports small countries (Luxembourg, Brunei, etc.)")
+print(" Handles ANY geographic location worldwide")
 print("\n" + "=" * 80)

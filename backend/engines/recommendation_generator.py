@@ -373,22 +373,22 @@ class RecommendationGenerator:
         
         # Header
         lines.append("=" * 80)
-        lines.append(f"📋 PROCUREMENT RECOMMENDATION")
+        lines.append(f" PROCUREMENT RECOMMENDATION")
         lines.append("=" * 80)
         
         # Strategy
-        lines.append(f"\n🎯 Strategy: {recommendation.strategy.value.replace('_', ' ').title()}")
-        lines.append(f"⏱️  Timeline: {recommendation.timeline}")
-        lines.append(f"🚨 Priority: {recommendation.priority}")
+        lines.append(f"\n Strategy: {recommendation.strategy.value.replace('_', ' ').title()}")
+        lines.append(f"⏱  Timeline: {recommendation.timeline}")
+        lines.append(f" Priority: {recommendation.priority}")
         
         # Current State
-        lines.append(f"\n📊 Current State:")
+        lines.append(f"\n Current State:")
         lines.append(f"Category: {recommendation.scenario.category}")
         lines.append(f"Risk Level: {recommendation.scenario.risk_level.value}")
         lines.append(f"Pattern: {recommendation.scenario.details.get('pattern', 'N/A')}")
         
         # Actions
-        lines.append(f"\n✅ Recommended Actions:")
+        lines.append(f"\n Recommended Actions:")
         for action in recommendation.actions:
             lines.append(f"\n{action['action_id']}. {action['type']}")
             for key, value in action.items():
@@ -399,9 +399,9 @@ class RecommendationGenerator:
                         lines.append(f"   {key}: {value}")
         
         # Expected Outcomes
-        lines.append(f"\n🎯 Expected Outcomes:")
+        lines.append(f"\n Expected Outcomes:")
         for key, value in recommendation.expected_outcomes.items():
-            lines.append(f"   • {key.replace('_', ' ').title()}: {value}")
+            lines.append(f"   - {key.replace('_', ' ').title()}: {value}")
         
         lines.append("\n" + "=" * 80)
         

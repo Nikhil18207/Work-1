@@ -34,7 +34,7 @@ class ConversationalAI:
 
     def __init__(self, enable_llm=True, enable_rag=True, enable_web_search=True, llm_provider="openai"):
         """Initialize the conversational AI with full capabilities"""
-        print("🤖 Initializing Conversational AI...")
+        print(" Initializing Conversational AI...")
         
         # Load all engines
         self.data_loader = DataLoader()
@@ -75,12 +75,12 @@ class ConversationalAI:
                         vector_store_manager=self.vector_store,
                         provider=provider
                     )
-                    print(f"✓ RAG engine loaded ({provider})")
+                    print(f" RAG engine loaded ({provider})")
                 else:
-                    print(f"⚠️  RAG: Vector store not found for {provider}")
+                    print(f"  RAG: Vector store not found for {provider}")
                     self.rag_engine = None
             except Exception as e:
-                print(f"⚠️  RAG initialization failed: {e}")
+                print(f"  RAG initialization failed: {e}")
                 self.rag_engine = None
         else:
             self.rag_engine = None
@@ -90,9 +90,9 @@ class ConversationalAI:
         if enable_web_search:
             try:
                 self.web_search = IntelligentSearchEngine()
-                print("✓ Web search enabled")
+                print(" Web search enabled")
             except Exception as e:
-                print(f"⚠️  Web search initialization failed: {e}")
+                print(f"  Web search initialization failed: {e}")
                 self.web_search = None
         else:
             self.web_search = None
@@ -108,7 +108,7 @@ class ConversationalAI:
         # Pre-detect scenario
         self.scenario = self.scenario_detector.detect_scenario("Rice Bran Oil", self.spend_data)
         
-        print("✅ AI Ready! Ask me anything about your procurement data.\n")
+        print(" AI Ready! Ask me anything about your procurement data.\n")
 
     def answer_question(self, question: str) -> str:
         """
@@ -239,9 +239,9 @@ class ConversationalAI:
         triggered_rules = [r for r in self.rule_results if r.triggered]
         
         if not triggered_rules:
-            return "✅ Good news! No major risks detected in your procurement data."
+            return " Good news! No major risks detected in your procurement data."
         
-        answer = "⚠️ **RISKS DETECTED:**\n\n"
+        answer = " **RISKS DETECTED:**\n\n"
         
         for rule in triggered_rules:
             answer += f"**{rule.rule_id}: {rule.rule_name}**\n"
@@ -256,7 +256,7 @@ class ConversationalAI:
         """Answer questions about suppliers"""
         recommendation = self.recommendation_generator.generate_recommendation(self.scenario)
         
-        answer = "🏢 **SUPPLIER RECOMMENDATIONS:**\n\n"
+        answer = " **SUPPLIER RECOMMENDATIONS:**\n\n"
         
         # Current suppliers
         top_suppliers = self.spend_data.groupby(['Supplier_ID', 'Supplier_Name'])['Spend_USD'].sum()
@@ -281,7 +281,7 @@ class ConversationalAI:
         """Answer questions about spend"""
         total_spend = self.regional_summary['total_spend']
         
-        answer = "💰 **SPEND ANALYSIS:**\n\n"
+        answer = " **SPEND ANALYSIS:**\n\n"
         answer += f"**Total Spend:** ${total_spend:,.0f}\n\n"
         
         answer += "**Regional Breakdown:**\n"
@@ -297,7 +297,7 @@ class ConversationalAI:
 
     def _answer_about_regions(self) -> str:
         """Answer questions about regions"""
-        answer = "🌍 **REGIONAL DISTRIBUTION:**\n\n"
+        answer = " **REGIONAL DISTRIBUTION:**\n\n"
         
         for region, data in sorted(self.regional_summary['regions'].items(), 
                                    key=lambda x: x[1]['percentage'], reverse=True):
@@ -307,7 +307,7 @@ class ConversationalAI:
             
             # Check if this region is problematic
             if data['percentage'] > 40:
-                answer += f"- ⚠️ HIGH CONCENTRATION (>{40}% threshold)\n"
+                answer += f"-  HIGH CONCENTRATION (>{40}% threshold)\n"
             
             answer += "\n"
         
@@ -315,10 +315,10 @@ class ConversationalAI:
 
     def _answer_about_rules(self) -> str:
         """Answer questions about rules"""
-        answer = "📋 **BUSINESS RULES:**\n\n"
+        answer = " **BUSINESS RULES:**\n\n"
         
         for rule in self.rule_results:
-            status = "⚠️ TRIGGERED" if rule.triggered else "✅ PASSED"
+            status = " TRIGGERED" if rule.triggered else " PASSED"
             answer += f"**{rule.rule_id}: {rule.rule_name}** - {status}\n"
             answer += f"- Threshold: {rule.threshold_value}\n"
             answer += f"- Current Value: {rule.actual_value:.2f}\n"
@@ -331,7 +331,7 @@ class ConversationalAI:
         """Answer questions about recommended actions"""
         recommendation = self.recommendation_generator.generate_recommendation(self.scenario)
         
-        answer = "✅ **RECOMMENDED ACTIONS:**\n\n"
+        answer = " **RECOMMENDED ACTIONS:**\n\n"
         answer += f"**Strategy:** {recommendation.strategy.value.replace('_', ' ').title()}\n"
         answer += f"**Priority:** {recommendation.priority}\n"
         answer += f"**Timeline:** {recommendation.timeline}\n\n"
@@ -356,7 +356,7 @@ class ConversationalAI:
 
     def _answer_about_esg(self) -> str:
         """Answer questions about ESG"""
-        answer = "🌱 **ESG ANALYSIS:**\n\n"
+        answer = " **ESG ANALYSIS:**\n\n"
         
         # Get suppliers with ESG scores
         esg_suppliers = self.contracts.sort_values('ESG_Score', ascending=False)
@@ -379,7 +379,7 @@ class ConversationalAI:
         """Answer questions about timeline"""
         recommendation = self.recommendation_generator.generate_recommendation(self.scenario)
         
-        answer = "⏱️ **IMPLEMENTATION TIMELINE:**\n\n"
+        answer = "⏱ **IMPLEMENTATION TIMELINE:**\n\n"
         answer += f"**Recommended Timeline:** {recommendation.timeline}\n"
         answer += f"**Priority:** {recommendation.priority}\n\n"
         
@@ -393,7 +393,7 @@ class ConversationalAI:
 
     def _answer_about_categories(self) -> str:
         """Answer questions about product categories - Universal for any industry"""
-        answer = "📦 **CATEGORY ANALYSIS:**\n\n"
+        answer = " **CATEGORY ANALYSIS:**\n\n"
         
         # Get unique categories from spend data
         if 'Category' in self.spend_data.columns:
@@ -414,7 +414,7 @@ class ConversationalAI:
 
     def _answer_about_contracts(self) -> str:
         """Answer questions about contracts - Universal for any industry"""
-        answer = "📄 **CONTRACT ANALYSIS:**\n\n"
+        answer = " **CONTRACT ANALYSIS:**\n\n"
         
         if not self.contracts.empty:
             answer += f"**Total Active Contracts:** {len(self.contracts)}\n\n"
@@ -484,7 +484,7 @@ Provide a clear, specific answer with numbers and facts from the data.
                 verbose=False
             )
             
-            answer = "📚 **FROM KNOWLEDGE BASE:**\n\n"
+            answer = " **FROM KNOWLEDGE BASE:**\n\n"
             answer += response['answer']
             
             if response.get('sources'):
@@ -503,7 +503,7 @@ Provide a clear, specific answer with numbers and facts from the data.
             result = self.web_search.intelligent_search(question, max_results=5)
             
             if not result or not result.get('results'):
-                return "🔍 No web results found. Try rephrasing your question."
+                return " No web results found. Try rephrasing your question."
             
             # Return the pre-formatted output from intelligent search
             return result.get('formatted_output', "No results found.")
@@ -515,7 +515,7 @@ Provide a clear, specific answer with numbers and facts from the data.
         """General answer when pattern not matched"""
         capabilities = """I can help you with:
 
-**📊 Data Analysis:**
+** Data Analysis:**
 - Risks and issues
 - Supplier recommendations
 - Spend analysis
@@ -525,14 +525,14 @@ Provide a clear, specific answer with numbers and facts from the data.
 - ESG scores
 - Implementation timeline
 
-**📚 Knowledge Base (RAG):**
+** Knowledge Base (RAG):**
 - Procurement policies
 - Best practices
 - Guidelines and procedures
 - Supplier criteria
 - Quality standards
 
-**🌐 Live Market Intelligence:**
+** Live Market Intelligence:**
 - Find suppliers
 - Market trends
 - Industry news
@@ -549,16 +549,16 @@ Try asking:
     def chat(self):
         """Start interactive chat session"""
         print("=" * 80)
-        print("🤖 CONVERSATIONAL AI - PROCUREMENT ASSISTANT")
+        print(" CONVERSATIONAL AI - PROCUREMENT ASSISTANT")
         print("=" * 80)
         print("\nI'm your AI procurement assistant with:")
-        print("  ✅ Access to your procurement data")
+        print("   Access to your procurement data")
         if self.enable_rag and self.rag_engine:
-            print("  ✅ Knowledge base (policies, best practices)")
+            print("   Knowledge base (policies, best practices)")
         if self.enable_web_search and self.web_search:
-            print("  ✅ Real-time web search")
+            print("   Real-time web search")
         if self.enable_llm and self.llm_engine:
-            print("  ✅ AI-powered reasoning")
+            print("   AI-powered reasoning")
         print("\nAsk me anything! Type 'exit' or 'quit' to end the conversation.\n")
         
         while True:
@@ -568,7 +568,7 @@ Try asking:
                 
                 # Check for exit
                 if question.lower() in ['exit', 'quit', 'bye', 'goodbye']:
-                    print("\n🤖 AI: Goodbye! Happy procurement! 👋\n")
+                    print("\n AI: Goodbye! Happy procurement! \n")
                     break
                 
                 if not question:
@@ -578,14 +578,14 @@ Try asking:
                 answer = self.answer_question(question)
                 
                 # Print answer
-                print(f"\n🤖 AI:\n{answer}\n")
+                print(f"\n AI:\n{answer}\n")
                 print("-" * 80 + "\n")
                 
             except KeyboardInterrupt:
-                print("\n\n🤖 AI: Goodbye! 👋\n")
+                print("\n\n AI: Goodbye! \n")
                 break
             except Exception as e:
-                print(f"\n⚠️ Error: {e}\n")
+                print(f"\n Error: {e}\n")
 
 
 # Example usage

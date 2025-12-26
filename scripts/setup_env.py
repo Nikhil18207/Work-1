@@ -15,20 +15,20 @@ def create_env_file():
     
     # Check if .env already exists
     if env_file.exists():
-        response = input("⚠️  .env file already exists. Overwrite? (y/N): ")
+        response = input("  .env file already exists. Overwrite? (y/N): ")
         if response.lower() != 'y':
-            print("❌ Setup cancelled.")
+            print(" Setup cancelled.")
             return
     
     print("=" * 80)
-    print("🚀 BEROE INC - SUPPLY CHAIN RECOMMENDATION SYSTEM")
+    print(" BEROE INC - SUPPLY CHAIN RECOMMENDATION SYSTEM")
     print("   Environment Setup")
     print("=" * 80)
     
     # Ask for LLM provider
-    print("\n📋 LLM CONFIGURATION")
+    print("\n LLM CONFIGURATION")
     print("Choose your LLM provider:")
-    print("  1. No LLM (Fallback mode) - ✅ Works now, no API key needed")
+    print("  1. No LLM (Fallback mode) -  Works now, no API key needed")
     print("  2. OpenAI GPT-4 - Best quality, requires API key")
     print("  3. Google Gemini - Free tier available, requires API key")
     
@@ -52,14 +52,12 @@ def create_env_file():
     env_content = f"""# ============================================
 # BEROE INC - SUPPLY CHAIN LLM RECOMMENDATION SYSTEM
 # Environment Configuration
-# ============================================
+
 # Auto-generated: {Path(__file__).name}
 # DO NOT COMMIT THIS FILE TO GIT
-# ============================================
 
-# ============================================
 # LLM CONFIGURATION
-# ============================================
+
 LLM_PROVIDER={llm_provider}
 ENABLE_LLM={enable_llm}
 
@@ -74,90 +72,78 @@ GEMINI_API_KEY={gemini_key}
 GEMINI_MODEL=gemini-pro
 GEMINI_TEMPERATURE=0.7
 
-# ============================================
 # APPLICATION CONFIGURATION
-# ============================================
+
 APP_ENV=development
 APP_PORT=8000
 APP_HOST=0.0.0.0
 LOG_LEVEL=INFO
 
-# ============================================
 # DATA PATHS
-# ============================================
+
 STRUCTURED_DATA_PATH=./data/structured
 UNSTRUCTURED_DATA_PATH=./data/unstructured
 CALCULATED_DATA_PATH=./data/calculated
 RULES_PATH=./data/structured/rule_book.csv
 PROMPTS_PATH=./config/prompts
 
-# ============================================
 # RULE ENGINE CONFIGURATION
-# ============================================
+
 REGIONAL_CONCENTRATION_THRESHOLD=40.0
 TAIL_SPEND_SUPPLIER_THRESHOLD=10
 TAIL_SPEND_PERCENTAGE=20.0
 
-# ============================================
 # CONFIDENCE & SCORING
-# ============================================
+
 MIN_CONFIDENCE_THRESHOLD=0.60
 HIGH_CONFIDENCE_THRESHOLD=0.85
 BASE_CONFIDENCE=0.50
 
-# ============================================
 # VECTOR DATABASE
-# ============================================
+
 VECTOR_DB_TYPE=chromadb
 CHROMA_PERSIST_DIRECTORY=./data/vector_db
 EMBEDDING_MODEL=text-embedding-3-small
 EMBEDDING_DIMENSION=1536
 
-# ============================================
 # RAG CONFIGURATION
-# ============================================
+
 RAG_CHUNK_SIZE=1000
 RAG_CHUNK_OVERLAP=200
 RAG_TOP_K_RESULTS=5
 RAG_SIMILARITY_THRESHOLD=0.7
 
-# ============================================
 # API CONFIGURATION
-# ============================================
+
 RATE_LIMIT_REQUESTS=100
 RATE_LIMIT_PERIOD=60
 CORS_ORIGINS=http://localhost:3000,http://localhost:8000
 
-# ============================================
 # CACHING
-# ============================================
+
 ENABLE_CACHE=true
 CACHE_TTL_SECONDS=3600
 CACHE_TYPE=memory
 
-# ============================================
 # MONITORING
-# ============================================
+
 ENABLE_MONITORING=true
 ENABLE_TRACING=true
 METRICS_PORT=9090
 
-# ============================================
 # SECURITY
-# ============================================
+
 API_KEY_REQUIRED=false
 API_KEY=
 
-# ============================================
 # EXPERIMENTAL FEATURES
-# ============================================
+
 ENABLE_EXPERIMENTAL_FEATURES=true
 ENABLE_MULTI_MODEL_COMPARISON=false
 ENABLE_CONFIDENCE_CALIBRATION=true
 
-# ============================================
 # SUPPLIER SELECTION WEIGHTS
-# ============================================
+
 ESG_SCORE_WEIGHT=0.30
 PAYMENT_TERMS_WEIGHT=0.20
 CAPACITY_WEIGHT=0.50
@@ -168,21 +154,21 @@ CAPACITY_WEIGHT=0.50
         f.write(env_content)
     
     print("\n" + "=" * 80)
-    print("✅ SUCCESS! .env file created")
+    print(" SUCCESS! .env file created")
     print("=" * 80)
     
-    print(f"\n📁 Location: {env_file}")
-    print(f"\n🔧 Configuration:")
+    print(f"\n Location: {env_file}")
+    print(f"\n Configuration:")
     print(f"   LLM Provider: {llm_provider}")
     print(f"   LLM Enabled: {enable_llm}")
     
     if enable_llm == "true":
         if llm_provider == "openai":
-            print(f"   OpenAI Key: {'✅ Set' if openai_key else '❌ Not set'}")
+            print(f"   OpenAI Key: {' Set' if openai_key else ' Not set'}")
         else:
-            print(f"   Gemini Key: {'✅ Set' if gemini_key else '❌ Not set'}")
+            print(f"   Gemini Key: {' Set' if gemini_key else ' Not set'}")
     
-    print("\n🚀 NEXT STEPS:")
+    print("\n NEXT STEPS:")
     print("   1. Test the system:")
     print("      python backend/demo_complete_system.py")
     print()

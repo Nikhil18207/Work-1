@@ -283,7 +283,7 @@ class IntelligentSearchEngine:
             
             return results
         except Exception as e:
-            print(f"⚠️ Serper search failed: {e}")
+            print(f" Serper search failed: {e}")
             return []
 
     def _search_google(self, query: str, max_results: int) -> List[Dict[str, Any]]:
@@ -315,7 +315,7 @@ class IntelligentSearchEngine:
             
             return results
         except Exception as e:
-            print(f"⚠️ Google search failed: {e}")
+            print(f" Google search failed: {e}")
             return []
 
     def _deduplicate_results(self, results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -418,18 +418,18 @@ class IntelligentSearchEngine:
         extracted_suppliers: List[Dict[str, str]]
     ) -> str:
         """Format output in a readable way"""
-        output = f"🔍 Intelligent Search Results for: {query}\n"
+        output = f" Intelligent Search Results for: {query}\n"
         output += "=" * 80 + "\n\n"
         
         # Show parsed query
-        output += f"📊 Query Analysis:\n"
+        output += f" Query Analysis:\n"
         output += f"   Product: {parsed['product']}\n"
         output += f"   Region: {parsed['region']['specific_location'] or parsed['region']['country']}\n"
         output += f"   Looking for: Top {parsed['number']} {parsed['query_type']}\n\n"
         
         # Show extracted suppliers
         if extracted_suppliers:
-            output += f"🏢 Extracted Suppliers:\n"
+            output += f" Extracted Suppliers:\n"
             output += "-" * 80 + "\n"
             for i, supplier in enumerate(extracted_suppliers, 1):
                 output += f"{i}. {supplier['name']}\n"
@@ -437,7 +437,7 @@ class IntelligentSearchEngine:
                 output += f"   Info: {supplier['snippet']}\n\n"
         
         # Show search results
-        output += f"📰 Detailed Search Results ({len(results)} found):\n"
+        output += f" Detailed Search Results ({len(results)} found):\n"
         output += "-" * 80 + "\n"
         for i, result in enumerate(results[:10], 1):
             output += f"{i}. {result['title']}\n"
@@ -454,7 +454,7 @@ if __name__ == "__main__":
     engine = IntelligentSearchEngine()
     
     print("=" * 80)
-    print("🧠 INTELLIGENT SEARCH ENGINE TEST")
+    print(" INTELLIGENT SEARCH ENGINE TEST")
     print("=" * 80)
     
     # Test queries

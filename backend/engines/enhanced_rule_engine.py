@@ -66,7 +66,7 @@ class EnhancedRuleEngine:
 
     def __init__(self):
         self.rules = self._load_rules_from_csv()
-        print(f"✅ Rule Engine initialized with {len(self.rules)} rules")
+        print(f" Rule Engine initialized with {len(self.rules)} rules")
 
     def _load_rules_from_csv(self) -> Dict[str, Dict[str, Any]]:
         """
@@ -102,7 +102,7 @@ class EnhancedRuleEngine:
             return rules_dict
             
         except Exception as e:
-            print(f"⚠️ Error loading rules from CSV: {e}")
+            print(f" Error loading rules from CSV: {e}")
             return self._get_fallback_rules()
 
     def _parse_threshold(self, threshold_str: str) -> float:

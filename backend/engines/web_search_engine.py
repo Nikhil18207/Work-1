@@ -225,7 +225,7 @@ class WebSearchEngine:
             return results
             
         except Exception as e:
-            print(f"⚠️ Serper search failed: {e}")
+            print(f" Serper search failed: {e}")
             return self._search_fallback(query)
 
     def _search_google(
@@ -272,7 +272,7 @@ class WebSearchEngine:
             return results
             
         except Exception as e:
-            print(f"⚠️ Google search failed: {e}")
+            print(f" Google search failed: {e}")
             return self._search_fallback(query)
 
     def _search_fallback(self, query: str) -> List[Dict[str, Any]]:
@@ -314,7 +314,7 @@ class WebSearchEngine:
         if not results:
             return f"No results found for: {query}"
         
-        output = f"🔍 Web Search Results for: {query}\n"
+        output = f" Web Search Results for: {query}\n"
         output += "=" * 80 + "\n\n"
         
         for i, result in enumerate(results, 1):

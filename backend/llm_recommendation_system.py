@@ -101,12 +101,12 @@ class LLMRecommendationSystem:
                         provider=provider,
                         api_key=api_key
                     )
-                    print(f"✓ RAG engine initialized ({provider})")
+                    print(f" RAG engine initialized ({provider})")
                 else:
-                    print(f"⚠️  RAG: Vector store not found for {provider}")
+                    print(f"  RAG: Vector store not found for {provider}")
                     self.rag_engine = None
             except Exception as e:
-                print(f"⚠️  RAG initialization failed: {e}")
+                print(f"  RAG initialization failed: {e}")
                 self.rag_engine = None
         else:
             self.rag_engine = None
@@ -170,7 +170,7 @@ class LLMRecommendationSystem:
                     recommendation
                 )
             except Exception as e:
-                print(f"⚠️ LLM enhancement failed: {e}")
+                print(f" LLM enhancement failed: {e}")
         
         return {
             "category": category,
@@ -228,7 +228,7 @@ if __name__ == "__main__":
     import json
     
     print("=" * 80)
-    print("🚀 LLM-ENHANCED SUPPLY CHAIN RECOMMENDATION SYSTEM")
+    print(" LLM-ENHANCED SUPPLY CHAIN RECOMMENDATION SYSTEM")
     print("=" * 80)
     
     # Initialize system (will use fallback if no API key)
@@ -238,7 +238,7 @@ if __name__ == "__main__":
     )
     
     # Get recommendation
-    print("\n📊 Generating recommendation...")
+    print("\n Generating recommendation...")
     result = system.get_recommendation("Rice Bran Oil")
     
     # Print formatted output
@@ -247,14 +247,14 @@ if __name__ == "__main__":
     # Print LLM explanation if available
     if result['llm_explanation']:
         print("\n" + "=" * 80)
-        print("🤖 LLM EXPLANATION")
+        print(" LLM EXPLANATION")
         print("=" * 80)
         print(result['llm_explanation'])
     
     # Print confidence score
     if result['confidence_score']:
         print("\n" + "=" * 80)
-        print("📊 CONFIDENCE SCORE")
+        print(" CONFIDENCE SCORE")
         print("=" * 80)
         conf = result['confidence_score']
         print(f"Score: {conf['confidence_score']}% ({conf['confidence_level']})")
@@ -265,7 +265,7 @@ if __name__ == "__main__":
     
     # Demo Q&A
     print("\n" + "=" * 80)
-    print("💬 INTERACTIVE Q&A DEMO")
+    print(" INTERACTIVE Q&A DEMO")
     print("=" * 80)
     
     questions = [
@@ -280,7 +280,7 @@ if __name__ == "__main__":
         print(f"A: {answer[:200]}..." if len(answer) > 200 else f"A: {answer}")
     
     print("\n" + "=" * 80)
-    print("✅ LLM INTEGRATION COMPLETE!")
+    print(" LLM INTEGRATION COMPLETE!")
     print("=" * 80)
 
     def search_supplier_news(self, supplier_name: str, region: Optional[str] = None) -> Dict[str, Any]:

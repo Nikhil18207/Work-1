@@ -81,7 +81,7 @@ class RAGEngine:
                 self.client = None
                 print("Warning: openai not installed")
         
-        print(f"✓ RAG Engine initialized")
+        print(f" RAG Engine initialized")
         print(f"  Provider: {self.provider}")
         print(f"  Model: {self.model_name}")
         print(f"  Vector Store: {'Connected' if vector_store_manager else 'Not connected'}")
@@ -116,7 +116,7 @@ class RAGEngine:
         
         if verbose:
             print(f"\n{'='*60}")
-            print(f"🔍 RAG QUERY")
+            print(f" RAG QUERY")
             print(f"{'='*60}")
             print(f"Question: {question}")
             print(f"Retrieving top {k} relevant documents...")
@@ -141,8 +141,8 @@ class RAGEngine:
             context = self._format_context(search_results)
             
             if verbose:
-                print(f"\n✓ Retrieved {len(search_results)} relevant documents")
-                print(f"\n📝 Context length: {len(context)} characters")
+                print(f"\n Retrieved {len(search_results)} relevant documents")
+                print(f"\n Context length: {len(context)} characters")
             
         except Exception as e:
             return {
@@ -154,7 +154,7 @@ class RAGEngine:
         # Step 2: Generate answer with LLM
         try:
             if verbose:
-                print(f"\n🤖 Generating answer with {self.model_name}...")
+                print(f"\n Generating answer with {self.model_name}...")
             
             answer = self._generate_answer(question, context, verbose=verbose)
             
@@ -182,7 +182,7 @@ class RAGEngine:
                 ]
             
             if verbose:
-                print(f"\n✅ Answer generated successfully")
+                print(f"\n Answer generated successfully")
                 print(f"{'='*60}\n")
             
             return response
@@ -324,7 +324,7 @@ Please provide a detailed, accurate answer based on the context above."""
                 answer = response.choices[0].message.content
             
             if verbose:
-                print(f"\n💬 LLM Response:")
+                print(f"\n LLM Response:")
                 print(f"{answer[:200]}...")
             
             return answer
@@ -420,7 +420,7 @@ Based on the above information, provide a comprehensive procurement recommendati
 
 if __name__ == "__main__":
     # Demo usage
-    print("\n🚀 RAG ENGINE DEMO\n")
+    print("\n RAG ENGINE DEMO\n")
     
     # Initialize vector store
     vector_store = VectorStoreManager(
@@ -458,8 +458,8 @@ if __name__ == "__main__":
             print(f"\nA: {response['answer']}")
             
             if response.get('sources'):
-                print(f"\n📚 Sources ({len(response['sources'])}):")
+                print(f"\n Sources ({len(response['sources'])}):")
                 for source in response['sources']:
                     print(f"  - {source['source']} (score: {source['score']:.3f})")
     else:
-        print("❌ No vector store found. Run document_processor.py first to create one.")
+        print(" No vector store found. Run document_processor.py first to create one.")

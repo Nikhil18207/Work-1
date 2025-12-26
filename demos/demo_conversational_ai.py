@@ -16,7 +16,7 @@ def demo_conversational_ai():
     """Demonstrate conversational AI capabilities"""
     
     print("\n" + "="*80)
-    print("🎯 CONVERSATIONAL AI DEMONSTRATION")
+    print(" CONVERSATIONAL AI DEMONSTRATION")
     print("="*80)
     print("\nThis demo shows the AI answering different types of questions:")
     print("  1. Data-specific questions (from your CSV files)")
@@ -36,7 +36,7 @@ def demo_conversational_ai():
     demo_questions = [
         # Data-specific questions
         {
-            "category": "📊 Data Analysis",
+            "category": " Data Analysis",
             "questions": [
                 "What are the risks?",
                 "Show me the spend breakdown",
@@ -45,7 +45,7 @@ def demo_conversational_ai():
         },
         # Knowledge base questions
         {
-            "category": "📚 Knowledge Base (RAG)",
+            "category": " Knowledge Base (RAG)",
             "questions": [
                 "What is our supplier selection policy?",
                 "What are the quality requirements?",
@@ -54,7 +54,7 @@ def demo_conversational_ai():
         },
         # Market intelligence questions
         {
-            "category": "🌐 Live Market Intelligence",
+            "category": " Live Market Intelligence",
             "questions": [
                 "Find top Rice Bran Oil suppliers in India",
                 "What's the latest news about palm oil market?",
@@ -70,21 +70,21 @@ def demo_conversational_ai():
         print("="*80)
         
         for question in category_info['questions']:
-            print(f"\n{'─'*80}")
-            print(f"❓ You: {question}")
-            print(f"{'─'*80}")
+            print(f"\n{''*80}")
+            print(f" You: {question}")
+            print(f"{''*80}")
             
             try:
                 answer = ai.answer_question(question)
-                print(f"\n🤖 AI:\n{answer}")
+                print(f"\n AI:\n{answer}")
             except Exception as e:
-                print(f"\n❌ Error: {e}")
+                print(f"\n Error: {e}")
             
             print()
     
     # Interactive mode
     print("\n" + "="*80)
-    print("🎮 INTERACTIVE MODE")
+    print(" INTERACTIVE MODE")
     print("="*80)
     print("\nNow you can ask your own questions!")
     print("The AI will automatically route to the best source (data/RAG/web).\n")
