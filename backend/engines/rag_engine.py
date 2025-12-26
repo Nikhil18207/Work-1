@@ -17,10 +17,12 @@ try:
 except ImportError:
     OpenAI = None
 
-try:
-    import google.generativeai as genai
-except ImportError:
-    genai = None
+# Gemini support disabled - using OpenAI only
+# try:
+#     import google.generativeai as genai
+# except ImportError:
+#     genai = None
+genai = None
 
 
 class RAGEngine:
