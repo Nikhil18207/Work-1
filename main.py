@@ -33,8 +33,7 @@ if __name__ == "__main__":
     ai = ConversationalAI(
         enable_llm=True,
         enable_rag=True,
-        enable_web_search=True,
-        llm_provider="openai"
+        enable_web_search=True
     )
     
     print("\nTRY THESE QUESTIONS:")
