@@ -1,0 +1,16 @@
+supplier_id,supplier_name,country,region,product_category,certifications,quality_rating,delivery_reliability_pct,min_order_quantity,payment_terms_offered,lead_time_days,sustainability_score,years_in_business,annual_capacity_tons
+S001,Golden Sun Oils Ltd,Malaysia,Asia Pacific,Vegetable Oils,ISO 22000|RSPO|Halal,4.5,95,5000,Net 45,21,8.5,25,50000
+S002,EuroFresh Oils GmbH,Germany,Europe,Vegetable Oils,ISO 22000|FSSC 22000|Organic,4.8,98,10000,Net 60,14,9.2,35,75000
+S003,American Harvest Co,USA,North America,Vegetable Oils,USDA Organic|Non-GMO|Kosher,4.6,92,3000,Net 30,10,7.8,18,35000
+S004,Tropical Oils International,Indonesia,Asia Pacific,Vegetable Oils,RSPO|ISO 22000,4.2,88,8000,Net 45,28,7.5,22,120000
+S005,Mediterranean Olive Corp,Spain,Europe,Olive Oil,PDO|Organic|ISO 22000,4.9,96,2000,Net 60,18,9.5,45,15000
+S006,Prairie Grain Mills,Canada,North America,Grains & Flours,Non-GMO|Organic|HACCP,4.4,94,5000,Net 45,12,8.0,30,80000
+S007,Spice Route Traders,India,Asia Pacific,Spices & Seasonings,ISO 22000|Organic|Fair Trade,4.3,90,500,Net 30,25,7.2,28,5000
+S008,Nordic Dairy Solutions,Denmark,Europe,Dairy Products,Organic|Arla Standards,4.7,97,2000,Net 30,7,8.8,40,25000
+S009,SweetHarvest Sugars,Brazil,South America,Sweeteners,Bonsucro|Fair Trade|Organic,4.1,85,10000,Net 60,35,6.5,20,200000
+S010,PureSource Ingredients,Netherlands,Europe,Food Additives,FSSC 22000|Kosher|Halal,4.8,99,1000,Net 45,10,9.0,32,10000
+S011,Coastal Seafood Suppliers,Norway,Europe,Seafood,MSC|ASC|ISO 22000,4.6,93,500,Net 30,5,8.7,38,8000
+S012,Valley Fresh Produce,USA,North America,Fresh Vegetables,GlobalGAP|Organic,4.4,91,1000,Net 15,3,7.9,15,12000
+S013,Sunrise Soy Products,China,Asia Pacific,Soy Products,Non-GMO|ISO 22000,4.0,87,5000,Net 60,30,6.8,25,60000
+S014,Alpine Nuts & Seeds,Switzerland,Europe,Nuts & Seeds,Organic|Fair Trade|Allergen Control,4.7,95,500,Net 45,14,8.5,28,3000
+S015,Tropical Fruit Co,Philippines,Asia Pacific,Dried Fruits,Organic|Fair Trade|HACCP,4.3,89,1000,Net 30,20,7.6,18,7000
