@@ -110,6 +110,85 @@ class DataLoader:
         
         return self._cache['pricing_benchmarks'].copy()
 
+    def load_industry_benchmarks(self, force_reload: bool = False) -> pd.DataFrame:
+        """
+        Load industry benchmarks
+        
+        Returns:
+            DataFrame with columns: Category, Metric, Industry_Benchmark, Our_Performance,
+                                   Gap, Unit, Benchmark_Source, Last_Updated
+        """
+        if 'industry_benchmarks' not in self._cache or force_reload:
+            file_path = self.data_dir / 'industry_benchmarks.csv'
+            self._cache['industry_benchmarks'] = pd.read_csv(file_path)
+            # Convert date column
+            self._cache['industry_benchmarks']['Last_Updated'] = pd.to_datetime(
+                self._cache['industry_benchmarks']['Last_Updated']
+            )
+        
+        return self._cache['industry_benchmarks'].copy()
+    
+    def get_benchmark_analysis(self, category: str = None) -> Dict[str, Any]:
+        """
+        Get industry benchmark comparison for a category
+        
+        Args:
+            category: Product category (e.g., 'Rice Bran Oil')
+            
+        Returns:
+            Dictionary with benchmark analysis
+        """
+        benchmarks = self.load_industry_benchmarks()
+        
+        if category:
+            benchmarks = benchmarks[benchmarks['Category'] == category]
+        
+        if len(benchmarks) == 0:
+            return {
+                "error": f"No benchmarks found for category: {category}",
+                "category": category
+            }
+        
+        # Group by category
+        analysis = {
+            "category": category or "All Categories",
+            "metrics": []
+        }
+        
+        for _, row in benchmarks.iterrows():
+            metric_data = {
+                "metric": row['Metric'],
+                "industry_benchmark": row['Industry_Benchmark'],
+                "our_performance": row['Our_Performance'],
+                "gap": row['Gap'],
+                "unit": row['Unit'],
+                "source": row['Benchmark_Source'],
+                "last_updated": str(row['Last_Updated'].date())
+            }
+            
+            # Determine performance status
+            if pd.notna(row['Gap']):
+                if isinstance(row['Gap'], (int, float)):
+                    if row['Gap'] > 0:
+                        metric_data['status'] = 'Above Benchmark' if 'Cost' not in row['Metric'] else 'Below Industry'
+                    elif row['Gap'] < 0:
+                        metric_data['status'] = 'Below Benchmark' if 'Cost' not in row['Metric'] else 'Better than Industry'
+                    else:
+                        metric_data['status'] = 'At Benchmark'
+                else:
+                    metric_data['status'] = str(row['Gap'])
+            
+            analysis['metrics'].append(metric_data)
+        
+        # Calculate overall performance score
+        numeric_gaps = [m['gap'] for m in analysis['metrics'] if isinstance(m.get('gap'), (int, float))]
+        if numeric_gaps:
+            avg_gap = sum(numeric_gaps) / len(numeric_gaps)
+            analysis['overall_gap'] = round(avg_gap, 2)
+            analysis['performance_summary'] = 'Above Industry Average' if avg_gap > 0 else 'Below Industry Average'
+        
+        return analysis
+
     def get_supplier_summary(self, supplier_id: str) -> Dict[str, Any]:
         """
         Get comprehensive supplier information

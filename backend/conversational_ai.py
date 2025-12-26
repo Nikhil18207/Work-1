@@ -376,6 +376,16 @@ class ConversationalAI:
                 answer = self._answer_about_contracts()
                 data_sources = ["supplier_contracts.csv"]
             
+            # 6.5. BENCHMARK/INDUSTRY COMPARISON QUERIES - From YOUR data
+            elif any(word in q_lower for word in ['benchmark', 'benchmarks', 'industry standard', 'industry average', 'compare to industry', 'market average', 'industry comparison']):
+                detected_intent = "benchmark_analysis"
+                # Try to detect category
+                benchmark_category = None
+                if detected_category:
+                    benchmark_category = detected_category
+                answer = self._answer_about_benchmarks(benchmark_category)
+                data_sources = ["industry_benchmarks.csv"]
+            
             # ========== PRIORITY 2: YOUR POLICIES (RAG) ==========
             
             # 7. RULES/POLICY/COMPLIANCE - From YOUR policies via RAG
@@ -715,6 +725,44 @@ class ConversationalAI:
                 answer += f"\n**Average ESG Score:** {avg_esg:.1f}/100\n"
         else:
             answer += "No contract data available.\n"
+        
+        return answer
+    
+    def _answer_about_benchmarks(self, category: str = None) -> str:
+        """Answer questions about industry benchmarks"""
+        answer = " **INDUSTRY BENCHMARK ANALYSIS:**\n\n"
+        
+        # Get benchmark data
+        benchmark_analysis = self.data_loader.get_benchmark_analysis(category)
+        
+        if 'error' in benchmark_analysis:
+            answer += f"{benchmark_analysis['error']}\n"
+            answer += "\nAvailable categories with benchmarks:\n"
+            benchmarks = self.data_loader.load_industry_benchmarks()
+            for cat in benchmarks['Category'].unique():
+                answer += f"- {cat}\n"
+            return answer
+        
+        answer += f"**Category:** {benchmark_analysis['category']}\n\n"
+        
+        # Overall performance
+        if 'performance_summary' in benchmark_analysis:
+            answer += f"**Overall Performance:** {benchmark_analysis['performance_summary']}\n"
+            answer += f"**Average Gap:** {benchmark_analysis['overall_gap']}\n\n"
+        
+        # Individual metrics
+        answer += "**Detailed Metrics:**\n\n"
+        for metric in benchmark_analysis['metrics']:
+            answer += f"**{metric['metric'].replace('_', ' ').title()}:**\n"
+            answer += f"  Industry Benchmark: {metric['industry_benchmark']} {metric['unit']}\n"
+            answer += f"  Our Performance: {metric['our_performance']} {metric['unit']}\n"
+            answer += f"  Gap: {metric['gap']} {metric['unit']}"
+            
+            if 'status' in metric:
+                answer += f" ({metric['status']})"
+            
+            answer += f"\n  Source: {metric['source']}\n"
+            answer += f"  Updated: {metric['last_updated']}\n\n"
         
         return answer
 
