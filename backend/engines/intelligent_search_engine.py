@@ -82,18 +82,22 @@ class IntelligentSearchEngine:
         unique_results = self._deduplicate_results(all_results)
         ranked_results = self._rank_results(unique_results, parsed)
         
+        # STRICT FILTERING: Remove results that don't mention the region
+        # This ensures region-specific queries only return region-specific results
+        filtered_results = self._filter_by_region(ranked_results, parsed)
+        
         # Extract specific information
-        extracted_info = self._extract_supplier_info(ranked_results, parsed)
+        extracted_info = self._extract_supplier_info(filtered_results, parsed)
         
         return {
             'status': 'success',
             'original_query': query,
             'parsed_query': parsed,
             'search_strategies': search_queries,
-            'results': ranked_results[:max_results],
+            'results': filtered_results[:max_results],
             'extracted_suppliers': extracted_info,
             'formatted_output': self._format_intelligent_output(
-                query, parsed, ranked_results[:max_results], extracted_info
+                query, parsed, filtered_results[:max_results], extracted_info
             )
         }
 
@@ -139,23 +143,32 @@ class IntelligentSearchEngine:
         query_lower = query.lower()
         
         # Common region patterns - works for ANY location
+        # Pattern 1: "in <Region>" - most common pattern
+        # Pattern 2: "from <Region>"
+        # Pattern 3: "at <Region>"
         region_patterns = [
-            r'in\s+([A-Z][A-Za-z\s,]+?)(?:\s+(?:for|of|with|and|or|top|best|leading)|\s*$)',  # "in Malaysia", "in Mumbai, India"
-            r'from\s+([A-Z][A-Za-z\s,]+?)(?:\s+(?:for|of|with|and|or|top|best|leading)|\s*$)',  # "from India"
-            r'at\s+([A-Z][A-Za-z\s,]+?)(?:\s+(?:for|of|with|and|or|top|best|leading)|\s*$)',  # "at Mumbai"
+            r'\bin\s+([A-Za-z][A-Za-z\s,\-]+?)(?:\s*$|\s+(?:for|of|with|and|or)(?:\s|$))',  # "in Malaysia" at end or before prepositions
+            r'\bfrom\s+([A-Za-z][A-Za-z\s,\-]+?)(?:\s*$|\s+(?:for|of|with|and|or)(?:\s|$))',  # "from India"
+            r'\bat\s+([A-Za-z][A-Za-z\s,\-]+?)(?:\s*$|\s+(?:for|of|with|and|or)(?:\s|$))',  # "at Mumbai"
         ]
         
         for pattern in region_patterns:
-            match = re.search(pattern, query)
+            match = re.search(pattern, query, re.IGNORECASE)
             if match:
                 location = match.group(1).strip()
-                # Clean up common trailing words
+                # Clean up common trailing words and punctuation
                 location = re.sub(r'\s+(for|of|with|and|or)$', '', location, flags=re.IGNORECASE)
-                return {
-                    'country': location,
-                    'specific_location': location,
-                    'found': True
-                }
+                location = re.sub(r'[,.\s]+$', '', location)  # Remove trailing punctuation
+                
+                # Capitalize properly
+                location = ' '.join(word.capitalize() for word in location.split())
+                
+                if len(location) > 2:  # Valid region name should be at least 3 characters
+                    return {
+                        'country': location,
+                        'specific_location': location,
+                        'found': True
+                    }
         
         return {'country': 'Global', 'specific_location': None, 'found': False}
 
@@ -331,6 +344,34 @@ class IntelligentSearchEngine:
         
         return unique_results
 
+    def _filter_by_region(
+        self,
+        results: List[Dict[str, Any]],
+        parsed: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
+        """
+        Filter results to only include those that mention the specified region
+        This ensures strict region-specific filtering
+        """
+        region = parsed['region']['specific_location'] or parsed['region']['country']
+        
+        # If region is "Global" or not found, return all results
+        if region == 'Global' or not parsed['region']['found']:
+            return results
+        
+        region_lower = region.lower()
+        filtered_results = []
+        
+        for result in results:
+            title_lower = result['title'].lower()
+            snippet_lower = result['snippet'].lower()
+            
+            # Only include results that mention the region in title OR snippet
+            if region_lower in title_lower or region_lower in snippet_lower:
+                filtered_results.append(result)
+        
+        return filtered_results
+
     def _rank_results(
         self,
         results: List[Dict[str, Any]],
@@ -345,19 +386,27 @@ class IntelligentSearchEngine:
             score = 0
             title_lower = result['title'].lower()
             snippet_lower = result['snippet'].lower()
+            combined_text = title_lower + ' ' + snippet_lower
+            
+            # CRITICAL: Region matching (very high weight)
+            # If region is specified and NOT "Global", it MUST be mentioned
+            if region != 'Global':
+                region_in_title = region_lower in title_lower
+                region_in_snippet = region_lower in snippet_lower
+                
+                if region_in_title:
+                    score += 15  # Very high score for region in title
+                elif region_in_snippet:
+                    score += 10  # High score for region in snippet
+                else:
+                    # PENALTY: If region not mentioned at all, heavily penalize
+                    score -= 15  # This will push non-regional results to the bottom
             
             # Product mention in title (high weight)
             if product in title_lower:
                 score += 10
             # Product mention in snippet
             if product in snippet_lower:
-                score += 5
-            
-            # Region mention in title (high weight)
-            if region_lower in title_lower:
-                score += 10
-            # Region mention in snippet
-            if region_lower in snippet_lower:
                 score += 5
             
             # Keywords indicating supplier/manufacturer
@@ -371,12 +420,12 @@ class IntelligentSearchEngine:
             # B2B indicators
             b2b_keywords = ['b2b', 'wholesale', 'trade', 'directory', 'list']
             for keyword in b2b_keywords:
-                if keyword in title_lower or keyword in snippet_lower:
+                if keyword in combined_text:
                     score += 2
             
             result['relevance_score'] = score
         
-        # Sort by relevance score
+        # Sort by relevance score (highest first)
         return sorted(results, key=lambda x: x.get('relevance_score', 0), reverse=True)
 
     def _extract_supplier_info(

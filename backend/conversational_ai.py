@@ -19,10 +19,12 @@ from backend.engines.data_loader import DataLoader
 from backend.engines.rule_engine import RuleEngine
 from backend.engines.scenario_detector import ScenarioDetector
 from backend.engines.recommendation_generator import RecommendationGenerator
-from backend.engines.llm_engine import LLMEngine, LLMProvider
+from backend.engines.llm_engine import LLMEngine
 from backend.engines.rag_engine import RAGEngine
 from backend.engines.vector_store_manager import VectorStoreManager
 from backend.engines.intelligent_search_engine import IntelligentSearchEngine
+from backend.engines.semantic_query_analyzer import SemanticQueryAnalyzer
+from backend.conversation_memory import ConversationMemory
 import json
 
 
@@ -30,9 +32,10 @@ class ConversationalAI:
     """
     Real-time conversational AI that answers questions by fetching from data corpus
     Enhanced with RAG for knowledge base queries and web search for real-time data
+    Uses OpenAI for LLM and embeddings
     """
 
-    def __init__(self, enable_llm=True, enable_rag=True, enable_web_search=True, llm_provider="openai"):
+    def __init__(self, enable_llm=True, enable_rag=True, enable_web_search=True):
         """Initialize the conversational AI with full capabilities"""
         print(" Initializing Conversational AI...")
         
@@ -42,42 +45,31 @@ class ConversationalAI:
         self.scenario_detector = ScenarioDetector()
         self.recommendation_generator = RecommendationGenerator()
         
-        # Load LLM if enabled
+        # Load LLM if enabled (OpenAI only)
         self.enable_llm = enable_llm
         if enable_llm:
-            provider = LLMProvider.OPENAI if llm_provider.lower() == "openai" else LLMProvider.GEMINI
-            self.llm_engine = LLMEngine(provider=provider)
+            self.llm_engine = LLMEngine()
         else:
             self.llm_engine = None
         
-        # Load RAG if enabled
+        # Load RAG if enabled (OpenAI only)
         self.enable_rag = enable_rag
         if enable_rag:
             try:
-                # Use provider-specific directories and collection names
-                if llm_provider.lower() == "google":
-                    persist_dir = "./data/vector_db_gemini"
-                    collection = "procurement_docs_gemini"
-                    provider = "google"
-                else:
-                    persist_dir = "./data/vector_db"
-                    collection = "procurement_docs"
-                    provider = "openai"
-                
                 self.vector_store = VectorStoreManager(
-                    persist_directory=persist_dir,
-                    collection_name=collection,
-                    provider=provider
+                    persist_directory="./data/vector_db",
+                    collection_name="procurement_docs",
+                    provider="openai"
                 )
                 
                 if self.vector_store.load_collection():
                     self.rag_engine = RAGEngine(
                         vector_store_manager=self.vector_store,
-                        provider=provider
+                        provider="openai"
                     )
-                    print(f" RAG engine loaded ({provider})")
+                    print(f" RAG engine loaded (OpenAI)")
                 else:
-                    print(f"  RAG: Vector store not found for {provider}")
+                    print(f"  RAG: Vector store not found")
                     self.rag_engine = None
             except Exception as e:
                 print(f"  RAG initialization failed: {e}")
@@ -97,6 +89,14 @@ class ConversationalAI:
         else:
             self.web_search = None
         
+        # Initialize semantic query analyzer for advanced understanding
+        try:
+            self.semantic_analyzer = SemanticQueryAnalyzer(enable_llm=enable_llm)
+            print(" Semantic query analyzer enabled")
+        except Exception as e:
+            print(f"  Semantic analyzer initialization failed: {e}")
+            self.semantic_analyzer = None
+        
         # Pre-load data
         self.spend_data = self.data_loader.load_spend_data()
         self.contracts = self.data_loader.load_supplier_contracts()
@@ -108,144 +108,358 @@ class ConversationalAI:
         # Pre-detect scenario
         self.scenario = self.scenario_detector.detect_scenario("Rice Bran Oil", self.spend_data)
         
+        # Initialize conversation memory
+        self.memory = ConversationMemory(max_history=100)
+        
         print(" AI Ready! Ask me anything about your procurement data.\n")
 
     def answer_question(self, question: str) -> str:
         """
         Answer a question by intelligently routing to appropriate data source
+        WITH FULL TRACEABILITY AND CONVERSATION MEMORY
+        
+        ENHANCED WITH SEMANTIC UNDERSTANDING:
+        - Uses LLM to deeply understand query intent
+        - Extracts entities (products, regions, metrics, etc.)
+        - Generates optimized sub-queries for each engine
+        - Routes intelligently based on query type
+        
         PRIORITY: YOUR Data → YOUR Policies (RAG) → Web Search → LLM
         
         Args:
-            question: User's question
+            question: User's natural language query (in ANY form!)
             
         Returns:
-            AI-generated answer from YOUR data/policies first
+            AI-generated answer from YOUR data/policies first, with full traceability
         """
         q_lower = question.lower()
         
-        # ========== CONTEXT-AWARE PARSING (Use Case Understanding) ==========
-        # Extract actual procurement need from use case descriptions
+        # ========== SPECIAL COMMANDS FOR MEMORY/TRACEABILITY ==========
         
-        # Use case → Material mapping
-        use_case_materials = {
-            'car': ['aluminum', 'steel', 'plastics', 'rubber', 'electronics'],
-            'automobile': ['aluminum', 'steel', 'plastics', 'rubber'],
-            'vehicle': ['aluminum', 'steel', 'plastics'],
-            'data center': ['servers', 'network equipment', 'cooling systems'],
-            'building': ['construction materials', 'steel', 'concrete', 'lumber'],
-            'construction': ['construction materials', 'steel', 'concrete'],
-            'hospital': ['medical devices', 'pharmaceuticals', 'medical supplies'],
-            'clinic': ['medical devices', 'pharmaceuticals'],
-            'software': ['cloud services', 'saas', 'software licenses'],
-            'app': ['cloud services', 'saas'],
-            'website': ['cloud services', 'hosting'],
-            'manufacturing': ['raw materials', 'equipment', 'machinery'],
-            'factory': ['equipment', 'machinery', 'raw materials']
-        }
+        # Show conversation history
+        if q_lower in ['history', 'show history', 'conversation history']:
+            return self.memory.get_conversation_summary()
         
-        # Check if question contains use case context
-        detected_materials = []
-        for use_case, materials in use_case_materials.items():
-            if use_case in q_lower:
-                detected_materials.extend(materials)
-        
-        # If materials detected from use case, search for those suppliers
-        if detected_materials and ('supplier' in q_lower or 'need' in q_lower or 'looking for' in q_lower or 'want' in q_lower):
-            # Use web search for finding suppliers based on use case
-            if self.enable_web_search and self.web_search:
-                # Enhance query with detected materials
-                enhanced_query = f"Find suppliers for {', '.join(set(detected_materials[:3]))} for {question}"
-                return self._answer_with_web_search(enhanced_query)
+        # Show traceability report
+        if q_lower.startswith('trace'):
+            parts = q_lower.split()
+            if len(parts) > 1 and parts[1].isdigit():
+                turn_id = int(parts[1])
+                return self.memory.get_traceability_report(turn_id)
             else:
-                # Search in our data for matching suppliers
-                return self._answer_about_suppliers_by_category(detected_materials)
+                return self.memory.get_traceability_report()
         
-        # ========== PRIORITY 1: YOUR DATA (CSV Files) ==========
+        # Show summary
+        if q_lower in ['summary', 'show summary']:
+            return self.memory.get_conversation_summary()
         
-        # 1. RISK ANALYSIS - From YOUR data
-        if any(word in q_lower for word in ['risk', 'risks', 'risky', 'danger', 'threat', 'vulnerability', 'exposure']):
-            return self._answer_about_risks()
+        # ========== SEMANTIC QUERY ANALYSIS (NEW!) ==========
         
-        # 2. SUPPLIER/VENDOR QUERIES - From YOUR data OR web search
-        elif any(word in q_lower for word in ['supplier', 'suppliers', 'vendor', 'vendors', 'provider', 'contractor']):
-            # Detect if user is asking about specific materials/categories
-            materials_keywords = ['steel', 'aluminum', 'plastic', 'rubber', 'concrete', 'lumber', 'oil', 
-                                'pharmaceutical', 'medical', 'it', 'software', 'cloud', 'hardware',
-                                'food', 'beverage', 'energy', 'construction', 'manufacturing']
-            
-            has_material = any(material in q_lower for material in materials_keywords)
-            has_location = any(loc in q_lower for loc in ['in ', 'from ', 'usa', 'india', 'china', 'europe', 'asia', 'america'])
-            is_search_query = any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest', 'new', 'looking for'])
-            
-            # Use web search if:
-            # 1. Explicitly asking to find/search, OR
-            # 2. Asking about specific material + location (e.g., "steel suppliers in USA")
-            # 3. Asking about specific material not in our current data
-            if (is_search_query or (has_material and has_location) or (has_material and 'who' in q_lower)):
-                if self.enable_web_search and self.web_search:
-                    return self._answer_with_web_search(question)
-            
-            # Otherwise, analyze YOUR existing suppliers
-            return self._answer_about_suppliers()
+        # Use semantic analyzer to understand the query deeply
+        analysis = None
+        if self.semantic_analyzer:
+            try:
+                # Get conversation context for better understanding
+                context = self.memory.get_recent_context(n_turns=3) if self.memory.conversation_history else None
+                
+                # Analyze the query
+                analysis = self.semantic_analyzer.analyze_query(question, context)
+                
+                # Show analysis in verbose mode (optional - can be disabled)
+                if False:  # Set to True for debugging
+                    print("\n" + self.semantic_analyzer.format_analysis_summary(analysis))
+                
+            except Exception as e:
+                print(f"Semantic analysis failed: {e}")
+                analysis = None
         
-        # 3. SPEND/COST ANALYSIS - From YOUR data
-        elif any(word in q_lower for word in ['spend', 'spending', 'cost', 'costs', 'expense', 'budget', 'price', 'pricing']):
-            return self._answer_about_spend()
-        
-        # 4. REGIONAL/GEOGRAPHIC ANALYSIS - From YOUR data
-        elif any(word in q_lower for word in ['region', 'regional', 'geography', 'geographic', 'location', 'country', 'continent']):
-            return self._answer_about_regions()
-        
-        # 5. CATEGORY/PRODUCT ANALYSIS - From YOUR data
-        elif any(word in q_lower for word in ['category', 'categories', 'product', 'products', 'item', 'commodity', 'service']):
-            return self._answer_about_categories()
-        
-        # 6. CONTRACT/AGREEMENT QUERIES - From YOUR data
-        elif any(word in q_lower for word in ['contract', 'agreement', 'terms', 'conditions', 'sla', 'payment terms']):
-            return self._answer_about_contracts()
-        
-        # ========== PRIORITY 2: YOUR POLICIES (RAG) ==========
-        
-        # 7. RULES/POLICY/COMPLIANCE - From YOUR policies via RAG
-        elif any(word in q_lower for word in ['rule', 'rules', 'policy', 'policies', 'compliance', 'regulation', 'guideline']):
-            # Try RAG first for policy questions
-            if self.enable_rag and self.rag_engine:
-                return self._answer_with_rag(question)
-            else:
-                return self._answer_about_rules()
-        
-        # 8. KNOWLEDGE BASE QUERIES - From YOUR documents via RAG
-        elif self.enable_rag and self.rag_engine and any(word in q_lower for word in ['what', 'how', 'why', 'explain', 'define', 'describe', 'criteria', 'requirement', 'standard', 'procedure', 'process']):
-            return self._answer_with_rag(question)
-        
-        # 9. RECOMMENDATIONS/ACTIONS - From YOUR data + rules
-        elif any(word in q_lower for word in ['action', 'actions', 'recommend', 'recommendation', 'suggest', 'advice', 'should']):
-            return self._answer_about_actions()
-        
-        # 10. ESG/SUSTAINABILITY - From YOUR data
-        elif any(word in q_lower for word in ['esg', 'sustainability', 'sustainable', 'environment', 'green', 'carbon', 'ethical']):
-            return self._answer_about_esg()
-        
-        # 11. TIMELINE/DELIVERY - From YOUR data
-        elif any(word in q_lower for word in ['timeline', 'delivery', 'lead time', 'schedule', 'deadline', 'when']):
-            return self._answer_about_timeline()
-        
-        # ========== PRIORITY 3: WEB SEARCH (Only for external market intelligence) ==========
-        
-        # 12. WEB SEARCH - ONLY for explicit "find/search" queries
-        elif self.enable_web_search and self.web_search and any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest', 'news', 'market', 'trend', 'forecast']):
-            return self._answer_with_web_search(question)
-        
-        # ========== PRIORITY 4: LLM (Only as last resort) ==========
-        
-        # 13. LLM - ONLY for complex questions not covered above
-        elif self.enable_llm and self.llm_engine:
-            # LLM still uses YOUR data as context
-            return self._answer_with_llm(question)
-        
-        # 14. FINAL FALLBACK
+        # Check for similar previous questions (topic switching support)
+        similar_turns = self.memory.find_similar_questions(question, threshold=0.6)
+        if similar_turns and len(similar_turns) > 0:
+            # User might be returning to a previous topic
+            last_similar = similar_turns[-1]
+            context_note = f"\n💡 *Note: This relates to your earlier question (Turn {last_similar.turn_id})*\n"
         else:
-            return self._answer_general()
+            context_note = ""
+        
+        # Initialize tracking variables
+        detected_intent = "general"
+        detected_category = None
+        detected_region = None
+        data_sources = []
+        answer = ""
+        
+        # ========== USE SEMANTIC ANALYSIS FOR INTELLIGENT ROUTING ==========
+        
+        if analysis and analysis.get('confidence', 0) > 0.7:
+            # High confidence in semantic analysis - use it!
+            detected_intent = analysis.get('primary_intent', 'general')
+            entities = analysis.get('entities', {})
+            routing = analysis.get('routing_strategy', {})
+            sub_queries = analysis.get('sub_queries', {})
+            
+            # Extract detected entities
+            if entities.get('product_category'):
+                detected_category = entities['product_category'][0] if entities['product_category'] else None
+            if entities.get('region'):
+                detected_region = entities['region'][0] if entities['region'] else None
+            
+            # Route based on semantic analysis
+            if detected_intent == 'data_analysis':
+                # Analyze structured data
+                if detected_category:
+                    answer = self._answer_about_spend(question)
+                    data_sources = ["spend_data.csv", f"Category: {detected_category}"]
+                elif any(word in q_lower for word in ['region', 'regional', 'geography']):
+                    answer = self._answer_about_regions()
+                    data_sources = ["spend_data.csv", "regional_summary"]
+                else:
+                    answer = self._answer_about_spend(question)
+                    data_sources = ["spend_data.csv"]
+            
+            elif detected_intent == 'knowledge_base':
+                # Query RAG knowledge base
+                if self.enable_rag and self.rag_engine:
+                    answer = self._answer_with_rag(sub_queries.get('rag_query', question))
+                    data_sources = ["RAG Knowledge Base", "procurement_docs vector store"]
+                else:
+                    answer = self._answer_about_rules()
+                    data_sources = ["rule_book.csv"]
+            
+            elif detected_intent == 'web_search':
+                # Use web search
+                if self.enable_web_search and self.web_search:
+                    search_query = sub_queries.get('web_search_query', question)
+                    answer = self._answer_with_web_search(search_query)
+                    data_sources = ["Web Search (Intelligent Search Engine)"]
+                else:
+                    answer = "Web search not available. Try asking about your existing data."
+                    data_sources = []
+            
+            elif detected_intent == 'recommendation':
+                # Generate recommendation
+                answer = self._answer_about_actions()
+                data_sources = ["recommendation_engine", "rule_results", "scenario_detector"]
+            
+            elif detected_intent == 'comparison':
+                # Compare suppliers/options
+                answer = self._answer_about_suppliers()
+                data_sources = ["spend_data.csv", "supplier_master.csv"]
+            
+            elif detected_intent == 'risk_assessment':
+                # Assess risks
+                answer = self._answer_about_risks()
+                data_sources = ["rule_results", "risk_register.csv", "spend_data.csv"]
+            
+            elif detected_intent == 'compliance_check':
+                # Check compliance
+                answer = self._answer_about_rules()
+                data_sources = ["rule_book.csv", "procurement_rulebook.csv"]
+            
+            else:
+                # Fall through to pattern-based routing
+                analysis = None
+        
+        # ========== FALLBACK: PATTERN-BASED ROUTING (Original Logic) ==========
+        
+        if not answer:  # If semantic routing didn't produce an answer
+            
+            # ========== CONTEXT-AWARE PARSING (Use Case Understanding) ==========
+            
+            # Use case → Material mapping
+            use_case_materials = {
+                'car': ['aluminum', 'steel', 'plastics', 'rubber', 'electronics'],
+                'automobile': ['aluminum', 'steel', 'plastics', 'rubber'],
+                'vehicle': ['aluminum', 'steel', 'plastics'],
+                'data center': ['servers', 'network equipment', 'cooling systems'],
+                'building': ['construction materials', 'steel', 'concrete', 'lumber'],
+                'construction': ['construction materials', 'steel', 'concrete'],
+                'hospital': ['medical devices', 'pharmaceuticals', 'medical supplies'],
+                'clinic': ['medical devices', 'pharmaceuticals'],
+                'software': ['cloud services', 'saas', 'software licenses'],
+                'app': ['cloud services', 'saas'],
+                'website': ['cloud services', 'hosting'],
+                'manufacturing': ['raw materials', 'equipment', 'machinery'],
+                'factory': ['equipment', 'machinery', 'raw materials']
+            }
+            
+            # Check if question contains use case context
+            detected_materials = []
+            for use_case, materials in use_case_materials.items():
+                if use_case in q_lower:
+                    detected_materials.extend(materials)
+            
+            # If materials detected from use case, search for those suppliers
+            if detected_materials and ('supplier' in q_lower or 'need' in q_lower or 'looking for' in q_lower or 'want' in q_lower):
+                detected_intent = "supplier_search_use_case"
+                # Use web search for finding suppliers based on use case
+                if self.enable_web_search and self.web_search:
+                    # Enhance query with detected materials
+                    enhanced_query = f"Find suppliers for {', '.join(set(detected_materials[:3]))} for {question}"
+                    answer = self._answer_with_web_search(enhanced_query)
+                    data_sources = ["Web Search (Intelligent Search Engine)"]
+                else:
+                    # Search in our data for matching suppliers
+                    answer = self._answer_about_suppliers_by_category(detected_materials)
+                    data_sources = ["spend_data.csv", "supplier_master.csv"]
+        
+            # ========== PRIORITY 1: YOUR DATA (CSV Files) ==========
+            
+            # 1. RISK ANALYSIS - From YOUR data
+            elif any(word in q_lower for word in ['risk', 'risks', 'risky', 'danger', 'threat', 'vulnerability', 'exposure']):
+                detected_intent = "risk_analysis"
+                answer = self._answer_about_risks()
+                data_sources = ["rule_results", "risk_register.csv", "spend_data.csv"]
+            
+            # 2. SUPPLIER/VENDOR QUERIES - From YOUR data OR web search
+            elif any(word in q_lower for word in ['supplier', 'suppliers', 'vendor', 'vendors', 'provider', 'contractor']):
+                detected_intent = "supplier_analysis"
+                # Detect if user is asking about specific materials/categories
+                materials_keywords = ['steel', 'aluminum', 'plastic', 'rubber', 'concrete', 'lumber', 'oil', 
+                                    'pharmaceutical', 'medical', 'it', 'software', 'cloud', 'hardware',
+                                    'food', 'beverage', 'energy', 'construction', 'manufacturing']
+                
+                has_material = any(material in q_lower for material in materials_keywords)
+                has_location = any(loc in q_lower for loc in ['in ', 'from ', 'usa', 'india', 'china', 'europe', 'asia', 'america', 'malaysia'])
+                is_search_query = any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest', 'new', 'looking for'])
+                
+                # Use web search if:
+                # 1. Explicitly asking to find/search, OR
+                # 2. Asking about specific material + location (e.g., "steel suppliers in USA")
+                # 3. Asking about specific material not in our current data
+                if (is_search_query or (has_material and has_location) or (has_material and 'who' in q_lower)):
+                    if self.enable_web_search and self.web_search:
+                        answer = self._answer_with_web_search(question)
+                        data_sources = ["Web Search (Intelligent Search Engine)"]
+                        detected_intent = "supplier_search_web"
+                    else:
+                        # Fallback to internal data if web search not enabled or failed
+                        answer = self._answer_about_suppliers()
+                        data_sources = ["spend_data.csv", "supplier_master.csv", "recommendation_engine"]
+                
+                # Otherwise, analyze YOUR existing suppliers
+                else:
+                    answer = self._answer_about_suppliers()
+                    data_sources = ["spend_data.csv", "supplier_master.csv", "recommendation_engine"]
+            
+            # 3. SPEND/COST ANALYSIS - From YOUR data
+            elif any(word in q_lower for word in ['spend', 'spending', 'cost', 'costs', 'expense', 'budget', 'price', 'pricing']):
+                detected_intent = "spend_analysis"
+                # Try to detect specific category in question
+                if 'Category' in self.spend_data.columns:
+                    categories = self.spend_data['Category'].unique()
+                    for category in categories:
+                        # Check if category name appears in question
+                        if category.lower() in q_lower:
+                            detected_category = category
+                            break
+                answer = self._answer_about_spend(question)
+                data_sources = ["spend_data.csv", "regional_summary"]
+                if detected_category:
+                    data_sources.append(f"spend_data.csv (filtered: {detected_category})")
+            
+            # 4. REGIONAL/GEOGRAPHIC ANALYSIS - From YOUR data
+            elif any(word in q_lower for word in ['region', 'regional', 'geography', 'geographic', 'location', 'country', 'continent']):
+                detected_intent = "regional_analysis"
+                answer = self._answer_about_regions()
+                data_sources = ["spend_data.csv", "regional_summary"]
+            
+            # 5. CATEGORY/PRODUCT ANALYSIS - From YOUR data
+            elif any(word in q_lower for word in ['category', 'categories', 'product', 'products', 'item', 'commodity', 'service']):
+                detected_intent = "category_analysis"
+                answer = self._answer_about_categories()
+                data_sources = ["spend_data.csv"]
+            
+            # 6. CONTRACT/AGREEMENT QUERIES - From YOUR data
+            elif any(word in q_lower for word in ['contract', 'agreement', 'terms', 'conditions', 'sla', 'payment terms']):
+                detected_intent = "contract_analysis"
+                answer = self._answer_about_contracts()
+                data_sources = ["supplier_contracts.csv"]
+            
+            # ========== PRIORITY 2: YOUR POLICIES (RAG) ==========
+            
+            # 7. RULES/POLICY/COMPLIANCE - From YOUR policies via RAG
+            elif any(word in q_lower for word in ['rule', 'rules', 'policy', 'policies', 'compliance', 'regulation', 'guideline']):
+                detected_intent = "policy_query"
+                # Try RAG first for policy questions
+                if self.enable_rag and self.rag_engine:
+                    answer = self._answer_with_rag(question)
+                    data_sources = ["RAG Knowledge Base", "procurement_docs vector store"]
+                else:
+                    answer = self._answer_about_rules()
+                    data_sources = ["rule_book.csv", "procurement_rulebook.csv"]
+            
+            # 8. KNOWLEDGE BASE QUERIES - From YOUR documents via RAG
+            elif self.enable_rag and self.rag_engine and any(word in q_lower for word in ['what', 'how', 'why', 'explain', 'define', 'describe', 'criteria', 'requirement', 'standard', 'procedure', 'process']):
+                detected_intent = "knowledge_query"
+                answer = self._answer_with_rag(question)
+                data_sources = ["RAG Knowledge Base", "procurement_docs vector store"]
+            
+            # 9. RECOMMENDATIONS/ACTIONS - From YOUR data + rules
+            elif any(word in q_lower for word in ['action', 'actions', 'recommend', 'recommendation', 'suggest', 'advice', 'should']):
+                detected_intent = "recommendation"
+                answer = self._answer_about_actions()
+                data_sources = ["recommendation_engine", "rule_results", "scenario_detector"]
+            
+            # 10. ESG/SUSTAINABILITY - From YOUR data
+            elif any(word in q_lower for word in ['esg', 'sustainability', 'sustainable', 'environment', 'green', 'carbon', 'ethical']):
+                detected_intent = "esg_analysis"
+                answer = self._answer_about_esg()
+                data_sources = ["supplier_contracts.csv (ESG scores)", "recommendation_engine"]
+            
+            # 11. TIMELINE/DELIVERY - From YOUR data
+            elif any(word in q_lower for word in ['timeline', 'delivery', 'lead time', 'schedule', 'deadline', 'when']):
+                detected_intent = "timeline_query"
+                answer = self._answer_about_timeline()
+                data_sources = ["recommendation_engine", "supplier_master.csv (lead times)"]
+            
+            # ========== PRIORITY 3: WEB SEARCH (Only for external market intelligence) ==========
+            
+            # 12. WEB SEARCH - ONLY for explicit "find/search" queries
+            elif self.enable_web_search and self.web_search and any(word in q_lower for word in ['find', 'search', 'top', 'best', 'latest', 'news', 'market', 'trend', 'forecast']):
+                detected_intent = "web_search"
+                answer = self._answer_with_web_search(question)
+                data_sources = ["Web Search (Intelligent Search Engine)"]
+            
+            # ========== PRIORITY 4: LLM (Only as last resort) ==========
+            
+            # 13. LLM - ONLY for complex questions not covered above
+            elif self.enable_llm and self.llm_engine:
+                detected_intent = "llm_reasoning"
+                # LLM still uses YOUR data as context
+                answer = self._answer_with_llm(question)
+                data_sources = ["LLM (GPT-4)", "spend_data.csv (context)", "rule_results (context)"]
+            
+            # 14. FINAL FALLBACK
+            else:
+                detected_intent = "general_help"
+                answer = self._answer_general()
+                data_sources = []
+        
+        # ========== SAVE TO MEMORY WITH FULL TRACEABILITY ==========
+        
+        self.memory.add_turn(
+            user_question=question,
+            ai_answer=answer,
+            data_sources=data_sources,
+            detected_intent=detected_intent,
+            detected_category=detected_category,
+            detected_region=detected_region,
+            metadata={
+                'timestamp': self.memory.conversation_history[-1].timestamp.isoformat() if self.memory.conversation_history else None,
+                'has_similar_questions': len(similar_turns) > 0
+            }
+        )
+        
+        # Add context note if returning to previous topic
+        if context_note:
+            answer = context_note + answer
+        
+        # Add traceability footer
+        if data_sources:
+            answer += f"\n\n📊 *Data Sources: {', '.join(data_sources)}*"
+        
+        return answer
 
     def _answer_about_risks(self) -> str:
         """Answer questions about risks"""
@@ -290,8 +504,59 @@ class ConversationalAI:
         
         return answer
 
-    def _answer_about_spend(self) -> str:
-        """Answer questions about spend"""
+    def _answer_about_spend(self, question: str = "") -> str:
+        """Answer questions about spend - category-aware"""
+        q_lower = question.lower()
+        
+        # Try to detect specific category in question
+        detected_category = None
+        if 'Category' in self.spend_data.columns:
+            categories = self.spend_data['Category'].unique()
+            for category in categories:
+                # Check if category name appears in question
+                if category.lower() in q_lower:
+                    detected_category = category
+                    break
+        
+        # If specific category detected, show category-specific spend
+        if detected_category:
+            category_data = self.spend_data[self.spend_data['Category'] == detected_category]
+            
+            if category_data.empty:
+                return f" No spend data found for category: {detected_category}"
+            
+            total_category_spend = category_data['Spend_USD'].sum()
+            total_overall_spend = self.spend_data['Spend_USD'].sum()
+            category_pct = (total_category_spend / total_overall_spend * 100)
+            
+            answer = f" **SPEND ANALYSIS: {detected_category}**\n\n"
+            answer += f"**Total Spend:** ${total_category_spend:,.0f} ({category_pct:.1f}% of total)\n\n"
+            
+            # Regional breakdown for this category
+            if 'Supplier_Region' in category_data.columns:
+                regional_spend = category_data.groupby('Supplier_Region')['Spend_USD'].sum().sort_values(ascending=False)
+                answer += "**Regional Breakdown:**\n"
+                for region, spend in regional_spend.items():
+                    pct = (spend / total_category_spend * 100)
+                    answer += f"- {region}: ${spend:,.0f} ({pct:.1f}%)\n"
+                answer += "\n"
+            
+            # Top suppliers for this category
+            if 'Supplier_Name' in category_data.columns:
+                supplier_spend = category_data.groupby('Supplier_Name')['Spend_USD'].sum().sort_values(ascending=False).head(5)
+                answer += "**Top Suppliers:**\n"
+                for supplier, spend in supplier_spend.items():
+                    pct = (spend / total_category_spend * 100)
+                    answer += f"- {supplier}: ${spend:,.0f} ({pct:.1f}%)\n"
+                answer += "\n"
+            
+            # Transaction details
+            answer += f"**Transactions:** {len(category_data)}\n"
+            answer += f"**Average Transaction:** ${category_data['Spend_USD'].mean():,.0f}\n"
+            
+            return answer
+        
+        # Otherwise, show overall spend summary
         total_spend = self.regional_summary['total_spend']
         
         answer = " **SPEND ANALYSIS:**\n\n"
@@ -480,10 +745,7 @@ Provide a clear, specific answer with numbers and facts from the data.
 """
         
         try:
-            if self.llm_engine.provider == LLMProvider.OPENAI:
-                return self.llm_engine._generate_openai(prompt)
-            else:
-                return self.llm_engine._generate_gemini(prompt)
+            return self.llm_engine._generate_openai(prompt)
         except Exception as e:
             return f"LLM Error: {e}\n\nFalling back to rule-based answer..."
     
@@ -531,7 +793,7 @@ Provide a clear, specific answer with numbers and facts from the data.
 ** Data Analysis:**
 - Risks and issues
 - Supplier recommendations
-- Spend analysis
+- Spend analysis (category-aware!)
 - Regional distribution
 - Business rules
 - Recommended actions
@@ -546,16 +808,23 @@ Provide a clear, specific answer with numbers and facts from the data.
 - Quality standards
 
 ** Live Market Intelligence:**
-- Find suppliers
+- Find suppliers (any country!)
 - Market trends
 - Industry news
 - Competitive intelligence
 
+** Memory & Traceability:**
+- Type 'history' to see conversation summary
+- Type 'trace' to see full traceability report
+- Type 'summary' for session overview
+- All answers show data sources used
+
 Try asking:
 - "What are the risks?"
-- "What is our supplier selection policy?"
-- "Find top Rice Bran Oil suppliers in India"
+- "How much did we spend on Rice Bran Oil?"
+- "Find top steel suppliers in Malaysia"
 - "Show me the spend breakdown"
+- "history" (to see what we've discussed)
 """
         return capabilities
 

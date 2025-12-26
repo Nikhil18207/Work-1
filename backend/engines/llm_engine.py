@@ -1,12 +1,10 @@
 """
 LLM Engine
-Integrates Large Language Models for natural language reasoning and explanations
-Supports OpenAI GPT-4 and Google Gemini
+Integrates OpenAI GPT-4 for natural language reasoning and explanations
 """
 
 import os
 from typing import Dict, List, Any, Optional
-from enum import Enum
 import json
 
 try:
@@ -17,71 +15,36 @@ except ImportError:
     from recommendation_generator import Recommendation
 
 
-class LLMProvider(Enum):
-    """Supported LLM providers"""
-    OPENAI = "openai"
-    GEMINI = "gemini"
-
-
 class LLMEngine:
     """
     LLM Engine for natural language reasoning and explanations
-    Implements context-aware recommendations with explainability
+    Uses OpenAI GPT-4 for context-aware recommendations with explainability
     """
 
     def __init__(
         self,
-        provider: LLMProvider = LLMProvider.OPENAI,
         api_key: Optional[str] = None,
         model: Optional[str] = None
     ):
         """
-        Initialize LLM Engine
+        Initialize LLM Engine with OpenAI
         
         Args:
-            provider: LLM provider (OpenAI or Gemini)
-            api_key: API key (if None, reads from environment)
-            model: Model name (if None, uses default)
+            api_key: OpenAI API key (if None, reads from environment)
+            model: Model name (if None, uses gpt-4o)
         """
-        self.provider = provider
-        self.api_key = api_key or self._get_api_key()
-        self.model = model or self._get_default_model()
+        self.api_key = api_key or os.getenv('OPENAI_API_KEY', '')
+        self.model = model or "gpt-4o"
         self.client = self._initialize_client()
 
-    def _get_api_key(self) -> str:
-        """Get API key from environment"""
-        if self.provider == LLMProvider.OPENAI:
-            return os.getenv('OPENAI_API_KEY', '')
-        elif self.provider == LLMProvider.GEMINI:
-            return os.getenv('GEMINI_API_KEY', '')
-        return ''
-
-    def _get_default_model(self) -> str:
-        """Get default model for provider"""
-        if self.provider == LLMProvider.OPENAI:
-            return "gpt-4"
-        elif self.provider == LLMProvider.GEMINI:
-            return "gemini-pro"
-        return ""
-
     def _initialize_client(self):
-        """Initialize LLM client"""
-        if self.provider == LLMProvider.OPENAI:
-            try:
-                from openai import OpenAI
-                return OpenAI(api_key=self.api_key)
-            except ImportError:
-                print(" OpenAI not installed. Run: pip install openai")
-                return None
-        elif self.provider == LLMProvider.GEMINI:
-            try:
-                import google.generativeai as genai
-                genai.configure(api_key=self.api_key)
-                return genai.GenerativeModel(self.model)
-            except ImportError:
-                print(" Google Generative AI not installed. Run: pip install google-generativeai")
-                return None
-        return None
+        """Initialize OpenAI client"""
+        try:
+            from openai import OpenAI
+            return OpenAI(api_key=self.api_key)
+        except ImportError:
+            print(" OpenAI not installed. Run: pip install openai")
+            return None
 
     def generate_explanation(
         self,
@@ -108,10 +71,7 @@ class LLMEngine:
             return self._generate_fallback_explanation(scenario, recommendation)
         
         try:
-            if self.provider == LLMProvider.OPENAI:
-                return self._generate_openai(prompt)
-            elif self.provider == LLMProvider.GEMINI:
-                return self._generate_gemini(prompt)
+            return self._generate_openai(prompt)
         except Exception as e:
             print(f" LLM generation failed: {e}")
             return self._generate_fallback_explanation(scenario, recommendation)
@@ -241,11 +201,6 @@ ALWAYS:
             max_tokens=2000
         )
         return response.choices[0].message.content
-
-    def _generate_gemini(self, prompt: str) -> str:
-        """Generate with Gemini"""
-        response = self.client.generate_content(prompt)
-        return response.text
 
     def _generate_fallback_explanation(
         self,
@@ -384,10 +339,7 @@ Provide a clear, specific answer based on the recommendation data.
 """
         
         try:
-            if self.provider == LLMProvider.OPENAI:
-                return self._generate_openai(prompt)
-            elif self.provider == LLMProvider.GEMINI:
-                return self._generate_gemini(prompt)
+            return self._generate_openai(prompt)
         except Exception as e:
             return f"Unable to answer: {e}"
 
@@ -406,7 +358,7 @@ if __name__ == "__main__":
     recommendation = generator.generate_recommendation(scenario)
     
     # Initialize LLM engine (will use fallback if no API key)
-    llm = LLMEngine(provider=LLMProvider.OPENAI)
+    llm = LLMEngine()
     
     print("=" * 80)
     print("LLM-ENHANCED RECOMMENDATION")

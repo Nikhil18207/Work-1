@@ -22,7 +22,7 @@ from backend.engines.data_loader import DataLoader
 from backend.engines.rule_engine import RuleEngine
 from backend.engines.scenario_detector import ScenarioDetector
 from backend.engines.recommendation_generator import RecommendationGenerator
-from backend.engines.llm_engine import LLMEngine, LLMProvider
+from backend.engines.llm_engine import LLMEngine
 from backend.engines.web_search_engine import WebSearchEngine
 from backend.engines.rag_engine import RAGEngine
 from backend.engines.vector_store_manager import VectorStoreManager
@@ -31,23 +31,21 @@ from backend.engines.vector_store_manager import VectorStoreManager
 class LLMRecommendationSystem:
     """
     LLM-Enhanced Supply Chain Recommendation System
-    Combines rule-based logic with LLM natural language reasoning
+    Combines rule-based logic with OpenAI GPT-4 natural language reasoning
     """
 
     def __init__(
         self,
-        llm_provider: str = "openai",
         api_key: Optional[str] = None,
         enable_llm: bool = True,
         enable_web_search: bool = True,
         enable_rag: bool = True
     ):
         """
-        Initialize LLM-enhanced system
+        Initialize LLM-enhanced system with OpenAI
         
         Args:
-            llm_provider: "openai" or "gemini"
-            api_key: API key (if None, reads from environment)
+            api_key: OpenAI API key (if None, reads from environment)
             enable_llm: Whether to enable LLM features
             enable_web_search: Whether to enable real-time web search
             enable_rag: Whether to enable RAG (Retrieval Augmented Generation)
@@ -58,11 +56,10 @@ class LLMRecommendationSystem:
         self.scenario_detector = ScenarioDetector()
         self.recommendation_generator = RecommendationGenerator()
         
-        # Initialize LLM engine
+        # Initialize LLM engine (OpenAI only)
         self.enable_llm = enable_llm
         if self.enable_llm:
-            provider = LLMProvider.OPENAI if llm_provider.lower() == "openai" else LLMProvider.GEMINI
-            self.llm_engine = LLMEngine(provider=provider, api_key=api_key)
+            self.llm_engine = LLMEngine(api_key=api_key)
         else:
             self.llm_engine = None
         
@@ -73,37 +70,27 @@ class LLMRecommendationSystem:
         else:
             self.web_search_engine = None
         
-        # Initialize RAG engine
+        # Initialize RAG engine (OpenAI only)
         self.enable_rag = enable_rag
         if self.enable_rag:
             try:
-                # Use provider-specific directories and collection names
-                if llm_provider.lower() == "google" or llm_provider.lower() == "gemini":
-                    persist_dir = "./data/vector_db_gemini"
-                    collection = "procurement_docs_gemini"
-                    provider = "google"
-                else:
-                    persist_dir = "./data/vector_db"
-                    collection = "procurement_docs"
-                    provider = "openai"
-                
                 # Load vector store
                 self.vector_store = VectorStoreManager(
-                    persist_directory=persist_dir,
-                    collection_name=collection,
-                    provider=provider
+                    persist_directory="./data/vector_db",
+                    collection_name="procurement_docs",
+                    provider="openai"
                 )
                 
                 # Try to load existing collection
                 if self.vector_store.load_collection():
                     self.rag_engine = RAGEngine(
                         vector_store_manager=self.vector_store,
-                        provider=provider,
+                        provider="openai",
                         api_key=api_key
                     )
-                    print(f" RAG engine initialized ({provider})")
+                    print(f" RAG engine initialized (OpenAI)")
                 else:
-                    print(f"  RAG: Vector store not found for {provider}")
+                    print(f"  RAG: Vector store not found")
                     self.rag_engine = None
             except Exception as e:
                 print(f"  RAG initialization failed: {e}")
@@ -233,7 +220,6 @@ if __name__ == "__main__":
     
     # Initialize system (will use fallback if no API key)
     system = LLMRecommendationSystem(
-        llm_provider="openai",
         enable_llm=True
     )
     
