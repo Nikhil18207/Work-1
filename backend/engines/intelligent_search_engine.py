@@ -146,29 +146,43 @@ class IntelligentSearchEngine:
         # Pattern 1: "in <Region>" - most common pattern
         # Pattern 2: "from <Region>"
         # Pattern 3: "at <Region>"
-        region_patterns = [
-            r'\bin\s+([A-Za-z][A-Za-z\s,\-]+?)(?:\s*$|\s+(?:for|of|with|and|or)(?:\s|$))',  # "in Malaysia" at end or before prepositions
-            r'\bfrom\s+([A-Za-z][A-Za-z\s,\-]+?)(?:\s*$|\s+(?:for|of|with|and|or)(?:\s|$))',  # "from India"
-            r'\bat\s+([A-Za-z][A-Za-z\s,\-]+?)(?:\s*$|\s+(?:for|of|with|and|or)(?:\s|$))',  # "at Mumbai"
-        ]
         
-        for pattern in region_patterns:
-            match = re.search(pattern, query, re.IGNORECASE)
-            if match:
-                location = match.group(1).strip()
-                # Clean up common trailing words and punctuation
-                location = re.sub(r'\s+(for|of|with|and|or)$', '', location, flags=re.IGNORECASE)
-                location = re.sub(r'[,.\s]+$', '', location)  # Remove trailing punctuation
-                
-                # Capitalize properly
-                location = ' '.join(word.capitalize() for word in location.split())
-                
-                if len(location) > 2:  # Valid region name should be at least 3 characters
-                    return {
-                        'country': location,
-                        'specific_location': location,
-                        'found': True
-                    }
+        # First, try to find "in <location>" pattern - most reliable
+        in_pattern = r'\bin\s+([A-Z][A-Za-z\s,\-]+?)(?:\s*$|\s*[.!?])'
+        match = re.search(in_pattern, query, re.IGNORECASE)
+        
+        if match:
+            location = match.group(1).strip()
+            # Clean up - remove common trailing words that aren't part of location
+            location = re.sub(r'\s+(for|of|with|and|or|the|a|an)\s*$', '', location, flags=re.IGNORECASE)
+            location = location.strip()
+            
+            # Capitalize properly
+            location = ' '.join(word.capitalize() for word in location.split())
+            
+            if len(location) > 2:  # Valid region name should be at least 3 characters
+                return {
+                    'country': location,
+                    'specific_location': location,
+                    'found': True
+                }
+        
+        # Try "from <location>" pattern
+        from_pattern = r'\bfrom\s+([A-Z][A-Za-z\s,\-]+?)(?:\s*$|\s*[.!?])'
+        match = re.search(from_pattern, query, re.IGNORECASE)
+        
+        if match:
+            location = match.group(1).strip()
+            location = re.sub(r'\s+(for|of|with|and|or|the|a|an)\s*$', '', location, flags=re.IGNORECASE)
+            location = location.strip()
+            location = ' '.join(word.capitalize() for word in location.split())
+            
+            if len(location) > 2:
+                return {
+                    'country': location,
+                    'specific_location': location,
+                    'found': True
+                }
         
         return {'country': 'Global', 'specific_location': None, 'found': False}
 
