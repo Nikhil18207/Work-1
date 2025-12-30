@@ -1,0 +1,94 @@
+﻿======================================================================
+RULE VIOLATIONS CHECK - ALL INDUSTRIES
+======================================================================
+
+Rice Bran Oil (C001):
+  Total Spend: $2,208,600
+  Violations: 3
+  Warnings: 0
+  Compliance Rate: 25.0%
+  Status: CRITICAL
+  Rule Violations:
+    - R001: Regional Concentration
+    - R003: Single Supplier Dependency
+    - R023: Supplier Concentration Index
+
+IT Hardware (C002):
+  Total Spend: $5,529,600
+  Violations: 2
+  Warnings: 0
+  Compliance Rate: 50.0%
+  Status: CRITICAL
+  Rule Violations:
+    - R001: Regional Concentration
+    - R023: Supplier Concentration Index
+
+Raw Materials - Steel (C005):
+  Total Spend: $13,068,000
+  Violations: 2
+  Warnings: 0
+  Compliance Rate: 50.0%
+  Status: CRITICAL
+  Rule Violations:
+    - R001: Regional Concentration
+    - R023: Supplier Concentration Index
+
+Pharmaceuticals (C007):
+  Total Spend: $22,874,400
+  Violations: 2
+  Warnings: 0
+  Compliance Rate: 50.0%
+  Status: CRITICAL
+  Rule Violations:
+    - R001: Regional Concentration
+    - R023: Supplier Concentration Index
+
+Marketing Services (C009):
+  Total Spend: $3,963,600
+  Violations: 2
+  Warnings: 1
+  Compliance Rate: 25.0%
+  Status: CRITICAL
+  Rule Violations:
+    - R001: Regional Concentration
+    - R023: Supplier Concentration Index
+
+Logistics Services (C012):
+  Total Spend: $4,244,400
+  Violations: 2
+  Warnings: 1
+  Compliance Rate: 25.0%
+  Status: CRITICAL
+  Rule Violations:
+    - R001: Regional Concentration
+    - R023: Supplier Concentration Index
+
+======================================================================
+GENERATING BRIEFS FOR ALL INDUSTRIES...
+======================================================================
+
+Rice Bran Oil: Generated
+  incumbent_docx: outputs\briefs\Incumbent_Concentration_Rice_Bran_Oil_20251231_021226.docx
+  regional_docx: outputs\briefs\Regional_Concentration_Rice_Bran_Oil_20251231_021227.docx
+
+IT Hardware: Generated
+  incumbent_docx: outputs\briefs\Incumbent_Concentration_IT_Hardware_20251231_021227.docx
+  regional_docx: outputs\briefs\Regional_Concentration_IT_Hardware_20251231_021227.docx
+
+Raw Materials - Steel: Generated
+  incumbent_docx: outputs\briefs\Incumbent_Concentration_Raw_Materials_-_Steel_20251231_021227.docx
+  regional_docx: outputs\briefs\Regional_Concentration_Raw_Materials_-_Steel_20251231_021227.docx
+
+Pharmaceuticals: Generated
+  incumbent_docx: outputs\briefs\Incumbent_Concentration_Pharmaceuticals_20251231_021227.docx
+  regional_docx: outputs\briefs\Regional_Concentration_Pharmaceuticals_20251231_021227.docx
+
+Marketing Services: Generated
+  incumbent_docx: outputs\briefs\Incumbent_Concentration_Marketing_Services_20251231_021227.docx
+  regional_docx: outputs\briefs\Regional_Concentration_Marketing_Services_20251231_021227.docx
+
+Logistics Services: Generated
+  incumbent_docx: outputs\briefs\Incumbent_Concentration_Logistics_Services_20251231_021227.docx
+  regional_docx: outputs\briefs\Regional_Concentration_Logistics_Services_20251231_021227.docx
+
+DONE!

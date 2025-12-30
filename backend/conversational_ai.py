@@ -25,6 +25,7 @@ from backend.engines.vector_store_manager import VectorStoreManager
 from backend.engines.intelligent_search_engine import IntelligentSearchEngine
 from backend.engines.semantic_query_analyzer import SemanticQueryAnalyzer
 from backend.conversation_memory import ConversationMemory
+from backend.agents.supplier_coaching_orchestrator import SupplierCoachingOrchestrator
 import json
 
 
@@ -105,11 +106,20 @@ class ConversationalAI:
         # Pre-evaluate rules
         self.rule_results = self.rule_engine.evaluate_all_rules(self.spend_data)
         
-        # Pre-detect scenario
-        self.scenario = self.scenario_detector.detect_scenario("Rice Bran Oil", self.spend_data)
+        # Pre-detect scenario - analyze overall company data by default
+        # Don't default to any specific category
+        self.scenario = None  # Will be detected based on user's question
         
         # Initialize conversation memory
         self.memory = ConversationMemory(max_history=100)
+        
+        # Initialize Personalized Supplier Coaching System
+        try:
+            self.coaching_orchestrator = SupplierCoachingOrchestrator()
+            print("✓ Personalized Coaching System enabled")
+        except Exception as e:
+            print(f"  Coaching system initialization failed: {e}")
+            self.coaching_orchestrator = None
         
         print(" AI Ready! Ask me anything about your procurement data.\n")
 
@@ -602,7 +612,108 @@ class ConversationalAI:
         return answer
 
     def _answer_about_rules(self) -> str:
-        """Answer questions about rules"""
+        """Answer questions about rules with PERSONALIZED COACHING"""
+        # Use the new Personalized Coaching System if available
+        if self.coaching_orchestrator:
+            try:
+                # Detect category from context or use company-wide analysis
+                category = None  # Default to company-wide
+                
+                # Check if there's a recent category mentioned in conversation
+                if self.memory.conversation_history:
+                    recent_context = self.memory.get_recent_context(n_turns=3)
+                    # Try to extract category from recent context
+                    # For now, default to None (company-wide)
+                
+                # Run comprehensive coaching analysis
+                coaching_input = {
+                    'client_id': 'C001',  # Using actual client ID from data
+                    'coaching_mode': 'focused',
+                    'focus_areas': ['concentration', 'quality'],
+                    'tuning_mode': 'balanced'
+                }
+                
+                # Only add category if explicitly detected
+                if category:
+                    coaching_input['category'] = category
+                
+                result = self.coaching_orchestrator.execute(coaching_input)
+                
+                if result['success']:
+                    data = result['data']
+                    
+                    # Build personalized response
+                    answer = "🎯 **PERSONALIZED SUPPLIER COACHING:**\n\n"
+                    
+                    # Current State
+                    exec_summary = data['executive_summary']
+                    current_state = exec_summary['current_state']
+                    
+                    answer += "**📊 CURRENT SITUATION:**\n"
+                    answer += f"- Total Spend: {current_state['total_spend_formatted']}\n"
+                    answer += f"- Active Suppliers: {current_state['supplier_count']}\n"
+                    answer += f"- Risk Level: {current_state['risk_level']}\n\n"
+                    
+                    # Key Issues with Specific Details
+                    key_issues = exec_summary['key_issues']
+                    if key_issues['violations'] > 0 or key_issues['warnings'] > 0:
+                        answer += "**⚠️ ISSUES DETECTED:**\n"
+                        answer += f"- Violations: {key_issues['violations']}\n"
+                        answer += f"- Warnings: {key_issues['warnings']}\n"
+                        
+                        for i, area in enumerate(key_issues['critical_areas'][:3], 1):
+                            answer += f"  {i}. {area}\n"
+                        answer += "\n"
+                    
+                    # Personalized Recommendations with Reasoning
+                    recommendations = data['branches'].get('personalized_recommendations', {})
+                    rec_list = recommendations.get('personalized_recommendations', [])
+                    
+                    if rec_list:
+                        answer += "**💡 PERSONALIZED RECOMMENDATIONS:**\n\n"
+                        
+                        for i, rec in enumerate(rec_list[:3], 1):
+                            answer += f"**{i}. [{rec['priority']}] {rec['title']}**\n"
+                            answer += f"   📍 Current: {rec['current_situation']}\n"
+                            answer += f"   🎯 Target: {rec['target_state']}\n"
+                            answer += f"   💰 Expected Outcome: {rec['expected_outcome']}\n"
+                            
+                            # Show specific actions with reasoning
+                            if rec.get('specific_actions'):
+                                answer += f"   \n   **Action Plan:**\n"
+                                for step in rec['specific_actions'][:2]:
+                                    answer += f"   Step {step['step']}: {step['action']}\n"
+                                    answer += f"   └─ Timeline: {step['timeline']} | Owner: {step['owner']}\n"
+                            
+                            # Show reasoning/rationale
+                            if rec.get('rationale'):
+                                answer += f"   \n   **Why This Matters:** {rec['rationale']}\n"
+                            
+                            answer += "\n"
+                    
+                    # Market Intelligence
+                    market_intel = exec_summary.get('market_intelligence', {})
+                    if market_intel.get('available'):
+                        answer += "**📈 MARKET INTELLIGENCE:**\n"
+                        for insight in market_intel.get('top_insights', [])[:2]:
+                            answer += f"- {insight}\n"
+                        answer += "\n"
+                    
+                    # Immediate Actions
+                    immediate_actions = exec_summary.get('immediate_actions', [])
+                    if immediate_actions:
+                        answer += "**🚨 IMMEDIATE ACTIONS REQUIRED:**\n"
+                        for action in immediate_actions[:3]:
+                            answer += f"- [{action['priority']}] {action['action']}\n"
+                            answer += f"  Timeline: {action['timeline']}\n"
+                    
+                    return answer
+                
+            except Exception as e:
+                print(f"Coaching system error: {e}")
+                # Fall back to old method
+        
+        # Fallback to old generic method if coaching system not available
         answer = " **BUSINESS RULES:**\n\n"
         
         for rule in self.rule_results:

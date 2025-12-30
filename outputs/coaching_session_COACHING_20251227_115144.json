@@ -1,0 +1,454 @@
+{
+  "session_id": "COACHING_20251227_115144",
+  "timestamp": "2025-12-27T11:51:44.459316",
+  "client_id": "CLIENT_001",
+  "category": "Rice Bran Oil",
+  "coaching_mode": "full",
+  "branches": {
+    "data_analysis": {
+      "branch_name": "Data Analysis & Quantification",
+      "components": {
+        "spend_analysis": {},
+        "threshold_tracking": {},
+        "regional_concentration": {},
+        "pattern_detection": {}
+      },
+      "quantification_summary": {
+        "total_spend": 0,
+        "supplier_count": 0,
+        "region_count": 0,
+        "violation_count": 0,
+        "warning_count": 0,
+        "risk_level": "UNKNOWN",
+        "concentration_metrics": {},
+        "pattern_insights": []
+      }
+    },
+    "system_architecture": {
+      "branch_name": "System Architecture",
+      "components": {
+        "parameter_tuning": {},
+        "web_scraping": {
+          "pricing_data": {
+            "category": "Rice Bran Oil",
+            "region": "Global",
+            "timestamp": "2025-12-27T11:51:44.544035",
+            "current_price": {
+              "value": 2.45,
+              "unit": "USD/kg",
+              "currency": "USD"
+            },
+            "price_trend": {
+              "24h_change": 0.05,
+              "24h_change_pct": 2.08,
+              "7d_change": 0.12,
+              "7d_change_pct": 5.15,
+              "30d_change": -0.08,
+              "30d_change_pct": -3.16
+            },
+            "regional_prices": [
+              {
+                "region": "India",
+                "price": 2.35,
+                "unit": "USD/kg"
+              },
+              {
+                "region": "Thailand",
+                "price": 2.48,
+                "unit": "USD/kg"
+              },
+              {
+                "region": "Malaysia",
+                "price": 2.52,
+                "unit": "USD/kg"
+              },
+              {
+                "region": "Vietnam",
+                "price": 2.38,
+                "unit": "USD/kg"
+              }
+            ],
+            "price_drivers": [
+              {
+                "factor": "Crude oil prices",
+                "impact": "POSITIVE",
+                "magnitude": "MEDIUM",
+                "description": "Rising crude oil prices increasing production costs"
+              },
+              {
+                "factor": "Harvest season",
+                "impact": "NEGATIVE",
+                "magnitude": "HIGH",
+                "description": "Peak harvest in India reducing prices"
+              },
+              {
+                "factor": "Export demand",
+                "impact": "POSITIVE",
+                "magnitude": "MEDIUM",
+                "description": "Strong export demand from Middle East"
+              }
+            ],
+            "forecast": {
+              "next_30_days": "STABLE",
+              "next_90_days": "SLIGHT_INCREASE",
+              "confidence": "MEDIUM",
+              "projected_range": {
+                "min": 2.4,
+                "max": 2.6,
+                "unit": "USD/kg"
+              }
+            },
+            "data_sources": [
+              "Commodity Exchange APIs",
+              "Supplier Price Lists",
+              "Market Intelligence Reports"
+            ]
+          },
+          "news_data": {
+            "category": "Rice Bran Oil",
+            "supplier_name": null,
+            "news_count": 4,
+            "news_items": [
+              {
+                "id": "NEWS_001",
+                "timestamp": "2025-12-27T09:51:44.544035",
+                "headline": "Major Rice Bran Oil Producer Expands Capacity in Thailand",
+                "summary": "Leading supplier announces 30% capacity expansion, expected completion Q3 2026",
+                "relevance": "HIGH",
+                "sentiment": "POSITIVE",
+                "impact": "Increased supply availability, potential price stabilization",
+                "source": "Industry News Wire",
+                "url": "https://example.com/news/001"
+              },
+              {
+                "id": "NEWS_002",
+                "timestamp": "2025-12-27T03:51:44.544035",
+                "headline": "India Implements New Export Regulations for Edible Oils",
+                "summary": "New quality standards and documentation requirements for oil exports",
+                "relevance": "HIGH",
+                "sentiment": "NEUTRAL",
+                "impact": "Potential delays in shipments, increased compliance costs",
+                "source": "Trade Policy Monitor",
+                "url": "https://example.com/news/002"
+              },
+              {
+                "id": "NEWS_003",
+                "timestamp": "2025-12-26T11:51:44.544035",
+                "headline": "Drought Conditions Affect Rice Production in Southeast Asia",
+                "summary": "El Ni\u00f1o weather patterns reducing rice yields, impacting bran availability",
+                "relevance": "MEDIUM",
+                "sentiment": "NEGATIVE",
+                "impact": "Reduced raw material availability, upward price pressure",
+                "source": "Agricultural Reports",
+                "url": "https://example.com/news/003"
+              },
+              {
+                "id": "NEWS_004",
+                "timestamp": "2025-12-25T11:51:44.544035",
+                "headline": "New Sustainability Certifications Gaining Traction in Edible Oil Industry",
+                "summary": "Major buyers requiring enhanced sustainability credentials from suppliers",
+                "relevance": "MEDIUM",
+                "sentiment": "NEUTRAL",
+                "impact": "Supplier qualification criteria evolving, potential cost increases",
+                "source": "Sustainability News",
+                "url": "https://example.com/news/004"
+              }
+            ],
+            "sentiment_summary": {
+              "positive": 1,
+              "neutral": 2,
+              "negative": 1,
+              "overall_sentiment": "NEUTRAL"
+            },
+            "high_relevance_count": 2
+          },
+          "trend_data": {
+            "category": "Rice Bran Oil",
+            "timestamp": "2025-12-27T11:51:44.544035",
+            "demand_trends": {
+              "current_trend": "INCREASING",
+              "growth_rate_yoy": 8.5,
+              "key_drivers": [
+                "Health consciousness driving demand for healthier oils",
+                "Growing food service industry in Asia",
+                "Substitution from more expensive oils"
+              ],
+              "regional_demand": [
+                {
+                  "region": "Asia Pacific",
+                  "trend": "STRONG_GROWTH",
+                  "growth_rate": 12.3
+                },
+                {
+                  "region": "Middle East",
+                  "trend": "MODERATE_GROWTH",
+                  "growth_rate": 6.8
+                },
+                {
+                  "region": "Europe",
+                  "trend": "STABLE",
+                  "growth_rate": 2.1
+                },
+                {
+                  "region": "North America",
+                  "trend": "EMERGING",
+                  "growth_rate": 15.7
+                }
+              ]
+            },
+            "supply_trends": {
+              "current_trend": "STABLE",
+              "capacity_additions": [
+                {
+                  "region": "India",
+                  "additional_capacity_mt": 50000,
+                  "timeline": "2026"
+                },
+                {
+                  "region": "Thailand",
+                  "additional_capacity_mt": 30000,
+                  "timeline": "2026"
+                },
+                {
+                  "region": "Vietnam",
+                  "additional_capacity_mt": 25000,
+                  "timeline": "2027"
+                }
+              ],
+              "supply_risk_factors": [
+                "Weather-dependent rice production",
+                "Competition from other rice bran uses (animal feed)",
+                "Processing technology requirements"
+              ]
+            },
+            "competitive_landscape": {
+              "market_concentration": "MODERATE",
+              "top_5_market_share": 45.2,
+              "new_entrants": 3,
+              "consolidation_activity": "MODERATE",
+              "key_developments": [
+                "Vertical integration by major players",
+                "Technology investments in extraction efficiency",
+                "Sustainability certifications becoming standard"
+              ]
+            },
+            "technology_trends": [
+              {
+                "trend": "Advanced extraction technologies",
+                "impact": "Improved yields and quality",
+                "adoption_rate": "GROWING"
+              },
+              {
+                "trend": "Blockchain for traceability",
+                "impact": "Enhanced supply chain transparency",
+                "adoption_rate": "EMERGING"
+              },
+              {
+                "trend": "Sustainable processing methods",
+                "impact": "Reduced environmental footprint",
+                "adoption_rate": "ACCELERATING"
+              }
+            ]
+          },
+          "risk_data": {
+            "region": "Global",
+            "timestamp": "2025-12-27T11:51:44.544035",
+            "geopolitical_risks": [
+              {
+                "risk_type": "TRADE_POLICY",
+                "region": "India",
+                "severity": "MEDIUM",
+                "description": "Potential export restrictions on agricultural commodities",
+                "probability": "MODERATE",
+                "impact": "Supply disruptions, price volatility",
+                "mitigation": "Diversify sourcing to other regions"
+              },
+              {
+                "risk_type": "GEOPOLITICAL",
+                "region": "Southeast Asia",
+                "severity": "LOW",
+                "description": "Regional tensions affecting trade routes",
+                "probability": "LOW",
+                "impact": "Logistics delays, increased shipping costs",
+                "mitigation": "Alternative shipping routes, local inventory buffers"
+              }
+            ],
+            "economic_risks": [
+              {
+                "risk_type": "CURRENCY",
+                "currencies": [
+                  "INR",
+                  "THB",
+                  "VND"
+                ],
+                "severity": "MEDIUM",
+                "description": "Currency volatility affecting landed costs",
+                "probability": "HIGH",
+                "impact": "Cost fluctuations of 5-10%",
+                "mitigation": "Currency hedging, USD-denominated contracts"
+              },
+              {
+                "risk_type": "INFLATION",
+                "region": "Global",
+                "severity": "MEDIUM",
+                "description": "Rising input costs (energy, labor, packaging)",
+                "probability": "HIGH",
+                "impact": "Supplier price increases",
+                "mitigation": "Long-term contracts, efficiency improvements"
+              }
+            ],
+            "supply_chain_risks": [
+              {
+                "risk_type": "LOGISTICS",
+                "severity": "MEDIUM",
+                "description": "Port congestion and container shortages",
+                "probability": "MODERATE",
+                "impact": "Delivery delays, increased freight costs",
+                "mitigation": "Extended lead times, alternative ports"
+              },
+              {
+                "risk_type": "CLIMATE",
+                "severity": "HIGH",
+                "description": "Weather events affecting crop yields",
+                "probability": "MODERATE",
+                "impact": "Raw material shortages, price spikes",
+                "mitigation": "Geographic diversification, strategic inventory"
+              }
+            ],
+            "regulatory_risks": [
+              {
+                "risk_type": "FOOD_SAFETY",
+                "region": "EU",
+                "severity": "MEDIUM",
+                "description": "Stricter contaminant limits for edible oils",
+                "probability": "HIGH",
+                "impact": "Supplier qualification challenges, testing costs",
+                "mitigation": "Supplier audits, quality assurance programs"
+              }
+            ],
+            "overall_risk_score": {
+              "score": 58,
+              "level": "MEDIUM",
+              "trend": "STABLE",
+              "recommendation": "Maintain diversified supplier base and monitor key risk indicators"
+            }
+          },
+          "aggregated_insights": {
+            "timestamp": "2025-12-27T11:51:44.544035",
+            "key_insights": [
+              "Significant price increase of 5.2% in past week",
+              "Major Rice Bran Oil Producer Expands Capacity in Thailand",
+              "India Implements New Export Regulations for Edible Oils",
+              "Demand growing at 8.5% YoY"
+            ],
+            "action_items": [
+              {
+                "action": "Secure long-term supply agreements",
+                "rationale": "Growing demand may lead to supply tightness",
+                "priority": "MEDIUM"
+              },
+              {
+                "action": "Geographic diversification, strategic inventory",
+                "rationale": "Mitigate CLIMATE risk",
+                "priority": "HIGH"
+              }
+            ],
+            "opportunities": [
+              {
+                "type": "COST_OPTIMIZATION",
+                "description": "Lower prices available in India ($2.35/kg)",
+                "potential_savings": "MEDIUM"
+              },
+              {
+                "type": "MARKET_NEWS",
+                "description": "Increased supply availability, potential price stabilization",
+                "potential_savings": "MEDIUM"
+              }
+            ],
+            "threats": [
+              {
+                "type": "PRICE_INCREASE",
+                "description": "Rising prices may impact procurement costs",
+                "urgency": "HIGH"
+              },
+              {
+                "type": "CLIMATE",
+                "description": "Weather events affecting crop yields",
+                "urgency": "HIGH"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "incumbent_strategy": {
+      "branch_name": "Incumbent Supplier Strategy",
+      "components": {
+        "incumbent_analysis": {}
+      }
+    },
+    "region_sourcing": {
+      "branch_name": "Additional Region Sourcing",
+      "components": {
+        "region_analysis": {}
+      }
+    },
+    "personalized_recommendations": {
+      "branch_name": "Personalized Recommendations",
+      "components": {
+        "coaching": {}
+      }
+    }
+  },
+  "executive_summary": {
+    "session_id": "COACHING_20251227_115144",
+    "client_id": "CLIENT_001",
+    "category": "Rice Bran Oil",
+    "timestamp": "2025-12-27T11:51:44.459316",
+    "current_state": {
+      "total_spend": 0,
+      "total_spend_formatted": "$0.00",
+      "supplier_count": 0,
+      "region_count": 0,
+      "risk_level": "UNKNOWN"
+    },
+    "key_issues": {
+      "violations": 0,
+      "warnings": 0,
+      "critical_areas": []
+    },
+    "opportunities": {
+      "incumbent_expansion": 0,
+      "new_regions": 0,
+      "total_recommendations": 0
+    },
+    "market_intelligence": {
+      "available": true,
+      "key_insights_count": 4,
+      "opportunities_count": 2,
+      "threats_count": 2,
+      "top_insights": [
+        "Significant price increase of 5.2% in past week",
+        "Major Rice Bran Oil Producer Expands Capacity in Thailand",
+        "India Implements New Export Regulations for Edible Oils"
+      ]
+    },
+    "immediate_actions": []
+  },
+  "action_plan": {
+    "phases": {},
+    "total_actions": 0,
+    "estimated_duration": "180 days"
+  },
+  "scoring": {
+    "current_health_score": 50,
+    "projected_health_score": 70,
+    "improvement_potential": 20,
+    "breakdown": {
+      "diversification": 0,
+      "quality": 0,
+      "compliance": 30,
+      "risk_management": 20
+    }
+  }
+}

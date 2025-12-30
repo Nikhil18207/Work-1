@@ -2,7 +2,6 @@
   "rule_book_version": "1.0",
   "last_updated": "2024-09-01",
   "description": "Business rules and constraints for LLM-based procurement recommendations",
-  
   "hard_constraints": {
     "description": "MUST be satisfied - recommendations violating these are rejected",
     "rules": [
@@ -72,7 +71,6 @@
       }
     ]
   },
-  
   "soft_preferences": {
     "description": "SHOULD be satisfied - recommendations are scored/ranked based on these",
     "rules": [
@@ -141,7 +139,6 @@
       }
     ]
   },
-  
   "risk_assessment_rules": {
     "description": "Rules for assessing and flagging risks in recommendations",
     "rules": [
@@ -201,7 +198,6 @@
       }
     ]
   },
-  
   "data_completeness_rules": {
     "description": "Rules for assessing data gaps and their impact on confidence",
     "critical_data_points": [
@@ -255,7 +251,6 @@
       }
     ]
   },
-  
   "recommendation_logic": {
     "description": "Logic for generating and scoring recommendations",
     "scoring_formula": "base_score + SUM(soft_preference_weights) - SUM(risk_penalties) - SUM(data_gap_penalties)",
@@ -263,7 +258,6 @@
     "base_confidence": 0.50,
     "minimum_confidence_threshold": 0.60,
     "high_confidence_threshold": 0.85,
-    
     "output_requirements": {
       "must_include": [
         "recommended_supplier",
@@ -279,7 +273,6 @@
       "source_citations": "MANDATORY"
     }
   },
-  
   "escalation_rules": {
     "description": "When to escalate recommendations for human review",
     "escalation_triggers": [
@@ -315,7 +308,6 @@
       }
     ]
   },
-  
   "client_specific_overrides": {
     "description": "Client-specific rule modifications",
     "C004": {
