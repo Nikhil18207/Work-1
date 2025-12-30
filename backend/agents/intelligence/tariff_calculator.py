@@ -23,9 +23,9 @@ class TariffCalculatorAgent(BaseAgent):
     Integrates real tariff data for accurate cost impact analysis
     """
     
-    # Real tariff data by product and country pair
+    # Real tariff data by product and country pair - COMPREHENSIVE MULTI-INDUSTRY
     TARIFF_RATES = {
-        # Rice Bran Oil tariffs (% of product value)
+        # ===== FOOD & BEVERAGE (Edible Oils) =====
         'rice_bran_oil': {
             'Malaysia_to_USA': 0.0,      # Free trade agreement
             'Malaysia_to_EU': 6.5,
@@ -59,21 +59,220 @@ class TariffCalculatorAgent(BaseAgent):
             'Argentina_to_USA': 3.0,
             'Argentina_to_EU': 12.0,
             'Argentina_to_India': 38.0,
+            'Ukraine_to_USA': 0.0,
+            'Ukraine_to_EU': 5.0,
+            'Spain_to_USA': 0.5,
+            'Spain_to_EU': 0.0,
         },
         'palm_oil': {
             'Malaysia_to_USA': 0.0,
             'Malaysia_to_EU': 8.0,
             'Indonesia_to_USA': 0.0,
             'Indonesia_to_EU': 8.5,
-        }
+            'Malaysia_to_India': 32.0,
+            'Indonesia_to_India': 28.0,
+        },
+        'sunflower_oil': {
+            'Ukraine_to_USA': 2.0,
+            'Ukraine_to_EU': 0.0,
+            'USA_to_EU': 3.5,
+            'Argentina_to_USA': 1.5,
+            'Argentina_to_EU': 5.0,
+        },
+        'olive_oil': {
+            'Spain_to_USA': 0.0,
+            'Spain_to_EU': 0.0,
+            'Spain_to_China': 12.0,
+            'Italy_to_USA': 0.0,
+            'Italy_to_EU': 0.0,
+            'Greece_to_USA': 0.0,
+            'Greece_to_EU': 0.0,
+        },
+        'soybean_oil': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 15.0,
+            'USA_to_India': 8.0,
+            'Argentina_to_USA': 0.0,
+            'Argentina_to_EU': 4.5,
+            'Brazil_to_USA': 0.0,
+            'Brazil_to_EU': 5.0,
+        },
+        
+        # ===== IT & TECHNOLOGY =====
+        'it_hardware': {
+            'USA_to_EU': 0.0,
+            'USA_to_India': 5.0,
+            'USA_to_China': 0.0,
+            'USA_to_Japan': 0.0,
+            'China_to_USA': 8.0,        # Trade tensions
+            'China_to_EU': 3.5,
+            'Taiwan_to_USA': 0.0,
+            'Taiwan_to_EU': 0.0,
+            'Japan_to_USA': 0.0,
+            'Japan_to_EU': 0.0,
+            'Germany_to_USA': 0.0,
+            'Germany_to_China': 4.5,
+        },
+        'laptops': {
+            'China_to_USA': 6.0,
+            'China_to_EU': 2.5,
+            'USA_to_EU': 0.0,
+            'Taiwan_to_USA': 0.0,
+            'Taiwan_to_EU': 0.0,
+            'Vietnam_to_USA': 0.0,
+            'Vietnam_to_EU': 0.0,
+        },
+        'servers': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 10.0,
+            'USA_to_India': 3.5,
+            'China_to_USA': 12.0,
+            'Germany_to_USA': 0.0,
+            'Germany_to_China': 5.0,
+        },
+        'network_equipment': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 10.0,
+            'China_to_USA': 12.0,
+            'China_to_EU': 4.0,
+            'Japan_to_USA': 0.0,
+            'Japan_to_EU': 0.0,
+        },
+        'cloud_services': {
+            'USA_to_EU': 0.0,           # No tariff on digital services
+            'USA_to_India': 0.0,
+            'USA_to_China': 0.0,        # Usually no tariff
+        },
+        'saas_subscriptions': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 0.0,
+            'USA_to_India': 0.0,
+        },
+        'software_licenses': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 0.0,
+            'Germany_to_USA': 0.0,
+            'Germany_to_China': 0.0,
+        },
+        'cybersecurity': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 0.0,
+            'USA_to_India': 0.0,
+        },
+        
+        # ===== MANUFACTURING & RAW MATERIALS =====
+        'steel': {
+            'Luxembourg_to_USA': 2.5,    # USMCA
+            'Luxembourg_to_EU': 0.0,
+            'Luxembourg_to_India': 7.5,
+            'Luxembourg_to_China': 6.0,
+            'India_to_USA': 5.0,
+            'India_to_EU': 0.0,
+            'China_to_USA': 12.5,        # Section 232 tariffs
+            'China_to_EU': 5.0,
+        },
+        'aluminum': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 8.0,
+            'Canada_to_USA': 0.0,
+            'Canada_to_EU': 0.0,
+        },
+        'copper': {
+            'Chile_to_USA': 0.0,
+            'Chile_to_EU': 0.0,
+            'Peru_to_USA': 0.0,
+            'Peru_to_EU': 0.0,
+            'China_to_USA': 0.0,
+            'China_to_EU': 0.0,
+        },
+        'plastics': {
+            'Germany_to_USA': 0.0,
+            'Germany_to_China': 6.5,
+            'Germany_to_EU': 0.0,
+            'USA_to_EU': 0.0,
+            'China_to_USA': 5.0,
+            'China_to_EU': 3.5,
+        },
+        
+        # ===== MANUFACTURING EQUIPMENT & MACHINERY =====
+        'manufacturing_equipment': {
+            'Germany_to_USA': 0.0,
+            'Germany_to_China': 0.0,
+            'Germany_to_EU': 0.0,
+            'Switzerland_to_USA': 0.0,
+            'Switzerland_to_EU': 0.0,
+            'France_to_USA': 0.0,
+            'France_to_EU': 0.0,
+            'Japan_to_USA': 0.0,
+            'Japan_to_EU': 0.0,
+        },
+        'industrial_machinery': {
+            'Germany_to_USA': 0.0,
+            'Germany_to_China': 0.0,
+            'Germany_to_EU': 0.0,
+            'Japan_to_USA': 0.0,
+            'Japan_to_EU': 0.0,
+            'USA_to_EU': 0.0,
+            'USA_to_China': 2.0,
+        },
+        'robotics': {
+            'Germany_to_USA': 0.0,
+            'Germany_to_China': 0.0,
+            'Germany_to_EU': 0.0,
+            'Japan_to_USA': 0.0,
+            'Japan_to_EU': 0.0,
+        },
+        
+        # ===== HEALTHCARE & PHARMACEUTICALS =====
+        'pharmaceuticals': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 0.0,
+            'USA_to_India': 0.0,
+            'Switzerland_to_USA': 0.0,
+            'Switzerland_to_EU': 0.0,
+            'Switzerland_to_China': 0.0,
+            'Germany_to_USA': 0.0,
+            'Germany_to_EU': 0.0,
+            'India_to_USA': 0.0,
+            'India_to_EU': 0.0,
+        },
+        'medical_devices': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 2.5,
+            'Germany_to_USA': 0.0,
+            'Germany_to_EU': 0.0,
+            'Germany_to_China': 3.0,
+            'Switzerland_to_USA': 0.0,
+            'Switzerland_to_EU': 0.0,
+        },
+        'medical_supplies': {
+            'USA_to_EU': 0.0,
+            'USA_to_China': 3.0,
+            'Germany_to_USA': 0.0,
+            'USA_to_India': 0.0,
+            'India_to_USA': 2.5,
+        },
+        
+        # ===== CONSTRUCTION MATERIALS =====
+        'construction_materials': {
+            'Mexico_to_USA': 0.0,
+            'Mexico_to_EU': 3.0,
+            'Canada_to_USA': 0.0,
+            'USA_to_Mexico': 0.0,
+            'Germany_to_USA': 2.5,
+            'Germany_to_EU': 0.0,
+        },
     }
     
-    # Logistics costs ($ per MT for shipping)
+    # Logistics costs ($ per MT for shipping) - EXPANDED FOR ALL INDUSTRIES
     LOGISTICS_COSTS = {
+        # ===== FOOD & BEVERAGE ROUTES =====
         'Malaysia_to_USA': 850,
         'Malaysia_to_EU': 750,
+        'Malaysia_to_India': 600,
         'India_to_USA': 900,
         'India_to_EU': 650,
+        'India_to_China': 400,
         'Thailand_to_USA': 880,
         'Thailand_to_EU': 720,
         'Vietnam_to_USA': 860,
@@ -84,14 +283,85 @@ class TariffCalculatorAgent(BaseAgent):
         'Brazil_to_EU': 1100,
         'Argentina_to_USA': 1400,
         'Argentina_to_EU': 1250,
+        'Ukraine_to_USA': 1100,
+        'Ukraine_to_EU': 300,
+        'Spain_to_USA': 950,
+        'Spain_to_EU': 200,
+        
+        # ===== IT & TECHNOLOGY ROUTES (per unit or per shipment) =====
+        'USA_to_EU': 25,               # Lower per-unit cost for electronics
+        'USA_to_China': 30,
+        'USA_to_India': 35,
+        'USA_to_Japan': 50,
+        'China_to_USA': 40,
+        'China_to_EU': 35,
+        'Taiwan_to_USA': 35,
+        'Taiwan_to_EU': 40,
+        'Japan_to_USA': 45,
+        'Japan_to_EU': 50,
+        'Germany_to_USA': 30,
+        'Germany_to_China': 40,
+        'Vietnam_to_USA': 38,
+        'Vietnam_to_EU': 42,
+        
+        # ===== MANUFACTURING & RAW MATERIALS ROUTES (per MT) =====
+        'Luxembourg_to_USA': 280,
+        'Luxembourg_to_EU': 120,
+        'Luxembourg_to_China': 650,
+        'Luxembourg_to_India': 700,
+        'India_to_USA': 900,
+        'China_to_USA': 1100,
+        'China_to_EU': 900,
+        'Chile_to_USA': 1500,
+        'Chile_to_EU': 1800,
+        'Peru_to_USA': 1400,
+        'Peru_to_EU': 1700,
+        'Canada_to_USA': 350,
+        'Canada_to_EU': 800,
+        
+        # ===== MANUFACTURING EQUIPMENT (per unit + freight) =====
+        'Germany_to_USA': 45,
+        'Germany_to_China': 55,
+        'Germany_to_EU': 20,
+        'Switzerland_to_USA': 50,
+        'Switzerland_to_EU': 25,
+        'Switzerland_to_China': 60,
+        'France_to_USA': 40,
+        'France_to_EU': 15,
+        'Japan_to_USA': 55,
+        'Japan_to_EU': 65,
+        'Japan_to_China': 30,
+        
+        # ===== HEALTHCARE & PHARMACEUTICALS (per unit, often airfreight) =====
+        'USA_to_EU': 120,              # Airfreight premium for pharma
+        'USA_to_China': 150,
+        'USA_to_India': 140,
+        'Switzerland_to_USA': 130,
+        'Switzerland_to_EU': 50,
+        'Switzerland_to_China': 160,
+        'Germany_to_USA': 125,
+        'Germany_to_EU': 45,
+        'Germany_to_China': 155,
+        'India_to_USA': 135,
+        'India_to_EU': 80,
+        
+        # ===== CONSTRUCTION MATERIALS (per MT) =====
+        'Mexico_to_USA': 150,
+        'Mexico_to_EU': 900,
+        'Canada_to_USA': 200,
+        'USA_to_Mexico': 150,
+        'USA_to_Canada': 200,
     }
     
-    # Lead times in days
+    # Lead times in days - EXPANDED FOR ALL INDUSTRIES
     LEAD_TIMES = {
+        # ===== FOOD & BEVERAGE =====
         'Malaysia_to_USA': 30,
         'Malaysia_to_EU': 45,
+        'Malaysia_to_India': 14,
         'India_to_USA': 35,
         'India_to_EU': 35,
+        'India_to_China': 21,
         'Thailand_to_USA': 32,
         'Thailand_to_EU': 42,
         'Vietnam_to_USA': 33,
@@ -102,15 +372,120 @@ class TariffCalculatorAgent(BaseAgent):
         'Brazil_to_EU': 40,
         'Argentina_to_USA': 28,
         'Argentina_to_EU': 42,
+        'Ukraine_to_USA': 45,
+        'Ukraine_to_EU': 10,
+        'Spain_to_USA': 28,
+        'Spain_to_EU': 7,
+        
+        # ===== IT & TECHNOLOGY (usually 7-21 days) =====
+        'USA_to_EU': 7,
+        'USA_to_China': 14,
+        'USA_to_India': 10,
+        'USA_to_Japan': 14,
+        'China_to_USA': 21,
+        'China_to_EU': 21,
+        'Taiwan_to_USA': 14,
+        'Taiwan_to_EU': 17,
+        'Japan_to_USA': 14,
+        'Japan_to_EU': 17,
+        'Germany_to_USA': 10,
+        'Germany_to_China': 21,
+        'Vietnam_to_USA': 18,
+        'Vietnam_to_EU': 21,
+        
+        # ===== MANUFACTURING & RAW MATERIALS (longer - 35-60 days) =====
+        'Luxembourg_to_USA': 35,
+        'Luxembourg_to_EU': 5,
+        'Luxembourg_to_China': 45,
+        'Luxembourg_to_India': 40,
+        'India_to_USA': 40,
+        'India_to_EU': 32,
+        'China_to_USA': 35,
+        'China_to_EU': 32,
+        'Chile_to_USA': 35,
+        'Chile_to_EU': 45,
+        'Peru_to_USA': 32,
+        'Peru_to_EU': 42,
+        'Canada_to_USA': 7,
+        'Canada_to_EU': 21,
+        
+        # ===== MANUFACTURING EQUIPMENT (30-60 days) =====
+        'Germany_to_USA': 42,
+        'Germany_to_China': 45,
+        'Germany_to_EU': 7,
+        'Switzerland_to_USA': 45,
+        'Switzerland_to_EU': 10,
+        'Switzerland_to_China': 42,
+        'France_to_USA': 40,
+        'France_to_EU': 5,
+        'Japan_to_USA': 28,
+        'Japan_to_EU': 35,
+        'Japan_to_China': 21,
+        
+        # ===== HEALTHCARE & PHARMACEUTICALS (14-28 days, often airfreight) =====
+        'USA_to_EU': 5,                # Often expedited
+        'USA_to_China': 10,
+        'USA_to_India': 8,
+        'Switzerland_to_USA': 5,
+        'Switzerland_to_EU': 3,
+        'Switzerland_to_China': 10,
+        'Germany_to_USA': 5,
+        'Germany_to_EU': 3,
+        'Germany_to_China': 10,
+        'India_to_USA': 8,
+        'India_to_EU': 7,
+        
+        # ===== CONSTRUCTION MATERIALS (14-35 days) =====
+        'Mexico_to_USA': 10,
+        'Mexico_to_EU': 28,
+        'Canada_to_USA': 7,
+        'USA_to_Mexico': 10,
+        'USA_to_Canada': 7,
     }
     
-    # Tariff change forecast (% change per year)
+    # Tariff change forecast (% change per year) - EXPANDED FOR ALL INDUSTRIES
     TARIFF_TRENDS = {
-        'Malaysia_USA': -0.5,   # Improving relationship
-        'India_USA': 0.0,       # Stable
-        'India_EU': 0.5,        # Slightly increasing
-        'Brazil_USA': 1.0,      # Rising tensions
-        'China_USA': 2.0,       # Trade war escalation
+        # ===== FOOD & BEVERAGE TRENDS =====
+        'Malaysia_USA': -0.5,           # Improving relationship
+        'India_USA': 0.0,               # Stable
+        'India_EU': 0.5,                # Slightly increasing
+        'Brazil_USA': 1.0,              # Rising tensions
+        'Argentina_USA': 0.5,           # Moderate
+        'Ukraine_EU': -0.3,             # Post-war recovery
+        'Spain_EU': 0.0,                # Stable
+        'Vietnam_USA': 0.3,             # Gradual alignment
+        
+        # ===== IT & TECHNOLOGY TRENDS =====
+        'China_USA': 2.0,               # Trade war escalation
+        'USA_EU': 0.0,                  # Stable
+        'Taiwan_USA': -0.5,             # Improving
+        'Japan_USA': 0.0,               # Stable
+        'Germany_USA': 0.0,             # Stable
+        'Vietnam_USA': -0.2,            # CPTPP benefits
+        
+        # ===== MANUFACTURING TRENDS =====
+        'China_USA': 2.0,               # Steel/aluminium tariffs ongoing
+        'India_USA': 0.5,               # Gradual increases
+        'Luxembourg_USA': -0.3,         # USMCA stable
+        'Canada_USA': 0.0,              # USMCA stable
+        'Chile_USA': -0.2,              # FTA benefits
+        
+        # ===== MANUFACTURING EQUIPMENT TRENDS =====
+        'Germany_USA': 0.0,             # Stable
+        'Germany_China': 1.5,           # Rising tensions
+        'Japan_USA': 0.0,               # Stable
+        'Switzerland_USA': 0.0,         # Stable
+        
+        # ===== HEALTHCARE & PHARMA TRENDS =====
+        'USA_EU': 0.0,                  # Stable
+        'USA_China': 1.0,               # Moderate pressure
+        'Switzerland_USA': 0.0,         # Stable
+        'Germany_China': 1.5,           # Rising
+        'India_USA': 0.0,               # Stable (pharma exemptions)
+        
+        # ===== CONSTRUCTION TRENDS =====
+        'Mexico_USA': 0.0,              # USMCA stable
+        'Canada_USA': 0.0,              # USMCA stable
     }
     
     def __init__(self):
