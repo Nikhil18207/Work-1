@@ -1,155 +1,400 @@
-Client_ID,Category,Supplier_ID,Supplier_Name,Supplier_Country,Supplier_Region,Transaction_Date,Spend_USD
-C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2025-01-15,669600
-C001,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,2025-03-22,772200
-C001,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,2025-02-03,766800
-C001,Sunflower Oil,S003,Golden Sun Oils,Ukraine,Europe,2025-01-20,486000
-C001,Sunflower Oil,S003,Golden Sun Oils,Ukraine,Europe,2025-04-15,561600
-C001,Palm Oil,S004,Indo Palm Corp,Indonesia,APAC,2025-02-10,410400
-C001,Palm Oil,S004,Indo Palm Corp,Indonesia,APAC,2025-05-22,453600
-C001,Olive Oil,S005,Mediterranean Oils,Spain,Europe,2025-03-05,313200
-C001,Soybean Oil,S006,American Soy Co,USA,Americas,2025-01-18,378000
-C002,IT Hardware,S101,Dell Technologies,USA,Americas,2025-01-10,918000
-C002,IT Hardware,S101,Dell Technologies,USA,Americas,2025-04-12,993600
-C002,IT Hardware,S101,Dell Technologies,USA,Americas,2025-07-20,842400
-C002,IT Hardware,S102,HP Inc,USA,Americas,2025-02-15,702000
-C002,IT Hardware,S102,HP Inc,USA,Americas,2025-05-18,777600
-C002,IT Hardware,S103,Lenovo,China,APAC,2025-03-22,626400
-C002,IT Hardware,S103,Lenovo,China,APAC,2025-06-14,669600
-C002,Laptops,S104,Apple Inc,USA,Americas,2025-01-25,1296000
-C002,Laptops,S104,Apple Inc,USA,Americas,2025-04-30,1458000
-C002,Servers,S105,Cisco Systems,USA,Americas,2025-02-08,1058400
-C002,Servers,S105,Cisco Systems,USA,Americas,2025-08-15,1188000
-C002,Network Equipment,S106,Juniper Networks,USA,Americas,2025-03-12,486000
-C002,Network Equipment,S107,Huawei,China,APAC,2025-05-20,410400
-C003,Cloud Services,S201,AWS,USA,Americas,2025-01-05,486000
-C003,Cloud Services,S201,AWS,USA,Americas,2025-02-10,561600
-C003,Cloud Services,S201,AWS,USA,Americas,2025-03-15,518400
-C003,Cloud Services,S201,AWS,USA,Americas,2025-04-20,594000
-C003,Cloud Services,S201,AWS,USA,Americas,2025-05-25,637200
-C003,Cloud Services,S201,AWS,USA,Americas,2025-06-30,669600
-C003,Cloud Services,S202,Microsoft Azure,USA,Americas,2025-01-12,410400
-C003,Cloud Services,S202,Microsoft Azure,USA,Americas,2025-03-18,453600
-C003,Cloud Services,S202,Microsoft Azure,USA,Americas,2025-05-22,496800
-C003,Cloud Services,S203,Google Cloud,USA,Americas,2025-02-14,345600
-C003,Cloud Services,S203,Google Cloud,USA,Americas,2025-04-28,378000
-C003,SaaS Subscriptions,S204,Salesforce,USA,Americas,2025-01-08,302400
-C003,SaaS Subscriptions,S204,Salesforce,USA,Americas,2025-07-15,334800
-C003,SaaS Subscriptions,S205,Adobe Creative Cloud,USA,Americas,2025-02-20,162000
-C003,SaaS Subscriptions,S206,Microsoft 365,USA,Americas,2025-01-15,237600
-C003,SaaS Subscriptions,S206,Microsoft 365,USA,Americas,2025-07-20,259200
-C004,Software Licenses,S301,Oracle,USA,Americas,2025-01-22,1026000
-C004,Software Licenses,S301,Oracle,USA,Americas,2025-07-18,1101600
-C004,Software Licenses,S302,SAP,Germany,Europe,2025-02-10,1242000
-C004,Software Licenses,S302,SAP,Germany,Europe,2025-08-22,1296000
-C004,Software Licenses,S303,IBM,USA,Americas,2025-03-15,734400
-C004,Cybersecurity,S304,Palo Alto Networks,USA,Americas,2025-01-28,453600
-C004,Cybersecurity,S304,Palo Alto Networks,USA,Americas,2025-07-30,486000
-C004,Cybersecurity,S305,CrowdStrike,USA,Americas,2025-02-18,410400
-C004,Cybersecurity,S306,Fortinet,USA,Americas,2025-04-12,345600
-C005,Raw Materials - Steel,S401,ArcelorMittal,Luxembourg,Europe,2025-01-10,1944000
-C005,Raw Materials - Steel,S401,ArcelorMittal,Luxembourg,Europe,2025-04-15,2106000
-C005,Raw Materials - Steel,S401,ArcelorMittal,Luxembourg,Europe,2025-07-20,1857600
-C005,Raw Materials - Steel,S402,Tata Steel,India,APAC,2025-02-12,1782000
-C005,Raw Materials - Steel,S402,Tata Steel,India,APAC,2025-05-18,1922400
-C005,Raw Materials - Steel,S403,Baosteel,China,APAC,2025-03-22,1706400
-C005,Raw Materials - Steel,S403,Baosteel,China,APAC,2025-06-25,1749600
-C005,Raw Materials - Aluminum,S404,Alcoa,USA,Americas,2025-01-15,1058400
-C005,Raw Materials - Aluminum,S404,Alcoa,USA,Americas,2025-04-20,1134000
-C005,Raw Materials - Copper,S405,Freeport-McMoRan,USA,Americas,2025-02-08,777600
-C005,Raw Materials - Copper,S405,Freeport-McMoRan,USA,Americas,2025-08-12,842400
-C005,Raw Materials - Plastics,S406,BASF,Germany,Europe,2025-03-10,702000
-C005,Raw Materials - Plastics,S407,Dow Chemical,USA,Americas,2025-05-15,745200
-C006,Manufacturing Equipment,S501,Siemens,Germany,Europe,2025-01-18,2376000
-C006,Manufacturing Equipment,S501,Siemens,Germany,Europe,2025-07-22,2538000
-C006,Manufacturing Equipment,S502,ABB,Switzerland,Europe,2025-02-25,2106000
-C006,Manufacturing Equipment,S503,Schneider Electric,France,Europe,2025-04-10,1814400
-C006,Industrial Machinery,S504,Caterpillar,USA,Americas,2025-01-20,1998000
-C006,Industrial Machinery,S504,Caterpillar,USA,Americas,2025-06-15,2073600
-C006,Industrial Machinery,S505,Komatsu,Japan,APAC,2025-03-12,1706400
-C006,Robotics,S506,Fanuc,Japan,APAC,2025-02-18,1350000
-C006,Robotics,S507,KUKA,Germany,Europe,2025-05-20,1274400
-C007,Pharmaceuticals,S601,Pfizer,USA,Americas,2025-01-12,3456000
-C007,Pharmaceuticals,S601,Pfizer,USA,Americas,2025-04-15,3726000
-C007,Pharmaceuticals,S601,Pfizer,USA,Americas,2025-07-18,3542400
-C007,Pharmaceuticals,S602,Johnson & Johnson,USA,Americas,2025-02-10,3186000
-C007,Pharmaceuticals,S602,Johnson & Johnson,USA,Americas,2025-05-22,3348000
-C007,Pharmaceuticals,S603,Novartis,Switzerland,Europe,2025-03-08,2894400
-C007,Pharmaceuticals,S604,Roche,Switzerland,Europe,2025-04-12,2721600
-C007,Medical Devices,S605,Medtronic,USA,Americas,2025-01-20,1998000
-C007,Medical Devices,S605,Medtronic,USA,Americas,2025-06-25,2073600
-C007,Medical Devices,S606,Boston Scientific,USA,Americas,2025-02-15,1814400
-C007,Medical Devices,S607,Siemens Healthineers,Germany,Europe,2025-03-22,1706400
-C007,Medical Supplies,S608,Cardinal Health,USA,Americas,2025-01-10,1058400
-C007,Medical Supplies,S608,Cardinal Health,USA,Americas,2025-07-15,1134000
-C007,Medical Supplies,S609,McKesson,USA,Americas,2025-04-18,993600
-C008,Construction Materials,S701,Cemex,Mexico,Americas,2025-01-15,1566000
-C008,Construction Materials,S701,Cemex,USA,Americas,2025-04-20,1641600
-C008,Construction Materials,S701,Cemex,Mexico,Americas,2025-07-25,1490400
-C008,Construction Materials,S702,LafargeHolcim,Switzerland,Europe,2025-02-12,1458000
-C008,Construction Materials,S702,LafargeHolcim,Switzerland,Europe,2025-05-18,1533600
-C008,Concrete,S703,HeidelbergCement,Germany,Europe,2025-03-10,1058400
-C008,Lumber,S704,Weyerhaeuser,USA,Americas,2025-01-22,918000
-C008,Lumber,S704,Weyerhaeuser,USA,Americas,2025-06-28,993600
-C008,Building Equipment,S705,Hilti,Liechtenstein,Europe,2025-02-15,734400
-C008,Building Equipment,S706,Bosch,Germany,Europe,2025-05-20,777600
-C009,Marketing Services,S801,WPP,UK,Europe,2025-01-10,1026000
-C009,Marketing Services,S801,WPP,UK,Europe,2025-07-15,1101600
-C009,Marketing Services,S802,Omnicom,USA,Americas,2025-02-12,950400
-C009,Marketing Services,S803,Publicis,France,Europe,2025-03-18,885600
-C009,Digital Marketing,S804,Google Ads,USA,Americas,2025-01-05,702000
-C009,Digital Marketing,S804,Google Ads,USA,Americas,2025-04-10,777600
-C009,Digital Marketing,S804,Google Ads,USA,Americas,2025-07-15,734400
-C009,Digital Marketing,S805,Meta Ads,USA,Americas,2025-02-08,626400
-C009,Digital Marketing,S805,Meta Ads,USA,Americas,2025-05-12,669600
-C009,Consulting Services,S806,McKinsey,USA,Americas,2025-01-20,1998000
-C009,Consulting Services,S807,BCG,USA,Americas,2025-03-15,1814400
-C009,Consulting Services,S808,Deloitte,USA,Americas,2025-05-22,1641600
-C009,PR Services,S809,Edelman,USA,Americas,2025-02-18,518400
-C009,PR Services,S810,Weber Shandwick,USA,Americas,2025-06-20,561600
-C010,Office Supplies,S901,Staples,USA,Americas,2025-01-08,91800
-C010,Office Supplies,S901,Staples,USA,Americas,2025-04-12,99360
-C010,Office Supplies,S901,Staples,USA,Americas,2025-07-18,95040
-C010,Office Supplies,S902,Office Depot,USA,Americas,2025-02-15,84240
-C010,Office Supplies,S902,Office Depot,USA,Americas,2025-05-20,88560
-C010,Office Furniture,S903,Steelcase,USA,Americas,2025-01-22,486000
-C010,Office Furniture,S903,Steelcase,USA,Americas,2025-07-25,518400
-C010,Office Furniture,S904,Herman Miller,USA,Americas,2025-03-10,453600
-C010,Printing Services,S905,FedEx Office,USA,Americas,2025-02-12,70200
-C010,Printing Services,S905,FedEx Office,USA,Americas,2025-08-15,77760
-C011,Energy - Electricity,S1001,NextEra Energy,USA,Americas,2025-01-10,1350000
-C011,Energy - Electricity,S1001,NextEra Energy,USA,Americas,2025-04-15,1425600
-C011,Energy - Electricity,S1001,NextEra Energy,USA,Americas,2025-07-20,1382400
-C011,Energy - Natural Gas,S1002,Cheniere Energy,USA,Americas,2025-02-12,1058400
-C011,Energy - Natural Gas,S1002,Cheniere Energy,USA,Americas,2025-05-18,1134000
-C011,Renewable Energy,S1003,Vestas,Denmark,Europe,2025-03-15,1998000
-C011,Renewable Energy,S1004,Siemens Gamesa,Spain,Europe,2025-06-20,1857600
-C011,Solar Panels,S1005,First Solar,USA,Americas,2025-01-25,993600
-C011,Solar Panels,S1006,Canadian Solar,Canada,Americas,2025-04-28,950400
-C012,Logistics Services,S1101,DHL,Germany,Europe,2025-01-10,702000
-C012,Logistics Services,S1101,DHL,Germany,Europe,2025-04-15,777600
-C012,Logistics Services,S1101,DHL,Germany,Europe,2025-07-20,734400
-C012,Logistics Services,S1102,FedEx,USA,Americas,2025-02-12,669600
-C012,Logistics Services,S1102,FedEx,USA,Americas,2025-05-18,734400
-C012,Logistics Services,S1103,UPS,USA,Americas,2025-03-22,626400
-C012,Freight Services,S1104,Maersk,Denmark,Europe,2025-01-15,1350000
-C012,Freight Services,S1104,Maersk,Denmark,Europe,2025-06-20,1425600
-C012,Warehousing,S1105,Prologis,USA,Americas,2025-02-18,918000
-C012,Warehousing,S1105,Prologis,USA,Americas,2025-08-22,993600
-C013,Telecommunications,S1201,Verizon,USA,Americas,2025-01-10,626400
-C013,Telecommunications,S1201,Verizon,USA,Americas,2025-07-15,669600
-C013,Telecommunications,S1202,AT&T,USA,Americas,2025-02-12,561600
-C013,Telecommunications,S1203,Vodafone,UK,Europe,2025-03-18,518400
-C013,Internet Services,S1204,Comcast,USA,Americas,2025-01-20,453600
-C013,Internet Services,S1204,Comcast,USA,Americas,2025-07-25,486000
-C014,Legal Services,S1301,Baker McKenzie,USA,Americas,2025-01-15,918000
-C014,Legal Services,S1302,DLA Piper,USA,Americas,2025-03-20,842400
-C014,Legal Services,S1303,Clifford Chance,UK,Europe,2025-05-22,777600
-C014,Accounting Services,S1304,PwC,USA,Americas,2025-02-10,1026000
-C014,Accounting Services,S1305,EY,USA,Americas,2025-06-15,993600
-C014,Accounting Services,S1306,KPMG,USA,Americas,2025-08-20,950400
-C015,HR Services,S1401,ADP,USA,Americas,2025-01-12,410400
-C015,HR Services,S1401,ADP,USA,Americas,2025-07-18,453600
-C015,Recruitment,S1402,Robert Half,USA,Americas,2025-02-15,302400
-C015,Recruitment,S1403,Hays,UK,Europe,2025-04-20,345600
-C015,Training Services,S1404,Skillsoft,USA,Americas,2025-03-10,194400
-C015,Training Services,S1405,Udemy Business,USA,Americas,2025-06-15,237600
+Client_ID,Sector,Category,SubCategory,Supplier_ID,Supplier_Name,Supplier_Country,Supplier_Region,Supplier_City,Transaction_Date,Spend_USD,Contract_Type,Payment_Terms,Quality_Rating,Delivery_Rating,Risk_Score
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,Kuala Lumpur,2025-01-15,669600,Annual Contract,Net 30,4.5,4.2,MEDIUM
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,Kuala Lumpur,2025-03-22,772200,Annual Contract,Net 30,4.5,4.3,MEDIUM
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S001,Malaya Agri Oils,Malaysia,APAC,Kuala Lumpur,2025-06-18,698400,Annual Contract,Net 30,4.6,4.4,MEDIUM
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,Kota Kinabalu,2025-02-03,766800,Spot Purchase,Net 45,4.3,4.0,MEDIUM
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S002,Borneo Nutrients,Malaysia,APAC,Kota Kinabalu,2025-05-14,712800,Spot Purchase,Net 45,4.2,4.1,MEDIUM
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S003,Thai Rice Oil Co,Thailand,APAC,Bangkok,2025-04-08,524400,Annual Contract,Net 30,4.4,4.5,LOW
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S004,Ricela Health Foods,India,APAC,Mumbai,2025-01-25,486000,Spot Purchase,Net 60,4.1,3.9,MEDIUM
+C001,Food & Beverages,Edible Oils,Rice Bran Oil,S004,Ricela Health Foods,India,APAC,Mumbai,2025-07-12,518400,Spot Purchase,Net 60,4.2,4.0,MEDIUM
+C001,Food & Beverages,Edible Oils,Sunflower Oil,S005,Golden Sun Oils,Ukraine,Europe,Kyiv,2025-01-20,486000,Annual Contract,Net 45,4.6,3.8,HIGH
+C001,Food & Beverages,Edible Oils,Sunflower Oil,S005,Golden Sun Oils,Ukraine,Europe,Kyiv,2025-04-15,561600,Annual Contract,Net 45,4.5,3.7,HIGH
+C001,Food & Beverages,Edible Oils,Sunflower Oil,S006,Kernel Trade,Ukraine,Europe,Zaporizhzhia,2025-02-28,432000,Spot Purchase,Net 30,4.4,3.6,HIGH
+C001,Food & Beverages,Edible Oils,Sunflower Oil,S007,Cargill Sunflower,Argentina,Americas,Buenos Aires,2025-03-18,378000,Annual Contract,Net 30,4.7,4.4,LOW
+C001,Food & Beverages,Edible Oils,Sunflower Oil,S008,ADM Argentina,Argentina,Americas,Rosario,2025-05-22,410400,Annual Contract,Net 30,4.8,4.5,LOW
+C001,Food & Beverages,Edible Oils,Palm Oil,S009,Indo Palm Corp,Indonesia,APAC,Jakarta,2025-02-10,410400,Annual Contract,Net 30,4.3,4.2,MEDIUM
+C001,Food & Beverages,Edible Oils,Palm Oil,S009,Indo Palm Corp,Indonesia,APAC,Jakarta,2025-05-22,453600,Annual Contract,Net 30,4.4,4.3,MEDIUM
+C001,Food & Beverages,Edible Oils,Palm Oil,S010,Wilmar International,Singapore,APAC,Singapore,2025-01-18,594000,Annual Contract,Net 30,4.8,4.7,LOW
+C001,Food & Beverages,Edible Oils,Palm Oil,S010,Wilmar International,Singapore,APAC,Singapore,2025-04-25,626400,Annual Contract,Net 30,4.8,4.6,LOW
+C001,Food & Beverages,Edible Oils,Palm Oil,S011,Sime Darby Oils,Malaysia,APAC,Kuala Lumpur,2025-03-12,486000,Annual Contract,Net 45,4.5,4.4,MEDIUM
+C001,Food & Beverages,Edible Oils,Olive Oil,S012,Mediterranean Oils,Spain,Europe,Seville,2025-03-05,313200,Annual Contract,Net 30,4.9,4.6,LOW
+C001,Food & Beverages,Edible Oils,Olive Oil,S012,Mediterranean Oils,Spain,Europe,Seville,2025-06-18,345600,Annual Contract,Net 30,4.9,4.7,LOW
+C001,Food & Beverages,Edible Oils,Olive Oil,S013,Deoleo Premium,Italy,Europe,Rome,2025-04-22,291600,Annual Contract,Net 45,4.8,4.5,LOW
+C001,Food & Beverages,Edible Oils,Olive Oil,S014,Greek Gold Olive,Greece,Europe,Athens,2025-02-14,259200,Spot Purchase,Net 30,4.7,4.4,LOW
+C001,Food & Beverages,Edible Oils,Soybean Oil,S015,American Soy Co,USA,Americas,Chicago,2025-01-18,378000,Annual Contract,Net 30,4.6,4.5,LOW
+C001,Food & Beverages,Edible Oils,Soybean Oil,S015,American Soy Co,USA,Americas,Chicago,2025-04-28,410400,Annual Contract,Net 30,4.6,4.6,LOW
+C001,Food & Beverages,Edible Oils,Soybean Oil,S016,Bunge Ltd,Brazil,Americas,Sao Paulo,2025-02-22,345600,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C001,Food & Beverages,Edible Oils,Soybean Oil,S017,Louis Dreyfus Soy,Brazil,Americas,Porto Alegre,2025-05-15,324000,Spot Purchase,Net 30,4.4,4.2,MEDIUM
+C001,Food & Beverages,Edible Oils,Canola Oil,S018,Richardson Oilseed,Canada,Americas,Winnipeg,2025-01-28,302400,Annual Contract,Net 30,4.7,4.6,LOW
+C001,Food & Beverages,Edible Oils,Canola Oil,S018,Richardson Oilseed,Canada,Americas,Winnipeg,2025-06-12,334800,Annual Contract,Net 30,4.7,4.7,LOW
+C001,Food & Beverages,Edible Oils,Canola Oil,S019,Viterra Canada,Canada,Americas,Calgary,2025-03-08,280800,Annual Contract,Net 30,4.6,4.5,LOW
+C001,Food & Beverages,Edible Oils,Coconut Oil,S020,Philippine Coconut,Philippines,APAC,Manila,2025-02-05,237600,Annual Contract,Net 45,4.3,4.0,MEDIUM
+C001,Food & Beverages,Edible Oils,Coconut Oil,S021,Sri Lanka Coco,Sri Lanka,APAC,Colombo,2025-04-18,216000,Spot Purchase,Net 60,4.2,3.8,MEDIUM
+C001,Food & Beverages,Edible Oils,Peanut Oil,S022,Shandong Luhua,China,APAC,Qingdao,2025-03-22,194400,Annual Contract,Net 30,4.4,4.2,MEDIUM
+C001,Food & Beverages,Grains & Cereals,Wheat,S023,Archer Daniels Midland,USA,Americas,Chicago,2025-01-10,1296000,Annual Contract,Net 30,4.8,4.7,LOW
+C001,Food & Beverages,Grains & Cereals,Wheat,S023,Archer Daniels Midland,USA,Americas,Chicago,2025-04-15,1382400,Annual Contract,Net 30,4.8,4.6,LOW
+C001,Food & Beverages,Grains & Cereals,Wheat,S024,Glencore Agriculture,Australia,APAC,Sydney,2025-02-18,1134000,Annual Contract,Net 45,4.6,4.4,LOW
+C001,Food & Beverages,Grains & Cereals,Wheat,S025,Nidera Holdings,Netherlands,Europe,Rotterdam,2025-03-25,993600,Annual Contract,Net 30,4.7,4.5,LOW
+C001,Food & Beverages,Grains & Cereals,Rice,S026,Olam International,Singapore,APAC,Singapore,2025-01-22,864000,Annual Contract,Net 30,4.7,4.5,LOW
+C001,Food & Beverages,Grains & Cereals,Rice,S026,Olam International,Singapore,APAC,Singapore,2025-05-08,918000,Annual Contract,Net 30,4.7,4.6,LOW
+C001,Food & Beverages,Grains & Cereals,Rice,S027,KRBL Ltd,India,APAC,New Delhi,2025-02-28,756000,Annual Contract,Net 45,4.5,4.2,MEDIUM
+C001,Food & Beverages,Grains & Cereals,Rice,S028,Vietnam Food Corp,Vietnam,APAC,Ho Chi Minh City,2025-04-12,702000,Spot Purchase,Net 30,4.4,4.3,MEDIUM
+C001,Food & Beverages,Grains & Cereals,Corn/Maize,S029,Cargill Corn,USA,Americas,Minneapolis,2025-01-15,1058400,Annual Contract,Net 30,4.8,4.7,LOW
+C001,Food & Beverages,Grains & Cereals,Corn/Maize,S029,Cargill Corn,USA,Americas,Minneapolis,2025-06-20,1134000,Annual Contract,Net 30,4.8,4.8,LOW
+C001,Food & Beverages,Grains & Cereals,Corn/Maize,S030,Bunge Corn Brazil,Brazil,Americas,Sao Paulo,2025-03-18,896400,Annual Contract,Net 45,4.6,4.4,MEDIUM
+C001,Food & Beverages,Proteins,Poultry,S031,Tyson Foods,USA,Americas,Springdale,2025-01-12,1782000,Annual Contract,Net 30,4.7,4.6,LOW
+C001,Food & Beverages,Proteins,Poultry,S031,Tyson Foods,USA,Americas,Springdale,2025-04-18,1890000,Annual Contract,Net 30,4.7,4.7,LOW
+C001,Food & Beverages,Proteins,Poultry,S032,BRF S.A.,Brazil,Americas,Sao Paulo,2025-02-25,1566000,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C001,Food & Beverages,Proteins,Poultry,S033,Pilgrim's Pride,USA,Americas,Greeley,2025-03-22,1404000,Annual Contract,Net 30,4.6,4.5,LOW
+C001,Food & Beverages,Proteins,Beef,S034,JBS S.A.,Brazil,Americas,Sao Paulo,2025-01-18,2376000,Annual Contract,Net 30,4.6,4.4,MEDIUM
+C001,Food & Beverages,Proteins,Beef,S034,JBS S.A.,Brazil,Americas,Sao Paulo,2025-05-22,2538000,Annual Contract,Net 30,4.6,4.5,MEDIUM
+C001,Food & Beverages,Proteins,Beef,S035,Cargill Beef,USA,Americas,Wichita,2025-02-28,2106000,Annual Contract,Net 30,4.8,4.7,LOW
+C001,Food & Beverages,Proteins,Beef,S036,Australian Meat Group,Australia,APAC,Brisbane,2025-04-15,1814400,Annual Contract,Net 45,4.7,4.4,LOW
+C001,Food & Beverages,Proteins,Seafood,S037,Thai Union Group,Thailand,APAC,Bangkok,2025-01-25,1242000,Annual Contract,Net 30,4.5,4.3,MEDIUM
+C001,Food & Beverages,Proteins,Seafood,S037,Thai Union Group,Thailand,APAC,Bangkok,2025-06-12,1350000,Annual Contract,Net 30,4.6,4.4,MEDIUM
+C001,Food & Beverages,Proteins,Seafood,S038,Nippon Suisan,Japan,APAC,Tokyo,2025-03-08,1134000,Annual Contract,Net 45,4.7,4.6,LOW
+C001,Food & Beverages,Dairy Products,Milk & Cream,S039,Fonterra,New Zealand,APAC,Auckland,2025-01-15,1620000,Annual Contract,Net 30,4.8,4.6,LOW
+C001,Food & Beverages,Dairy Products,Milk & Cream,S039,Fonterra,New Zealand,APAC,Auckland,2025-04-22,1728000,Annual Contract,Net 30,4.8,4.7,LOW
+C001,Food & Beverages,Dairy Products,Milk & Cream,S040,FrieslandCampina,Netherlands,Europe,Amersfoort,2025-02-18,1404000,Annual Contract,Net 30,4.7,4.5,LOW
+C001,Food & Beverages,Dairy Products,Cheese,S041,Kraft Heinz Dairy,USA,Americas,Chicago,2025-01-28,972000,Annual Contract,Net 30,4.6,4.5,LOW
+C001,Food & Beverages,Dairy Products,Cheese,S042,Lactalis Group,France,Europe,Laval,2025-03-15,864000,Annual Contract,Net 45,4.7,4.4,LOW
+C001,Food & Beverages,Sweeteners,Sugar,S043,Sudzucker AG,Germany,Europe,Mannheim,2025-01-10,810000,Annual Contract,Net 30,4.6,4.5,LOW
+C001,Food & Beverages,Sweeteners,Sugar,S043,Sudzucker AG,Germany,Europe,Mannheim,2025-05-18,864000,Annual Contract,Net 30,4.6,4.6,LOW
+C001,Food & Beverages,Sweeteners,Sugar,S044,Raizen Energia,Brazil,Americas,Sao Paulo,2025-02-22,756000,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C001,Food & Beverages,Sweeteners,Sugar,S045,Thai Sugar Trading,Thailand,APAC,Bangkok,2025-04-08,648000,Spot Purchase,Net 30,4.4,4.2,MEDIUM
+C001,Food & Beverages,Beverages,Coffee,S046,Nestle Coffee,Switzerland,Europe,Vevey,2025-01-15,1296000,Annual Contract,Net 30,4.9,4.7,LOW
+C001,Food & Beverages,Beverages,Coffee,S046,Nestle Coffee,Switzerland,Europe,Vevey,2025-06-20,1404000,Annual Contract,Net 30,4.9,4.8,LOW
+C001,Food & Beverages,Beverages,Coffee,S047,JDE Peets,Netherlands,Europe,Amsterdam,2025-02-28,1080000,Annual Contract,Net 30,4.7,4.5,LOW
+C001,Food & Beverages,Beverages,Coffee,S048,Colombian Coffee Fed,Colombia,Americas,Bogota,2025-04-12,918000,Annual Contract,Net 45,4.8,4.4,LOW
+C001,Food & Beverages,Beverages,Tea,S049,Unilever Tea,UK,Europe,London,2025-01-22,594000,Annual Contract,Net 30,4.7,4.5,LOW
+C001,Food & Beverages,Beverages,Tea,S050,Tata Global Beverages,India,APAC,Kolkata,2025-03-18,518400,Annual Contract,Net 45,4.5,4.2,MEDIUM
+C001,Food & Beverages,Spices & Seasonings,Pepper,S051,Olam Spices,Vietnam,APAC,Ho Chi Minh City,2025-02-08,324000,Annual Contract,Net 30,4.5,4.3,MEDIUM
+C001,Food & Beverages,Spices & Seasonings,Vanilla,S052,Madagascar Vanilla,Madagascar,Africa,Antananarivo,2025-01-28,486000,Spot Purchase,Net 60,4.4,3.8,HIGH
+C001,Food & Beverages,Spices & Seasonings,Vanilla,S052,Madagascar Vanilla,Madagascar,Africa,Antananarivo,2025-05-15,540000,Spot Purchase,Net 60,4.3,3.7,HIGH
+C001,Food & Beverages,Packaging Materials,Food-Grade Plastics,S053,Berry Global,USA,Americas,Evansville,2025-01-18,648000,Annual Contract,Net 30,4.6,4.5,LOW
+C001,Food & Beverages,Packaging Materials,Food-Grade Plastics,S053,Berry Global,USA,Americas,Evansville,2025-04-25,702000,Annual Contract,Net 30,4.6,4.6,LOW
+C001,Food & Beverages,Packaging Materials,Glass Containers,S054,Owens-Illinois,USA,Americas,Perrysburg,2025-02-12,540000,Annual Contract,Net 30,4.7,4.5,LOW
+C001,Food & Beverages,Packaging Materials,Aluminum Cans,S055,Ball Corporation,USA,Americas,Westminster,2025-03-08,756000,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Hardware,Laptops,S101,Dell Technologies,USA,Americas,Round Rock,2025-01-10,918000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Hardware,Laptops,S101,Dell Technologies,USA,Americas,Round Rock,2025-04-12,993600,Annual Contract,Net 30,4.7,4.7,LOW
+C002,Information Technology,Hardware,Laptops,S101,Dell Technologies,USA,Americas,Round Rock,2025-07-20,842400,Annual Contract,Net 30,4.8,4.6,LOW
+C002,Information Technology,Hardware,Laptops,S102,HP Inc,USA,Americas,Palo Alto,2025-02-15,702000,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Hardware,Laptops,S102,HP Inc,USA,Americas,Palo Alto,2025-05-18,777600,Annual Contract,Net 30,4.6,4.6,LOW
+C002,Information Technology,Hardware,Laptops,S103,Lenovo,China,APAC,Beijing,2025-03-22,626400,Annual Contract,Net 45,4.5,4.4,MEDIUM
+C002,Information Technology,Hardware,Laptops,S103,Lenovo,China,APAC,Beijing,2025-06-14,669600,Annual Contract,Net 45,4.5,4.5,MEDIUM
+C002,Information Technology,Hardware,Laptops,S104,Apple Inc,USA,Americas,Cupertino,2025-01-25,1296000,Annual Contract,Net 30,4.9,4.8,LOW
+C002,Information Technology,Hardware,Laptops,S104,Apple Inc,USA,Americas,Cupertino,2025-04-30,1458000,Annual Contract,Net 30,4.9,4.9,LOW
+C002,Information Technology,Hardware,Desktops,S105,Dell Desktops,USA,Americas,Round Rock,2025-02-08,486000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Hardware,Desktops,S106,HP Desktops,USA,Americas,Palo Alto,2025-03-15,432000,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Hardware,Servers,S107,Cisco Systems,USA,Americas,San Jose,2025-02-08,1058400,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Hardware,Servers,S107,Cisco Systems,USA,Americas,San Jose,2025-08-15,1188000,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Hardware,Servers,S108,HPE Servers,USA,Americas,Houston,2025-03-22,950400,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Hardware,Servers,S109,Dell EMC,USA,Americas,Round Rock,2025-05-18,896400,Annual Contract,Net 30,4.7,4.7,LOW
+C002,Information Technology,Hardware,Servers,S110,IBM Servers,USA,Americas,Armonk,2025-06-25,810000,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Hardware,Network Equipment,S111,Juniper Networks,USA,Americas,Sunnyvale,2025-03-12,486000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Hardware,Network Equipment,S111,Juniper Networks,USA,Americas,Sunnyvale,2025-07-18,540000,Annual Contract,Net 30,4.7,4.7,LOW
+C002,Information Technology,Hardware,Network Equipment,S112,Huawei,China,APAC,Shenzhen,2025-05-20,410400,Annual Contract,Net 45,4.5,4.4,HIGH
+C002,Information Technology,Hardware,Network Equipment,S113,Arista Networks,USA,Americas,Santa Clara,2025-04-08,378000,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Hardware,Storage Systems,S114,NetApp,USA,Americas,Sunnyvale,2025-01-28,648000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Hardware,Storage Systems,S115,Pure Storage,USA,Americas,Mountain View,2025-04-15,594000,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Hardware,Peripherals,S116,Logitech,Switzerland,Europe,Lausanne,2025-02-12,194400,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Hardware,Peripherals,S117,LG Electronics,South Korea,APAC,Seoul,2025-05-08,237600,Annual Contract,Net 45,4.5,4.4,LOW
+C002,Information Technology,Cloud Services,IaaS,S201,AWS,USA,Americas,Seattle,2025-01-05,486000,Annual Contract,Net 30,4.9,4.8,LOW
+C002,Information Technology,Cloud Services,IaaS,S201,AWS,USA,Americas,Seattle,2025-02-10,561600,Annual Contract,Net 30,4.9,4.8,LOW
+C002,Information Technology,Cloud Services,IaaS,S201,AWS,USA,Americas,Seattle,2025-03-15,518400,Annual Contract,Net 30,4.9,4.9,LOW
+C002,Information Technology,Cloud Services,IaaS,S201,AWS,USA,Americas,Seattle,2025-04-20,594000,Annual Contract,Net 30,4.9,4.9,LOW
+C002,Information Technology,Cloud Services,IaaS,S201,AWS,USA,Americas,Seattle,2025-05-25,637200,Annual Contract,Net 30,4.9,4.8,LOW
+C002,Information Technology,Cloud Services,IaaS,S201,AWS,USA,Americas,Seattle,2025-06-30,669600,Annual Contract,Net 30,4.9,4.9,LOW
+C002,Information Technology,Cloud Services,IaaS,S202,Microsoft Azure,USA,Americas,Redmond,2025-01-12,410400,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Cloud Services,IaaS,S202,Microsoft Azure,USA,Americas,Redmond,2025-03-18,453600,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Cloud Services,IaaS,S202,Microsoft Azure,USA,Americas,Redmond,2025-05-22,496800,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Cloud Services,IaaS,S203,Google Cloud,USA,Americas,Mountain View,2025-02-14,345600,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Cloud Services,IaaS,S203,Google Cloud,USA,Americas,Mountain View,2025-04-28,378000,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Cloud Services,PaaS,S204,Heroku,USA,Americas,San Francisco,2025-01-18,162000,Annual Contract,Net 30,4.5,4.4,LOW
+C002,Information Technology,Cloud Services,PaaS,S205,Red Hat OpenShift,USA,Americas,Raleigh,2025-03-25,216000,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Cloud Services,SaaS,S206,Salesforce,USA,Americas,San Francisco,2025-01-08,302400,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Cloud Services,SaaS,S206,Salesforce,USA,Americas,San Francisco,2025-07-15,334800,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Cloud Services,SaaS,S207,Adobe Creative Cloud,USA,Americas,San Jose,2025-02-20,162000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Cloud Services,SaaS,S208,Microsoft 365,USA,Americas,Redmond,2025-01-15,237600,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Cloud Services,SaaS,S208,Microsoft 365,USA,Americas,Redmond,2025-07-20,259200,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Cloud Services,SaaS,S209,Workday,USA,Americas,Pleasanton,2025-03-12,194400,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Cloud Services,Cloud Storage,S210,Dropbox Business,USA,Americas,San Francisco,2025-02-08,108000,Annual Contract,Net 30,4.5,4.5,LOW
+C002,Information Technology,Cloud Services,Cloud Storage,S211,Box Enterprise,USA,Americas,Redwood City,2025-04-18,129600,Annual Contract,Net 30,4.6,4.6,LOW
+C002,Information Technology,Software,Enterprise Software,S301,Oracle,USA,Americas,Austin,2025-01-22,1026000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Software,Enterprise Software,S301,Oracle,USA,Americas,Austin,2025-07-18,1101600,Annual Contract,Net 30,4.7,4.7,LOW
+C002,Information Technology,Software,Enterprise Software,S302,SAP,Germany,Europe,Walldorf,2025-02-10,1242000,Annual Contract,Net 30,4.8,4.6,LOW
+C002,Information Technology,Software,Enterprise Software,S302,SAP,Germany,Europe,Walldorf,2025-08-22,1296000,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Software,Enterprise Software,S303,IBM,USA,Americas,Armonk,2025-03-15,734400,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Software,Productivity Software,S304,Microsoft Office,USA,Americas,Redmond,2025-01-10,486000,Annual Contract,Net 30,4.9,4.8,LOW
+C002,Information Technology,Software,Productivity Software,S305,Google Workspace,USA,Americas,Mountain View,2025-02-15,378000,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Software,Database Software,S306,Oracle Database,USA,Americas,Austin,2025-01-28,756000,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Software,Database Software,S307,Microsoft SQL Server,USA,Americas,Redmond,2025-03-22,648000,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Software,Development Tools,S308,JetBrains,Czech Republic,Europe,Prague,2025-02-18,162000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Software,Development Tools,S309,GitHub Enterprise,USA,Americas,San Francisco,2025-04-12,216000,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Cybersecurity,Endpoint Security,S310,Palo Alto Networks,USA,Americas,Santa Clara,2025-01-28,453600,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Cybersecurity,Endpoint Security,S310,Palo Alto Networks,USA,Americas,Santa Clara,2025-07-30,486000,Annual Contract,Net 30,4.8,4.8,LOW
+C002,Information Technology,Cybersecurity,Endpoint Security,S311,CrowdStrike,USA,Americas,Sunnyvale,2025-02-18,410400,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Cybersecurity,Network Security,S312,Fortinet,USA,Americas,Sunnyvale,2025-04-12,345600,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Cybersecurity,Network Security,S313,Check Point,Israel,Middle East,Tel Aviv,2025-03-08,324000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Cybersecurity,Identity Management,S314,Okta,USA,Americas,San Francisco,2025-01-15,259200,Annual Contract,Net 30,4.8,4.7,LOW
+C002,Information Technology,Cybersecurity,Identity Management,S315,Ping Identity,USA,Americas,Denver,2025-04-22,216000,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Cybersecurity,Security Operations,S316,Splunk,USA,Americas,San Francisco,2025-02-25,378000,Annual Contract,Net 30,4.7,4.6,LOW
+C002,Information Technology,Telecommunications,Mobile Services,S317,Verizon,USA,Americas,New York,2025-01-10,626400,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Telecommunications,Mobile Services,S317,Verizon,USA,Americas,New York,2025-07-15,669600,Annual Contract,Net 30,4.6,4.6,LOW
+C002,Information Technology,Telecommunications,Mobile Services,S318,AT&T,USA,Americas,Dallas,2025-02-12,561600,Annual Contract,Net 30,4.5,4.4,LOW
+C002,Information Technology,Telecommunications,Mobile Services,S319,Vodafone,UK,Europe,London,2025-03-18,518400,Annual Contract,Net 30,4.6,4.5,LOW
+C002,Information Technology,Telecommunications,Internet Services,S320,Comcast Business,USA,Americas,Philadelphia,2025-01-20,453600,Annual Contract,Net 30,4.5,4.4,LOW
+C002,Information Technology,Telecommunications,Internet Services,S320,Comcast Business,USA,Americas,Philadelphia,2025-07-25,486000,Annual Contract,Net 30,4.5,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S401,ArcelorMittal,Luxembourg,Europe,Luxembourg City,2025-01-10,1944000,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S401,ArcelorMittal,Luxembourg,Europe,Luxembourg City,2025-04-15,2106000,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S401,ArcelorMittal,Luxembourg,Europe,Luxembourg City,2025-07-20,1857600,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S402,Tata Steel,India,APAC,Mumbai,2025-02-12,1782000,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S402,Tata Steel,India,APAC,Mumbai,2025-05-18,1922400,Annual Contract,Net 45,4.5,4.4,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S403,Baosteel,China,APAC,Shanghai,2025-03-22,1706400,Annual Contract,Net 45,4.4,4.2,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S403,Baosteel,China,APAC,Shanghai,2025-06-25,1749600,Annual Contract,Net 45,4.4,4.3,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S404,Nippon Steel,Japan,APAC,Tokyo,2025-01-28,1566000,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Steel,S405,POSCO,South Korea,APAC,Pohang,2025-04-08,1490400,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,S406,Alcoa,USA,Americas,Pittsburgh,2025-01-15,1058400,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,S406,Alcoa,USA,Americas,Pittsburgh,2025-04-20,1134000,Annual Contract,Net 30,4.7,4.7,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,S407,Rio Tinto Alcan,Canada,Americas,Montreal,2025-02-18,993600,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,S408,Norsk Hydro,Norway,Europe,Oslo,2025-03-25,918000,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Copper,S409,Freeport-McMoRan,USA,Americas,Phoenix,2025-02-08,777600,Annual Contract,Net 30,4.6,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Copper,S409,Freeport-McMoRan,USA,Americas,Phoenix,2025-08-12,842400,Annual Contract,Net 30,4.6,4.6,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Copper,S410,Codelco,Chile,Americas,Santiago,2025-03-15,896400,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Metals,Copper,S411,BHP Copper,Australia,APAC,Melbourne,2025-05-22,810000,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Zinc,S412,Glencore Zinc,Switzerland,Europe,Zug,2025-01-22,540000,Annual Contract,Net 30,4.6,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Metals,Nickel,S413,Vale Nickel,Brazil,Americas,Rio de Janeiro,2025-02-28,702000,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Metals,Nickel,S414,Norilsk Nickel,Russia,Europe,Moscow,2025-04-18,648000,Annual Contract,Net 60,4.3,3.8,HIGH
+C003,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,S415,BASF,Germany,Europe,Ludwigshafen,2025-03-10,702000,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,S416,Dow Chemical,USA,Americas,Midland,2025-05-15,745200,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,S417,SABIC,Saudi Arabia,Middle East,Riyadh,2025-01-18,669600,Annual Contract,Net 45,4.6,4.4,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,S418,LyondellBasell,Netherlands,Europe,Rotterdam,2025-02-22,594000,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,S419,ExxonMobil Chemical,USA,Americas,Houston,2025-04-12,626400,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,Raw Materials - Plastics,PVC,S420,Formosa Plastics,Taiwan,APAC,Taipei,2025-03-08,540000,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C003,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,S421,DuPont,USA,Americas,Wilmington,2025-01-28,486000,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,Chemicals,Industrial Chemicals,S422,BASF Chemicals,Germany,Europe,Ludwigshafen,2025-01-15,1080000,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Chemicals,Industrial Chemicals,S422,BASF Chemicals,Germany,Europe,Ludwigshafen,2025-05-20,1134000,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,Chemicals,Industrial Chemicals,S423,Dow Industrial,USA,Americas,Midland,2025-02-25,993600,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,Chemicals,Specialty Chemicals,S424,Evonik,Germany,Europe,Essen,2025-03-18,702000,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Chemicals,Specialty Chemicals,S425,Huntsman,USA,Americas,The Woodlands,2025-05-08,648000,Annual Contract,Net 30,4.6,4.5,LOW
+C003,Manufacturing & Industrial,Chemicals,Petrochemicals,S426,Shell Chemicals,Netherlands,Europe,The Hague,2025-01-22,864000,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Chemicals,Petrochemicals,S427,Chevron Phillips,USA,Americas,Houston,2025-04-15,810000,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,S428,Henkel,Germany,Europe,Dusseldorf,2025-02-12,432000,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,S429,3M Adhesives,USA,Americas,St. Paul,2025-06-18,486000,Annual Contract,Net 30,4.9,4.8,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,S501,Siemens,Germany,Europe,Munich,2025-01-18,2376000,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,S501,Siemens,Germany,Europe,Munich,2025-07-22,2538000,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,S502,ABB,Switzerland,Europe,Zurich,2025-02-25,2106000,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,S503,Schneider Electric,France,Europe,Paris,2025-04-10,1814400,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,S504,Rockwell Automation,USA,Americas,Milwaukee,2025-05-28,1620000,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,S505,Caterpillar,USA,Americas,Peoria,2025-01-20,1998000,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,S505,Caterpillar,USA,Americas,Peoria,2025-06-15,2073600,Annual Contract,Net 30,4.8,4.8,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,S506,Komatsu,Japan,APAC,Tokyo,2025-03-12,1706400,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,S507,John Deere,USA,Americas,Moline,2025-04-25,1566000,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,S508,Fanuc,Japan,APAC,Yamanashi,2025-02-18,1350000,Annual Contract,Net 30,4.9,4.7,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,S508,Fanuc,Japan,APAC,Yamanashi,2025-07-25,1458000,Annual Contract,Net 30,4.9,4.8,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,S509,KUKA,Germany,Europe,Augsburg,2025-05-20,1274400,Annual Contract,Net 30,4.7,4.5,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,S510,ABB Robotics,Switzerland,Europe,Zurich,2025-03-28,1188000,Annual Contract,Net 30,4.8,4.6,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Material Handling,S511,Toyota Material Handling,Japan,APAC,Nagoya,2025-01-25,864000,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,Equipment & Machinery,Material Handling,S512,Crown Equipment,USA,Americas,New Bremen,2025-04-18,756000,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,MRO Supplies,Industrial Tools,S513,Stanley Black & Decker,USA,Americas,New Britain,2025-02-08,324000,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,MRO Supplies,Safety Equipment,S514,Honeywell Safety,USA,Americas,Charlotte,2025-01-15,432000,Annual Contract,Net 30,4.8,4.7,LOW
+C003,Manufacturing & Industrial,MRO Supplies,Safety Equipment,S515,3M Safety,USA,Americas,St. Paul,2025-04-22,486000,Annual Contract,Net 30,4.9,4.8,LOW
+C003,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,S516,Shell Lubricants,Netherlands,Europe,The Hague,2025-03-18,270000,Annual Contract,Net 30,4.7,4.6,LOW
+C003,Manufacturing & Industrial,MRO Supplies,Spare Parts,S517,Grainger,USA,Americas,Lake Forest,2025-02-25,540000,Annual Contract,Net 30,4.6,4.5,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S601,Pfizer,USA,Americas,New York,2025-01-12,3456000,Annual Contract,Net 30,4.9,4.7,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S601,Pfizer,USA,Americas,New York,2025-04-15,3726000,Annual Contract,Net 30,4.9,4.8,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S601,Pfizer,USA,Americas,New York,2025-07-18,3542400,Annual Contract,Net 30,4.9,4.7,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S602,Johnson & Johnson,USA,Americas,New Brunswick,2025-02-10,3186000,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S602,Johnson & Johnson,USA,Americas,New Brunswick,2025-05-22,3348000,Annual Contract,Net 30,4.8,4.8,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S603,Novartis,Switzerland,Europe,Basel,2025-03-08,2894400,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S604,Roche,Switzerland,Europe,Basel,2025-04-12,2721600,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,S605,Merck & Co,USA,Americas,Kenilworth,2025-05-18,2592000,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,S606,Teva Pharmaceutical,Israel,Middle East,Tel Aviv,2025-01-18,1296000,Annual Contract,Net 30,4.5,4.3,MEDIUM
+C004,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,S607,Mylan,USA,Americas,Canonsburg,2025-03-22,1134000,Annual Contract,Net 30,4.5,4.4,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,S608,Sun Pharma,India,APAC,Mumbai,2025-02-15,1026000,Annual Contract,Net 45,4.4,4.2,MEDIUM
+C004,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,S609,Sandoz,Switzerland,Europe,Basel,2025-05-08,1188000,Annual Contract,Net 30,4.6,4.5,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,S610,Moderna,USA,Americas,Cambridge,2025-01-25,1944000,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,S611,AstraZeneca,UK,Europe,Cambridge,2025-04-18,1782000,Annual Contract,Net 30,4.7,4.5,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,S612,GSK Vaccines,UK,Europe,London,2025-06-22,1620000,Annual Contract,Net 30,4.7,4.6,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Biologics,S613,AbbVie,USA,Americas,North Chicago,2025-02-28,2160000,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,Biologics,S614,Amgen,USA,Americas,Thousand Oaks,2025-05-15,1998000,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,S615,Bayer Consumer,Germany,Europe,Leverkusen,2025-01-10,648000,Annual Contract,Net 30,4.6,4.5,LOW
+C004,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,S616,Procter & Gamble Health,USA,Americas,Cincinnati,2025-03-18,594000,Annual Contract,Net 30,4.7,4.6,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,S617,Siemens Healthineers,Germany,Europe,Erlangen,2025-01-20,1998000,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,S617,Siemens Healthineers,Germany,Europe,Erlangen,2025-06-25,2073600,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,S618,GE Healthcare,USA,Americas,Chicago,2025-03-15,1782000,Annual Contract,Net 30,4.7,4.5,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,S619,Philips Healthcare,Netherlands,Europe,Amsterdam,2025-05-22,1620000,Annual Contract,Net 30,4.7,4.6,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,S620,Medtronic,USA,Americas,Minneapolis,2025-02-08,1566000,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,S621,Stryker,USA,Americas,Kalamazoo,2025-04-25,1458000,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Implants,S622,Boston Scientific,USA,Americas,Marlborough,2025-01-15,1350000,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Implants,S623,Zimmer Biomet,USA,Americas,Warsaw,2025-03-28,1242000,Annual Contract,Net 30,4.7,4.5,LOW
+C004,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,S624,Masimo,USA,Americas,Irvine,2025-02-22,756000,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,S625,Cardinal Health,USA,Americas,Dublin,2025-01-10,1058400,Annual Contract,Net 30,4.6,4.5,LOW
+C004,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,S625,Cardinal Health,USA,Americas,Dublin,2025-07-15,1134000,Annual Contract,Net 30,4.6,4.6,LOW
+C004,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,S626,McKesson,USA,Americas,San Francisco,2025-04-18,993600,Annual Contract,Net 30,4.6,4.5,LOW
+C004,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,S627,Becton Dickinson,USA,Americas,Franklin Lakes,2025-02-28,918000,Annual Contract,Net 30,4.7,4.6,LOW
+C004,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,S628,Thermo Fisher Scientific,USA,Americas,Waltham,2025-01-22,864000,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,S629,Merck Millipore,Germany,Europe,Darmstadt,2025-03-15,756000,Annual Contract,Net 30,4.7,4.5,LOW
+C004,Healthcare & Life Sciences,Medical Supplies,Wound Care,S630,Smith & Nephew,UK,Europe,London,2025-02-18,540000,Annual Contract,Net 30,4.7,4.6,LOW
+C004,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,S631,Agilent Technologies,USA,Americas,Santa Clara,2025-01-28,1296000,Annual Contract,Net 30,4.8,4.7,LOW
+C004,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,S632,Waters Corporation,USA,Americas,Milford,2025-04-12,1134000,Annual Contract,Net 30,4.8,4.6,LOW
+C004,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,S633,PerkinElmer,USA,Americas,Waltham,2025-02-25,864000,Annual Contract,Net 30,4.7,4.5,LOW
+C005,Energy & Utilities,Electricity,Grid Electricity,S701,NextEra Energy,USA,Americas,Juno Beach,2025-01-10,1350000,Annual Contract,Net 30,4.7,4.6,LOW
+C005,Energy & Utilities,Electricity,Grid Electricity,S701,NextEra Energy,USA,Americas,Juno Beach,2025-04-15,1425600,Annual Contract,Net 30,4.7,4.7,LOW
+C005,Energy & Utilities,Electricity,Grid Electricity,S701,NextEra Energy,USA,Americas,Juno Beach,2025-07-20,1382400,Annual Contract,Net 30,4.7,4.6,LOW
+C005,Energy & Utilities,Electricity,Grid Electricity,S702,Duke Energy,USA,Americas,Charlotte,2025-02-18,1242000,Annual Contract,Net 30,4.6,4.5,LOW
+C005,Energy & Utilities,Electricity,Grid Electricity,S703,Enel,Italy,Europe,Rome,2025-03-25,1134000,Annual Contract,Net 30,4.6,4.4,LOW
+C005,Energy & Utilities,Electricity,Renewable Electricity,S704,Orsted,Denmark,Europe,Copenhagen,2025-01-15,918000,Annual Contract,Net 30,4.8,4.6,LOW
+C005,Energy & Utilities,Electricity,Renewable Electricity,S705,Iberdrola Renewables,Spain,Europe,Bilbao,2025-04-22,864000,Annual Contract,Net 30,4.7,4.5,LOW
+C005,Energy & Utilities,Electricity,Backup Power,S706,Cummins Power,USA,Americas,Columbus,2025-02-08,540000,Annual Contract,Net 30,4.7,4.6,LOW
+C005,Energy & Utilities,Electricity,Backup Power,S707,Caterpillar Power,USA,Americas,Peoria,2025-05-18,594000,Annual Contract,Net 30,4.8,4.7,LOW
+C005,Energy & Utilities,Fuels,Natural Gas,S708,Cheniere Energy,USA,Americas,Houston,2025-02-12,1058400,Annual Contract,Net 30,4.7,4.6,LOW
+C005,Energy & Utilities,Fuels,Natural Gas,S708,Cheniere Energy,USA,Americas,Houston,2025-05-18,1134000,Annual Contract,Net 30,4.7,4.7,LOW
+C005,Energy & Utilities,Fuels,Natural Gas,S709,Shell Gas,Netherlands,Europe,The Hague,2025-03-22,993600,Annual Contract,Net 30,4.8,4.6,LOW
+C005,Energy & Utilities,Fuels,Diesel,S710,BP Fuels,UK,Europe,London,2025-01-18,702000,Annual Contract,Net 30,4.6,4.5,LOW
+C005,Energy & Utilities,Fuels,Diesel,S711,ExxonMobil Fuels,USA,Americas,Houston,2025-04-25,756000,Annual Contract,Net 30,4.7,4.6,LOW
+C005,Energy & Utilities,Fuels,Aviation Fuel,S712,Shell Aviation,Netherlands,Europe,The Hague,2025-02-28,864000,Annual Contract,Net 30,4.8,4.7,LOW
+C005,Energy & Utilities,Fuels,Biofuels,S713,Neste,Finland,Europe,Espoo,2025-01-22,594000,Annual Contract,Net 30,4.7,4.5,LOW
+C005,Energy & Utilities,Renewable Equipment,Solar Panels,S714,First Solar,USA,Americas,Tempe,2025-01-25,993600,Annual Contract,Net 30,4.7,4.6,LOW
+C005,Energy & Utilities,Renewable Equipment,Solar Panels,S714,First Solar,USA,Americas,Tempe,2025-06-18,1080000,Annual Contract,Net 30,4.7,4.7,LOW
+C005,Energy & Utilities,Renewable Equipment,Solar Panels,S715,Canadian Solar,Canada,Americas,Guelph,2025-04-28,950400,Annual Contract,Net 30,4.6,4.5,LOW
+C005,Energy & Utilities,Renewable Equipment,Solar Panels,S716,JinkoSolar,China,APAC,Shanghai,2025-02-15,864000,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C005,Energy & Utilities,Renewable Equipment,Wind Turbines,S717,Vestas,Denmark,Europe,Aarhus,2025-03-15,1998000,Annual Contract,Net 30,4.8,4.6,LOW
+C005,Energy & Utilities,Renewable Equipment,Wind Turbines,S718,Siemens Gamesa,Spain,Europe,Zamudio,2025-06-20,1857600,Annual Contract,Net 30,4.8,4.7,LOW
+C005,Energy & Utilities,Renewable Equipment,Wind Turbines,S719,GE Renewable Energy,USA,Americas,Schenectady,2025-04-08,1706400,Annual Contract,Net 30,4.7,4.5,LOW
+C005,Energy & Utilities,Renewable Equipment,Battery Storage,S720,Tesla Energy,USA,Americas,Palo Alto,2025-01-28,1350000,Annual Contract,Net 30,4.8,4.6,LOW
+C005,Energy & Utilities,Renewable Equipment,Battery Storage,S721,LG Energy Solution,South Korea,APAC,Seoul,2025-05-12,1242000,Annual Contract,Net 45,4.7,4.5,LOW
+C005,Energy & Utilities,Renewable Equipment,Battery Storage,S722,CATL,China,APAC,Ningde,2025-03-22,1134000,Annual Contract,Net 45,4.5,4.3,MEDIUM
+C006,Construction & Real Estate,Building Materials,Cement,S801,Cemex,Mexico,Americas,Monterrey,2025-01-15,1566000,Annual Contract,Net 30,4.6,4.4,LOW
+C006,Construction & Real Estate,Building Materials,Cement,S801,Cemex,Mexico,Americas,Monterrey,2025-04-20,1641600,Annual Contract,Net 30,4.6,4.5,LOW
+C006,Construction & Real Estate,Building Materials,Cement,S801,Cemex,Mexico,Americas,Monterrey,2025-07-25,1490400,Annual Contract,Net 30,4.6,4.4,LOW
+C006,Construction & Real Estate,Building Materials,Cement,S802,LafargeHolcim,Switzerland,Europe,Jona,2025-02-12,1458000,Annual Contract,Net 30,4.7,4.5,LOW
+C006,Construction & Real Estate,Building Materials,Cement,S802,LafargeHolcim,Switzerland,Europe,Jona,2025-05-18,1533600,Annual Contract,Net 30,4.7,4.6,LOW
+C006,Construction & Real Estate,Building Materials,Cement,S803,HeidelbergCement,Germany,Europe,Heidelberg,2025-03-25,1350000,Annual Contract,Net 30,4.7,4.5,LOW
+C006,Construction & Real Estate,Building Materials,Concrete,S804,Ready Mix USA,USA,Americas,Houston,2025-01-22,756000,Annual Contract,Net 30,4.5,4.4,LOW
+C006,Construction & Real Estate,Building Materials,Concrete,S805,Martin Marietta,USA,Americas,Raleigh,2025-04-12,810000,Annual Contract,Net 30,4.6,4.5,LOW
+C006,Construction & Real Estate,Building Materials,Lumber,S806,Weyerhaeuser,USA,Americas,Seattle,2025-01-18,918000,Annual Contract,Net 30,4.7,4.6,LOW
+C006,Construction & Real Estate,Building Materials,Lumber,S806,Weyerhaeuser,USA,Americas,Seattle,2025-06-28,993600,Annual Contract,Net 30,4.7,4.7,LOW
+C006,Construction & Real Estate,Building Materials,Lumber,S807,West Fraser Timber,Canada,Americas,Vancouver,2025-03-15,864000,Annual Contract,Net 30,4.6,4.5,LOW
+C006,Construction & Real Estate,Building Materials,Structural Steel,S808,Nucor,USA,Americas,Charlotte,2025-02-08,1242000,Annual Contract,Net 30,4.7,4.6,LOW
+C006,Construction & Real Estate,Building Materials,Structural Steel,S809,Steel Dynamics,USA,Americas,Fort Wayne,2025-05-22,1134000,Annual Contract,Net 30,4.6,4.5,LOW
+C006,Construction & Real Estate,Building Materials,Glass,S810,Guardian Glass,USA,Americas,Auburn Hills,2025-01-28,648000,Annual Contract,Net 30,4.6,4.5,LOW
+C006,Construction & Real Estate,Building Materials,Glass,S811,Saint-Gobain Glass,France,Europe,Paris,2025-04-18,702000,Annual Contract,Net 30,4.7,4.6,LOW
+C006,Construction & Real Estate,MEP Systems,HVAC Equipment,S812,Carrier Global,USA,Americas,Palm Beach Gardens,2025-01-10,864000,Annual Contract,Net 30,4.7,4.6,LOW
+C006,Construction & Real Estate,MEP Systems,HVAC Equipment,S813,Trane Technologies,Ireland,Europe,Dublin,2025-03-22,918000,Annual Contract,Net 30,4.7,4.5,LOW
+C006,Construction & Real Estate,MEP Systems,Electrical Systems,S814,Eaton,Ireland,Europe,Dublin,2025-02-15,702000,Annual Contract,Net 30,4.8,4.6,LOW
+C006,Construction & Real Estate,MEP Systems,Electrical Systems,S815,Schneider Electric,France,Europe,Paris,2025-05-08,756000,Annual Contract,Net 30,4.8,4.7,LOW
+C006,Construction & Real Estate,MEP Systems,Plumbing Systems,S816,Masco,USA,Americas,Livonia,2025-01-25,486000,Annual Contract,Net 30,4.6,4.5,LOW
+C006,Construction & Real Estate,MEP Systems,Plumbing Systems,S817,Kohler,USA,Americas,Kohler,2025-04-28,540000,Annual Contract,Net 30,4.7,4.6,LOW
+C006,Construction & Real Estate,Construction Equipment,Heavy Equipment,S818,Caterpillar Construction,USA,Americas,Peoria,2025-01-12,1566000,Annual Contract,Net 30,4.8,4.7,LOW
+C006,Construction & Real Estate,Construction Equipment,Heavy Equipment,S818,Caterpillar Construction,USA,Americas,Peoria,2025-06-18,1674000,Annual Contract,Net 30,4.8,4.8,LOW
+C006,Construction & Real Estate,Construction Equipment,Heavy Equipment,S819,Komatsu Construction,Japan,APAC,Tokyo,2025-03-25,1404000,Annual Contract,Net 30,4.7,4.5,LOW
+C006,Construction & Real Estate,Construction Equipment,Power Tools,S820,Hilti,Liechtenstein,Europe,Schaan,2025-02-18,734400,Annual Contract,Net 30,4.8,4.7,LOW
+C006,Construction & Real Estate,Construction Equipment,Power Tools,S821,Bosch Power Tools,Germany,Europe,Stuttgart,2025-05-12,777600,Annual Contract,Net 30,4.8,4.7,LOW
+C006,Construction & Real Estate,Construction Equipment,Scaffolding,S822,Layher,Germany,Europe,Guglingen,2025-01-28,432000,Annual Contract,Net 30,4.7,4.6,LOW
+C007,Logistics & Transportation,Freight Services,Ocean Freight,S901,Maersk,Denmark,Europe,Copenhagen,2025-01-15,1350000,Annual Contract,Net 30,4.8,4.6,LOW
+C007,Logistics & Transportation,Freight Services,Ocean Freight,S901,Maersk,Denmark,Europe,Copenhagen,2025-06-20,1425600,Annual Contract,Net 30,4.8,4.7,LOW
+C007,Logistics & Transportation,Freight Services,Ocean Freight,S902,MSC,Switzerland,Europe,Geneva,2025-02-22,1242000,Annual Contract,Net 30,4.7,4.5,LOW
+C007,Logistics & Transportation,Freight Services,Ocean Freight,S903,CMA CGM,France,Europe,Marseille,2025-04-18,1134000,Annual Contract,Net 30,4.7,4.5,LOW
+C007,Logistics & Transportation,Freight Services,Air Freight,S904,DHL Express,Germany,Europe,Bonn,2025-01-10,918000,Annual Contract,Net 30,4.8,4.7,LOW
+C007,Logistics & Transportation,Freight Services,Air Freight,S904,DHL Express,Germany,Europe,Bonn,2025-05-15,993600,Annual Contract,Net 30,4.8,4.8,LOW
+C007,Logistics & Transportation,Freight Services,Air Freight,S905,FedEx Express,USA,Americas,Memphis,2025-02-18,864000,Annual Contract,Net 30,4.8,4.7,LOW
+C007,Logistics & Transportation,Freight Services,Air Freight,S906,UPS Air,USA,Americas,Louisville,2025-04-25,810000,Annual Contract,Net 30,4.7,4.6,LOW
+C007,Logistics & Transportation,Freight Services,Road Freight,S907,XPO Logistics,USA,Americas,Greenwich,2025-01-22,702000,Annual Contract,Net 30,4.6,4.5,LOW
+C007,Logistics & Transportation,Freight Services,Road Freight,S907,XPO Logistics,USA,Americas,Greenwich,2025-06-28,756000,Annual Contract,Net 30,4.6,4.6,LOW
+C007,Logistics & Transportation,Freight Services,Road Freight,S908,J.B. Hunt,USA,Americas,Lowell,2025-03-15,669600,Annual Contract,Net 30,4.6,4.5,LOW
+C007,Logistics & Transportation,Freight Services,Road Freight,S909,Kuehne + Nagel Road,Switzerland,Europe,Schindellegi,2025-05-08,626400,Annual Contract,Net 30,4.7,4.5,LOW
+C007,Logistics & Transportation,Freight Services,Rail Freight,S910,Union Pacific,USA,Americas,Omaha,2025-02-12,540000,Annual Contract,Net 30,4.6,4.5,LOW
+C007,Logistics & Transportation,Freight Services,Rail Freight,S911,BNSF Railway,USA,Americas,Fort Worth,2025-04-22,594000,Annual Contract,Net 30,4.6,4.5,LOW
+C007,Logistics & Transportation,Warehousing,Distribution Centers,S912,Prologis,USA,Americas,San Francisco,2025-01-18,918000,Annual Contract,Net 30,4.8,4.7,LOW
+C007,Logistics & Transportation,Warehousing,Distribution Centers,S912,Prologis,USA,Americas,San Francisco,2025-08-22,993600,Annual Contract,Net 30,4.8,4.8,LOW
+C007,Logistics & Transportation,Warehousing,Distribution Centers,S913,Duke Realty,USA,Americas,Indianapolis,2025-03-25,810000,Annual Contract,Net 30,4.7,4.6,LOW
+C007,Logistics & Transportation,Warehousing,Cold Storage,S914,Americold,USA,Americas,Atlanta,2025-02-08,756000,Annual Contract,Net 30,4.7,4.5,LOW
+C007,Logistics & Transportation,Warehousing,Cold Storage,S915,Lineage Logistics,USA,Americas,Novi,2025-05-18,810000,Annual Contract,Net 30,4.8,4.6,LOW
+C007,Logistics & Transportation,Warehousing,3PL Services,S916,DHL Supply Chain,Germany,Europe,Bonn,2025-01-28,864000,Annual Contract,Net 30,4.8,4.6,LOW
+C007,Logistics & Transportation,Warehousing,3PL Services,S917,C.H. Robinson,USA,Americas,Eden Prairie,2025-04-12,756000,Annual Contract,Net 30,4.6,4.5,LOW
+C007,Logistics & Transportation,Fleet Services,Fleet Vehicles,S918,Enterprise Fleet,USA,Americas,St. Louis,2025-02-15,594000,Annual Contract,Net 30,4.7,4.6,LOW
+C007,Logistics & Transportation,Fleet Services,Fleet Vehicles,S919,Ryder Fleet,USA,Americas,Miami,2025-05-22,648000,Annual Contract,Net 30,4.6,4.5,LOW
+C007,Logistics & Transportation,Fleet Services,Fleet Maintenance,S920,Penske Truck Leasing,USA,Americas,Reading,2025-03-18,432000,Annual Contract,Net 30,4.7,4.6,LOW
+C007,Logistics & Transportation,Fleet Services,Fleet Telematics,S921,Samsara,USA,Americas,San Francisco,2025-01-10,270000,Annual Contract,Net 30,4.7,4.6,LOW
+C008,Professional Services,Consulting,Management Consulting,S1001,McKinsey,USA,Americas,New York,2025-01-20,1998000,Annual Contract,Net 30,4.9,4.7,LOW
+C008,Professional Services,Consulting,Management Consulting,S1001,McKinsey,USA,Americas,New York,2025-06-25,2160000,Annual Contract,Net 30,4.9,4.8,LOW
+C008,Professional Services,Consulting,Management Consulting,S1002,BCG,USA,Americas,Boston,2025-03-15,1814400,Annual Contract,Net 30,4.8,4.6,LOW
+C008,Professional Services,Consulting,Management Consulting,S1003,Bain & Company,USA,Americas,Boston,2025-05-18,1620000,Annual Contract,Net 30,4.8,4.7,LOW
+C008,Professional Services,Consulting,IT Consulting,S1004,Accenture,Ireland,Europe,Dublin,2025-01-12,1566000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Consulting,IT Consulting,S1004,Accenture,Ireland,Europe,Dublin,2025-07-18,1674000,Annual Contract,Net 30,4.7,4.6,LOW
+C008,Professional Services,Consulting,IT Consulting,S1005,Deloitte Digital,USA,Americas,New York,2025-02-25,1404000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Consulting,IT Consulting,S1006,IBM Consulting,USA,Americas,Armonk,2025-04-22,1296000,Annual Contract,Net 30,4.6,4.5,LOW
+C008,Professional Services,Consulting,HR Consulting,S1007,Mercer,USA,Americas,New York,2025-01-28,702000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Consulting,HR Consulting,S1008,Korn Ferry,USA,Americas,Los Angeles,2025-04-15,648000,Annual Contract,Net 30,4.6,4.5,LOW
+C008,Professional Services,Legal Services,Corporate Law,S1009,Baker McKenzie,USA,Americas,Chicago,2025-01-15,918000,Annual Contract,Net 30,4.8,4.6,LOW
+C008,Professional Services,Legal Services,Corporate Law,S1010,DLA Piper,USA,Americas,New York,2025-03-20,842400,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Legal Services,Corporate Law,S1011,Clifford Chance,UK,Europe,London,2025-05-22,777600,Annual Contract,Net 30,4.8,4.6,LOW
+C008,Professional Services,Legal Services,Intellectual Property,S1012,Fish & Richardson,USA,Americas,Boston,2025-02-18,540000,Annual Contract,Net 30,4.8,4.6,LOW
+C008,Professional Services,Legal Services,Intellectual Property,S1013,Finnegan,USA,Americas,Washington DC,2025-05-08,486000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Legal Services,Employment Law,S1014,Littler Mendelson,USA,Americas,San Francisco,2025-01-22,432000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Financial Services,Accounting,S1015,PwC,USA,Americas,New York,2025-02-10,1026000,Annual Contract,Net 30,4.8,4.6,LOW
+C008,Professional Services,Financial Services,Accounting,S1015,PwC,USA,Americas,New York,2025-08-15,1080000,Annual Contract,Net 30,4.8,4.7,LOW
+C008,Professional Services,Financial Services,Accounting,S1016,EY,USA,Americas,New York,2025-06-15,993600,Annual Contract,Net 30,4.8,4.6,LOW
+C008,Professional Services,Financial Services,Accounting,S1017,KPMG,USA,Americas,New York,2025-08-20,950400,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Financial Services,Banking,S1018,JPMorgan Chase,USA,Americas,New York,2025-01-10,756000,Annual Contract,Net 30,4.8,4.7,LOW
+C008,Professional Services,Financial Services,Banking,S1019,Bank of America,USA,Americas,Charlotte,2025-04-18,702000,Annual Contract,Net 30,4.7,4.6,LOW
+C008,Professional Services,Financial Services,Insurance,S1020,Marsh McLennan,USA,Americas,New York,2025-02-22,594000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Financial Services,Insurance,S1021,Aon,UK,Europe,London,2025-05-15,648000,Annual Contract,Net 30,4.7,4.6,LOW
+C008,Professional Services,Marketing Services,Advertising,S1022,WPP,UK,Europe,London,2025-01-10,1026000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Marketing Services,Advertising,S1022,WPP,UK,Europe,London,2025-07-15,1101600,Annual Contract,Net 30,4.7,4.6,LOW
+C008,Professional Services,Marketing Services,Advertising,S1023,Omnicom,USA,Americas,New York,2025-02-12,950400,Annual Contract,Net 30,4.6,4.5,LOW
+C008,Professional Services,Marketing Services,Advertising,S1024,Publicis Groupe,France,Europe,Paris,2025-03-18,885600,Annual Contract,Net 30,4.6,4.4,LOW
+C008,Professional Services,Marketing Services,Digital Marketing,S1025,Google Ads,USA,Americas,Mountain View,2025-01-05,702000,Annual Contract,Net 30,4.8,4.8,LOW
+C008,Professional Services,Marketing Services,Digital Marketing,S1025,Google Ads,USA,Americas,Mountain View,2025-04-10,777600,Annual Contract,Net 30,4.8,4.8,LOW
+C008,Professional Services,Marketing Services,Digital Marketing,S1025,Google Ads,USA,Americas,Mountain View,2025-07-15,734400,Annual Contract,Net 30,4.8,4.9,LOW
+C008,Professional Services,Marketing Services,Digital Marketing,S1026,Meta Ads,USA,Americas,Menlo Park,2025-02-08,626400,Annual Contract,Net 30,4.7,4.7,LOW
+C008,Professional Services,Marketing Services,Digital Marketing,S1026,Meta Ads,USA,Americas,Menlo Park,2025-05-12,669600,Annual Contract,Net 30,4.7,4.8,LOW
+C008,Professional Services,Marketing Services,Market Research,S1027,Nielsen,USA,Americas,New York,2025-01-18,486000,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Marketing Services,Market Research,S1028,Ipsos,France,Europe,Paris,2025-04-22,432000,Annual Contract,Net 30,4.6,4.4,LOW
+C008,Professional Services,Marketing Services,PR & Communications,S1029,Edelman,USA,Americas,New York,2025-02-18,518400,Annual Contract,Net 30,4.7,4.5,LOW
+C008,Professional Services,Marketing Services,PR & Communications,S1030,Weber Shandwick,USA,Americas,New York,2025-06-20,561600,Annual Contract,Net 30,4.6,4.5,LOW
+C009,Facilities & Corporate Services,Facilities Management,Building Maintenance,S1101,CBRE,USA,Americas,Dallas,2025-01-12,540000,Annual Contract,Net 30,4.6,4.5,LOW
+C009,Facilities & Corporate Services,Facilities Management,Building Maintenance,S1101,CBRE,USA,Americas,Dallas,2025-07-18,594000,Annual Contract,Net 30,4.6,4.6,LOW
+C009,Facilities & Corporate Services,Facilities Management,Building Maintenance,S1102,JLL,USA,Americas,Chicago,2025-03-22,518400,Annual Contract,Net 30,4.6,4.5,LOW
+C009,Facilities & Corporate Services,Facilities Management,Cleaning Services,S1103,ISS,Denmark,Europe,Copenhagen,2025-01-18,324000,Annual Contract,Net 30,4.5,4.4,LOW
+C009,Facilities & Corporate Services,Facilities Management,Cleaning Services,S1104,ABM Industries,USA,Americas,New York,2025-04-25,345600,Annual Contract,Net 30,4.5,4.4,LOW
+C009,Facilities & Corporate Services,Facilities Management,Security Services,S1105,Securitas,Sweden,Europe,Stockholm,2025-02-08,432000,Annual Contract,Net 30,4.6,4.5,LOW
+C009,Facilities & Corporate Services,Facilities Management,Security Services,S1106,Allied Universal,USA,Americas,Santa Ana,2025-05-15,486000,Annual Contract,Net 30,4.6,4.5,LOW
+C009,Facilities & Corporate Services,Office Services,Office Supplies,S1107,Staples,USA,Americas,Framingham,2025-01-08,91800,Annual Contract,Net 30,4.5,4.5,LOW
+C009,Facilities & Corporate Services,Office Services,Office Supplies,S1107,Staples,USA,Americas,Framingham,2025-04-12,99360,Annual Contract,Net 30,4.5,4.5,LOW
+C009,Facilities & Corporate Services,Office Services,Office Supplies,S1107,Staples,USA,Americas,Framingham,2025-07-18,95040,Annual Contract,Net 30,4.5,4.6,LOW
+C009,Facilities & Corporate Services,Office Services,Office Supplies,S1108,Office Depot,USA,Americas,Boca Raton,2025-02-15,84240,Annual Contract,Net 30,4.4,4.4,LOW
+C009,Facilities & Corporate Services,Office Services,Office Supplies,S1108,Office Depot,USA,Americas,Boca Raton,2025-05-20,88560,Annual Contract,Net 30,4.4,4.5,LOW
+C009,Facilities & Corporate Services,Office Services,Office Furniture,S1109,Steelcase,USA,Americas,Grand Rapids,2025-01-22,486000,Annual Contract,Net 30,4.7,4.6,LOW
+C009,Facilities & Corporate Services,Office Services,Office Furniture,S1109,Steelcase,USA,Americas,Grand Rapids,2025-07-25,518400,Annual Contract,Net 30,4.7,4.7,LOW
+C009,Facilities & Corporate Services,Office Services,Office Furniture,S1110,Herman Miller,USA,Americas,Zeeland,2025-03-10,453600,Annual Contract,Net 30,4.8,4.7,LOW
+C009,Facilities & Corporate Services,Office Services,Office Furniture,S1111,Haworth,USA,Americas,Holland,2025-05-28,410400,Annual Contract,Net 30,4.6,4.5,LOW
+C009,Facilities & Corporate Services,Office Services,Printing Services,S1112,FedEx Office,USA,Americas,Dallas,2025-02-12,70200,Annual Contract,Net 30,4.5,4.5,LOW
+C009,Facilities & Corporate Services,Office Services,Printing Services,S1112,FedEx Office,USA,Americas,Dallas,2025-08-15,77760,Annual Contract,Net 30,4.5,4.6,LOW
+C009,Facilities & Corporate Services,Travel & Events,Business Travel,S1113,American Express GBT,USA,Americas,New York,2025-01-15,324000,Annual Contract,Net 30,4.7,4.5,LOW
+C009,Facilities & Corporate Services,Travel & Events,Business Travel,S1114,BCD Travel,Netherlands,Europe,Utrecht,2025-04-18,291600,Annual Contract,Net 30,4.6,4.4,LOW
+C009,Facilities & Corporate Services,Travel & Events,Event Management,S1115,Maritz Global Events,USA,Americas,Fenton,2025-02-22,216000,Annual Contract,Net 30,4.6,4.5,LOW
+C010,Human Resources,Staffing Services,Permanent Recruitment,S1201,Robert Half,USA,Americas,Menlo Park,2025-02-15,302400,Annual Contract,Net 30,4.6,4.5,LOW
+C010,Human Resources,Staffing Services,Permanent Recruitment,S1201,Robert Half,USA,Americas,Menlo Park,2025-07-22,324000,Annual Contract,Net 30,4.6,4.6,LOW
+C010,Human Resources,Staffing Services,Permanent Recruitment,S1202,Hays,UK,Europe,London,2025-04-20,345600,Annual Contract,Net 30,4.5,4.4,LOW
+C010,Human Resources,Staffing Services,Temporary Staffing,S1203,Randstad,Netherlands,Europe,Diemen,2025-01-18,432000,Annual Contract,Net 30,4.5,4.4,LOW
+C010,Human Resources,Staffing Services,Temporary Staffing,S1203,Randstad,Netherlands,Europe,Diemen,2025-06-25,486000,Annual Contract,Net 30,4.5,4.5,LOW
+C010,Human Resources,Staffing Services,Temporary Staffing,S1204,Adecco,Switzerland,Europe,Zurich,2025-03-12,410400,Annual Contract,Net 30,4.5,4.4,LOW
+C010,Human Resources,Staffing Services,Temporary Staffing,S1205,ManpowerGroup,USA,Americas,Milwaukee,2025-05-18,378000,Annual Contract,Net 30,4.5,4.4,LOW
+C010,Human Resources,Staffing Services,Executive Search,S1206,Spencer Stuart,USA,Americas,Chicago,2025-01-25,270000,Annual Contract,Net 30,4.8,4.6,LOW
+C010,Human Resources,Staffing Services,Executive Search,S1207,Heidrick & Struggles,USA,Americas,Chicago,2025-04-28,291600,Annual Contract,Net 30,4.7,4.5,LOW
+C010,Human Resources,HR Technology,HRIS Systems,S1208,Workday HR,USA,Americas,Pleasanton,2025-01-10,378000,Annual Contract,Net 30,4.8,4.7,LOW
+C010,Human Resources,HR Technology,HRIS Systems,S1209,SAP SuccessFactors,Germany,Europe,Walldorf,2025-04-15,345600,Annual Contract,Net 30,4.7,4.5,LOW
+C010,Human Resources,HR Technology,Payroll Services,S1210,ADP,USA,Americas,Roseland,2025-01-12,410400,Annual Contract,Net 30,4.7,4.6,LOW
+C010,Human Resources,HR Technology,Payroll Services,S1210,ADP,USA,Americas,Roseland,2025-07-18,453600,Annual Contract,Net 30,4.7,4.7,LOW
+C010,Human Resources,HR Technology,Payroll Services,S1211,Paychex,USA,Americas,Rochester,2025-03-22,378000,Annual Contract,Net 30,4.6,4.5,LOW
+C010,Human Resources,HR Technology,Benefits Administration,S1212,Benefitfocus,USA,Americas,Charleston,2025-02-18,270000,Annual Contract,Net 30,4.5,4.4,LOW
+C010,Human Resources,HR Technology,Benefits Administration,S1213,Businessolver,USA,Americas,Des Moines,2025-05-25,302400,Annual Contract,Net 30,4.6,4.5,LOW
+C010,Human Resources,Learning & Development,Training Programs,S1214,Dale Carnegie,USA,Americas,Hauppauge,2025-01-28,162000,Annual Contract,Net 30,4.6,4.5,LOW
+C010,Human Resources,Learning & Development,Training Programs,S1215,Franklin Covey,USA,Americas,Salt Lake City,2025-04-22,194400,Annual Contract,Net 30,4.7,4.5,LOW
+C010,Human Resources,Learning & Development,E-Learning Platforms,S1216,Skillsoft,USA,Americas,Boston,2025-03-10,194400,Annual Contract,Net 30,4.5,4.5,LOW
+C010,Human Resources,Learning & Development,E-Learning Platforms,S1217,LinkedIn Learning,USA,Americas,Sunnyvale,2025-06-15,237600,Annual Contract,Net 30,4.7,4.7,LOW
+C010,Human Resources,Learning & Development,E-Learning Platforms,S1218,Udemy Business,USA,Americas,San Francisco,2025-02-08,216000,Annual Contract,Net 30,4.6,4.6,LOW
+C010,Human Resources,Learning & Development,Leadership Development,S1219,Center for Creative Leadership,USA,Americas,Greensboro,2025-01-15,324000,Annual Contract,Net 30,4.8,4.6,LOW
+C010,Human Resources,Learning & Development,Leadership Development,S1220,DDI,USA,Americas,Pittsburgh,2025-05-08,291600,Annual Contract,Net 30,4.7,4.5,LOW

@@ -1,12 +1,313 @@
-Supplier_ID,Supplier_Name,Region,Product_Type,Contract_Start,Contract_End,Payment_Terms_Days,ESG_Score
-S001,Malaya Agri Oils,APAC,Vegetable Oil,2022-01-01,2025-12-31,60,62
-S002,Borneo Nutrients,APAC,Vegetable Oil,2021-06-01,2024-12-31,45,58
-S003,KL Edible Oils,APAC,Vegetable Oil,2023-01-01,2026-12-31,60,65
-S004,Penang Bio Extracts,APAC,Vegetable Oil,2022-03-01,2025-02-28,30,55
-S005,VietAgro Oils,APAC,Vegetable Oil,2023-05-01,2024-10-31,30,70
-S006,Thai Harvest Co,APAC,Vegetable Oil,2023-07-01,2024-12-31,30,68
-S007,Indo BioFoods,APAC,Vegetable Oil,2022-08-01,2025-07-31,45,66
-S008,Sunrise Oils,APAC,Vegetable Oil,2023-04-01,2024-09-30,30,72
-S011,EuroSeed GmbH,EU,Vegetable Oil,2023-01-01,2025-12-31,60,82
-S012,AgriSource BV,EU,Vegetable Oil,2022-06-01,2025-05-31,60,80
-S015,Pacific Rim Oils,APAC,Vegetable Oil,2023-03-01,2026-02-28,45,75
+Supplier_ID,Supplier_Name,Region,Sector,Category,SubCategory,Contract_Start,Contract_End,Payment_Terms_Days,ESG_Score,Contract_Status
+S001,Malaya Agri Oils,APAC,Food & Beverages,Edible Oils,Rice Bran Oil,2024-09-28,2026-09-18,60,79,Active
+S002,Borneo Nutrients,APAC,Food & Beverages,Edible Oils,Rice Bran Oil,2024-02-27,2027-02-11,30,80,Active
+S003,Thai Rice Oil Co,APAC,Food & Beverages,Edible Oils,Rice Bran Oil,2025-03-09,2029-02-16,90,76,Active
+S004,Ricela Health Foods,APAC,Food & Beverages,Edible Oils,Rice Bran Oil,2025-02-10,2027-01-31,75,85,Active
+S005,Golden Sun Oils,Europe,Food & Beverages,Edible Oils,Sunflower Oil,2024-05-24,2029-04-28,45,80,Active
+S006,Kernel Trade,Europe,Food & Beverages,Edible Oils,Sunflower Oil,2025-04-03,2029-03-13,30,75,Active
+S007,Cargill Sunflower,Americas,Food & Beverages,Edible Oils,Sunflower Oil,2024-10-07,2029-09-11,90,76,Active
+S008,ADM Argentina,Americas,Food & Beverages,Edible Oils,Sunflower Oil,2024-03-26,2027-03-11,75,85,Active
+S009,Indo Palm Corp,APAC,Food & Beverages,Edible Oils,Palm Oil,2024-10-09,2029-09-13,90,81,Active
+S010,Wilmar International,APAC,Food & Beverages,Edible Oils,Palm Oil,2024-06-19,2025-06-14,60,85,Expired
+S011,Sime Darby Oils,APAC,Food & Beverages,Edible Oils,Palm Oil,2024-11-07,2028-10-17,60,75,Active
+S012,Mediterranean Oils,Europe,Food & Beverages,Edible Oils,Olive Oil,2024-08-03,2029-07-08,30,78,Active
+S013,Deoleo Premium,Europe,Food & Beverages,Edible Oils,Olive Oil,2025-05-01,2029-04-10,75,79,Active
+S014,Greek Gold Olive,Europe,Food & Beverages,Edible Oils,Olive Oil,2024-05-12,2025-05-07,30,77,Expired
+S015,American Soy Co,Americas,Food & Beverages,Edible Oils,Soybean Oil,2025-05-19,2026-05-14,45,79,Active
+S016,Bunge Ltd,Americas,Food & Beverages,Edible Oils,Soybean Oil,2024-02-16,2025-02-10,45,76,Expired
+S017,Louis Dreyfus Soy,Americas,Food & Beverages,Edible Oils,Soybean Oil,2024-11-06,2029-10-11,60,77,Active
+S018,Richardson Oilseed,Americas,Food & Beverages,Edible Oils,Canola Oil,2024-06-02,2028-05-12,90,80,Active
+S019,Viterra Canada,Americas,Food & Beverages,Edible Oils,Canola Oil,2024-05-01,2029-04-05,45,77,Active
+S020,Philippine Coconut,APAC,Food & Beverages,Edible Oils,Coconut Oil,2024-05-06,2025-05-01,75,82,Expired
+S021,Sri Lanka Coco,APAC,Food & Beverages,Edible Oils,Coconut Oil,2024-05-13,2027-04-28,30,75,Active
+S022,Shandong Luhua,APAC,Food & Beverages,Edible Oils,Peanut Oil,2024-06-20,2026-06-10,45,82,Active
+S023,Archer Daniels Midland,Americas,Food & Beverages,Grains & Cereals,Wheat,2024-04-05,2026-03-26,90,80,Active
+S024,Glencore Agriculture,APAC,Food & Beverages,Grains & Cereals,Wheat,2025-03-25,2028-03-09,90,83,Active
+S025,Nidera Holdings,Europe,Food & Beverages,Grains & Cereals,Wheat,2024-07-02,2025-06-27,90,81,Expired
+S026,Olam International,APAC,Food & Beverages,Grains & Cereals,Rice,2024-09-25,2026-09-15,60,76,Active
+S027,KRBL Ltd,APAC,Food & Beverages,Grains & Cereals,Rice,2024-03-26,2025-03-21,30,85,Expired
+S028,Vietnam Food Corp,APAC,Food & Beverages,Grains & Cereals,Rice,2024-11-29,2029-11-03,45,75,Active
+S029,Cargill Corn,Americas,Food & Beverages,Grains & Cereals,Corn/Maize,2025-05-14,2028-04-28,45,78,Active
+S030,Bunge Corn Brazil,Americas,Food & Beverages,Grains & Cereals,Corn/Maize,2025-02-26,2030-01-31,75,78,Active
+S031,Tyson Foods,Americas,Food & Beverages,Proteins,Poultry,2025-04-25,2030-03-30,60,78,Active
+S032,BRF S.A.,Americas,Food & Beverages,Proteins,Poultry,2024-11-25,2026-11-15,30,80,Active
+S033,Pilgrim's Pride,Americas,Food & Beverages,Proteins,Poultry,2025-02-03,2030-01-08,30,75,Active
+S034,JBS S.A.,Americas,Food & Beverages,Proteins,Beef,2024-09-24,2026-09-14,45,77,Active
+S035,Cargill Beef,Americas,Food & Beverages,Proteins,Beef,2024-10-21,2026-10-11,75,76,Active
+S036,Australian Meat Group,APAC,Food & Beverages,Proteins,Beef,2025-06-08,2027-05-29,60,75,Active
+S037,Thai Union Group,APAC,Food & Beverages,Proteins,Seafood,2024-07-03,2026-06-23,30,84,Active
+S038,Nippon Suisan,APAC,Food & Beverages,Proteins,Seafood,2024-08-07,2025-08-02,45,77,Expired
+S039,Fonterra,APAC,Food & Beverages,Dairy Products,Milk & Cream,2024-10-06,2025-10-01,45,77,Expired
+S040,FrieslandCampina,Europe,Food & Beverages,Dairy Products,Milk & Cream,2024-04-29,2029-04-03,75,76,Active
+S041,Kraft Heinz Dairy,Americas,Food & Beverages,Dairy Products,Cheese,2025-04-30,2029-04-09,30,82,Active
+S042,Lactalis Group,Europe,Food & Beverages,Dairy Products,Cheese,2024-06-29,2029-06-03,75,84,Active
+S043,Sudzucker AG,Europe,Food & Beverages,Sweeteners,Sugar,2025-03-15,2029-02-22,60,83,Active
+S044,Raizen Energia,Americas,Food & Beverages,Sweeteners,Sugar,2024-11-20,2029-10-25,75,75,Active
+S045,Thai Sugar Trading,APAC,Food & Beverages,Sweeteners,Sugar,2024-01-18,2027-01-02,90,82,Active
+S046,Nestle Coffee,Europe,Food & Beverages,Beverages,Coffee,2025-06-03,2026-05-29,90,82,Active
+S047,JDE Peets,Europe,Food & Beverages,Beverages,Coffee,2024-05-19,2028-04-28,45,85,Active
+S048,Colombian Coffee Fed,Americas,Food & Beverages,Beverages,Coffee,2025-03-16,2029-02-23,75,82,Active
+S049,Unilever Tea,Europe,Food & Beverages,Beverages,Tea,2025-04-20,2026-04-15,90,80,Active
+S050,Tata Global Beverages,APAC,Food & Beverages,Beverages,Tea,2025-02-03,2026-01-29,60,77,Active
+S051,Olam Spices,APAC,Food & Beverages,Spices & Seasonings,Pepper,2024-09-26,2029-08-31,60,85,Active
+S052,Madagascar Vanilla,Africa,Food & Beverages,Spices & Seasonings,Vanilla,2024-08-06,2028-07-16,60,84,Active
+S053,Berry Global,Americas,Food & Beverages,Packaging Materials,Food-Grade Plastics,2024-01-08,2026-12-23,30,82,Active
+S054,Owens-Illinois,Americas,Food & Beverages,Packaging Materials,Glass Containers,2024-02-03,2029-01-07,30,81,Active
+S055,Ball Corporation,Americas,Food & Beverages,Packaging Materials,Aluminum Cans,2025-03-25,2026-03-20,60,85,Active
+S1001,McKinsey,Americas,Professional Services,Consulting,Management Consulting,2024-11-26,2028-11-05,60,82,Active
+S1002,BCG,Americas,Professional Services,Consulting,Management Consulting,2024-11-13,2028-10-23,60,80,Active
+S1003,Bain & Company,Americas,Professional Services,Consulting,Management Consulting,2024-03-27,2028-03-06,90,81,Active
+S1004,Accenture,Europe,Professional Services,Consulting,IT Consulting,2025-03-29,2028-03-13,60,81,Active
+S1005,Deloitte Digital,Americas,Professional Services,Consulting,IT Consulting,2024-08-18,2027-08-03,45,80,Active
+S1006,IBM Consulting,Americas,Professional Services,Consulting,IT Consulting,2025-01-29,2029-01-08,75,76,Active
+S1007,Mercer,Americas,Professional Services,Consulting,HR Consulting,2025-04-02,2026-03-28,30,76,Active
+S1008,Korn Ferry,Americas,Professional Services,Consulting,HR Consulting,2024-04-18,2025-04-13,30,80,Expired
+S1009,Baker McKenzie,Americas,Professional Services,Legal Services,Corporate Law,2025-02-21,2030-01-26,60,75,Active
+S101,Dell Technologies,Americas,Information Technology,Hardware,Laptops,2024-08-01,2025-07-27,45,81,Expired
+S1010,DLA Piper,Americas,Professional Services,Legal Services,Corporate Law,2024-07-07,2028-06-16,90,75,Active
+S1011,Clifford Chance,Europe,Professional Services,Legal Services,Corporate Law,2024-09-13,2029-08-18,90,79,Active
+S1012,Fish & Richardson,Americas,Professional Services,Legal Services,Intellectual Property,2024-07-09,2025-07-04,30,84,Expired
+S1013,Finnegan,Americas,Professional Services,Legal Services,Intellectual Property,2024-02-01,2026-01-21,45,77,Active
+S1014,Littler Mendelson,Americas,Professional Services,Legal Services,Employment Law,2024-02-27,2026-02-16,60,76,Active
+S1015,PwC,Americas,Professional Services,Financial Services,Accounting,2024-07-11,2029-06-15,75,80,Active
+S1016,EY,Americas,Professional Services,Financial Services,Accounting,2025-03-09,2028-02-22,30,84,Active
+S1017,KPMG,Americas,Professional Services,Financial Services,Accounting,2024-11-15,2028-10-25,60,83,Active
+S1018,JPMorgan Chase,Americas,Professional Services,Financial Services,Banking,2025-06-08,2030-05-13,60,85,Active
+S1019,Bank of America,Americas,Professional Services,Financial Services,Banking,2024-10-04,2025-09-29,45,77,Expired
+S102,HP Inc,Americas,Information Technology,Hardware,Laptops,2024-09-28,2027-09-13,90,80,Active
+S1020,Marsh McLennan,Americas,Professional Services,Financial Services,Insurance,2024-07-10,2025-07-05,90,77,Expired
+S1021,Aon,Europe,Professional Services,Financial Services,Insurance,2025-02-08,2030-01-13,45,85,Active
+S1022,WPP,Europe,Professional Services,Marketing Services,Advertising,2024-05-20,2025-05-15,45,77,Expired
+S1023,Omnicom,Americas,Professional Services,Marketing Services,Advertising,2025-06-03,2026-05-29,30,83,Active
+S1024,Publicis Groupe,Europe,Professional Services,Marketing Services,Advertising,2024-11-26,2028-11-05,60,81,Active
+S1025,Google Ads,Americas,Professional Services,Marketing Services,Digital Marketing,2024-03-27,2027-03-12,45,77,Active
+S1026,Meta Ads,Americas,Professional Services,Marketing Services,Digital Marketing,2024-06-21,2027-06-06,45,80,Active
+S1027,Nielsen,Americas,Professional Services,Marketing Services,Market Research,2025-04-09,2026-04-04,75,77,Active
+S1028,Ipsos,Europe,Professional Services,Marketing Services,Market Research,2025-01-24,2029-12-29,75,75,Active
+S1029,Edelman,Americas,Professional Services,Marketing Services,PR & Communications,2025-04-12,2028-03-27,45,82,Active
+S103,Lenovo,APAC,Information Technology,Hardware,Laptops,2024-04-26,2028-04-05,60,84,Active
+S1030,Weber Shandwick,Americas,Professional Services,Marketing Services,PR & Communications,2024-04-08,2028-03-18,45,79,Active
+S104,Apple Inc,Americas,Information Technology,Hardware,Laptops,2024-11-26,2029-10-31,75,76,Active
+S105,Dell Desktops,Americas,Information Technology,Hardware,Desktops,2024-07-16,2028-06-25,30,76,Active
+S106,HP Desktops,Americas,Information Technology,Hardware,Desktops,2024-09-17,2029-08-22,90,82,Active
+S107,Cisco Systems,Americas,Information Technology,Hardware,Servers,2024-01-12,2026-12-27,60,75,Active
+S108,HPE Servers,Americas,Information Technology,Hardware,Servers,2024-11-21,2028-10-31,60,84,Active
+S109,Dell EMC,Americas,Information Technology,Hardware,Servers,2025-05-09,2026-05-04,30,78,Active
+S110,IBM Servers,Americas,Information Technology,Hardware,Servers,2024-08-30,2026-08-20,60,77,Active
+S1101,CBRE,Americas,Facilities & Corporate Services,Facilities Management,Building Maintenance,2024-10-16,2027-10-01,90,80,Active
+S1102,JLL,Americas,Facilities & Corporate Services,Facilities Management,Building Maintenance,2025-03-04,2026-02-27,75,82,Active
+S1103,ISS,Europe,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-04-20,2026-04-10,30,77,Active
+S1104,ABM Industries,Americas,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-06-10,2029-05-15,90,78,Active
+S1105,Securitas,Europe,Facilities & Corporate Services,Facilities Management,Security Services,2024-02-08,2029-01-12,75,85,Active
+S1106,Allied Universal,Americas,Facilities & Corporate Services,Facilities Management,Security Services,2024-07-07,2025-07-02,90,81,Expired
+S1107,Staples,Americas,Facilities & Corporate Services,Office Services,Office Supplies,2025-05-22,2029-05-01,30,75,Active
+S1108,Office Depot,Americas,Facilities & Corporate Services,Office Services,Office Supplies,2024-03-21,2025-03-16,90,80,Expired
+S1109,Steelcase,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2024-04-21,2029-03-26,75,81,Active
+S111,Juniper Networks,Americas,Information Technology,Hardware,Network Equipment,2024-05-03,2027-04-18,60,76,Active
+S1110,Herman Miller,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2024-05-16,2025-05-11,45,80,Expired
+S1111,Haworth,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2025-01-10,2029-12-15,75,82,Active
+S1112,FedEx Office,Americas,Facilities & Corporate Services,Office Services,Printing Services,2024-06-29,2025-06-24,90,81,Expired
+S1113,American Express GBT,Americas,Facilities & Corporate Services,Travel & Events,Business Travel,2025-03-18,2027-03-08,90,81,Active
+S1114,BCD Travel,Europe,Facilities & Corporate Services,Travel & Events,Business Travel,2024-05-20,2029-04-24,60,76,Active
+S1115,Maritz Global Events,Americas,Facilities & Corporate Services,Travel & Events,Event Management,2024-05-25,2027-05-10,90,80,Active
+S112,Huawei,APAC,Information Technology,Hardware,Network Equipment,2024-11-20,2027-11-05,75,77,Active
+S113,Arista Networks,Americas,Information Technology,Hardware,Network Equipment,2025-04-17,2030-03-22,90,85,Active
+S114,NetApp,Americas,Information Technology,Hardware,Storage Systems,2025-03-10,2030-02-12,30,83,Active
+S115,Pure Storage,Americas,Information Technology,Hardware,Storage Systems,2024-12-18,2027-12-03,90,80,Active
+S116,Logitech,Europe,Information Technology,Hardware,Peripherals,2025-02-03,2027-01-24,45,76,Active
+S117,LG Electronics,APAC,Information Technology,Hardware,Peripherals,2025-02-05,2028-01-21,45,78,Active
+S1201,Robert Half,Americas,Human Resources,Staffing Services,Permanent Recruitment,2025-01-08,2029-12-13,30,77,Active
+S1202,Hays,Europe,Human Resources,Staffing Services,Permanent Recruitment,2025-04-18,2027-04-08,45,85,Active
+S1203,Randstad,Europe,Human Resources,Staffing Services,Temporary Staffing,2024-02-15,2028-01-25,90,84,Active
+S1204,Adecco,Europe,Human Resources,Staffing Services,Temporary Staffing,2024-04-01,2029-03-06,75,85,Active
+S1205,ManpowerGroup,Americas,Human Resources,Staffing Services,Temporary Staffing,2024-08-08,2027-07-24,90,77,Active
+S1206,Spencer Stuart,Americas,Human Resources,Staffing Services,Executive Search,2024-04-10,2025-04-05,75,82,Expired
+S1207,Heidrick & Struggles,Americas,Human Resources,Staffing Services,Executive Search,2024-04-08,2027-03-24,75,79,Active
+S1208,Workday HR,Americas,Human Resources,HR Technology,HRIS Systems,2025-05-08,2028-04-22,30,83,Active
+S1209,SAP SuccessFactors,Europe,Human Resources,HR Technology,HRIS Systems,2025-04-20,2028-04-04,45,82,Active
+S1210,ADP,Americas,Human Resources,HR Technology,Payroll Services,2024-03-29,2025-03-24,75,75,Expired
+S1211,Paychex,Americas,Human Resources,HR Technology,Payroll Services,2024-06-22,2027-06-07,45,76,Active
+S1212,Benefitfocus,Americas,Human Resources,HR Technology,Benefits Administration,2025-04-03,2030-03-08,45,84,Active
+S1213,Businessolver,Americas,Human Resources,HR Technology,Benefits Administration,2024-02-01,2028-01-11,90,82,Active
+S1214,Dale Carnegie,Americas,Human Resources,Learning & Development,Training Programs,2025-05-23,2029-05-02,90,84,Active
+S1215,Franklin Covey,Americas,Human Resources,Learning & Development,Training Programs,2024-12-24,2027-12-09,90,84,Active
+S1216,Skillsoft,Americas,Human Resources,Learning & Development,E-Learning Platforms,2024-03-04,2029-02-06,75,77,Active
+S1217,LinkedIn Learning,Americas,Human Resources,Learning & Development,E-Learning Platforms,2025-05-02,2029-04-11,45,76,Active
+S1218,Udemy Business,Americas,Human Resources,Learning & Development,E-Learning Platforms,2024-07-18,2025-07-13,75,83,Expired
+S1219,Center for Creative Leadership,Americas,Human Resources,Learning & Development,Leadership Development,2025-01-09,2026-01-04,75,78,Active
+S1220,DDI,Americas,Human Resources,Learning & Development,Leadership Development,2024-04-12,2028-03-22,45,83,Active
+S201,AWS,Americas,Information Technology,Cloud Services,IaaS,2024-01-16,2028-12-20,60,77,Active
+S202,Microsoft Azure,Americas,Information Technology,Cloud Services,IaaS,2024-06-27,2027-06-12,90,79,Active
+S203,Google Cloud,Americas,Information Technology,Cloud Services,IaaS,2024-06-03,2028-05-13,45,80,Active
+S204,Heroku,Americas,Information Technology,Cloud Services,PaaS,2025-05-12,2028-04-26,45,76,Active
+S205,Red Hat OpenShift,Americas,Information Technology,Cloud Services,PaaS,2024-08-01,2025-07-27,45,83,Expired
+S206,Salesforce,Americas,Information Technology,Cloud Services,SaaS,2024-06-04,2027-05-20,30,79,Active
+S207,Adobe Creative Cloud,Americas,Information Technology,Cloud Services,SaaS,2025-02-01,2028-01-17,75,76,Active
+S208,Microsoft 365,Americas,Information Technology,Cloud Services,SaaS,2025-02-10,2028-01-26,90,79,Active
+S209,Workday,Americas,Information Technology,Cloud Services,SaaS,2024-05-29,2026-05-19,75,84,Active
+S210,Dropbox Business,Americas,Information Technology,Cloud Services,Cloud Storage,2025-04-09,2028-03-24,45,83,Active
+S211,Box Enterprise,Americas,Information Technology,Cloud Services,Cloud Storage,2024-06-14,2027-05-30,75,77,Active
+S301,Oracle,Americas,Information Technology,Software,Enterprise Software,2024-01-12,2025-01-06,75,85,Expired
+S302,SAP,Europe,Information Technology,Software,Enterprise Software,2024-04-27,2029-04-01,60,80,Active
+S303,IBM,Americas,Information Technology,Software,Enterprise Software,2025-06-16,2028-05-31,90,79,Active
+S304,Microsoft Office,Americas,Information Technology,Software,Productivity Software,2025-01-01,2026-12-22,45,80,Active
+S305,Google Workspace,Americas,Information Technology,Software,Productivity Software,2024-02-23,2026-02-12,75,78,Active
+S306,Oracle Database,Americas,Information Technology,Software,Database Software,2025-02-14,2027-02-04,60,76,Active
+S307,Microsoft SQL Server,Americas,Information Technology,Software,Database Software,2024-09-05,2025-08-31,75,83,Expired
+S308,JetBrains,Europe,Information Technology,Software,Development Tools,2024-01-12,2025-01-06,30,85,Expired
+S309,GitHub Enterprise,Americas,Information Technology,Software,Development Tools,2024-07-25,2029-06-29,30,77,Active
+S310,Palo Alto Networks,Americas,Information Technology,Cybersecurity,Endpoint Security,2024-06-14,2026-06-04,75,77,Active
+S311,CrowdStrike,Americas,Information Technology,Cybersecurity,Endpoint Security,2024-12-31,2029-12-05,60,77,Active
+S312,Fortinet,Americas,Information Technology,Cybersecurity,Network Security,2024-04-12,2025-04-07,45,81,Expired
+S313,Check Point,Middle East,Information Technology,Cybersecurity,Network Security,2024-06-26,2026-06-16,60,82,Active
+S314,Okta,Americas,Information Technology,Cybersecurity,Identity Management,2024-09-16,2028-08-26,75,78,Active
+S315,Ping Identity,Americas,Information Technology,Cybersecurity,Identity Management,2024-01-05,2025-12-25,75,79,Expired
+S316,Splunk,Americas,Information Technology,Cybersecurity,Security Operations,2024-03-11,2026-03-01,30,80,Active
+S317,Verizon,Americas,Information Technology,Telecommunications,Mobile Services,2024-04-09,2028-03-19,30,79,Active
+S318,AT&T,Americas,Information Technology,Telecommunications,Mobile Services,2024-06-08,2029-05-13,45,83,Active
+S319,Vodafone,Europe,Information Technology,Telecommunications,Mobile Services,2024-05-02,2026-04-22,90,78,Active
+S320,Comcast Business,Americas,Information Technology,Telecommunications,Internet Services,2025-02-13,2028-01-29,45,75,Active
+S401,ArcelorMittal,Europe,Manufacturing & Industrial,Raw Materials - Metals,Steel,2024-02-28,2027-02-12,90,83,Active
+S402,Tata Steel,APAC,Manufacturing & Industrial,Raw Materials - Metals,Steel,2025-03-21,2030-02-23,60,76,Active
+S403,Baosteel,APAC,Manufacturing & Industrial,Raw Materials - Metals,Steel,2024-09-16,2025-09-11,45,77,Expired
+S404,Nippon Steel,APAC,Manufacturing & Industrial,Raw Materials - Metals,Steel,2024-09-28,2028-09-07,60,83,Active
+S405,POSCO,APAC,Manufacturing & Industrial,Raw Materials - Metals,Steel,2025-02-04,2029-01-14,30,76,Active
+S406,Alcoa,Americas,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,2024-11-19,2028-10-29,90,80,Active
+S407,Rio Tinto Alcan,Americas,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,2025-06-07,2029-05-17,90,75,Active
+S408,Norsk Hydro,Europe,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,2024-05-25,2029-04-29,90,80,Active
+S409,Freeport-McMoRan,Americas,Manufacturing & Industrial,Raw Materials - Metals,Copper,2024-11-05,2028-10-15,30,76,Active
+S410,Codelco,Americas,Manufacturing & Industrial,Raw Materials - Metals,Copper,2024-06-16,2026-06-06,45,75,Active
+S411,BHP Copper,APAC,Manufacturing & Industrial,Raw Materials - Metals,Copper,2024-08-12,2025-08-07,60,85,Expired
+S412,Glencore Zinc,Europe,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-07-26,2026-07-16,60,77,Active
+S413,Vale Nickel,Americas,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2025-05-26,2028-05-10,45,82,Active
+S414,Norilsk Nickel,Europe,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2025-02-12,2029-01-22,60,82,Active
+S415,BASF,Europe,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,2025-06-29,2026-06-24,75,75,Active
+S416,Dow Chemical,Americas,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,2024-10-15,2026-10-05,60,77,Active
+S417,SABIC,Middle East,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,2024-01-11,2027-12-21,45,76,Active
+S418,LyondellBasell,Europe,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,2024-09-12,2026-09-02,75,79,Active
+S419,ExxonMobil Chemical,Americas,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,2025-03-02,2026-02-25,75,78,Active
+S420,Formosa Plastics,APAC,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2024-05-01,2029-04-05,75,82,Active
+S421,DuPont,Americas,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,2025-05-01,2026-04-26,75,82,Active
+S422,BASF Chemicals,Europe,Manufacturing & Industrial,Chemicals,Industrial Chemicals,2024-01-03,2024-12-28,60,85,Expired
+S423,Dow Industrial,Americas,Manufacturing & Industrial,Chemicals,Industrial Chemicals,2024-01-24,2028-12-28,60,78,Active
+S424,Evonik,Europe,Manufacturing & Industrial,Chemicals,Specialty Chemicals,2025-02-07,2028-01-23,60,81,Active
+S425,Huntsman,Americas,Manufacturing & Industrial,Chemicals,Specialty Chemicals,2025-07-03,2030-06-07,45,80,Active
+S426,Shell Chemicals,Europe,Manufacturing & Industrial,Chemicals,Petrochemicals,2024-10-31,2029-10-05,90,81,Active
+S427,Chevron Phillips,Americas,Manufacturing & Industrial,Chemicals,Petrochemicals,2024-12-25,2025-12-20,45,83,Expired
+S428,Henkel,Europe,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,2024-06-30,2025-06-25,60,83,Expired
+S429,3M Adhesives,Americas,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,2024-02-01,2029-01-05,60,83,Active
+S501,Siemens,Europe,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,2025-06-14,2029-05-24,45,82,Active
+S502,ABB,Europe,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,2025-05-21,2029-04-30,30,80,Active
+S503,Schneider Electric,Europe,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,2024-10-18,2025-10-13,75,80,Expired
+S504,Rockwell Automation,Americas,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,2025-04-26,2028-04-10,45,78,Active
+S505,Caterpillar,Americas,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,2025-03-20,2030-02-22,75,80,Active
+S506,Komatsu,APAC,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,2025-02-18,2026-02-13,75,80,Active
+S507,John Deere,Americas,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,2024-07-23,2026-07-13,90,85,Active
+S508,Fanuc,APAC,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,2024-03-16,2028-02-24,45,85,Active
+S509,KUKA,Europe,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,2024-12-30,2026-12-20,45,76,Active
+S510,ABB Robotics,Europe,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,2024-03-23,2025-03-18,75,79,Expired
+S511,Toyota Material Handling,APAC,Manufacturing & Industrial,Equipment & Machinery,Material Handling,2024-12-10,2025-12-05,75,78,Expired
+S512,Crown Equipment,Americas,Manufacturing & Industrial,Equipment & Machinery,Material Handling,2025-05-23,2028-05-07,60,79,Active
+S513,Stanley Black & Decker,Americas,Manufacturing & Industrial,MRO Supplies,Industrial Tools,2024-01-24,2028-01-03,90,83,Active
+S514,Honeywell Safety,Americas,Manufacturing & Industrial,MRO Supplies,Safety Equipment,2024-03-07,2027-02-20,45,75,Active
+S515,3M Safety,Americas,Manufacturing & Industrial,MRO Supplies,Safety Equipment,2024-12-21,2027-12-06,45,80,Active
+S516,Shell Lubricants,Europe,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,2025-05-17,2028-05-01,45,79,Active
+S517,Grainger,Americas,Manufacturing & Industrial,MRO Supplies,Spare Parts,2025-02-27,2028-02-12,60,81,Active
+S601,Pfizer,Americas,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2024-05-21,2028-04-30,75,81,Active
+S602,Johnson & Johnson,Americas,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2024-07-22,2026-07-12,60,82,Active
+S603,Novartis,Europe,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2024-02-11,2027-01-26,30,83,Active
+S604,Roche,Europe,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2024-10-04,2025-09-29,60,81,Expired
+S605,Merck & Co,Americas,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2025-04-15,2029-03-25,30,84,Active
+S606,Teva Pharmaceutical,Middle East,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2025-01-01,2029-12-06,90,79,Active
+S607,Mylan,Americas,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2024-08-10,2025-08-05,30,76,Expired
+S608,Sun Pharma,APAC,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2024-08-03,2027-07-19,75,79,Active
+S609,Sandoz,Europe,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2024-04-04,2029-03-09,90,81,Active
+S610,Moderna,Americas,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,2025-01-15,2028-12-25,30,80,Active
+S611,AstraZeneca,Europe,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,2024-04-03,2025-03-29,60,80,Expired
+S612,GSK Vaccines,Europe,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,2024-04-15,2027-03-31,30,85,Active
+S613,AbbVie,Americas,Healthcare & Life Sciences,Pharmaceuticals,Biologics,2025-05-07,2026-05-02,60,85,Active
+S614,Amgen,Americas,Healthcare & Life Sciences,Pharmaceuticals,Biologics,2024-05-15,2027-04-30,75,83,Active
+S615,Bayer Consumer,Europe,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2025-01-22,2026-01-17,60,77,Active
+S616,Procter & Gamble Health,Americas,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2024-04-12,2025-04-07,75,77,Expired
+S617,Siemens Healthineers,Europe,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,2025-04-27,2027-04-17,60,85,Active
+S618,GE Healthcare,Americas,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,2024-06-24,2027-06-09,60,81,Active
+S619,Philips Healthcare,Europe,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,2025-06-01,2030-05-06,60,77,Active
+S620,Medtronic,Americas,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,2024-03-31,2027-03-16,60,80,Active
+S621,Stryker,Americas,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,2024-04-06,2025-04-01,30,84,Expired
+S622,Boston Scientific,Americas,Healthcare & Life Sciences,Medical Devices,Implants,2025-02-14,2030-01-19,60,80,Active
+S623,Zimmer Biomet,Americas,Healthcare & Life Sciences,Medical Devices,Implants,2024-05-23,2027-05-08,30,85,Active
+S624,Masimo,Americas,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,2024-09-22,2026-09-12,30,76,Active
+S625,Cardinal Health,Americas,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,2025-06-08,2027-05-29,30,82,Active
+S626,McKesson,Americas,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,2024-01-21,2027-12-31,60,83,Active
+S627,Becton Dickinson,Americas,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,2025-03-06,2028-02-19,30,79,Active
+S628,Thermo Fisher Scientific,Americas,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,2024-04-04,2026-03-25,90,84,Active
+S629,Merck Millipore,Europe,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,2024-09-15,2028-08-25,75,78,Active
+S630,Smith & Nephew,Europe,Healthcare & Life Sciences,Medical Supplies,Wound Care,2025-03-01,2027-02-19,30,76,Active
+S631,Agilent Technologies,Americas,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,2024-03-29,2026-03-19,60,82,Active
+S632,Waters Corporation,Americas,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,2025-04-06,2028-03-21,75,85,Active
+S633,PerkinElmer,Americas,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2024-07-14,2025-07-09,30,83,Expired
+S701,NextEra Energy,Americas,Energy & Utilities,Electricity,Grid Electricity,2024-09-10,2027-08-26,30,77,Active
+S702,Duke Energy,Americas,Energy & Utilities,Electricity,Grid Electricity,2025-01-07,2027-12-23,75,83,Active
+S703,Enel,Europe,Energy & Utilities,Electricity,Grid Electricity,2024-11-17,2025-11-12,90,78,Expired
+S704,Orsted,Europe,Energy & Utilities,Electricity,Renewable Electricity,2025-02-12,2027-02-02,75,82,Active
+S705,Iberdrola Renewables,Europe,Energy & Utilities,Electricity,Renewable Electricity,2025-06-08,2028-05-23,75,83,Active
+S706,Cummins Power,Americas,Energy & Utilities,Electricity,Backup Power,2024-06-22,2028-06-01,75,83,Active
+S707,Caterpillar Power,Americas,Energy & Utilities,Electricity,Backup Power,2025-02-22,2030-01-27,75,76,Active
+S708,Cheniere Energy,Americas,Energy & Utilities,Fuels,Natural Gas,2025-04-28,2028-04-12,45,81,Active
+S709,Shell Gas,Europe,Energy & Utilities,Fuels,Natural Gas,2024-03-01,2029-02-03,75,81,Active
+S710,BP Fuels,Europe,Energy & Utilities,Fuels,Diesel,2024-05-11,2029-04-15,60,76,Active
+S711,ExxonMobil Fuels,Americas,Energy & Utilities,Fuels,Diesel,2025-02-26,2028-02-11,60,85,Active
+S712,Shell Aviation,Europe,Energy & Utilities,Fuels,Aviation Fuel,2025-04-20,2029-03-30,75,82,Active
+S713,Neste,Europe,Energy & Utilities,Fuels,Biofuels,2024-01-22,2027-01-06,60,77,Active
+S714,First Solar,Americas,Energy & Utilities,Renewable Equipment,Solar Panels,2024-12-30,2026-12-20,60,81,Active
+S715,Canadian Solar,Americas,Energy & Utilities,Renewable Equipment,Solar Panels,2024-02-06,2025-01-31,90,76,Expired
+S716,JinkoSolar,APAC,Energy & Utilities,Renewable Equipment,Solar Panels,2024-01-21,2026-01-10,75,79,Active
+S717,Vestas,Europe,Energy & Utilities,Renewable Equipment,Wind Turbines,2025-01-17,2027-01-07,75,80,Active
+S718,Siemens Gamesa,Europe,Energy & Utilities,Renewable Equipment,Wind Turbines,2024-11-16,2027-11-01,45,83,Active
+S719,GE Renewable Energy,Americas,Energy & Utilities,Renewable Equipment,Wind Turbines,2024-09-17,2025-09-12,45,79,Expired
+S720,Tesla Energy,Americas,Energy & Utilities,Renewable Equipment,Battery Storage,2024-12-15,2029-11-19,30,79,Active
+S721,LG Energy Solution,APAC,Energy & Utilities,Renewable Equipment,Battery Storage,2025-02-26,2028-02-11,90,84,Active
+S722,CATL,APAC,Energy & Utilities,Renewable Equipment,Battery Storage,2024-01-05,2024-12-30,45,83,Expired
+S801,Cemex,Americas,Construction & Real Estate,Building Materials,Cement,2025-01-13,2029-12-18,30,84,Active
+S802,LafargeHolcim,Europe,Construction & Real Estate,Building Materials,Cement,2025-01-28,2027-01-18,60,85,Active
+S803,HeidelbergCement,Europe,Construction & Real Estate,Building Materials,Cement,2024-07-24,2029-06-28,60,75,Active
+S804,Ready Mix USA,Americas,Construction & Real Estate,Building Materials,Concrete,2025-06-05,2026-05-31,75,75,Active
+S805,Martin Marietta,Americas,Construction & Real Estate,Building Materials,Concrete,2024-10-06,2026-09-26,45,84,Active
+S806,Weyerhaeuser,Americas,Construction & Real Estate,Building Materials,Lumber,2024-05-04,2029-04-08,30,85,Active
+S807,West Fraser Timber,Americas,Construction & Real Estate,Building Materials,Lumber,2025-06-03,2029-05-13,30,85,Active
+S808,Nucor,Americas,Construction & Real Estate,Building Materials,Structural Steel,2024-09-11,2027-08-27,60,82,Active
+S809,Steel Dynamics,Americas,Construction & Real Estate,Building Materials,Structural Steel,2024-10-27,2028-10-06,60,79,Active
+S810,Guardian Glass,Americas,Construction & Real Estate,Building Materials,Glass,2024-03-27,2025-03-22,60,75,Expired
+S811,Saint-Gobain Glass,Europe,Construction & Real Estate,Building Materials,Glass,2025-01-24,2029-01-03,45,81,Active
+S812,Carrier Global,Americas,Construction & Real Estate,MEP Systems,HVAC Equipment,2024-02-25,2028-02-04,75,78,Active
+S813,Trane Technologies,Europe,Construction & Real Estate,MEP Systems,HVAC Equipment,2024-07-21,2029-06-25,45,77,Active
+S814,Eaton,Europe,Construction & Real Estate,MEP Systems,Electrical Systems,2024-08-18,2027-08-03,90,80,Active
+S815,Schneider Electric,Europe,Construction & Real Estate,MEP Systems,Electrical Systems,2024-05-22,2026-05-12,90,80,Active
+S816,Masco,Americas,Construction & Real Estate,MEP Systems,Plumbing Systems,2024-01-24,2028-12-28,75,76,Active
+S817,Kohler,Americas,Construction & Real Estate,MEP Systems,Plumbing Systems,2024-08-12,2026-08-02,60,82,Active
+S818,Caterpillar Construction,Americas,Construction & Real Estate,Construction Equipment,Heavy Equipment,2025-03-01,2028-02-14,60,82,Active
+S819,Komatsu Construction,APAC,Construction & Real Estate,Construction Equipment,Heavy Equipment,2024-10-24,2026-10-14,75,76,Active
+S820,Hilti,Europe,Construction & Real Estate,Construction Equipment,Power Tools,2025-05-14,2028-04-28,75,81,Active
+S821,Bosch Power Tools,Europe,Construction & Real Estate,Construction Equipment,Power Tools,2024-05-02,2026-04-22,60,77,Active
+S822,Layher,Europe,Construction & Real Estate,Construction Equipment,Scaffolding,2024-08-03,2029-07-08,75,80,Active
+S901,Maersk,Europe,Logistics & Transportation,Freight Services,Ocean Freight,2024-12-22,2026-12-12,45,82,Active
+S902,MSC,Europe,Logistics & Transportation,Freight Services,Ocean Freight,2024-01-24,2028-01-03,90,82,Active
+S903,CMA CGM,Europe,Logistics & Transportation,Freight Services,Ocean Freight,2024-08-23,2028-08-02,90,75,Active
+S904,DHL Express,Europe,Logistics & Transportation,Freight Services,Air Freight,2025-04-03,2029-03-13,60,83,Active
+S905,FedEx Express,Americas,Logistics & Transportation,Freight Services,Air Freight,2024-03-23,2026-03-13,75,78,Active
+S906,UPS Air,Americas,Logistics & Transportation,Freight Services,Air Freight,2024-07-08,2025-07-03,30,75,Expired
+S907,XPO Logistics,Americas,Logistics & Transportation,Freight Services,Road Freight,2024-09-19,2028-08-29,90,84,Active
+S908,J.B. Hunt,Americas,Logistics & Transportation,Freight Services,Road Freight,2024-03-10,2027-02-23,60,83,Active
+S909,Kuehne + Nagel Road,Europe,Logistics & Transportation,Freight Services,Road Freight,2025-06-26,2026-06-21,90,81,Active
+S910,Union Pacific,Americas,Logistics & Transportation,Freight Services,Rail Freight,2025-02-17,2028-02-02,45,80,Active
+S911,BNSF Railway,Americas,Logistics & Transportation,Freight Services,Rail Freight,2024-05-18,2027-05-03,90,75,Active
+S912,Prologis,Americas,Logistics & Transportation,Warehousing,Distribution Centers,2024-05-20,2025-05-15,45,84,Expired
+S913,Duke Realty,Americas,Logistics & Transportation,Warehousing,Distribution Centers,2024-12-17,2027-12-02,30,83,Active
+S914,Americold,Americas,Logistics & Transportation,Warehousing,Cold Storage,2024-09-12,2025-09-07,75,81,Expired
+S915,Lineage Logistics,Americas,Logistics & Transportation,Warehousing,Cold Storage,2024-02-04,2028-01-14,90,83,Active
+S916,DHL Supply Chain,Europe,Logistics & Transportation,Warehousing,3PL Services,2024-09-21,2029-08-26,45,85,Active
+S917,C.H. Robinson,Americas,Logistics & Transportation,Warehousing,3PL Services,2025-03-05,2027-02-23,60,76,Active
+S918,Enterprise Fleet,Americas,Logistics & Transportation,Fleet Services,Fleet Vehicles,2024-05-27,2027-05-12,75,80,Active
+S919,Ryder Fleet,Americas,Logistics & Transportation,Fleet Services,Fleet Vehicles,2024-06-25,2026-06-15,45,78,Active
+S920,Penske Truck Leasing,Americas,Logistics & Transportation,Fleet Services,Fleet Maintenance,2024-01-30,2028-01-09,90,83,Active
+S921,Samsara,Americas,Logistics & Transportation,Fleet Services,Fleet Telematics,2025-05-24,2026-05-19,90,75,Active

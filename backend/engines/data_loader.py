@@ -5,7 +5,7 @@ Loads and manages all data sources for the recommendation system
 
 import pandas as pd
 import os
-from typing import Dict, Any
+from typing import Dict, Any, List, Optional
 from pathlib import Path
 
 
@@ -32,6 +32,23 @@ class DataLoader:
         
         self.data_dir = Path(data_dir)
         self._cache = {}
+    
+    def set_spend_data(self, df: pd.DataFrame):
+        """
+        Inject custom spend data DataFrame (for user uploads)
+        This overrides the default CSV file loading.
+        """
+        # Ensure date column is datetime
+        if 'Transaction_Date' in df.columns:
+            df['Transaction_Date'] = pd.to_datetime(df['Transaction_Date'])
+        self._cache['spend_data'] = df
+    
+    def set_supplier_master(self, df: pd.DataFrame):
+        """
+        Inject custom supplier master DataFrame (for user uploads)
+        This overrides the default CSV file loading.
+        """
+        self._cache['supplier_master'] = df
 
     def load_spend_data(self, force_reload: bool = False) -> pd.DataFrame:
         """
@@ -305,6 +322,316 @@ class DataLoader:
     def clear_cache(self):
         """Clear all cached data"""
         self._cache = {}
+
+    # ========================================================================
+    # HIERARCHICAL INDUSTRY TAXONOMY METHODS
+    # Support for Sector > Category > SubCategory structure
+    # ========================================================================
+
+    def load_industry_taxonomy(self, force_reload: bool = False) -> pd.DataFrame:
+        """
+        Load industry taxonomy (Sector > Category > SubCategory hierarchy)
+
+        Returns:
+            DataFrame with columns: Sector_ID, Sector_Name, Category_ID, Category_Name,
+                                   SubCategory_ID, SubCategory_Name, Description,
+                                   Risk_Profile, Strategic_Importance
+        """
+        if 'industry_taxonomy' not in self._cache or force_reload:
+            file_path = self.data_dir / 'industry_taxonomy.csv'
+            if file_path.exists():
+                self._cache['industry_taxonomy'] = pd.read_csv(file_path)
+            else:
+                # Return empty DataFrame if file doesn't exist
+                self._cache['industry_taxonomy'] = pd.DataFrame()
+
+        return self._cache['industry_taxonomy'].copy()
+
+    def get_all_sectors(self) -> List[Dict[str, Any]]:
+        """
+        Get all available sectors with their categories
+
+        Returns:
+            List of sector dictionaries with nested categories
+        """
+        spend_data = self.load_spend_data()
+
+        if 'Sector' not in spend_data.columns:
+            # Fallback for old data format
+            return self._get_sectors_from_categories()
+
+        sectors = []
+        for sector in spend_data['Sector'].unique():
+            sector_data = spend_data[spend_data['Sector'] == sector]
+            sector_spend = float(sector_data['Spend_USD'].sum())
+
+            categories = []
+            for category in sector_data['Category'].unique():
+                cat_data = sector_data[sector_data['Category'] == category]
+                cat_spend = float(cat_data['Spend_USD'].sum())
+
+                subcategories = []
+                if 'SubCategory' in cat_data.columns:
+                    for subcat in cat_data['SubCategory'].unique():
+                        subcat_data = cat_data[cat_data['SubCategory'] == subcat]
+                        subcategories.append({
+                            'name': subcat,
+                            'spend': float(subcat_data['Spend_USD'].sum()),
+                            'suppliers': int(subcat_data['Supplier_ID'].nunique())
+                        })
+
+                categories.append({
+                    'name': category,
+                    'spend': cat_spend,
+                    'suppliers': int(cat_data['Supplier_ID'].nunique()),
+                    'subcategories': subcategories
+                })
+
+            sectors.append({
+                'name': sector,
+                'spend': sector_spend,
+                'suppliers': int(sector_data['Supplier_ID'].nunique()),
+                'categories': categories
+            })
+
+        return sorted(sectors, key=lambda x: x['spend'], reverse=True)
+
+    def _get_sectors_from_categories(self) -> List[Dict[str, Any]]:
+        """Fallback method to infer sectors from category names"""
+        spend_data = self.load_spend_data()
+
+        # Map categories to sectors based on naming patterns
+        sector_mapping = {
+            'Food & Beverages': ['Oil', 'Rice', 'Wheat', 'Coffee', 'Tea', 'Sugar', 'Dairy',
+                               'Poultry', 'Beef', 'Seafood', 'Protein', 'Grain', 'Spice'],
+            'Information Technology': ['IT', 'Hardware', 'Software', 'Cloud', 'Cyber',
+                                       'Telecom', 'Network', 'Server', 'Laptop', 'SaaS'],
+            'Manufacturing & Industrial': ['Steel', 'Aluminum', 'Copper', 'Plastic',
+                                           'Chemical', 'Manufacturing', 'Industrial',
+                                           'Machinery', 'Robot', 'MRO'],
+            'Healthcare & Life Sciences': ['Pharma', 'Medical', 'Health', 'Drug', 'Vaccine'],
+            'Energy & Utilities': ['Energy', 'Electricity', 'Gas', 'Solar', 'Wind',
+                                   'Renewable', 'Fuel', 'Battery'],
+            'Construction & Real Estate': ['Construction', 'Building', 'Cement', 'Concrete',
+                                           'Lumber', 'HVAC', 'Plumbing'],
+            'Logistics & Transportation': ['Logistics', 'Freight', 'Warehouse', 'Fleet',
+                                           'Transport', 'Shipping'],
+            'Professional Services': ['Consulting', 'Legal', 'Account', 'Marketing',
+                                     'PR', 'Advertising', 'Financial'],
+            'Facilities & Corporate': ['Office', 'Facility', 'Cleaning', 'Security',
+                                       'Travel', 'Event'],
+            'Human Resources': ['HR', 'Staffing', 'Recruit', 'Training', 'Payroll']
+        }
+
+        def get_sector(category_name):
+            cat_lower = category_name.lower()
+            for sector, keywords in sector_mapping.items():
+                if any(kw.lower() in cat_lower for kw in keywords):
+                    return sector
+            return 'Other'
+
+        spend_data['_inferred_sector'] = spend_data['Category'].apply(get_sector)
+
+        sectors = []
+        for sector in spend_data['_inferred_sector'].unique():
+            sector_data = spend_data[spend_data['_inferred_sector'] == sector]
+
+            categories = []
+            for category in sector_data['Category'].unique():
+                cat_data = sector_data[sector_data['Category'] == category]
+                categories.append({
+                    'name': category,
+                    'spend': float(cat_data['Spend_USD'].sum()),
+                    'suppliers': int(cat_data['Supplier_ID'].nunique()),
+                    'subcategories': []
+                })
+
+            sectors.append({
+                'name': sector,
+                'spend': float(sector_data['Spend_USD'].sum()),
+                'suppliers': int(sector_data['Supplier_ID'].nunique()),
+                'categories': sorted(categories, key=lambda x: x['spend'], reverse=True)
+            })
+
+        return sorted(sectors, key=lambda x: x['spend'], reverse=True)
+
+    def get_sector_summary(self, sector: str) -> Dict[str, Any]:
+        """
+        Get detailed summary for a specific sector
+
+        Args:
+            sector: Sector name (e.g., 'Food & Beverages')
+
+        Returns:
+            Dictionary with sector details, categories, and spend breakdown
+        """
+        spend_data = self.load_spend_data()
+
+        if 'Sector' not in spend_data.columns:
+            return {"error": "Sector data not available. Using legacy format."}
+
+        sector_data = spend_data[spend_data['Sector'] == sector]
+
+        if len(sector_data) == 0:
+            return {"error": f"Sector '{sector}' not found"}
+
+        total_spend = float(sector_data['Spend_USD'].sum())
+
+        # Get category breakdown
+        category_breakdown = sector_data.groupby('Category').agg({
+            'Spend_USD': 'sum',
+            'Supplier_ID': 'nunique',
+            'Supplier_Country': lambda x: list(x.unique())
+        }).reset_index()
+
+        categories = []
+        for _, row in category_breakdown.iterrows():
+            categories.append({
+                'name': row['Category'],
+                'spend': float(row['Spend_USD']),
+                'percentage': round(float(row['Spend_USD'] / total_spend * 100), 2),
+                'suppliers': int(row['Supplier_ID']),
+                'countries': row['Supplier_Country']
+            })
+
+        # Get regional breakdown
+        regional_breakdown = sector_data.groupby('Supplier_Region')['Spend_USD'].sum()
+        regions = {
+            region: {
+                'spend': float(spend),
+                'percentage': round(float(spend / total_spend * 100), 2)
+            }
+            for region, spend in regional_breakdown.items()
+        }
+
+        return {
+            'sector': sector,
+            'total_spend': total_spend,
+            'total_suppliers': int(sector_data['Supplier_ID'].nunique()),
+            'total_categories': int(sector_data['Category'].nunique()),
+            'categories': sorted(categories, key=lambda x: x['spend'], reverse=True),
+            'regions': regions
+        }
+
+    def get_subcategory_data(
+        self,
+        client_id: str = None,
+        subcategory: str = None,
+        category: str = None
+    ) -> pd.DataFrame:
+        """
+        Get spend data filtered by subcategory (or category for backward compatibility)
+
+        Args:
+            client_id: Optional client filter
+            subcategory: SubCategory name (e.g., 'Rice Bran Oil')
+            category: Category name (falls back if SubCategory not available)
+
+        Returns:
+            Filtered DataFrame
+        """
+        spend_data = self.load_spend_data()
+
+        if client_id:
+            spend_data = spend_data[spend_data['Client_ID'] == client_id]
+
+        # Try SubCategory first, then Category
+        if 'SubCategory' in spend_data.columns and subcategory:
+            spend_data = spend_data[spend_data['SubCategory'] == subcategory]
+        elif category:
+            spend_data = spend_data[spend_data['Category'] == category]
+
+        return spend_data
+
+    def get_hierarchy_path(self, subcategory: str) -> Dict[str, str]:
+        """
+        Get the full hierarchy path for a subcategory
+
+        Args:
+            subcategory: SubCategory name (e.g., 'Rice Bran Oil')
+
+        Returns:
+            Dictionary with sector, category, subcategory
+        """
+        spend_data = self.load_spend_data()
+
+        if 'SubCategory' not in spend_data.columns:
+            # Fallback for old format
+            return {
+                'sector': 'Unknown',
+                'category': subcategory,
+                'subcategory': subcategory
+            }
+
+        subcat_data = spend_data[spend_data['SubCategory'] == subcategory]
+
+        if len(subcat_data) == 0:
+            # Try matching on Category instead
+            subcat_data = spend_data[spend_data['Category'] == subcategory]
+
+        if len(subcat_data) == 0:
+            return {
+                'sector': 'Unknown',
+                'category': 'Unknown',
+                'subcategory': subcategory
+            }
+
+        return {
+            'sector': subcat_data.iloc[0].get('Sector', 'Unknown'),
+            'category': subcat_data.iloc[0].get('Category', 'Unknown'),
+            'subcategory': subcat_data.iloc[0].get('SubCategory', subcategory)
+        }
+
+    def search_categories(self, query: str) -> List[Dict[str, Any]]:
+        """
+        Search across sectors, categories, and subcategories
+
+        Args:
+            query: Search string
+
+        Returns:
+            List of matching items with their hierarchy
+        """
+        spend_data = self.load_spend_data()
+        query_lower = query.lower()
+
+        results = []
+
+        # Search in Sectors
+        if 'Sector' in spend_data.columns:
+            for sector in spend_data['Sector'].unique():
+                if query_lower in sector.lower():
+                    results.append({
+                        'type': 'sector',
+                        'name': sector,
+                        'path': sector,
+                        'spend': float(spend_data[spend_data['Sector'] == sector]['Spend_USD'].sum())
+                    })
+
+        # Search in Categories
+        for category in spend_data['Category'].unique():
+            if query_lower in category.lower():
+                sector = spend_data[spend_data['Category'] == category]['Sector'].iloc[0] if 'Sector' in spend_data.columns else 'N/A'
+                results.append({
+                    'type': 'category',
+                    'name': category,
+                    'path': f"{sector} > {category}",
+                    'spend': float(spend_data[spend_data['Category'] == category]['Spend_USD'].sum())
+                })
+
+        # Search in SubCategories
+        if 'SubCategory' in spend_data.columns:
+            for subcat in spend_data['SubCategory'].unique():
+                if query_lower in subcat.lower():
+                    row = spend_data[spend_data['SubCategory'] == subcat].iloc[0]
+                    results.append({
+                        'type': 'subcategory',
+                        'name': subcat,
+                        'path': f"{row.get('Sector', 'N/A')} > {row['Category']} > {subcat}",
+                        'spend': float(spend_data[spend_data['SubCategory'] == subcat]['Spend_USD'].sum())
+                    })
+
+        return sorted(results, key=lambda x: x['spend'], reverse=True)
 
 
 # Example usage

@@ -9,10 +9,10 @@ import pandas as pd
 
 # Handle imports for both module and standalone execution
 try:
-    from .rule_engine import RuleEngine, RuleResult, RiskLevel
+    from .enhanced_rule_engine import EnhancedRuleEngine as RuleEngine, RuleResult, RiskLevel
     from .data_loader import DataLoader
 except ImportError:
-    from rule_engine import RuleEngine, RuleResult, RiskLevel
+    from enhanced_rule_engine import EnhancedRuleEngine as RuleEngine, RuleResult, RiskLevel
     from data_loader import DataLoader
 
 

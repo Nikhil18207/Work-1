@@ -2,14 +2,25 @@
 Enhanced Leadership Brief Generator
 Generates executive-level procurement diversification briefs for ANY industry
 All numbers calculated from actual data - no hardcoded values
+
+NOW WITH LLM-POWERED REASONING:
+- AI-generated executive summaries
+- Contextual risk analysis with GPT-4
+- Strategic recommendations with business justification
+- Market-aware insights
 """
 
 import sys
+import os
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
+
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv()
 
 root_path = Path(__file__).parent.parent.parent
 if str(root_path) not in sys.path:
@@ -17,6 +28,7 @@ if str(root_path) not in sys.path:
 
 from backend.engines.data_loader import DataLoader
 from backend.engines.rule_evaluation_engine import RuleEvaluationEngine
+from backend.engines.llm_engine import LLMEngine
 
 
 class LeadershipBriefGenerator:
@@ -24,6 +36,11 @@ class LeadershipBriefGenerator:
     Enhanced Leadership Brief Generator
     Works for ANY industry - IT, Manufacturing, Healthcare, Services, etc.
     All metrics calculated from actual data
+
+    LLM-POWERED REASONING:
+    - Uses GPT-4 for contextual executive summaries
+    - Generates AI-driven strategic recommendations
+    - Provides market-aware risk analysis
     """
     
     INDUSTRY_COST_DRIVERS = {
@@ -148,9 +165,34 @@ class LeadershipBriefGenerator:
         }
     }
     
-    def __init__(self):
-        self.data_loader = DataLoader()
+    def __init__(self, data_loader=None, enable_llm: bool = True):
+        """
+        Initialize brief generator with optional LLM-powered reasoning.
+
+        Args:
+            data_loader: Optional DataLoader instance with custom data.
+                         If not provided, creates default DataLoader.
+            enable_llm: Enable LLM-powered reasoning for enhanced insights.
+                        Defaults to True. Set False for faster template-only mode.
+        """
+        if data_loader:
+            self.data_loader = data_loader
+        else:
+            self.data_loader = DataLoader()
         self.rule_engine = RuleEvaluationEngine()
+
+        # Initialize LLM engine for AI-powered reasoning
+        self.enable_llm = enable_llm
+        self.llm_engine = None
+        if enable_llm:
+            try:
+                self.llm_engine = LLMEngine()
+                if self.llm_engine.client is None:
+                    print("⚠️ LLM not available - using template-based reasoning")
+                    self.enable_llm = False
+            except Exception as e:
+                print(f"⚠️ LLM initialization failed: {e} - using template-based reasoning")
+                self.enable_llm = False
     
     def _get_industry_config(self, category: str, product_category: str = None) -> Dict:
         """Get industry-specific configuration based on category"""
@@ -487,28 +529,51 @@ class LeadershipBriefGenerator:
         }
     
     def generate_incumbent_concentration_brief(
-        self, 
-        client_id: str, 
+        self,
+        client_id: str,
         category: str = None
     ) -> Dict[str, Any]:
         """Generate Incumbent Concentration Brief with all data-driven metrics"""
-        
+
         spend_df = self.data_loader.load_spend_data()
         supplier_df = self.data_loader.load_supplier_master()
-        
+
         if category:
-            spend_df = spend_df[
-                (spend_df['Client_ID'] == client_id) & 
-                (spend_df['Category'] == category)
-            ]
+            # Support hierarchical structure: check SubCategory first, then Category
+            if 'SubCategory' in spend_df.columns:
+                # First try with client filter
+                cat_mask = (
+                    (spend_df['Client_ID'] == client_id) &
+                    ((spend_df['SubCategory'] == category) | (spend_df['Category'] == category))
+                )
+                filtered_df = spend_df[cat_mask]
+
+                # If no data for this client, use all data for this category
+                if filtered_df.empty:
+                    cat_mask = (spend_df['SubCategory'] == category) | (spend_df['Category'] == category)
+                    filtered_df = spend_df[cat_mask]
+
+                spend_df = filtered_df
+            else:
+                cat_mask = (
+                    (spend_df['Client_ID'] == client_id) &
+                    (spend_df['Category'] == category)
+                )
+                filtered_df = spend_df[cat_mask]
+
+                # Fallback to all data for category
+                if filtered_df.empty:
+                    filtered_df = spend_df[spend_df['Category'] == category]
+
+                spend_df = filtered_df
         else:
             spend_df = spend_df[spend_df['Client_ID'] == client_id]
-        
+
         if spend_df.empty:
             return self._empty_brief_response("No spend data found")
-        
+
         total_spend = spend_df['Spend_USD'].sum()
-        
+
         supplier_spend = spend_df.groupby('Supplier_Name')['Spend_USD'].sum()
         supplier_spend_pct = (supplier_spend / total_spend * 100).round(1)
         supplier_spend_sorted = supplier_spend_pct.sort_values(ascending=False)
@@ -688,29 +753,86 @@ class LeadershipBriefGenerator:
                 'Initiate 8–12 week pilot allocations',
                 'Benchmark pricing and delivery quarterly',
                 'Continue phased reduction based on pilot performance'
-            ]
+            ],
+            
+            # REASONING SECTIONS - Explain WHY these recommendations matter
+            'why_this_matters': self._generate_why_this_matters(
+                dominant_supplier_pct, num_current_suppliers, total_spend, category
+            ),
+
+            'business_justification': self._generate_business_justification(
+                dominant_supplier_pct, target_dominant_pct, roi_projections, risk_matrix
+            ),
+
+            'risk_reasoning': self._generate_risk_reasoning(
+                num_current_suppliers, dominant_supplier_pct, dominant_region_pct, supplier_countries
+            ),
+
+            'recommendation_rationale': self._generate_recommendation_rationale(
+                category, alternate_supplier, new_regions, industry_config
+            )
         }
-        
+
+        # Add LLM-powered deep analysis sections if enabled
+        if self.enable_llm:
+            brief['ai_executive_summary'] = self._generate_llm_executive_summary(brief, "incumbent")
+            brief['ai_risk_analysis'] = self._generate_llm_risk_analysis(brief, "incumbent")
+            brief['ai_strategic_recommendations'] = self._generate_llm_strategic_recommendations(brief, "incumbent")
+            brief['ai_market_intelligence'] = self._generate_llm_market_intelligence(
+                category, supplier_countries + new_regions, product_category
+            )
+            brief['llm_enabled'] = True
+        else:
+            # Use template-based reasoning as fallback
+            brief['ai_executive_summary'] = self._generate_template_executive_summary(brief, "incumbent")
+            brief['ai_risk_analysis'] = brief['risk_reasoning']
+            brief['ai_strategic_recommendations'] = brief['recommendation_rationale']
+            brief['ai_market_intelligence'] = f"Market intelligence for {category} sourcing."
+            brief['llm_enabled'] = False
+
         return brief
     
     def generate_regional_concentration_brief(
-        self, 
-        client_id: str, 
+        self,
+        client_id: str,
         category: str = None
     ) -> Dict[str, Any]:
         """Generate Regional Concentration Brief with all data-driven metrics"""
-        
+
         spend_df = self.data_loader.load_spend_data()
         supplier_df = self.data_loader.load_supplier_master()
-        
+
         if category:
-            spend_df = spend_df[
-                (spend_df['Client_ID'] == client_id) & 
-                (spend_df['Category'] == category)
-            ]
+            # Support hierarchical structure: check SubCategory first, then Category
+            if 'SubCategory' in spend_df.columns:
+                # First try with client filter
+                cat_mask = (
+                    (spend_df['Client_ID'] == client_id) &
+                    ((spend_df['SubCategory'] == category) | (spend_df['Category'] == category))
+                )
+                filtered_df = spend_df[cat_mask]
+
+                # If no data for this client, use all data for this category
+                if filtered_df.empty:
+                    cat_mask = (spend_df['SubCategory'] == category) | (spend_df['Category'] == category)
+                    filtered_df = spend_df[cat_mask]
+
+                spend_df = filtered_df
+            else:
+                cat_mask = (
+                    (spend_df['Client_ID'] == client_id) &
+                    (spend_df['Category'] == category)
+                )
+                filtered_df = spend_df[cat_mask]
+
+                # Fallback to all data for category
+                if filtered_df.empty:
+                    filtered_df = spend_df[spend_df['Category'] == category]
+
+                spend_df = filtered_df
         else:
             spend_df = spend_df[spend_df['Client_ID'] == client_id]
-        
+
         if spend_df.empty:
             return self._empty_brief_response("No spend data found")
         
@@ -851,11 +973,45 @@ class LeadershipBriefGenerator:
                 'Initiate 8–12 week pilot contracts',
                 'Review pricing and delivery performance quarterly',
                 'Reduce concentration further if pilots outperform'
-            ]
+            ],
+
+            # REASONING SECTIONS for regional brief
+            'why_this_matters': self._generate_why_this_matters(
+                top_country_pct, num_suppliers, total_spend, category
+            ),
+
+            'business_justification': self._generate_business_justification(
+                total_high_concentration, target_region_pct_max, roi_projections, risk_matrix
+            ),
+
+            'risk_reasoning': self._generate_risk_reasoning(
+                num_suppliers, top_supplier_pct, top_country_pct, all_countries[:5]
+            ),
+
+            'recommendation_rationale': self._generate_recommendation_rationale(
+                category, None, new_regions, industry_config
+            )
         }
-        
+
+        # Add LLM-powered deep analysis sections if enabled
+        if self.enable_llm:
+            brief['ai_executive_summary'] = self._generate_llm_executive_summary(brief, "regional")
+            brief['ai_risk_analysis'] = self._generate_llm_risk_analysis(brief, "regional")
+            brief['ai_strategic_recommendations'] = self._generate_llm_strategic_recommendations(brief, "regional")
+            brief['ai_market_intelligence'] = self._generate_llm_market_intelligence(
+                category, all_countries + new_regions, product_category
+            )
+            brief['llm_enabled'] = True
+        else:
+            # Use template-based reasoning as fallback
+            brief['ai_executive_summary'] = self._generate_template_executive_summary(brief, "regional")
+            brief['ai_risk_analysis'] = brief['risk_reasoning']
+            brief['ai_strategic_recommendations'] = brief['recommendation_rationale']
+            brief['ai_market_intelligence'] = f"Market intelligence for {category} sourcing."
+            brief['llm_enabled'] = False
+
         return brief
-    
+
     def _generate_target_allocation(
         self, 
         total_spend: float, 
@@ -1005,6 +1161,509 @@ class LeadershipBriefGenerator:
         
         return statement
     
+    def _generate_why_this_matters(
+        self,
+        dominant_pct: float,
+        num_suppliers: int,
+        total_spend: float,
+        category: str
+    ) -> str:
+        """Generate 'Why This Matters' reasoning section"""
+        cat = category or "procurement"
+        
+        if dominant_pct > 80:
+            severity = "critical"
+            impact = "immediate action required"
+        elif dominant_pct > 60:
+            severity = "high"
+            impact = "proactive action recommended"
+        else:
+            severity = "moderate"
+            impact = "opportunity for optimization"
+        
+        reasoning = f"This analysis reveals a {severity} supplier concentration issue in {cat}. "
+        
+        if num_suppliers == 1:
+            reasoning += f"With 100% of the ${total_spend:,.0f} annual spend flowing through a single supplier, "
+            reasoning += "any disruption—whether from production issues, logistics failures, geopolitical events, "
+            reasoning += "or commercial disputes—would result in complete supply chain failure. "
+        else:
+            reasoning += f"With {dominant_pct:.0f}% of spend concentrated with one supplier, "
+            reasoning += "the organization faces significant vulnerability to supply disruptions, "
+            reasoning += "limited negotiating leverage, and reduced ability to respond to market changes. "
+        
+        reasoning += f"\n\nThis matters because: (1) Supply chain resilience is now a board-level priority, "
+        reasoning += "(2) Procurement concentration directly impacts business continuity risk profiles, "
+        reasoning += f"(3) Diversification typically yields 5-15% cost improvements through competitive pressure, "
+        reasoning += f"and (4) {impact} to maintain competitive procurement operations."
+        
+        return reasoning
+    
+    def _generate_business_justification(
+        self,
+        current_pct: float,
+        target_pct: float,
+        roi_projections: Dict,
+        risk_matrix: Dict
+    ) -> str:
+        """Generate business justification with ROI reasoning"""
+        reduction = current_pct - target_pct
+        
+        justification = "BUSINESS CASE JUSTIFICATION:\n\n"
+        
+        # ROI Argument
+        min_savings = roi_projections.get('annual_cost_savings_min', 0)
+        max_savings = roi_projections.get('annual_cost_savings_max', 0)
+        impl_cost = roi_projections.get('implementation_cost', 0)
+        roi_min = roi_projections.get('roi_percentage_min', 0)
+        roi_max = roi_projections.get('roi_percentage_max', 0)
+        
+        justification += f"1. FINANCIAL RETURN: The proposed diversification is projected to deliver "
+        justification += f"${min_savings:,.0f} to ${max_savings:,.0f} in annual cost savings, "
+        justification += f"representing a {roi_min:.0f}%-{roi_max:.0f}% ROI on the estimated "
+        justification += f"${impl_cost:,.0f} implementation investment.\n\n"
+        
+        # Risk Reduction Argument
+        risk_level = risk_matrix.get('overall_risk', 'HIGH')
+        justification += f"2. RISK MITIGATION: Current risk level is rated {risk_level}. "
+        justification += f"Reducing concentration by {reduction:.0f} percentage points will "
+        justification += "significantly lower supply chain vulnerability, improve business continuity, "
+        justification += "and reduce exposure to single-source disruptions.\n\n"
+        
+        # Strategic Argument
+        justification += "3. STRATEGIC VALUE: Beyond direct savings, diversification enables: "
+        justification += "(a) Improved negotiating leverage with existing suppliers, "
+        justification += "(b) Access to innovation from multiple sources, "
+        justification += "(c) Flexibility to respond to demand changes, and "
+        justification += "(d) Alignment with enterprise risk management policies."
+        
+        return justification
+    
+    def _generate_risk_reasoning(
+        self,
+        num_suppliers: int,
+        supplier_concentration: float,
+        regional_concentration: float,
+        countries: List[str]
+    ) -> str:
+        """Generate detailed risk reasoning"""
+        reasoning = "RISK ANALYSIS REASONING:\n\n"
+        
+        # Supplier Risk
+        if supplier_concentration > 80:
+            reasoning += f"• SUPPLIER RISK (CRITICAL): At {supplier_concentration:.0f}% concentration, "
+            reasoning += "a single supplier controls the vast majority of supply. "
+            reasoning += "Industry best practice recommends no single supplier exceeds 30%. "
+            reasoning += "Current state exceeds this threshold by {:.0f}x.\n\n".format(supplier_concentration / 30)
+        elif supplier_concentration > 60:
+            reasoning += f"• SUPPLIER RISK (HIGH): At {supplier_concentration:.0f}% concentration, "
+            reasoning += "the dominant supplier has excessive market power. "
+            reasoning += "This limits negotiating leverage and creates dependency.\n\n"
+        else:
+            reasoning += f"• SUPPLIER RISK (MODERATE): At {supplier_concentration:.0f}% concentration, "
+            reasoning += "there is opportunity to further balance the supplier portfolio.\n\n"
+        
+        # Geographic Risk
+        if regional_concentration > 60:
+            countries_str = ', '.join(countries[:3]) if countries else 'a single region'
+            reasoning += f"• GEOGRAPHIC RISK (HIGH): {regional_concentration:.0f}% of spend is concentrated in {countries_str}. "
+            reasoning += "This exposes the supply chain to regional disruptions including: "
+            reasoning += "natural disasters, political instability, trade policy changes, "
+            reasoning += "and logistics bottlenecks.\n\n"
+        
+        # Diversity Risk
+        if num_suppliers <= 2:
+            reasoning += f"• DIVERSITY RISK (CRITICAL): Only {num_suppliers} supplier(s) active. "
+            reasoning += "Limited supplier pool means no fallback options during disruptions "
+            reasoning += "and insufficient competition to drive optimal pricing."
+        
+        return reasoning
+    
+    def _generate_recommendation_rationale(
+        self,
+        category: str,
+        alternate_supplier: Optional[str],
+        new_regions: List[str],
+        industry_config: Dict
+    ) -> str:
+        """Generate rationale for specific recommendations"""
+        cat = category or "this category"
+        rationale = "RECOMMENDATION RATIONALE:\n\n"
+        
+        # Why these specific actions
+        rationale += "The recommended diversification strategy is based on:\n\n"
+        
+        # Alternate supplier reasoning
+        if alternate_supplier:
+            rationale += f"1. ACTIVATE {alternate_supplier.upper()}: This supplier is already "
+            rationale += "qualified in our supplier database with proven quality ratings and "
+            rationale += "delivery reliability. Activation requires minimal qualification effort "
+            rationale += "compared to onboarding entirely new suppliers.\n\n"
+        else:
+            rationale += "1. IDENTIFY ALTERNATE SUPPLIERS: New supplier qualification should "
+            rationale += "prioritize candidates with existing certifications, proven track records, "
+            rationale += "and geographic diversity from current sources.\n\n"
+        
+        # Regional selection reasoning
+        if new_regions:
+            low_cost_regions = industry_config.get('low_cost_regions', [])
+            rationale += f"2. REGIONAL DIVERSIFICATION TO {', '.join(new_regions[:2]).upper()}: "
+            rationale += f"These regions are identified as optimal for {cat} based on: "
+            
+            for region in new_regions[:2]:
+                driver = industry_config.get('drivers', {}).get(region, 'competitive market conditions')
+                rationale += f"\n   • {region}: {driver}"
+            rationale += "\n\n"
+        
+        # Timeline reasoning
+        rationale += "3. PHASED IMPLEMENTATION: The 26-week timeline allows for: "
+        rationale += "controlled pilot testing, performance validation before scale-up, "
+        rationale += "and risk mitigation through gradual volume transitions rather than "
+        rationale += "abrupt supplier changes that could disrupt operations."
+        
+        return rationale
+    
+    # ========================================================================
+    # LLM-POWERED REASONING METHODS
+    # These methods use GPT-4 for deep, contextual analysis and insights
+    # ========================================================================
+
+    def _generate_llm_executive_summary(
+        self,
+        brief_data: Dict[str, Any],
+        brief_type: str = "incumbent"
+    ) -> str:
+        """
+        Generate AI-powered executive summary using GPT-4.
+
+        Args:
+            brief_data: The complete brief data dictionary
+            brief_type: "incumbent" or "regional"
+
+        Returns:
+            AI-generated executive summary with strategic insights
+        """
+        if not self.enable_llm or not self.llm_engine:
+            return self._generate_template_executive_summary(brief_data, brief_type)
+
+        try:
+            prompt = self._build_executive_summary_prompt(brief_data, brief_type)
+            response = self.llm_engine._generate_openai(prompt)
+            return response
+        except Exception as e:
+            print(f"⚠️ LLM executive summary failed: {e}")
+            return self._generate_template_executive_summary(brief_data, brief_type)
+
+    def _build_executive_summary_prompt(
+        self,
+        brief_data: Dict[str, Any],
+        brief_type: str
+    ) -> str:
+        """Build prompt for LLM executive summary generation"""
+        category = brief_data.get('category', 'Procurement')
+        total_spend = brief_data.get('total_spend', 0)
+
+        if brief_type == "incumbent":
+            current_state = brief_data.get('current_state', {})
+            dominant_supplier = current_state.get('dominant_supplier', 'Unknown')
+            dominant_pct = current_state.get('spend_share_pct', 0)
+            num_suppliers = current_state.get('num_suppliers', 0)
+            roi = brief_data.get('roi_projections', {})
+            risk = brief_data.get('risk_matrix', {})
+
+            prompt = f"""You are a senior procurement strategist writing an executive summary for leadership.
+
+PROCUREMENT DATA ANALYSIS:
+- Category: {category}
+- Total Annual Spend: ${total_spend:,.0f}
+- Dominant Supplier: {dominant_supplier} ({dominant_pct:.1f}% of spend)
+- Total Active Suppliers: {num_suppliers}
+- Current Risk Level: {risk.get('overall_risk', 'HIGH')}
+- Projected Annual Savings: ${roi.get('annual_cost_savings_min', 0):,.0f} - ${roi.get('annual_cost_savings_max', 0):,.0f}
+- Projected ROI: {roi.get('roi_percentage_min', 0):.0f}% - {roi.get('roi_percentage_max', 0):.0f}%
+
+SUPPLIER CONCENTRATION DETAILS:
+"""
+            for supplier in current_state.get('all_suppliers', [])[:5]:
+                prompt += f"- {supplier['name']}: ${supplier['spend']:,.0f} ({supplier['pct']:.1f}%)\n"
+
+            prompt += f"""
+KEY RISK: {current_state.get('key_risk', 'High supplier concentration')}
+
+WRITE AN EXECUTIVE SUMMARY (3-4 paragraphs) that:
+1. Opens with the critical business issue and its financial magnitude
+2. Explains WHY this concentration is problematic (business continuity, pricing leverage, supply risk)
+3. Summarizes the recommended diversification strategy
+4. Closes with the expected ROI and strategic benefits
+
+TONE: Executive-level, data-driven, action-oriented. Use specific numbers.
+DO NOT use bullet points. Write in flowing paragraphs.
+"""
+
+        else:  # regional
+            original_concentration = brief_data.get('original_concentration', [])
+            total_high_pct = brief_data.get('total_high_concentration_pct', 0)
+            roi = brief_data.get('roi_projections', {})
+            risk = brief_data.get('risk_matrix', {})
+
+            prompt = f"""You are a senior procurement strategist writing an executive summary for leadership.
+
+REGIONAL CONCENTRATION DATA:
+- Category: {category}
+- Total Annual Spend: ${total_spend:,.0f}
+- High Concentration Regions: {total_high_pct:.1f}% of spend in limited geography
+- Current Risk Level: {risk.get('overall_risk', 'HIGH')}
+- Projected Annual Savings: ${roi.get('annual_cost_savings_min', 0):,.0f} - ${roi.get('annual_cost_savings_max', 0):,.0f}
+
+REGIONAL BREAKDOWN:
+"""
+            for region in original_concentration[:5]:
+                prompt += f"- {region['country']}: ${region['spend_usd']:,.0f} ({region['pct']:.1f}%)\n"
+
+            prompt += f"""
+CONCENTRATION NOTE: {brief_data.get('concentration_note', '')}
+
+WRITE AN EXECUTIVE SUMMARY (3-4 paragraphs) that:
+1. Opens with the geographic concentration risk and its business impact
+2. Explains WHY regional concentration is problematic (geopolitical risk, logistics disruption, currency exposure)
+3. Summarizes the diversification strategy with specific new regions
+4. Closes with expected benefits and risk reduction
+
+TONE: Executive-level, data-driven, action-oriented. Use specific numbers.
+DO NOT use bullet points. Write in flowing paragraphs.
+"""
+
+        return prompt
+
+    def _generate_template_executive_summary(
+        self,
+        brief_data: Dict[str, Any],
+        brief_type: str
+    ) -> str:
+        """Fallback template-based executive summary when LLM unavailable"""
+        category = brief_data.get('category', 'Procurement')
+        total_spend = brief_data.get('total_spend', 0)
+        roi = brief_data.get('roi_projections', {})
+
+        if brief_type == "incumbent":
+            current_state = brief_data.get('current_state', {})
+            dominant_supplier = current_state.get('dominant_supplier', 'the primary supplier')
+            dominant_pct = current_state.get('spend_share_pct', 0)
+
+            return f"""Our {category} procurement faces a critical supplier concentration challenge.
+{dominant_supplier} currently controls {dominant_pct:.0f}% of our ${total_spend:,.0f} annual category spend,
+creating significant supply chain vulnerability and limiting our negotiating leverage.
+
+This concentration exposes the organization to substantial business continuity risk. A single
+disruption—whether from production issues, logistics failures, or commercial disputes—could
+severely impact operations. Additionally, the lack of competitive tension in our supplier base
+likely results in suboptimal pricing.
+
+The recommended diversification strategy targets a reduction of {dominant_supplier}'s share to
+55-60%, while activating qualified alternate suppliers. This balanced approach maintains
+operational stability while introducing healthy competition.
+
+Implementation is projected to deliver ${roi.get('annual_cost_savings_min', 0):,.0f} to
+${roi.get('annual_cost_savings_max', 0):,.0f} in annual cost savings with an ROI of
+{roi.get('roi_percentage_min', 0):.0f}%-{roi.get('roi_percentage_max', 0):.0f}%,
+while significantly reducing supply chain risk exposure."""
+
+        else:  # regional
+            total_high_pct = brief_data.get('total_high_concentration_pct', 0)
+            original = brief_data.get('original_concentration', [])
+            top_region = original[0]['country'] if original else 'the primary region'
+
+            return f"""Our {category} procurement demonstrates concerning geographic concentration,
+with {total_high_pct:.0f}% of the ${total_spend:,.0f} annual spend concentrated in {top_region}.
+This creates material exposure to regional disruptions, trade policy changes, and logistics bottlenecks.
+
+Geographic concentration of this magnitude exposes the organization to correlated risks—natural
+disasters, political instability, or infrastructure failures in one region could simultaneously
+impact the majority of supply. Currency fluctuations and trade policy changes further compound this exposure.
+
+The recommended regional diversification strategy introduces new supply corridors while
+maintaining existing supplier relationships. Target allocation reduces any single region
+to below 40% of category spend, aligned with enterprise risk management guidelines.
+
+Expected benefits include ${roi.get('annual_cost_savings_min', 0):,.0f} to
+${roi.get('annual_cost_savings_max', 0):,.0f} in annual cost optimization, improved logistics
+resilience, and reduced exposure to regional disruption events."""
+
+    def _generate_llm_risk_analysis(
+        self,
+        brief_data: Dict[str, Any],
+        brief_type: str = "incumbent"
+    ) -> str:
+        """
+        Generate AI-powered detailed risk analysis using GPT-4.
+
+        Returns deep risk analysis with business context and mitigation strategies.
+        """
+        if not self.enable_llm or not self.llm_engine:
+            return self._generate_risk_reasoning(
+                brief_data.get('current_state', {}).get('num_suppliers', 1),
+                brief_data.get('current_state', {}).get('spend_share_pct', 100),
+                brief_data.get('regional_dependency', {}).get('original_pct', 100),
+                []
+            )
+
+        try:
+            risk_matrix = brief_data.get('risk_matrix', {})
+            rule_violations = brief_data.get('rule_violations', {})
+            category = brief_data.get('category', 'Procurement')
+            total_spend = brief_data.get('total_spend', 0)
+
+            prompt = f"""You are a supply chain risk analyst providing a comprehensive risk assessment.
+
+CATEGORY: {category}
+TOTAL SPEND AT RISK: ${total_spend:,.0f}
+
+RISK MATRIX:
+- Supply Chain Risk: {risk_matrix.get('supply_chain_risk', 'N/A')}
+- Geographic Risk: {risk_matrix.get('geographic_risk', 'N/A')}
+- Supplier Diversity Risk: {risk_matrix.get('supplier_diversity_risk', 'N/A')}
+- Overall Risk Score: {risk_matrix.get('risk_score', 0)}/4.0
+- Overall Risk Level: {risk_matrix.get('overall_risk', 'HIGH')}
+
+RULE VIOLATIONS:
+- Total Violations: {rule_violations.get('total_violations', 0)}
+- Total Warnings: {rule_violations.get('total_warnings', 0)}
+- Compliance Rate: {rule_violations.get('compliance_rate', 0):.1f}%
+"""
+            for violation in rule_violations.get('violations', [])[:5]:
+                prompt += f"- VIOLATION: {violation.get('rule_name', 'Unknown')} - {violation.get('message', '')}\n"
+
+            for warning in rule_violations.get('warnings', [])[:3]:
+                prompt += f"- WARNING: {warning.get('rule_name', 'Unknown')} - {warning.get('message', '')}\n"
+
+            prompt += """
+PROVIDE A DETAILED RISK ANALYSIS (4-5 paragraphs) covering:
+
+1. CURRENT RISK EXPOSURE: Quantify the business impact of current risk levels
+2. RULE VIOLATION ANALYSIS: Explain which procurement rules are violated and why it matters
+3. SCENARIO ANALYSIS: Describe 2-3 realistic disruption scenarios and their potential impact
+4. RISK INTERDEPENDENCIES: How do supplier and geographic risks compound each other?
+5. MITIGATION URGENCY: Why action is needed now vs later
+
+Use specific numbers. Be direct about the severity. Explain business consequences.
+"""
+
+            response = self.llm_engine._generate_openai(prompt)
+            return response
+
+        except Exception as e:
+            print(f"⚠️ LLM risk analysis failed: {e}")
+            return brief_data.get('risk_reasoning', 'Risk analysis unavailable')
+
+    def _generate_llm_strategic_recommendations(
+        self,
+        brief_data: Dict[str, Any],
+        brief_type: str = "incumbent"
+    ) -> str:
+        """
+        Generate AI-powered strategic recommendations using GPT-4.
+
+        Returns actionable, prioritized recommendations with business justification.
+        """
+        if not self.enable_llm or not self.llm_engine:
+            return self._generate_recommendation_rationale(
+                brief_data.get('category', ''),
+                brief_data.get('supplier_reduction', {}).get('alternate_supplier', {}).get('name'),
+                [],
+                self._get_industry_config(brief_data.get('category', ''), None)
+            )
+
+        try:
+            category = brief_data.get('category', 'Procurement')
+            total_spend = brief_data.get('total_spend', 0)
+            roi = brief_data.get('roi_projections', {})
+            timeline = brief_data.get('implementation_timeline', [])
+            cost_advantages = brief_data.get('cost_advantages', [])
+
+            prompt = f"""You are a strategic procurement consultant advising C-level executives.
+
+PROCUREMENT OPPORTUNITY:
+- Category: {category}
+- Total Spend: ${total_spend:,.0f}
+- Projected Savings: ${roi.get('annual_cost_savings_min', 0):,.0f} - ${roi.get('annual_cost_savings_max', 0):,.0f}
+- Implementation Cost: ${roi.get('implementation_cost', 0):,.0f}
+- 3-Year Net Benefit: ${roi.get('three_year_net_benefit_min', 0):,.0f} - ${roi.get('three_year_net_benefit_max', 0):,.0f}
+- Payback Period: {roi.get('payback_period_months_min', 0):.1f} - {roi.get('payback_period_months_max', 0):.1f} months
+
+COST ADVANTAGES BY REGION:
+"""
+            for advantage in cost_advantages[:5]:
+                if 'Blended' not in advantage.get('region', ''):
+                    prompt += f"- {advantage['region']}: ${advantage['min_usd']:,.0f} - ${advantage['max_usd']:,.0f} ({advantage['driver']})\n"
+
+            prompt += f"""
+IMPLEMENTATION PHASES:
+"""
+            for phase in timeline:
+                prompt += f"- {phase['phase']}: {phase['duration']}\n"
+
+            prompt += """
+WRITE STRATEGIC RECOMMENDATIONS (5-6 paragraphs) that:
+
+1. IMMEDIATE ACTIONS (Week 1-2): What should procurement do RIGHT NOW?
+2. SHORT-TERM WINS (Month 1-3): Quick wins to build momentum
+3. STRATEGIC INITIATIVES (Month 3-6): Larger transformation efforts
+4. GOVERNANCE & MONITORING: How to track progress and ensure success
+5. RISK MITIGATION: How to execute without disrupting operations
+6. SUCCESS METRICS: How will we know the strategy is working?
+
+Be specific. Name timeframes. Provide actionable steps. Explain the 'why' behind each recommendation.
+"""
+
+            response = self.llm_engine._generate_openai(prompt)
+            return response
+
+        except Exception as e:
+            print(f"⚠️ LLM strategic recommendations failed: {e}")
+            return brief_data.get('recommendation_rationale', 'Recommendations unavailable')
+
+    def _generate_llm_market_intelligence(
+        self,
+        category: str,
+        regions: List[str],
+        product_category: str = None
+    ) -> str:
+        """
+        Generate AI-powered market intelligence for the category.
+
+        Provides industry context, market trends, and supplier landscape insights.
+        """
+        if not self.enable_llm or not self.llm_engine:
+            return f"Market intelligence for {category} across {', '.join(regions[:3])}."
+
+        try:
+            industry_config = self._get_industry_config(category, product_category)
+
+            prompt = f"""You are a procurement market intelligence analyst.
+
+CATEGORY: {category}
+PRODUCT TYPE: {product_category or category}
+CURRENT SOURCING REGIONS: {', '.join(regions[:5])}
+INDUSTRY LOW-COST REGIONS: {', '.join(industry_config.get('low_cost_regions', [])[:5])}
+TYPICAL SAVINGS RANGE: {industry_config.get('savings_range', (0.05, 0.15))}
+
+PROVIDE MARKET INTELLIGENCE (3-4 paragraphs) covering:
+
+1. INDUSTRY TRENDS: What's happening in this category globally? (demand, supply dynamics, pricing)
+2. REGIONAL ANALYSIS: Strengths and risks of each major sourcing region
+3. SUPPLIER LANDSCAPE: Types of suppliers available, market concentration trends
+4. STRATEGIC CONSIDERATIONS: Key factors for sourcing decisions in this category
+
+Be factual. Reference known industry dynamics. Provide actionable intelligence.
+"""
+
+            response = self.llm_engine._generate_openai(prompt)
+            return response
+
+        except Exception as e:
+            print(f"⚠️ LLM market intelligence failed: {e}")
+            return f"Market intelligence for {category} is currently unavailable."
+
     def _empty_brief_response(self, message: str) -> Dict[str, Any]:
         """Return empty brief response"""
         return {

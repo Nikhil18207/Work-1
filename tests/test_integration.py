@@ -23,9 +23,9 @@ def verify_integration():
     print("1⃣  Checking imports...")
     system_imported = False
     try:
-        from backend.llm_recommendation_system import LLMRecommendationSystem
+        from backend.engines.llm_recommendation_system import LLMRecommendationSystem
         from backend.engines.data_loader import DataLoader
-        from backend.engines.rule_engine import RuleEngine
+        from backend.engines.enhanced_rule_engine import EnhancedRuleEngine as RuleEngine
         from backend.engines.enhanced_rule_engine import EnhancedRuleEngine
         from backend.engines.scenario_detector import ScenarioDetector
         from backend.engines.recommendation_generator import RecommendationGenerator

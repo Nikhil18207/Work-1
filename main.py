@@ -17,7 +17,7 @@ if "Beroe_Env" not in sys.executable:
     print(f"   .\\Beroe_Env\\Scripts\\python {Path(__file__).name}")
     print("!"*80 + "\n")
 
-from backend.conversational_ai import ConversationalAI
+from backend.engines.conversational_ai import ConversationalAI
 
 if __name__ == "__main__":
     print("\n" + "="*80)

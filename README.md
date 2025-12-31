@@ -110,9 +110,7 @@ Beroe Inc/
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # This file
 └── Beroe_Env/                      # Python virtual environment (ACTIVE)
-```
 
----
 
 ## Tariff Calculator - Global Trade Coverage
 

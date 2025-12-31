@@ -338,6 +338,61 @@ class DOCXExporter:
         
         doc.add_paragraph()
         
+        # Add Reasoning Sections
+        why_matters = brief_data.get('why_this_matters', '')
+        if why_matters:
+            self._add_section_heading(doc, 'WHY THIS MATTERS')
+            doc.add_paragraph(why_matters)
+            doc.add_paragraph()
+        
+        business_just = brief_data.get('business_justification', '')
+        if business_just:
+            self._add_section_heading(doc, 'BUSINESS JUSTIFICATION')
+            doc.add_paragraph(business_just)
+            doc.add_paragraph()
+        
+        risk_reason = brief_data.get('risk_reasoning', '')
+        if risk_reason:
+            self._add_section_heading(doc, 'RISK ANALYSIS')
+            doc.add_paragraph(risk_reason)
+            doc.add_paragraph()
+        
+        rec_rationale = brief_data.get('recommendation_rationale', '')
+        if rec_rationale:
+            self._add_section_heading(doc, 'RECOMMENDATION RATIONALE')
+            doc.add_paragraph(rec_rationale)
+            doc.add_paragraph()
+
+        # AI-GENERATED SECTIONS (GPT-4 Powered)
+        if brief_data.get('llm_enabled', False):
+            self._add_section_heading(doc, '🤖 AI-GENERATED EXECUTIVE SUMMARY', level=2)
+            ai_summary = brief_data.get('ai_executive_summary', '')
+            if ai_summary:
+                para = doc.add_paragraph(ai_summary)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
+            self._add_section_heading(doc, '🤖 AI-POWERED RISK ANALYSIS', level=2)
+            ai_risk = brief_data.get('ai_risk_analysis', '')
+            if ai_risk:
+                para = doc.add_paragraph(ai_risk)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
+            self._add_section_heading(doc, '🤖 AI-GENERATED STRATEGIC RECOMMENDATIONS', level=2)
+            ai_recs = brief_data.get('ai_strategic_recommendations', '')
+            if ai_recs:
+                para = doc.add_paragraph(ai_recs)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
+            self._add_section_heading(doc, '🤖 AI MARKET INTELLIGENCE', level=2)
+            ai_market = brief_data.get('ai_market_intelligence', '')
+            if ai_market:
+                para = doc.add_paragraph(ai_market)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
         timeline = brief_data.get('implementation_timeline', [])
         if timeline:
             self._add_section_heading(doc, 'IMPLEMENTATION TIMELINE')
@@ -545,18 +600,73 @@ class DOCXExporter:
             doc.add_paragraph()
         
         self._add_section_heading(doc, 'STRATEGIC OUTCOME')
-        
+
         outcomes = brief_data.get('strategic_outcome', [])
         for outcome in outcomes:
             if isinstance(outcome, str):
                 doc.add_paragraph(outcome, style='List Bullet')
-        
+
         doc.add_paragraph()
-        
+
+        # REASONING SECTIONS
+        why_matters = brief_data.get('why_this_matters', '')
+        if why_matters:
+            self._add_section_heading(doc, 'WHY THIS MATTERS')
+            doc.add_paragraph(why_matters)
+            doc.add_paragraph()
+
+        business_just = brief_data.get('business_justification', '')
+        if business_just:
+            self._add_section_heading(doc, 'BUSINESS JUSTIFICATION')
+            doc.add_paragraph(business_just)
+            doc.add_paragraph()
+
+        risk_reason = brief_data.get('risk_reasoning', '')
+        if risk_reason:
+            self._add_section_heading(doc, 'RISK ANALYSIS')
+            doc.add_paragraph(risk_reason)
+            doc.add_paragraph()
+
+        rec_rationale = brief_data.get('recommendation_rationale', '')
+        if rec_rationale:
+            self._add_section_heading(doc, 'RECOMMENDATION RATIONALE')
+            doc.add_paragraph(rec_rationale)
+            doc.add_paragraph()
+
+        # AI-GENERATED SECTIONS (GPT-4 Powered) for regional brief
+        if brief_data.get('llm_enabled', False):
+            self._add_section_heading(doc, '🤖 AI-GENERATED EXECUTIVE SUMMARY', level=2)
+            ai_summary = brief_data.get('ai_executive_summary', '')
+            if ai_summary:
+                para = doc.add_paragraph(ai_summary)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
+            self._add_section_heading(doc, '🤖 AI-POWERED RISK ANALYSIS', level=2)
+            ai_risk = brief_data.get('ai_risk_analysis', '')
+            if ai_risk:
+                para = doc.add_paragraph(ai_risk)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
+            self._add_section_heading(doc, '🤖 AI-GENERATED STRATEGIC RECOMMENDATIONS', level=2)
+            ai_recs = brief_data.get('ai_strategic_recommendations', '')
+            if ai_recs:
+                para = doc.add_paragraph(ai_recs)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
+            self._add_section_heading(doc, '🤖 AI MARKET INTELLIGENCE', level=2)
+            ai_market = brief_data.get('ai_market_intelligence', '')
+            if ai_market:
+                para = doc.add_paragraph(ai_market)
+                para.paragraph_format.space_after = Pt(12)
+            doc.add_paragraph()
+
         timeline = brief_data.get('implementation_timeline', [])
         if timeline:
             self._add_section_heading(doc, 'IMPLEMENTATION TIMELINE')
-            
+
             timeline_rows = []
             for phase in timeline:
                 if isinstance(phase, dict):
@@ -565,7 +675,7 @@ class DOCXExporter:
                         phase.get('duration', ''),
                         ', '.join(phase.get('activities', [])[:2])
                     ])
-            
+
             if timeline_rows:
                 self._create_styled_table(
                     doc,
@@ -573,24 +683,24 @@ class DOCXExporter:
                     timeline_rows
                 )
             doc.add_paragraph()
-        
+
         self._add_section_heading(doc, 'NEXT STEPS')
-        
+
         next_steps = brief_data.get('next_steps', [])
         for i, step in enumerate(next_steps, 1):
             if isinstance(step, str):
                 doc.add_paragraph(f"{i}. {step}")
-        
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         if not filename:
             category_clean = (category or 'Procurement').replace(' ', '_')
             filename = f"Regional_Concentration_{category_clean}_{timestamp}.docx"
-        
+
         filepath = self.output_dir / filename
         doc.save(str(filepath))
-        
+
         return str(filepath)
-    
+
     def export_both_briefs(
         self,
         briefs: Dict[str, Dict[str, Any]],

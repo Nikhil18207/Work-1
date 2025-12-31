@@ -10,11 +10,11 @@ import pandas as pd
 
 try:
     from .scenario_detector import Scenario, ScenarioType
-    from .rule_engine import RiskLevel
+    from .enhanced_rule_engine import RiskLevel
     from .data_loader import DataLoader
 except ImportError:
     from scenario_detector import Scenario, ScenarioType
-    from rule_engine import RiskLevel
+    from enhanced_rule_engine import RiskLevel
     from data_loader import DataLoader
 
 

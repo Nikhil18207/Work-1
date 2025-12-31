@@ -1,96 +1,313 @@
-supplier_id,supplier_name,region,country,product_category,quality_rating,certifications,sustainability_score,delivery_reliability_pct,lead_time_days,min_order_quantity,payment_terms_offered,years_in_business,annual_capacity_tons
-S001,Malaya Agri Oils,APAC,Malaysia,Edible Oils,4.5,ISO 22000|HACCP,8.2,92,14,50000,Net 60,25,500000
-S002,Borneo Nutrients,APAC,Malaysia,Edible Oils,4.3,ISO 22000|HACCP,7.8,90,15,45000,Net 60,22,450000
-S003,Golden Sun Oils,Europe,Ukraine,Edible Oils,4.6,ISO 22000|HACCP|Organic,8.5,94,18,60000,Net 45,30,600000
-S004,Indo Palm Corp,APAC,Indonesia,Edible Oils,4.4,ISO 22000|RSPO,7.5,91,16,55000,Net 60,28,550000
-S005,Mediterranean Oils,Europe,Spain,Edible Oils,4.7,ISO 22000|HACCP|Organic,8.8,95,20,40000,Net 45,35,400000
-S006,American Soy Co,Americas,USA,Edible Oils,4.5,ISO 22000|HACCP|Non-GMO,8.3,93,12,50000,Net 45,32,520000
-S101,Dell Technologies,Americas,USA,IT Hardware,4.8,ISO 9001|ISO 14001|ISO 27001,9.2,96,10,100,Net 45,40,N/A
-S102,HP Inc,Americas,USA,IT Hardware,4.6,ISO 9001|ISO 14001,8.8,94,12,100,Net 45,85,N/A
-S103,Lenovo,APAC,China,IT Hardware,4.5,ISO 9001|ISO 14001,8.5,92,15,100,Net 60,40,N/A
-S104,Apple Inc,Americas,USA,IT Hardware,4.9,ISO 9001|ISO 14001,9.5,98,8,50,Net 30,48,N/A
-S105,Cisco Systems,Americas,USA,IT Hardware,4.7,ISO 9001|ISO 27001,9.0,95,14,50,Net 45,40,N/A
-S106,Juniper Networks,Americas,USA,Network Equipment,4.6,ISO 9001|ISO 27001,8.7,93,16,25,Net 45,28,N/A
-S107,Huawei,APAC,China,Network Equipment,4.4,ISO 9001|ISO 14001,8.2,90,18,50,Net 60,37,N/A
-S201,AWS,Americas,USA,Cloud Services,4.9,SOC 2|ISO 27001|GDPR,9.8,99,1,N/A,Net 30,18,N/A
-S202,Microsoft Azure,Americas,USA,Cloud Services,4.8,SOC 2|ISO 27001|GDPR,9.7,99,1,N/A,Net 30,15,N/A
-S203,Google Cloud,Americas,USA,Cloud Services,4.8,SOC 2|ISO 27001|GDPR,9.6,98,1,N/A,Net 30,13,N/A
-S204,Salesforce,Americas,USA,SaaS,4.7,SOC 2|ISO 27001,9.5,97,2,N/A,Net 30,25,N/A
-S205,Adobe Creative Cloud,Americas,USA,SaaS,4.6,SOC 2|ISO 27001,9.3,96,1,N/A,Net 30,42,N/A
-S206,Microsoft 365,Americas,USA,SaaS,4.8,SOC 2|ISO 27001,9.7,98,1,N/A,Net 30,49,N/A
-S301,Oracle,Americas,USA,Software Licenses,4.5,ISO 27001|SOC 2,8.8,94,14,N/A,Net 90,47,N/A
-S302,SAP,Europe,Germany,Software Licenses,4.6,ISO 27001|SOC 2,9.0,95,12,N/A,Net 90,52,N/A
-S303,IBM,Americas,USA,Software Licenses,4.4,ISO 27001|SOC 2,8.5,92,16,N/A,Net 90,113,N/A
-S304,Palo Alto Networks,Americas,USA,Cybersecurity,4.8,ISO 27001|SOC 2,9.2,96,10,N/A,Net 45,20,N/A
-S305,CrowdStrike,Americas,USA,Cybersecurity,4.7,ISO 27001|SOC 2,9.0,95,8,N/A,Net 45,13,N/A
-S306,Fortinet,Americas,USA,Cybersecurity,4.6,ISO 27001|SOC 2,8.8,94,12,N/A,Net 45,24,N/A
-S401,ArcelorMittal,Europe,Luxembourg,Steel,4.7,ISO 9001|ISO 14001,8.5,94,21,100000,Net 60,35,95000000
-S402,Tata Steel,APAC,India,Steel,4.6,ISO 9001|ISO 14001,8.3,92,24,80000,Net 60,118,28000000
-S403,Baosteel,APAC,China,Steel,4.5,ISO 9001|ISO 14001,8.0,90,26,90000,Net 75,28,45000000
-S404,Alcoa,Americas,USA,Aluminum,4.6,ISO 9001|ISO 14001,8.7,93,18,50000,Net 60,136,3500000
-S405,Freeport-McMoRan,Americas,USA,Copper,4.5,ISO 9001|ISO 14001,8.2,91,22,40000,Net 60,35,1500000
-S406,BASF,Europe,Germany,Plastics,4.8,ISO 9001|ISO 14001,9.0,95,16,30000,Net 45,158,78000000
-S407,Dow Chemical,Americas,USA,Plastics,4.7,ISO 9001|ISO 14001,8.8,94,18,35000,Net 45,127,56000000
-S501,Siemens,Europe,Germany,Manufacturing Equipment,4.9,ISO 9001|CE Mark,9.5,97,30,1,Net 75,177,N/A
-S502,ABB,Europe,Switzerland,Manufacturing Equipment,4.8,ISO 9001|CE Mark,9.3,96,28,1,Net 75,140,N/A
-S503,Schneider Electric,Europe,France,Manufacturing Equipment,4.7,ISO 9001|CE Mark,9.0,95,32,1,Net 75,188,N/A
-S504,Caterpillar,Americas,USA,Industrial Machinery,4.8,ISO 9001|ISO 14001,9.2,96,35,1,Net 90,99,N/A
-S505,Komatsu,APAC,Japan,Industrial Machinery,4.7,ISO 9001|ISO 14001,9.0,94,38,1,Net 90,105,N/A
-S506,Fanuc,APAC,Japan,Robotics,4.9,ISO 9001|CE Mark,9.4,98,40,1,Net 90,65,N/A
-S507,KUKA,Europe,Germany,Robotics,4.8,ISO 9001|CE Mark,9.2,97,42,1,Net 90,127,N/A
-S601,Pfizer,Americas,USA,Pharmaceuticals,4.9,FDA|GMP|ISO 13485,9.8,98,14,10000,Net 90,175,N/A
-S602,Johnson & Johnson,Americas,USA,Pharmaceuticals,4.8,FDA|GMP|ISO 13485,9.7,97,16,10000,Net 90,138,N/A
-S603,Novartis,Europe,Switzerland,Pharmaceuticals,4.8,FDA|GMP|ISO 13485,9.6,96,18,10000,Net 90,28,N/A
-S604,Roche,Europe,Switzerland,Pharmaceuticals,4.7,FDA|GMP|ISO 13485,9.5,95,20,10000,Net 90,128,N/A
-S605,Medtronic,Americas,USA,Medical Devices,4.8,FDA|ISO 13485,9.4,96,22,5000,Net 75,75,N/A
-S606,Boston Scientific,Americas,USA,Medical Devices,4.7,FDA|ISO 13485,9.2,95,24,5000,Net 75,45,N/A
-S607,Siemens Healthineers,Europe,Germany,Medical Devices,4.8,FDA|ISO 13485,9.3,96,20,5000,Net 75,174,N/A
-S608,Cardinal Health,Americas,USA,Medical Supplies,4.6,ISO 9001|ISO 13485,8.8,94,10,20000,Net 60,52,N/A
-S609,McKesson,Americas,USA,Medical Supplies,4.6,ISO 9001|ISO 13485,8.7,93,12,20000,Net 60,191,N/A
-S701,Cemex,Americas,Mexico,Construction Materials,4.5,ISO 9001|ISO 14001,8.2,92,14,50000,Net 60,118,87000000
-S702,LafargeHolcim,Europe,Switzerland,Construction Materials,4.6,ISO 9001|ISO 14001,8.5,93,16,55000,Net 60,189,220000000
-S703,HeidelbergCement,Europe,Germany,Concrete,4.5,ISO 9001|ISO 14001,8.3,91,12,40000,Net 60,150,95000000
-S704,Weyerhaeuser,Americas,USA,Lumber,4.6,FSC|SFI,8.8,94,18,30000,Net 45,123,N/A
-S705,Hilti,Europe,Liechtenstein,Building Equipment,4.8,ISO 9001|CE Mark,9.0,96,10,100,Net 45,82,N/A
-S706,Bosch,Europe,Germany,Building Equipment,4.7,ISO 9001|CE Mark,8.9,95,12,100,Net 45,137,N/A
-S801,WPP,Europe,UK,Marketing Services,4.6,None,8.5,93,30,N/A,Net 30,110,N/A
-S802,Omnicom,Americas,USA,Marketing Services,4.6,None,8.4,92,30,N/A,Net 30,76,N/A
-S803,Publicis,Europe,France,Marketing Services,4.5,None,8.3,91,30,N/A,Net 30,98,N/A
-S804,Google Ads,Americas,USA,Digital Marketing,4.8,SOC 2|ISO 27001,9.5,98,1,N/A,Net 30,26,N/A
-S805,Meta Ads,Americas,USA,Digital Marketing,4.7,SOC 2|ISO 27001,9.3,97,1,N/A,Net 30,20,N/A
-S806,McKinsey,Americas,USA,Consulting,4.9,None,9.2,98,45,N/A,Net 60,98,N/A
-S807,BCG,Americas,USA,Consulting,4.9,None,9.1,97,45,N/A,Net 60,62,N/A
-S808,Deloitte,Americas,USA,Consulting,4.8,ISO 27001,9.0,96,30,N/A,Net 60,178,N/A
-S809,Edelman,Americas,USA,PR Services,4.6,None,8.6,94,20,N/A,Net 30,73,N/A
-S810,Weber Shandwick,Americas,USA,PR Services,4.6,None,8.5,93,20,N/A,Net 30,71,N/A
-S901,Staples,Americas,USA,Office Supplies,4.2,FSC|Green Seal,7.8,90,5,1000,Net 45,38,N/A
-S902,Office Depot,Americas,USA,Office Supplies,4.1,FSC|Green Seal,7.6,89,5,1000,Net 45,37,N/A
-S903,Steelcase,Americas,USA,Office Furniture,4.7,ISO 9001|LEED,8.9,95,30,10,Net 60,112,N/A
-S904,Herman Miller,Americas,USA,Office Furniture,4.8,ISO 9001|LEED,9.2,96,28,10,Net 60,119,N/A
-S905,FedEx Office,Americas,USA,Printing,4.3,FSC,7.9,91,3,N/A,Net 30,52,N/A
-S1001,NextEra Energy,Americas,USA,Electricity,4.7,ISO 14001|ISO 50001,9.3,98,Continuous,N/A,Net 30,38,N/A
-S1002,Cheniere Energy,Americas,USA,Natural Gas,4.6,ISO 14001,8.8,96,Continuous,N/A,Net 30,27,N/A
-S1003,Vestas,Europe,Denmark,Renewable Energy,4.8,ISO 9001|ISO 14001,9.6,97,180,1,Net 90,46,N/A
-S1004,Siemens Gamesa,Europe,Spain,Renewable Energy,4.7,ISO 9001|ISO 14001,9.4,96,180,1,Net 90,17,N/A
-S1005,First Solar,Americas,USA,Solar Panels,4.6,ISO 9001|ISO 14001,9.2,95,90,100,Net 60,26,N/A
-S1006,Canadian Solar,Americas,Canada,Solar Panels,4.5,ISO 9001|ISO 14001,9.0,94,90,100,Net 60,23,N/A
-S1101,DHL,Europe,Germany,Logistics,4.7,ISO 9001|ISO 28000,8.9,96,Daily,N/A,Net 45,55,N/A
-S1102,FedEx,Americas,USA,Logistics,4.7,ISO 9001|ISO 28000,8.8,95,Daily,N/A,Net 45,53,N/A
-S1103,UPS,Americas,USA,Logistics,4.6,ISO 9001|ISO 28000,8.7,94,Daily,N/A,Net 45,117,N/A
-S1104,Maersk,Europe,Denmark,Freight,4.8,ISO 9001|ISO 28000,9.0,97,21,1 Container,Net 60,119,N/A
-S1105,Prologis,Americas,USA,Warehousing,4.7,ISO 9001|LEED,8.9,96,30,10000 sqft,Net 60,40,N/A
-S1201,Verizon,Americas,USA,Telecommunications,4.6,ISO 27001|SOC 2,8.8,95,14,N/A,Net 30,40,N/A
-S1202,AT&T,Americas,USA,Telecommunications,4.5,ISO 27001|SOC 2,8.6,94,14,N/A,Net 30,139,N/A
-S1203,Vodafone,Europe,UK,Telecommunications,4.6,ISO 27001|SOC 2,8.7,94,14,N/A,Net 30,40,N/A
-S1204,Comcast,Americas,USA,Internet Services,4.4,ISO 27001,8.4,92,10,N/A,Net 30,61,N/A
-S1301,Baker McKenzie,Americas,USA,Legal Services,4.8,None,8.5,97,As Needed,N/A,Net 60,75,N/A
-S1302,DLA Piper,Americas,USA,Legal Services,4.7,None,8.4,96,As Needed,N/A,Net 60,63,N/A
-S1303,Clifford Chance,Europe,UK,Legal Services,4.8,None,8.6,97,As Needed,N/A,Net 60,98,N/A
-S1304,PwC,Americas,USA,Accounting,4.8,ISO 27001,9.0,98,30,N/A,Net 60,175,N/A
-S1305,EY,Americas,USA,Accounting,4.8,ISO 27001,8.9,97,30,N/A,Net 60,37,N/A
-S1306,KPMG,Americas,USA,Accounting,4.7,ISO 27001,8.8,96,30,N/A,Net 60,135,N/A
-S1401,ADP,Americas,USA,HR Services,4.7,ISO 27001|SOC 2,8.9,96,14,N/A,Net 45,75,N/A
-S1402,Robert Half,Americas,USA,Recruitment,4.5,None,8.2,93,20,N/A,Net 30,77,N/A
-S1403,Hays,Europe,UK,Recruitment,4.5,None,8.3,92,20,N/A,Net 30,56,N/A
-S1404,Skillsoft,Americas,USA,Training,4.4,ISO 27001,8.1,91,10,N/A,Net 30,27,N/A
-S1405,Udemy Business,Americas,USA,Training,4.5,ISO 27001,8.4,93,5,N/A,Net 30,20,N/A
+supplier_id,supplier_name,region,country,sector,product_category,subcategory,quality_rating,certifications,sustainability_score,delivery_reliability_pct,lead_time_days,min_order_quantity,payment_terms_offered,years_in_business,annual_capacity_tons
+S001,Malaya Agri Oils,APAC,Malaysia,Food & Beverages,Edible Oils,Rice Bran Oil,4.5,ISO 22000|HACCP,8.0,86.0,11,18389,Net 60,77,217026
+S002,Borneo Nutrients,APAC,Malaysia,Food & Beverages,Edible Oils,Rice Bran Oil,4.2,ISO 22000|HACCP|Organic,8.0,81.0,44,4005,Net 30,123,116663
+S003,Thai Rice Oil Co,APAC,Thailand,Food & Beverages,Edible Oils,Rice Bran Oil,4.4,ISO 22000|HACCP,8.0,90.0,24,26162,Net 90,21,394254
+S004,Ricela Health Foods,APAC,India,Food & Beverages,Edible Oils,Rice Bran Oil,4.2,ISO 22000|HACCP|Organic,8.0,79.0,44,77336,Net 75,71,335514
+S005,Golden Sun Oils,Europe,Ukraine,Food & Beverages,Edible Oils,Sunflower Oil,4.6,ISO 22000|HACCP,8.0,75.0,10,36521,Net 45,123,278389
+S006,Kernel Trade,Europe,Ukraine,Food & Beverages,Edible Oils,Sunflower Oil,4.4,ISO 22000|HACCP,8.0,72.0,31,12776,Net 30,38,299191
+S007,Cargill Sunflower,Americas,Argentina,Food & Beverages,Edible Oils,Sunflower Oil,4.7,ISO 22000|HACCP,8.0,88.0,32,95747,Net 90,82,122780
+S008,ADM Argentina,Americas,Argentina,Food & Beverages,Edible Oils,Sunflower Oil,4.8,ISO 22000|HACCP,8.0,90.0,17,38527,Net 75,35,389428
+S009,Indo Palm Corp,APAC,Indonesia,Food & Beverages,Edible Oils,Palm Oil,4.4,ISO 22000|HACCP|Organic,8.0,85.0,33,9216,Net 90,64,469398
+S010,Wilmar International,APAC,Singapore,Food & Beverages,Edible Oils,Palm Oil,4.8,ISO 22000|HACCP,8.0,93.0,24,13338,Net 60,35,222049
+S011,Sime Darby Oils,APAC,Malaysia,Food & Beverages,Edible Oils,Palm Oil,4.5,ISO 22000|HACCP,8.0,88.0,39,46666,Net 60,56,294081
+S012,Mediterranean Oils,Europe,Spain,Food & Beverages,Edible Oils,Olive Oil,4.9,ISO 22000|HACCP,8.0,93.0,27,95668,Net 30,58,380043
+S013,Deoleo Premium,Europe,Italy,Food & Beverages,Edible Oils,Olive Oil,4.8,ISO 22000|HACCP,8.0,90.0,39,90298,Net 75,84,435544
+S014,Greek Gold Olive,Europe,Greece,Food & Beverages,Edible Oils,Olive Oil,4.7,ISO 22000|HACCP,8.0,88.0,30,41447,Net 30,73,116829
+S015,American Soy Co,Americas,USA,Food & Beverages,Edible Oils,Soybean Oil,4.6,ISO 22000|HACCP,8.0,91.0,14,86009,Net 45,95,211477
+S016,Bunge Ltd,Americas,Brazil,Food & Beverages,Edible Oils,Soybean Oil,4.5,ISO 22000|HACCP,8.0,86.0,39,32425,Net 45,82,173206
+S017,Louis Dreyfus Soy,Americas,Brazil,Food & Beverages,Edible Oils,Soybean Oil,4.4,ISO 22000|HACCP|Organic,8.0,84.0,44,52450,Net 60,124,405939
+S018,Richardson Oilseed,Americas,Canada,Food & Beverages,Edible Oils,Canola Oil,4.7,ISO 22000|HACCP,8.0,93.0,18,99161,Net 90,141,147662
+S019,Viterra Canada,Americas,Canada,Food & Beverages,Edible Oils,Canola Oil,4.6,ISO 22000|HACCP,8.0,90.0,17,55433,Net 45,55,456768
+S020,Philippine Coconut,APAC,Philippines,Food & Beverages,Edible Oils,Coconut Oil,4.3,ISO 22000|HACCP,8.0,80.0,34,33053,Net 75,134,377408
+S021,Sri Lanka Coco,APAC,Sri Lanka,Food & Beverages,Edible Oils,Coconut Oil,4.2,ISO 22000|HACCP|Organic,8.0,76.0,10,44687,Net 30,83,436048
+S022,Shandong Luhua,APAC,China,Food & Beverages,Edible Oils,Peanut Oil,4.4,ISO 22000|HACCP,8.0,84.0,37,94746,Net 45,131,101701
+S023,Archer Daniels Midland,Americas,USA,Food & Beverages,Grains & Cereals,Wheat,4.8,ISO 22000|HACCP|Organic,8.0,93.0,26,14047,Net 90,60,366171
+S024,Glencore Agriculture,APAC,Australia,Food & Beverages,Grains & Cereals,Wheat,4.6,ISO 22000|HACCP|Organic,8.0,88.0,29,49109,Net 90,65,180131
+S025,Nidera Holdings,Europe,Netherlands,Food & Beverages,Grains & Cereals,Wheat,4.7,ISO 22000|HACCP|Organic,8.0,90.0,44,42587,Net 90,15,414019
+S026,Olam International,APAC,Singapore,Food & Beverages,Grains & Cereals,Rice,4.7,ISO 22000|HACCP,8.0,91.0,17,7692,Net 60,93,225541
+S027,KRBL Ltd,APAC,India,Food & Beverages,Grains & Cereals,Rice,4.5,ISO 22000|HACCP,8.0,84.0,15,99793,Net 30,139,136287
+S028,Vietnam Food Corp,APAC,Vietnam,Food & Beverages,Grains & Cereals,Rice,4.4,ISO 22000|HACCP,8.0,86.0,18,21743,Net 45,136,388255
+S029,Cargill Corn,Americas,USA,Food & Beverages,Grains & Cereals,Corn/Maize,4.8,ISO 22000|HACCP,8.0,95.0,37,40957,Net 45,66,473790
+S030,Bunge Corn Brazil,Americas,Brazil,Food & Beverages,Grains & Cereals,Corn/Maize,4.6,ISO 22000|HACCP,8.0,88.0,33,15960,Net 75,147,336708
+S031,Tyson Foods,Americas,USA,Food & Beverages,Proteins,Poultry,4.7,ISO 22000|HACCP,8.0,93.0,14,72703,Net 60,20,408443
+S032,BRF S.A.,Americas,Brazil,Food & Beverages,Proteins,Poultry,4.5,ISO 22000|HACCP,8.0,86.0,24,82819,Net 30,33,471112
+S033,Pilgrim's Pride,Americas,USA,Food & Beverages,Proteins,Poultry,4.6,ISO 22000|HACCP,8.0,90.0,14,67491,Net 30,99,137149
+S034,JBS S.A.,Americas,Brazil,Food & Beverages,Proteins,Beef,4.6,ISO 22000|HACCP,8.0,89.0,41,74947,Net 45,48,479245
+S035,Cargill Beef,Americas,USA,Food & Beverages,Proteins,Beef,4.8,ISO 22000|HACCP,8.0,94.0,25,12463,Net 75,119,199829
+S036,Australian Meat Group,APAC,Australia,Food & Beverages,Proteins,Beef,4.7,ISO 22000|HACCP,8.0,88.0,37,61313,Net 60,123,315535
+S037,Thai Union Group,APAC,Thailand,Food & Beverages,Proteins,Seafood,4.6,ISO 22000|HACCP|Organic,8.0,87.0,13,95548,Net 30,30,311089
+S038,Nippon Suisan,APAC,Japan,Food & Beverages,Proteins,Seafood,4.7,ISO 22000|HACCP,8.0,92.0,16,70392,Net 45,64,199724
+S039,Fonterra,APAC,New Zealand,Food & Beverages,Dairy Products,Milk & Cream,4.8,ISO 22000|HACCP,8.0,93.0,37,32842,Net 45,86,342550
+S040,FrieslandCampina,Europe,Netherlands,Food & Beverages,Dairy Products,Milk & Cream,4.7,ISO 22000|HACCP|Organic,8.0,90.0,14,85577,Net 75,40,126522
+S041,Kraft Heinz Dairy,Americas,USA,Food & Beverages,Dairy Products,Cheese,4.6,ISO 22000|HACCP|Organic,8.0,90.0,10,53369,Net 30,75,187194
+S042,Lactalis Group,Europe,France,Food & Beverages,Dairy Products,Cheese,4.7,ISO 22000|HACCP,8.0,88.0,23,49772,Net 75,30,186317
+S043,Sudzucker AG,Europe,Germany,Food & Beverages,Sweeteners,Sugar,4.6,ISO 22000|HACCP,8.0,91.0,34,55544,Net 60,131,249552
+S044,Raizen Energia,Americas,Brazil,Food & Beverages,Sweeteners,Sugar,4.5,ISO 22000|HACCP,8.0,86.0,45,38990,Net 75,54,199561
+S045,Thai Sugar Trading,APAC,Thailand,Food & Beverages,Sweeteners,Sugar,4.4,ISO 22000|HACCP,8.0,84.0,13,41204,Net 90,30,492154
+S046,Nestle Coffee,Europe,Switzerland,Food & Beverages,Beverages,Coffee,4.9,ISO 22000|HACCP,8.0,95.0,40,7555,Net 90,150,182540
+S047,JDE Peets,Europe,Netherlands,Food & Beverages,Beverages,Coffee,4.7,ISO 22000|HACCP|Organic,8.0,90.0,15,9007,Net 45,32,411969
+S048,Colombian Coffee Fed,Americas,Colombia,Food & Beverages,Beverages,Coffee,4.8,ISO 22000|HACCP,8.0,88.0,25,32371,Net 75,45,398673
+S049,Unilever Tea,Europe,UK,Food & Beverages,Beverages,Tea,4.7,ISO 22000|HACCP,8.0,90.0,12,86263,Net 90,35,319794
+S050,Tata Global Beverages,APAC,India,Food & Beverages,Beverages,Tea,4.5,ISO 22000|HACCP,8.0,84.0,43,87882,Net 60,81,207090
+S051,Olam Spices,APAC,Vietnam,Food & Beverages,Spices & Seasonings,Pepper,4.5,ISO 22000|HACCP|Organic,8.0,86.0,25,88139,Net 60,116,168617
+S052,Madagascar Vanilla,Africa,Madagascar,Food & Beverages,Spices & Seasonings,Vanilla,4.4,ISO 22000|HACCP,8.0,75.0,39,60168,Net 60,33,104883
+S053,Berry Global,Americas,USA,Food & Beverages,Packaging Materials,Food-Grade Plastics,4.6,ISO 22000|HACCP,8.0,91.0,16,34860,Net 30,69,365229
+S054,Owens-Illinois,Americas,USA,Food & Beverages,Packaging Materials,Glass Containers,4.7,ISO 22000|HACCP,8.0,90.0,32,37453,Net 30,77,293738
+S055,Ball Corporation,Americas,USA,Food & Beverages,Packaging Materials,Aluminum Cans,4.8,ISO 22000|HACCP,8.0,94.0,44,87638,Net 60,150,104101
+S1001,McKinsey,Americas,USA,Professional Services,Consulting,Management Consulting,4.9,ISO 27001,8.0,95.0,45,N/A,Net 60,41,N/A
+S1002,BCG,Americas,USA,Professional Services,Consulting,Management Consulting,4.8,ISO 27001,8.0,92.0,18,N/A,Net 60,44,N/A
+S1003,Bain & Company,Americas,USA,Professional Services,Consulting,Management Consulting,4.8,ISO 27001,8.0,94.0,16,N/A,Net 90,54,N/A
+S1004,Accenture,Europe,Ireland,Professional Services,Consulting,IT Consulting,4.7,ISO 27001,8.0,91.0,27,N/A,Net 60,68,N/A
+S1005,Deloitte Digital,Americas,USA,Professional Services,Consulting,IT Consulting,4.7,ISO 27001,8.0,90.0,31,N/A,Net 45,82,N/A
+S1006,IBM Consulting,Americas,USA,Professional Services,Consulting,IT Consulting,4.6,ISO 27001,8.0,90.0,42,N/A,Net 75,79,N/A
+S1007,Mercer,Americas,USA,Professional Services,Consulting,HR Consulting,4.7,ISO 27001,8.0,90.0,13,N/A,Net 30,123,N/A
+S1008,Korn Ferry,Americas,USA,Professional Services,Consulting,HR Consulting,4.6,ISO 27001,8.0,90.0,27,N/A,Net 30,15,N/A
+S1009,Baker McKenzie,Americas,USA,Professional Services,Legal Services,Corporate Law,4.8,None,8.0,92.0,As Needed,N/A,Net 60,48,N/A
+S101,Dell Technologies,Americas,USA,Information Technology,Hardware,Laptops,4.7,ISO 27001|SOC 2,8.0,93.0,26,N/A,Net 45,128,N/A
+S1010,DLA Piper,Americas,USA,Professional Services,Legal Services,Corporate Law,4.7,None,8.0,90.0,As Needed,N/A,Net 90,124,N/A
+S1011,Clifford Chance,Europe,UK,Professional Services,Legal Services,Corporate Law,4.8,None,8.0,92.0,As Needed,N/A,Net 90,17,N/A
+S1012,Fish & Richardson,Americas,USA,Professional Services,Legal Services,Intellectual Property,4.8,None,8.0,92.0,As Needed,N/A,Net 30,34,N/A
+S1013,Finnegan,Americas,USA,Professional Services,Legal Services,Intellectual Property,4.7,None,8.0,90.0,As Needed,N/A,Net 45,24,N/A
+S1014,Littler Mendelson,Americas,USA,Professional Services,Legal Services,Employment Law,4.7,None,8.0,90.0,As Needed,N/A,Net 60,52,N/A
+S1015,PwC,Americas,USA,Professional Services,Financial Services,Accounting,4.8,None,8.0,93.0,As Needed,N/A,Net 75,47,N/A
+S1016,EY,Americas,USA,Professional Services,Financial Services,Accounting,4.8,None,8.0,92.0,As Needed,N/A,Net 30,93,N/A
+S1017,KPMG,Americas,USA,Professional Services,Financial Services,Accounting,4.7,None,8.0,90.0,As Needed,N/A,Net 60,25,N/A
+S1018,JPMorgan Chase,Americas,USA,Professional Services,Financial Services,Banking,4.8,None,8.0,94.0,As Needed,N/A,Net 60,68,N/A
+S1019,Bank of America,Americas,USA,Professional Services,Financial Services,Banking,4.7,None,8.0,92.0,As Needed,N/A,Net 45,41,N/A
+S102,HP Inc,Americas,USA,Information Technology,Hardware,Laptops,4.6,ISO 27001|SOC 2,8.0,91.0,32,N/A,Net 90,119,N/A
+S1020,Marsh McLennan,Americas,USA,Professional Services,Financial Services,Insurance,4.7,None,8.0,90.0,As Needed,N/A,Net 90,54,N/A
+S1021,Aon,Europe,UK,Professional Services,Financial Services,Insurance,4.7,None,8.0,92.0,As Needed,N/A,Net 45,56,N/A
+S1022,WPP,Europe,UK,Professional Services,Marketing Services,Advertising,4.7,None,8.0,91.0,As Needed,N/A,Net 45,120,N/A
+S1023,Omnicom,Americas,USA,Professional Services,Marketing Services,Advertising,4.6,None,8.0,90.0,As Needed,N/A,Net 30,60,N/A
+S1024,Publicis Groupe,Europe,France,Professional Services,Marketing Services,Advertising,4.6,None,8.0,88.0,As Needed,N/A,Net 60,120,N/A
+S1025,Google Ads,Americas,USA,Professional Services,Marketing Services,Digital Marketing,4.8,None,8.0,97.0,As Needed,N/A,Net 45,83,N/A
+S1026,Meta Ads,Americas,USA,Professional Services,Marketing Services,Digital Marketing,4.7,None,8.0,95.0,As Needed,N/A,Net 45,42,N/A
+S1027,Nielsen,Americas,USA,Professional Services,Marketing Services,Market Research,4.7,None,8.0,90.0,As Needed,N/A,Net 75,24,N/A
+S1028,Ipsos,Europe,France,Professional Services,Marketing Services,Market Research,4.6,None,8.0,88.0,As Needed,N/A,Net 75,71,N/A
+S1029,Edelman,Americas,USA,Professional Services,Marketing Services,PR & Communications,4.7,None,8.0,90.0,As Needed,N/A,Net 45,132,N/A
+S103,Lenovo,APAC,China,Information Technology,Hardware,Laptops,4.5,ISO 27001|SOC 2,8.0,89.0,32,N/A,Net 60,73,N/A
+S1030,Weber Shandwick,Americas,USA,Professional Services,Marketing Services,PR & Communications,4.6,None,8.0,90.0,As Needed,N/A,Net 45,21,N/A
+S104,Apple Inc,Americas,USA,Information Technology,Hardware,Laptops,4.9,ISO 27001|SOC 2,8.0,97.0,22,N/A,Net 75,99,N/A
+S105,Dell Desktops,Americas,USA,Information Technology,Hardware,Desktops,4.7,ISO 27001|SOC 2,8.0,92.0,27,N/A,Net 30,86,N/A
+S106,HP Desktops,Americas,USA,Information Technology,Hardware,Desktops,4.6,ISO 27001|SOC 2,8.0,90.0,32,N/A,Net 90,117,N/A
+S107,Cisco Systems,Americas,USA,Information Technology,Hardware,Servers,4.8,ISO 27001|SOC 2,8.0,95.0,44,N/A,Net 60,22,N/A
+S108,HPE Servers,Americas,USA,Information Technology,Hardware,Servers,4.7,ISO 27001|SOC 2,8.0,92.0,17,N/A,Net 60,60,N/A
+S109,Dell EMC,Americas,USA,Information Technology,Hardware,Servers,4.7,ISO 27001|SOC 2,8.0,94.0,26,N/A,Net 30,42,N/A
+S110,IBM Servers,Americas,USA,Information Technology,Hardware,Servers,4.6,ISO 27001|SOC 2,8.0,90.0,37,N/A,Net 60,95,N/A
+S1101,CBRE,Americas,USA,Facilities & Corporate Services,Facilities Management,Building Maintenance,4.6,ISO 9001,8.0,91.0,37,N/A,Net 90,145,N/A
+S1102,JLL,Americas,USA,Facilities & Corporate Services,Facilities Management,Building Maintenance,4.6,ISO 9001,8.0,90.0,17,N/A,Net 75,63,N/A
+S1103,ISS,Europe,Denmark,Facilities & Corporate Services,Facilities Management,Cleaning Services,4.5,ISO 9001,8.0,88.0,26,N/A,Net 30,126,N/A
+S1104,ABM Industries,Americas,USA,Facilities & Corporate Services,Facilities Management,Cleaning Services,4.5,ISO 9001,8.0,88.0,10,N/A,Net 90,65,N/A
+S1105,Securitas,Europe,Sweden,Facilities & Corporate Services,Facilities Management,Security Services,4.6,ISO 9001,8.0,90.0,33,N/A,Net 75,32,N/A
+S1106,Allied Universal,Americas,USA,Facilities & Corporate Services,Facilities Management,Security Services,4.6,ISO 9001,8.0,90.0,31,N/A,Net 90,95,N/A
+S1107,Staples,Americas,USA,Facilities & Corporate Services,Office Services,Office Supplies,4.5,ISO 9001,8.0,91.0,As Needed,N/A,Net 30,91,N/A
+S1108,Office Depot,Americas,USA,Facilities & Corporate Services,Office Services,Office Supplies,4.4,ISO 9001,8.0,89.0,As Needed,N/A,Net 90,94,N/A
+S1109,Steelcase,Americas,USA,Facilities & Corporate Services,Office Services,Office Furniture,4.7,ISO 9001,8.0,93.0,As Needed,N/A,Net 75,98,N/A
+S111,Juniper Networks,Americas,USA,Information Technology,Hardware,Network Equipment,4.7,ISO 27001|SOC 2,8.0,93.0,35,N/A,Net 60,47,N/A
+S1110,Herman Miller,Americas,USA,Facilities & Corporate Services,Office Services,Office Furniture,4.8,ISO 9001,8.0,94.0,As Needed,N/A,Net 45,122,N/A
+S1111,Haworth,Americas,USA,Facilities & Corporate Services,Office Services,Office Furniture,4.6,ISO 9001,8.0,90.0,As Needed,N/A,Net 75,59,N/A
+S1112,FedEx Office,Americas,USA,Facilities & Corporate Services,Office Services,Printing Services,4.5,ISO 9001,8.0,91.0,As Needed,N/A,Net 90,92,N/A
+S1113,American Express GBT,Americas,USA,Facilities & Corporate Services,Travel & Events,Business Travel,4.7,ISO 9001,8.0,90.0,35,N/A,Net 90,15,N/A
+S1114,BCD Travel,Europe,Netherlands,Facilities & Corporate Services,Travel & Events,Business Travel,4.6,ISO 9001,8.0,88.0,29,N/A,Net 60,68,N/A
+S1115,Maritz Global Events,Americas,USA,Facilities & Corporate Services,Travel & Events,Event Management,4.6,ISO 9001,8.0,90.0,37,N/A,Net 90,97,N/A
+S112,Huawei,APAC,China,Information Technology,Hardware,Network Equipment,4.5,ISO 27001|SOC 2,8.0,88.0,39,N/A,Net 75,128,N/A
+S113,Arista Networks,Americas,USA,Information Technology,Hardware,Network Equipment,4.8,ISO 27001|SOC 2,8.0,94.0,23,N/A,Net 90,136,N/A
+S114,NetApp,Americas,USA,Information Technology,Hardware,Storage Systems,4.7,ISO 27001|SOC 2,8.0,92.0,20,N/A,Net 30,87,N/A
+S115,Pure Storage,Americas,USA,Information Technology,Hardware,Storage Systems,4.8,ISO 27001|SOC 2,8.0,94.0,42,N/A,Net 90,100,N/A
+S116,Logitech,Europe,Switzerland,Information Technology,Hardware,Peripherals,4.6,ISO 27001|SOC 2,8.0,90.0,15,N/A,Net 45,94,N/A
+S117,LG Electronics,APAC,South Korea,Information Technology,Hardware,Peripherals,4.5,ISO 27001|SOC 2,8.0,88.0,24,N/A,Net 45,52,N/A
+S1201,Robert Half,Americas,USA,Human Resources,Staffing Services,Permanent Recruitment,4.6,ISO 9001,8.0,91.0,As Needed,N/A,Net 30,26,N/A
+S1202,Hays,Europe,UK,Human Resources,Staffing Services,Permanent Recruitment,4.5,ISO 9001,8.0,88.0,As Needed,N/A,Net 45,136,N/A
+S1203,Randstad,Europe,Netherlands,Human Resources,Staffing Services,Temporary Staffing,4.5,ISO 9001,8.0,89.0,As Needed,N/A,Net 90,33,N/A
+S1204,Adecco,Europe,Switzerland,Human Resources,Staffing Services,Temporary Staffing,4.5,ISO 9001,8.0,88.0,As Needed,N/A,Net 75,121,N/A
+S1205,ManpowerGroup,Americas,USA,Human Resources,Staffing Services,Temporary Staffing,4.5,ISO 9001,8.0,88.0,As Needed,N/A,Net 90,64,N/A
+S1206,Spencer Stuart,Americas,USA,Human Resources,Staffing Services,Executive Search,4.8,ISO 9001,8.0,92.0,As Needed,N/A,Net 75,141,N/A
+S1207,Heidrick & Struggles,Americas,USA,Human Resources,Staffing Services,Executive Search,4.7,ISO 9001,8.0,90.0,As Needed,N/A,Net 75,77,N/A
+S1208,Workday HR,Americas,USA,Human Resources,HR Technology,HRIS Systems,4.8,ISO 9001,8.0,94.0,19,N/A,Net 30,42,N/A
+S1209,SAP SuccessFactors,Europe,Germany,Human Resources,HR Technology,HRIS Systems,4.7,ISO 9001,8.0,90.0,37,N/A,Net 45,60,N/A
+S1210,ADP,Americas,USA,Human Resources,HR Technology,Payroll Services,4.7,ISO 9001,8.0,93.0,43,N/A,Net 75,27,N/A
+S1211,Paychex,Americas,USA,Human Resources,HR Technology,Payroll Services,4.6,ISO 9001,8.0,90.0,45,N/A,Net 45,46,N/A
+S1212,Benefitfocus,Americas,USA,Human Resources,HR Technology,Benefits Administration,4.5,ISO 9001,8.0,88.0,39,N/A,Net 45,133,N/A
+S1213,Businessolver,Americas,USA,Human Resources,HR Technology,Benefits Administration,4.6,ISO 9001,8.0,90.0,43,N/A,Net 90,96,N/A
+S1214,Dale Carnegie,Americas,USA,Human Resources,Learning & Development,Training Programs,4.6,ISO 9001,8.0,90.0,38,N/A,Net 90,144,N/A
+S1215,Franklin Covey,Americas,USA,Human Resources,Learning & Development,Training Programs,4.7,ISO 9001,8.0,90.0,37,N/A,Net 90,129,N/A
+S1216,Skillsoft,Americas,USA,Human Resources,Learning & Development,E-Learning Platforms,4.5,ISO 9001,8.0,90.0,20,N/A,Net 75,130,N/A
+S1217,LinkedIn Learning,Americas,USA,Human Resources,Learning & Development,E-Learning Platforms,4.7,ISO 9001,8.0,94.0,26,N/A,Net 45,85,N/A
+S1218,Udemy Business,Americas,USA,Human Resources,Learning & Development,E-Learning Platforms,4.6,ISO 9001,8.0,92.0,43,N/A,Net 75,76,N/A
+S1219,Center for Creative Leadership,Americas,USA,Human Resources,Learning & Development,Leadership Development,4.8,ISO 9001,8.0,92.0,27,N/A,Net 75,34,N/A
+S1220,DDI,Americas,USA,Human Resources,Learning & Development,Leadership Development,4.7,ISO 9001,8.0,90.0,28,N/A,Net 45,84,N/A
+S201,AWS,Americas,USA,Information Technology,Cloud Services,IaaS,4.9,ISO 27001|SOC 2|GDPR,8.0,97.0,1,N/A,Net 60,96,N/A
+S202,Microsoft Azure,Americas,USA,Information Technology,Cloud Services,IaaS,4.8,ISO 27001|SOC 2|GDPR,8.0,95.0,1,N/A,Net 90,35,N/A
+S203,Google Cloud,Americas,USA,Information Technology,Cloud Services,IaaS,4.8,ISO 27001|SOC 2|GDPR,8.0,95.0,1,N/A,Net 45,53,N/A
+S204,Heroku,Americas,USA,Information Technology,Cloud Services,PaaS,4.5,ISO 27001|SOC 2|GDPR,8.0,88.0,1,N/A,Net 45,113,N/A
+S205,Red Hat OpenShift,Americas,USA,Information Technology,Cloud Services,PaaS,4.6,ISO 27001|SOC 2|GDPR,8.0,90.0,1,N/A,Net 45,69,N/A
+S206,Salesforce,Americas,USA,Information Technology,Cloud Services,SaaS,4.8,ISO 27001|SOC 2|GDPR,8.0,95.0,1,N/A,Net 30,121,N/A
+S207,Adobe Creative Cloud,Americas,USA,Information Technology,Cloud Services,SaaS,4.7,ISO 27001|SOC 2|GDPR,8.0,92.0,1,N/A,Net 75,99,N/A
+S208,Microsoft 365,Americas,USA,Information Technology,Cloud Services,SaaS,4.8,ISO 27001|SOC 2|GDPR,8.0,96.0,1,N/A,Net 90,134,N/A
+S209,Workday,Americas,USA,Information Technology,Cloud Services,SaaS,4.7,ISO 27001|SOC 2|GDPR,8.0,92.0,1,N/A,Net 75,30,N/A
+S210,Dropbox Business,Americas,USA,Information Technology,Cloud Services,Cloud Storage,4.5,ISO 27001|SOC 2|GDPR,8.0,90.0,1,N/A,Net 45,122,N/A
+S211,Box Enterprise,Americas,USA,Information Technology,Cloud Services,Cloud Storage,4.6,ISO 27001|SOC 2|GDPR,8.0,92.0,1,N/A,Net 75,20,N/A
+S301,Oracle,Americas,USA,Information Technology,Software,Enterprise Software,4.7,ISO 27001|SOC 2,8.0,93.0,34,N/A,Net 75,16,N/A
+S302,SAP,Europe,Germany,Information Technology,Software,Enterprise Software,4.8,ISO 27001|SOC 2,8.0,93.0,32,N/A,Net 60,114,N/A
+S303,IBM,Americas,USA,Information Technology,Software,Enterprise Software,4.6,ISO 27001|SOC 2,8.0,90.0,36,N/A,Net 90,71,N/A
+S304,Microsoft Office,Americas,USA,Information Technology,Software,Productivity Software,4.9,ISO 27001|SOC 2,8.0,96.0,41,N/A,Net 45,84,N/A
+S305,Google Workspace,Americas,USA,Information Technology,Software,Productivity Software,4.8,ISO 27001|SOC 2,8.0,94.0,37,N/A,Net 75,22,N/A
+S306,Oracle Database,Americas,USA,Information Technology,Software,Database Software,4.8,ISO 27001|SOC 2,8.0,94.0,34,N/A,Net 60,118,N/A
+S307,Microsoft SQL Server,Americas,USA,Information Technology,Software,Database Software,4.8,ISO 27001|SOC 2,8.0,96.0,20,N/A,Net 75,47,N/A
+S308,JetBrains,Europe,Czech Republic,Information Technology,Software,Development Tools,4.7,ISO 27001|SOC 2,8.0,92.0,44,N/A,Net 30,115,N/A
+S309,GitHub Enterprise,Americas,USA,Information Technology,Software,Development Tools,4.8,ISO 27001|SOC 2,8.0,94.0,11,N/A,Net 30,124,N/A
+S310,Palo Alto Networks,Americas,USA,Information Technology,Cybersecurity,Endpoint Security,4.8,ISO 27001|SOC 2,8.0,95.0,18,N/A,Net 75,61,N/A
+S311,CrowdStrike,Americas,USA,Information Technology,Cybersecurity,Endpoint Security,4.8,ISO 27001|SOC 2,8.0,94.0,13,N/A,Net 60,112,N/A
+S312,Fortinet,Americas,USA,Information Technology,Cybersecurity,Network Security,4.7,ISO 27001|SOC 2,8.0,92.0,30,N/A,Net 45,131,N/A
+S313,Check Point,Middle East,Israel,Information Technology,Cybersecurity,Network Security,4.7,ISO 27001|SOC 2,8.0,92.0,30,N/A,Net 60,112,N/A
+S314,Okta,Americas,USA,Information Technology,Cybersecurity,Identity Management,4.8,ISO 27001|SOC 2,8.0,94.0,27,N/A,Net 75,79,N/A
+S315,Ping Identity,Americas,USA,Information Technology,Cybersecurity,Identity Management,4.6,ISO 27001|SOC 2,8.0,90.0,15,N/A,Net 75,19,N/A
+S316,Splunk,Americas,USA,Information Technology,Cybersecurity,Security Operations,4.7,ISO 27001|SOC 2,8.0,92.0,44,N/A,Net 30,104,N/A
+S317,Verizon,Americas,USA,Information Technology,Telecommunications,Mobile Services,4.6,ISO 27001|SOC 2,8.0,91.0,24,N/A,Net 30,25,N/A
+S318,AT&T,Americas,USA,Information Technology,Telecommunications,Mobile Services,4.5,ISO 27001|SOC 2,8.0,88.0,11,N/A,Net 45,66,N/A
+S319,Vodafone,Europe,UK,Information Technology,Telecommunications,Mobile Services,4.6,ISO 27001|SOC 2,8.0,90.0,11,N/A,Net 90,54,N/A
+S320,Comcast Business,Americas,USA,Information Technology,Telecommunications,Internet Services,4.5,ISO 27001|SOC 2,8.0,89.0,25,N/A,Net 45,136,N/A
+S401,ArcelorMittal,Europe,Luxembourg,Manufacturing & Industrial,Raw Materials - Metals,Steel,4.7,ISO 9001|ISO 14001,8.0,91.0,17,91780,Net 90,70,343811
+S402,Tata Steel,APAC,India,Manufacturing & Industrial,Raw Materials - Metals,Steel,4.5,ISO 9001|ISO 14001,8.0,87.0,26,79693,Net 60,57,417662
+S403,Baosteel,APAC,China,Manufacturing & Industrial,Raw Materials - Metals,Steel,4.4,ISO 9001|ISO 14001,8.0,85.0,17,75949,Net 45,94,156674
+S404,Nippon Steel,APAC,Japan,Manufacturing & Industrial,Raw Materials - Metals,Steel,4.8,ISO 9001|ISO 14001,8.0,92.0,11,93818,Net 60,111,307961
+S405,POSCO,APAC,South Korea,Manufacturing & Industrial,Raw Materials - Metals,Steel,4.7,ISO 9001|ISO 14001,8.0,90.0,22,91482,Net 30,77,153425
+S406,Alcoa,Americas,USA,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,4.7,ISO 9001|ISO 14001,8.0,93.0,29,5483,Net 90,45,396711
+S407,Rio Tinto Alcan,Americas,Canada,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,4.8,ISO 9001|ISO 14001,8.0,92.0,32,48671,Net 90,124,446827
+S408,Norsk Hydro,Europe,Norway,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,4.7,ISO 9001|ISO 14001,8.0,90.0,14,55157,Net 90,102,106633
+S409,Freeport-McMoRan,Americas,USA,Manufacturing & Industrial,Raw Materials - Metals,Copper,4.6,ISO 9001|ISO 14001,8.0,91.0,41,83407,Net 30,125,289890
+S410,Codelco,Americas,Chile,Manufacturing & Industrial,Raw Materials - Metals,Copper,4.5,ISO 9001|ISO 14001,8.0,86.0,39,96280,Net 45,126,192346
+S411,BHP Copper,APAC,Australia,Manufacturing & Industrial,Raw Materials - Metals,Copper,4.7,ISO 9001|ISO 14001,8.0,90.0,43,57191,Net 60,138,343727
+S412,Glencore Zinc,Europe,Switzerland,Manufacturing & Industrial,Raw Materials - Metals,Zinc,4.6,ISO 9001|ISO 14001,8.0,90.0,27,36659,Net 60,77,145436
+S413,Vale Nickel,Americas,Brazil,Manufacturing & Industrial,Raw Materials - Metals,Nickel,4.5,ISO 9001|ISO 14001,8.0,86.0,38,80097,Net 45,133,398765
+S414,Norilsk Nickel,Europe,Russia,Manufacturing & Industrial,Raw Materials - Metals,Nickel,4.3,ISO 9001|ISO 14001,8.0,76.0,34,42700,Net 60,22,359158
+S415,BASF,Europe,Germany,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,4.8,ISO 9001|ISO 14001,8.0,92.0,21,33962,Net 75,69,286030
+S416,Dow Chemical,Americas,USA,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,4.7,ISO 9001|ISO 14001,8.0,92.0,31,1430,Net 60,85,391394
+S417,SABIC,Middle East,Saudi Arabia,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,4.6,ISO 9001|ISO 14001,8.0,88.0,43,94481,Net 45,36,226540
+S418,LyondellBasell,Europe,Netherlands,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,4.7,ISO 9001|ISO 14001,8.0,90.0,36,62502,Net 75,76,462078
+S419,ExxonMobil Chemical,Americas,USA,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,4.8,ISO 9001|ISO 14001,8.0,94.0,41,38666,Net 75,19,148786
+S420,Formosa Plastics,APAC,Taiwan,Manufacturing & Industrial,Raw Materials - Plastics,PVC,4.5,ISO 9001|ISO 14001,8.0,86.0,24,87126,Net 75,77,260540
+S421,DuPont,Americas,USA,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,4.8,ISO 9001|ISO 14001,8.0,94.0,33,55871,Net 75,150,280227
+S422,BASF Chemicals,Europe,Germany,Manufacturing & Industrial,Chemicals,Industrial Chemicals,4.8,ISO 9001|ISO 14001,8.0,93.0,45,59573,Net 60,105,468498
+S423,Dow Industrial,Americas,USA,Manufacturing & Industrial,Chemicals,Industrial Chemicals,4.7,ISO 9001|ISO 14001,8.0,92.0,27,15914,Net 60,79,220868
+S424,Evonik,Europe,Germany,Manufacturing & Industrial,Chemicals,Specialty Chemicals,4.7,ISO 9001|ISO 14001,8.0,90.0,22,70336,Net 60,45,489483
+S425,Huntsman,Americas,USA,Manufacturing & Industrial,Chemicals,Specialty Chemicals,4.6,ISO 9001|ISO 14001,8.0,90.0,21,63564,Net 45,70,487241
+S426,Shell Chemicals,Europe,Netherlands,Manufacturing & Industrial,Chemicals,Petrochemicals,4.8,ISO 9001|ISO 14001,8.0,92.0,27,37193,Net 90,149,412890
+S427,Chevron Phillips,Americas,USA,Manufacturing & Industrial,Chemicals,Petrochemicals,4.7,ISO 9001|ISO 14001,8.0,92.0,16,47401,Net 45,90,219266
+S428,Henkel,Europe,Germany,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,4.8,ISO 9001|ISO 14001,8.0,94.0,21,70110,Net 60,18,471205
+S429,3M Adhesives,Americas,USA,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,4.9,ISO 9001|ISO 14001,8.0,96.0,18,72629,Net 60,26,128587
+S501,Siemens,Europe,Germany,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,4.8,ISO 9001|ISO 14001,8.0,93.0,28,N/A,Net 45,140,N/A
+S502,ABB,Europe,Switzerland,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,4.8,ISO 9001|ISO 14001,8.0,92.0,16,N/A,Net 30,87,N/A
+S503,Schneider Electric,Europe,France,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,4.7,ISO 9001|ISO 14001,8.0,90.0,40,N/A,Net 75,127,N/A
+S504,Rockwell Automation,Americas,USA,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,4.7,ISO 9001|ISO 14001,8.0,92.0,31,N/A,Net 45,28,N/A
+S505,Caterpillar,Americas,USA,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,4.8,ISO 9001|ISO 14001,8.0,95.0,26,N/A,Net 75,44,N/A
+S506,Komatsu,APAC,Japan,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,4.7,ISO 9001|ISO 14001,8.0,90.0,14,N/A,Net 75,140,N/A
+S507,John Deere,Americas,USA,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,4.7,ISO 9001|ISO 14001,8.0,92.0,14,N/A,Net 90,28,N/A
+S508,Fanuc,APAC,Japan,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,4.9,ISO 9001|ISO 14001,8.0,95.0,19,N/A,Net 45,92,N/A
+S509,KUKA,Europe,Germany,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,4.7,ISO 9001|ISO 14001,8.0,90.0,15,N/A,Net 45,45,N/A
+S510,ABB Robotics,Europe,Switzerland,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,4.8,ISO 9001|ISO 14001,8.0,92.0,45,N/A,Net 75,72,N/A
+S511,Toyota Material Handling,APAC,Japan,Manufacturing & Industrial,Equipment & Machinery,Material Handling,4.8,ISO 9001|ISO 14001,8.0,94.0,43,N/A,Net 75,130,N/A
+S512,Crown Equipment,Americas,USA,Manufacturing & Industrial,Equipment & Machinery,Material Handling,4.7,ISO 9001|ISO 14001,8.0,92.0,38,N/A,Net 60,124,N/A
+S513,Stanley Black & Decker,Americas,USA,Manufacturing & Industrial,MRO Supplies,Industrial Tools,4.7,ISO 9001|ISO 14001,8.0,92.0,29,97104,Net 90,30,419622
+S514,Honeywell Safety,Americas,USA,Manufacturing & Industrial,MRO Supplies,Safety Equipment,4.8,ISO 9001|ISO 14001,8.0,94.0,16,86663,Net 45,69,238750
+S515,3M Safety,Americas,USA,Manufacturing & Industrial,MRO Supplies,Safety Equipment,4.9,ISO 9001|ISO 14001,8.0,96.0,15,72450,Net 45,76,191128
+S516,Shell Lubricants,Europe,Netherlands,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,4.7,ISO 9001|ISO 14001,8.0,92.0,14,59148,Net 45,15,314180
+S517,Grainger,Americas,USA,Manufacturing & Industrial,MRO Supplies,Spare Parts,4.6,ISO 9001|ISO 14001,8.0,90.0,40,37862,Net 60,23,221360
+S601,Pfizer,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,4.9,FDA|GMP|ISO 13485,8.0,95.0,28,N/A,Net 75,33,N/A
+S602,Johnson & Johnson,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,4.8,FDA|GMP|ISO 13485,8.0,95.0,24,N/A,Net 60,65,N/A
+S603,Novartis,Europe,Switzerland,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,4.8,FDA|GMP|ISO 13485,8.0,92.0,37,N/A,Net 30,72,N/A
+S604,Roche,Europe,Switzerland,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,4.8,FDA|GMP|ISO 13485,8.0,94.0,19,N/A,Net 60,51,N/A
+S605,Merck & Co,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,4.8,FDA|GMP|ISO 13485,8.0,92.0,14,N/A,Net 30,57,N/A
+S606,Teva Pharmaceutical,Middle East,Israel,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,4.5,FDA|GMP|ISO 13485,8.0,86.0,29,N/A,Net 90,88,N/A
+S607,Mylan,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,4.5,FDA|GMP|ISO 13485,8.0,88.0,38,N/A,Net 30,134,N/A
+S608,Sun Pharma,APAC,India,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,4.4,FDA|GMP|ISO 13485,8.0,84.0,29,N/A,Net 75,84,N/A
+S609,Sandoz,Europe,Switzerland,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,4.6,FDA|GMP|ISO 13485,8.0,90.0,42,N/A,Net 90,141,N/A
+S610,Moderna,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,4.8,FDA|GMP|ISO 13485,8.0,92.0,38,N/A,Net 30,25,N/A
+S611,AstraZeneca,Europe,UK,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,4.7,FDA|GMP|ISO 13485,8.0,90.0,37,N/A,Net 60,79,N/A
+S612,GSK Vaccines,Europe,UK,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,4.7,FDA|GMP|ISO 13485,8.0,92.0,11,N/A,Net 30,73,N/A
+S613,AbbVie,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,Biologics,4.8,FDA|GMP|ISO 13485,8.0,92.0,11,N/A,Net 60,25,N/A
+S614,Amgen,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,Biologics,4.8,FDA|GMP|ISO 13485,8.0,94.0,21,N/A,Net 75,147,N/A
+S615,Bayer Consumer,Europe,Germany,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,4.6,FDA|GMP|ISO 13485,8.0,90.0,38,N/A,Net 60,61,N/A
+S616,Procter & Gamble Health,Americas,USA,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,4.7,FDA|GMP|ISO 13485,8.0,92.0,37,N/A,Net 75,38,N/A
+S617,Siemens Healthineers,Europe,Germany,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,4.8,FDA|GMP|ISO 13485,8.0,93.0,40,N/A,Net 60,119,N/A
+S618,GE Healthcare,Americas,USA,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,4.7,FDA|GMP|ISO 13485,8.0,90.0,31,N/A,Net 60,41,N/A
+S619,Philips Healthcare,Europe,Netherlands,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,4.7,FDA|GMP|ISO 13485,8.0,92.0,20,N/A,Net 60,120,N/A
+S620,Medtronic,Americas,USA,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,4.8,FDA|GMP|ISO 13485,8.0,94.0,41,N/A,Net 60,117,N/A
+S621,Stryker,Americas,USA,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,4.8,FDA|GMP|ISO 13485,8.0,92.0,45,N/A,Net 30,131,N/A
+S622,Boston Scientific,Americas,USA,Healthcare & Life Sciences,Medical Devices,Implants,4.8,FDA|GMP|ISO 13485,8.0,92.0,15,N/A,Net 60,79,N/A
+S623,Zimmer Biomet,Americas,USA,Healthcare & Life Sciences,Medical Devices,Implants,4.7,FDA|GMP|ISO 13485,8.0,90.0,30,N/A,Net 30,118,N/A
+S624,Masimo,Americas,USA,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,4.8,FDA|GMP|ISO 13485,8.0,94.0,42,N/A,Net 30,133,N/A
+S625,Cardinal Health,Americas,USA,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,4.6,FDA|GMP|ISO 13485,8.0,91.0,36,N/A,Net 30,63,N/A
+S626,McKesson,Americas,USA,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,4.6,FDA|GMP|ISO 13485,8.0,90.0,43,N/A,Net 60,142,N/A
+S627,Becton Dickinson,Americas,USA,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,4.7,FDA|GMP|ISO 13485,8.0,92.0,38,N/A,Net 30,67,N/A
+S628,Thermo Fisher Scientific,Americas,USA,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,4.8,FDA|GMP|ISO 13485,8.0,94.0,27,N/A,Net 90,48,N/A
+S629,Merck Millipore,Europe,Germany,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,4.7,FDA|GMP|ISO 13485,8.0,90.0,28,N/A,Net 75,139,N/A
+S630,Smith & Nephew,Europe,UK,Healthcare & Life Sciences,Medical Supplies,Wound Care,4.7,FDA|GMP|ISO 13485,8.0,92.0,17,N/A,Net 30,76,N/A
+S631,Agilent Technologies,Americas,USA,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,4.8,FDA|GMP|ISO 13485,8.0,94.0,20,N/A,Net 60,18,N/A
+S632,Waters Corporation,Americas,USA,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,4.8,FDA|GMP|ISO 13485,8.0,92.0,45,N/A,Net 75,38,N/A
+S633,PerkinElmer,Americas,USA,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,4.7,FDA|GMP|ISO 13485,8.0,90.0,24,N/A,Net 30,133,N/A
+S701,NextEra Energy,Americas,USA,Energy & Utilities,Electricity,Grid Electricity,4.7,ISO 14001|ISO 50001,8.0,93.0,Continuous,N/A,Net 30,54,N/A
+S702,Duke Energy,Americas,USA,Energy & Utilities,Electricity,Grid Electricity,4.6,ISO 14001|ISO 50001,8.0,90.0,Continuous,N/A,Net 75,89,N/A
+S703,Enel,Europe,Italy,Energy & Utilities,Electricity,Grid Electricity,4.6,ISO 14001|ISO 50001,8.0,88.0,Continuous,N/A,Net 90,84,N/A
+S704,Orsted,Europe,Denmark,Energy & Utilities,Electricity,Renewable Electricity,4.8,ISO 14001|ISO 50001,8.0,92.0,Continuous,N/A,Net 75,138,N/A
+S705,Iberdrola Renewables,Europe,Spain,Energy & Utilities,Electricity,Renewable Electricity,4.7,ISO 14001|ISO 50001,8.0,90.0,Continuous,N/A,Net 75,77,N/A
+S706,Cummins Power,Americas,USA,Energy & Utilities,Electricity,Backup Power,4.7,ISO 14001|ISO 50001,8.0,92.0,Continuous,N/A,Net 75,52,N/A
+S707,Caterpillar Power,Americas,USA,Energy & Utilities,Electricity,Backup Power,4.8,ISO 14001|ISO 50001,8.0,94.0,Continuous,N/A,Net 75,63,N/A
+S708,Cheniere Energy,Americas,USA,Energy & Utilities,Fuels,Natural Gas,4.7,ISO 14001|ISO 50001,8.0,93.0,42,N/A,Net 45,32,N/A
+S709,Shell Gas,Europe,Netherlands,Energy & Utilities,Fuels,Natural Gas,4.8,ISO 14001|ISO 50001,8.0,92.0,27,N/A,Net 75,102,N/A
+S710,BP Fuels,Europe,UK,Energy & Utilities,Fuels,Diesel,4.6,ISO 14001|ISO 50001,8.0,90.0,42,N/A,Net 60,15,N/A
+S711,ExxonMobil Fuels,Americas,USA,Energy & Utilities,Fuels,Diesel,4.7,ISO 14001|ISO 50001,8.0,92.0,28,N/A,Net 60,140,N/A
+S712,Shell Aviation,Europe,Netherlands,Energy & Utilities,Fuels,Aviation Fuel,4.8,ISO 14001|ISO 50001,8.0,94.0,19,N/A,Net 75,138,N/A
+S713,Neste,Europe,Finland,Energy & Utilities,Fuels,Biofuels,4.7,ISO 14001|ISO 50001,8.0,90.0,32,N/A,Net 60,111,N/A
+S714,First Solar,Americas,USA,Energy & Utilities,Renewable Equipment,Solar Panels,4.7,ISO 14001|ISO 50001,8.0,93.0,39,N/A,Net 60,63,N/A
+S715,Canadian Solar,Americas,Canada,Energy & Utilities,Renewable Equipment,Solar Panels,4.6,ISO 14001|ISO 50001,8.0,90.0,25,N/A,Net 90,113,N/A
+S716,JinkoSolar,APAC,China,Energy & Utilities,Renewable Equipment,Solar Panels,4.5,ISO 14001|ISO 50001,8.0,86.0,24,N/A,Net 75,26,N/A
+S717,Vestas,Europe,Denmark,Energy & Utilities,Renewable Equipment,Wind Turbines,4.8,ISO 14001|ISO 50001,8.0,92.0,30,N/A,Net 75,112,N/A
+S718,Siemens Gamesa,Europe,Spain,Energy & Utilities,Renewable Equipment,Wind Turbines,4.8,ISO 14001|ISO 50001,8.0,94.0,34,N/A,Net 45,141,N/A
+S719,GE Renewable Energy,Americas,USA,Energy & Utilities,Renewable Equipment,Wind Turbines,4.7,ISO 14001|ISO 50001,8.0,90.0,12,N/A,Net 45,143,N/A
+S720,Tesla Energy,Americas,USA,Energy & Utilities,Renewable Equipment,Battery Storage,4.8,ISO 14001|ISO 50001,8.0,92.0,31,N/A,Net 30,127,N/A
+S721,LG Energy Solution,APAC,South Korea,Energy & Utilities,Renewable Equipment,Battery Storage,4.7,ISO 14001|ISO 50001,8.0,90.0,16,N/A,Net 90,131,N/A
+S722,CATL,APAC,China,Energy & Utilities,Renewable Equipment,Battery Storage,4.5,ISO 14001|ISO 50001,8.0,86.0,10,N/A,Net 45,119,N/A
+S801,Cemex,Americas,Mexico,Construction & Real Estate,Building Materials,Cement,4.6,ISO 9001|LEED,8.0,89.0,19,N/A,Net 30,135,N/A
+S802,LafargeHolcim,Europe,Switzerland,Construction & Real Estate,Building Materials,Cement,4.7,ISO 9001|LEED,8.0,91.0,26,N/A,Net 60,116,N/A
+S803,HeidelbergCement,Europe,Germany,Construction & Real Estate,Building Materials,Cement,4.7,ISO 9001|LEED,8.0,90.0,15,N/A,Net 60,112,N/A
+S804,Ready Mix USA,Americas,USA,Construction & Real Estate,Building Materials,Concrete,4.5,ISO 9001|LEED,8.0,88.0,30,N/A,Net 75,24,N/A
+S805,Martin Marietta,Americas,USA,Construction & Real Estate,Building Materials,Concrete,4.6,ISO 9001|LEED,8.0,90.0,14,N/A,Net 45,88,N/A
+S806,Weyerhaeuser,Americas,USA,Construction & Real Estate,Building Materials,Lumber,4.7,ISO 9001|LEED,8.0,93.0,24,N/A,Net 30,126,N/A
+S807,West Fraser Timber,Americas,Canada,Construction & Real Estate,Building Materials,Lumber,4.6,ISO 9001|LEED,8.0,90.0,16,N/A,Net 30,128,N/A
+S808,Nucor,Americas,USA,Construction & Real Estate,Building Materials,Structural Steel,4.7,ISO 9001|LEED,8.0,92.0,20,N/A,Net 60,22,N/A
+S809,Steel Dynamics,Americas,USA,Construction & Real Estate,Building Materials,Structural Steel,4.6,ISO 9001|LEED,8.0,90.0,12,N/A,Net 60,29,N/A
+S810,Guardian Glass,Americas,USA,Construction & Real Estate,Building Materials,Glass,4.6,ISO 9001|LEED,8.0,90.0,28,N/A,Net 60,110,N/A
+S811,Saint-Gobain Glass,Europe,France,Construction & Real Estate,Building Materials,Glass,4.7,ISO 9001|LEED,8.0,92.0,37,N/A,Net 45,77,N/A
+S812,Carrier Global,Americas,USA,Construction & Real Estate,MEP Systems,HVAC Equipment,4.7,ISO 9001|LEED,8.0,92.0,43,N/A,Net 75,61,N/A
+S813,Trane Technologies,Europe,Ireland,Construction & Real Estate,MEP Systems,HVAC Equipment,4.7,ISO 9001|LEED,8.0,90.0,20,N/A,Net 45,35,N/A
+S814,Eaton,Europe,Ireland,Construction & Real Estate,MEP Systems,Electrical Systems,4.8,ISO 9001|LEED,8.0,92.0,34,N/A,Net 90,76,N/A
+S815,Schneider Electric,Europe,France,Construction & Real Estate,MEP Systems,Electrical Systems,4.8,ISO 9001|LEED,8.0,94.0,41,N/A,Net 90,51,N/A
+S816,Masco,Americas,USA,Construction & Real Estate,MEP Systems,Plumbing Systems,4.6,ISO 9001|LEED,8.0,90.0,24,N/A,Net 75,80,N/A
+S817,Kohler,Americas,USA,Construction & Real Estate,MEP Systems,Plumbing Systems,4.7,ISO 9001|LEED,8.0,92.0,39,N/A,Net 60,17,N/A
+S818,Caterpillar Construction,Americas,USA,Construction & Real Estate,Construction Equipment,Heavy Equipment,4.8,ISO 9001|LEED,8.0,95.0,39,N/A,Net 60,55,N/A
+S819,Komatsu Construction,APAC,Japan,Construction & Real Estate,Construction Equipment,Heavy Equipment,4.7,ISO 9001|LEED,8.0,90.0,14,N/A,Net 75,103,N/A
+S820,Hilti,Europe,Liechtenstein,Construction & Real Estate,Construction Equipment,Power Tools,4.8,ISO 9001|LEED,8.0,94.0,29,N/A,Net 75,79,N/A
+S821,Bosch Power Tools,Europe,Germany,Construction & Real Estate,Construction Equipment,Power Tools,4.8,ISO 9001|LEED,8.0,94.0,39,N/A,Net 60,65,N/A
+S822,Layher,Europe,Germany,Construction & Real Estate,Construction Equipment,Scaffolding,4.7,ISO 9001|LEED,8.0,92.0,34,N/A,Net 75,42,N/A
+S901,Maersk,Europe,Denmark,Logistics & Transportation,Freight Services,Ocean Freight,4.8,ISO 9001|ISO 28000,8.0,93.0,As Needed,N/A,Net 45,112,N/A
+S902,MSC,Europe,Switzerland,Logistics & Transportation,Freight Services,Ocean Freight,4.7,ISO 9001|ISO 28000,8.0,90.0,As Needed,N/A,Net 90,106,N/A
+S903,CMA CGM,Europe,France,Logistics & Transportation,Freight Services,Ocean Freight,4.7,ISO 9001|ISO 28000,8.0,90.0,As Needed,N/A,Net 90,90,N/A
+S904,DHL Express,Europe,Germany,Logistics & Transportation,Freight Services,Air Freight,4.8,ISO 9001|ISO 28000,8.0,95.0,As Needed,N/A,Net 60,20,N/A
+S905,FedEx Express,Americas,USA,Logistics & Transportation,Freight Services,Air Freight,4.8,ISO 9001|ISO 28000,8.0,94.0,As Needed,N/A,Net 75,85,N/A
+S906,UPS Air,Americas,USA,Logistics & Transportation,Freight Services,Air Freight,4.7,ISO 9001|ISO 28000,8.0,92.0,As Needed,N/A,Net 30,27,N/A
+S907,XPO Logistics,Americas,USA,Logistics & Transportation,Freight Services,Road Freight,4.6,ISO 9001|ISO 28000,8.0,91.0,As Needed,N/A,Net 90,142,N/A
+S908,J.B. Hunt,Americas,USA,Logistics & Transportation,Freight Services,Road Freight,4.6,ISO 9001|ISO 28000,8.0,90.0,As Needed,N/A,Net 60,73,N/A
+S909,Kuehne + Nagel Road,Europe,Switzerland,Logistics & Transportation,Freight Services,Road Freight,4.7,ISO 9001|ISO 28000,8.0,90.0,As Needed,N/A,Net 90,105,N/A
+S910,Union Pacific,Americas,USA,Logistics & Transportation,Freight Services,Rail Freight,4.6,ISO 9001|ISO 28000,8.0,90.0,As Needed,N/A,Net 45,63,N/A
+S911,BNSF Railway,Americas,USA,Logistics & Transportation,Freight Services,Rail Freight,4.6,ISO 9001|ISO 28000,8.0,90.0,As Needed,N/A,Net 90,79,N/A
+S912,Prologis,Americas,USA,Logistics & Transportation,Warehousing,Distribution Centers,4.8,ISO 9001|ISO 28000,8.0,95.0,Daily,N/A,Net 45,39,N/A
+S913,Duke Realty,Americas,USA,Logistics & Transportation,Warehousing,Distribution Centers,4.7,ISO 9001|ISO 28000,8.0,92.0,Daily,N/A,Net 30,94,N/A
+S914,Americold,Americas,USA,Logistics & Transportation,Warehousing,Cold Storage,4.7,ISO 9001|ISO 28000,8.0,90.0,Daily,N/A,Net 75,23,N/A
+S915,Lineage Logistics,Americas,USA,Logistics & Transportation,Warehousing,Cold Storage,4.8,ISO 9001|ISO 28000,8.0,92.0,Daily,N/A,Net 90,108,N/A
+S916,DHL Supply Chain,Europe,Germany,Logistics & Transportation,Warehousing,3PL Services,4.8,ISO 9001|ISO 28000,8.0,92.0,Daily,N/A,Net 45,38,N/A
+S917,C.H. Robinson,Americas,USA,Logistics & Transportation,Warehousing,3PL Services,4.6,ISO 9001|ISO 28000,8.0,90.0,Daily,N/A,Net 60,98,N/A
+S918,Enterprise Fleet,Americas,USA,Logistics & Transportation,Fleet Services,Fleet Vehicles,4.7,ISO 9001|ISO 28000,8.0,92.0,As Needed,N/A,Net 75,59,N/A
+S919,Ryder Fleet,Americas,USA,Logistics & Transportation,Fleet Services,Fleet Vehicles,4.6,ISO 9001|ISO 28000,8.0,90.0,As Needed,N/A,Net 45,48,N/A
+S920,Penske Truck Leasing,Americas,USA,Logistics & Transportation,Fleet Services,Fleet Maintenance,4.7,ISO 9001|ISO 28000,8.0,92.0,As Needed,N/A,Net 90,108,N/A
+S921,Samsara,Americas,USA,Logistics & Transportation,Fleet Services,Fleet Telematics,4.7,ISO 9001|ISO 28000,8.0,92.0,As Needed,N/A,Net 90,143,N/A

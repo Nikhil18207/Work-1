@@ -25,6 +25,7 @@ if str(root_path) not in sys.path:
 from backend.engines.data_loader import DataLoader
 from backend.engines.rule_evaluation_engine import RuleEvaluationEngine
 from backend.engines.tariff_calculator import TariffCalculator
+from backend.agents.constraint_validation_agent import ConstraintValidationAgent
 
 
 @dataclass

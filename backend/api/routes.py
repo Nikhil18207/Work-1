@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 from loguru import logger
 
-from backend.conversational_ai import ConversationalAI
+from backend.engines.conversational_ai import ConversationalAI
 
 recommendation_router = APIRouter()
 
