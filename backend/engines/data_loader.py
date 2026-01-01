@@ -633,6 +633,296 @@ class DataLoader:
 
         return sorted(results, key=lambda x: x['spend'], reverse=True)
 
+    def resolve_category_input(
+        self,
+        input_value: str,
+        client_id: str = None
+    ) -> Dict[str, Any]:
+        """
+        Robust category resolver that handles ANY input - sector, category, or subcategory.
+
+        This is the MAIN method to use when you have ambiguous category input.
+        It will:
+        1. Search across all hierarchy levels (Sector, Category, SubCategory)
+        2. Determine what level the input matches
+        3. Return filtered spend data with proper hierarchy metadata
+        4. Handle partial/fuzzy matching if exact match not found
+
+        Args:
+            input_value: Any category-related input (sector, category, or subcategory name)
+            client_id: Optional client filter
+
+        Returns:
+            Dictionary with:
+                - success: bool
+                - match_type: 'sector' | 'category' | 'subcategory' | 'none'
+                - hierarchy: {sector, category, subcategory} - resolved hierarchy
+                - spend_data: filtered DataFrame
+                - total_spend: float
+                - supplier_count: int
+                - suppliers: list of supplier dicts with spend breakdown
+                - regions: regional spend breakdown
+                - error: str (if success=False)
+        """
+        if not input_value:
+            return {
+                'success': False,
+                'match_type': 'none',
+                'error': 'No input value provided'
+            }
+
+        spend_data = self.load_spend_data()
+        supplier_master = self.load_supplier_master()
+
+        if client_id:
+            spend_data = spend_data[spend_data['Client_ID'] == client_id]
+
+        input_lower = input_value.strip().lower()
+
+        # Strategy 1: Try exact match on SubCategory (most specific)
+        if 'SubCategory' in spend_data.columns:
+            for subcat in spend_data['SubCategory'].dropna().unique():
+                if subcat.lower() == input_lower:
+                    return self._build_resolved_response(
+                        spend_data[spend_data['SubCategory'] == subcat],
+                        supplier_master,
+                        'subcategory',
+                        subcat
+                    )
+
+        # Strategy 2: Try exact match on Category
+        for category in spend_data['Category'].dropna().unique():
+            if category.lower() == input_lower:
+                return self._build_resolved_response(
+                    spend_data[spend_data['Category'] == category],
+                    supplier_master,
+                    'category',
+                    category
+                )
+
+        # Strategy 3: Try exact match on Sector
+        if 'Sector' in spend_data.columns:
+            for sector in spend_data['Sector'].dropna().unique():
+                if sector.lower() == input_lower:
+                    return self._build_resolved_response(
+                        spend_data[spend_data['Sector'] == sector],
+                        supplier_master,
+                        'sector',
+                        sector
+                    )
+
+        # Strategy 4: Try partial/fuzzy matching (contains search)
+        # Check subcategory first (most specific)
+        if 'SubCategory' in spend_data.columns:
+            for subcat in spend_data['SubCategory'].dropna().unique():
+                if input_lower in subcat.lower() or subcat.lower() in input_lower:
+                    return self._build_resolved_response(
+                        spend_data[spend_data['SubCategory'] == subcat],
+                        supplier_master,
+                        'subcategory',
+                        subcat
+                    )
+
+        # Check category
+        for category in spend_data['Category'].dropna().unique():
+            if input_lower in category.lower() or category.lower() in input_lower:
+                return self._build_resolved_response(
+                    spend_data[spend_data['Category'] == category],
+                    supplier_master,
+                    'category',
+                    category
+                )
+
+        # Check sector
+        if 'Sector' in spend_data.columns:
+            for sector in spend_data['Sector'].dropna().unique():
+                if input_lower in sector.lower() or sector.lower() in input_lower:
+                    return self._build_resolved_response(
+                        spend_data[spend_data['Sector'] == sector],
+                        supplier_master,
+                        'sector',
+                        sector
+                    )
+
+        # Strategy 5: Check supplier_master for matching product_category or subcategory
+        if not supplier_master.empty:
+            # Check subcategory in supplier_master
+            if 'subcategory' in supplier_master.columns:
+                for subcat in supplier_master['subcategory'].dropna().unique():
+                    if input_lower == subcat.lower() or input_lower in subcat.lower():
+                        # Find matching spend data through supplier matching
+                        matching_suppliers = supplier_master[
+                            supplier_master['subcategory'].str.lower() == subcat.lower()
+                        ]['supplier_name'].unique()
+
+                        matched_spend = spend_data[
+                            spend_data['Supplier_Name'].isin(matching_suppliers)
+                        ]
+
+                        if not matched_spend.empty:
+                            return self._build_resolved_response(
+                                matched_spend,
+                                supplier_master,
+                                'subcategory',
+                                subcat
+                            )
+
+            # Check product_category in supplier_master
+            if 'product_category' in supplier_master.columns:
+                for prod_cat in supplier_master['product_category'].dropna().unique():
+                    if input_lower == prod_cat.lower() or input_lower in prod_cat.lower():
+                        matching_suppliers = supplier_master[
+                            supplier_master['product_category'].str.lower() == prod_cat.lower()
+                        ]['supplier_name'].unique()
+
+                        matched_spend = spend_data[
+                            spend_data['Supplier_Name'].isin(matching_suppliers)
+                        ]
+
+                        if not matched_spend.empty:
+                            return self._build_resolved_response(
+                                matched_spend,
+                                supplier_master,
+                                'category',
+                                prod_cat
+                            )
+
+        # No match found
+        return {
+            'success': False,
+            'match_type': 'none',
+            'error': f"Could not resolve '{input_value}' to any sector, category, or subcategory",
+            'suggestions': self._get_suggestions(input_value, spend_data)
+        }
+
+    def _build_resolved_response(
+        self,
+        filtered_data: pd.DataFrame,
+        supplier_master: pd.DataFrame,
+        match_type: str,
+        matched_value: str
+    ) -> Dict[str, Any]:
+        """
+        Build a standardized response for resolved category data
+        """
+        if filtered_data.empty:
+            return {
+                'success': False,
+                'match_type': match_type,
+                'error': f"No spend data found for {match_type}: {matched_value}"
+            }
+
+        # Build hierarchy from the data
+        hierarchy = {
+            'sector': None,
+            'category': None,
+            'subcategory': None
+        }
+
+        first_row = filtered_data.iloc[0]
+
+        if 'Sector' in filtered_data.columns:
+            hierarchy['sector'] = first_row.get('Sector')
+        if 'Category' in filtered_data.columns:
+            hierarchy['category'] = first_row.get('Category')
+        if 'SubCategory' in filtered_data.columns:
+            hierarchy['subcategory'] = first_row.get('SubCategory')
+
+        # Override with matched value at appropriate level
+        if match_type == 'sector':
+            hierarchy['sector'] = matched_value
+        elif match_type == 'category':
+            hierarchy['category'] = matched_value
+        elif match_type == 'subcategory':
+            hierarchy['subcategory'] = matched_value
+
+        # Calculate metrics
+        total_spend = float(filtered_data['Spend_USD'].sum())
+
+        # Get supplier breakdown
+        supplier_spend = filtered_data.groupby(['Supplier_ID', 'Supplier_Name']).agg({
+            'Spend_USD': 'sum',
+            'Supplier_Region': 'first',
+            'Supplier_Country': 'first'
+        }).reset_index()
+
+        supplier_spend['percentage'] = (supplier_spend['Spend_USD'] / total_spend * 100).round(2)
+        supplier_spend = supplier_spend.sort_values('Spend_USD', ascending=False)
+
+        suppliers = []
+        for _, row in supplier_spend.iterrows():
+            supplier_info = {
+                'supplier_id': row['Supplier_ID'],
+                'supplier_name': row['Supplier_Name'],
+                'spend': float(row['Spend_USD']),
+                'percentage': float(row['percentage']),
+                'region': row['Supplier_Region'],
+                'country': row['Supplier_Country']
+            }
+
+            # Add additional info from supplier_master if available
+            if not supplier_master.empty:
+                master_match = supplier_master[
+                    supplier_master['supplier_name'] == row['Supplier_Name']
+                ]
+                if not master_match.empty:
+                    master_row = master_match.iloc[0]
+                    supplier_info['product_category'] = master_row.get('product_category')
+                    supplier_info['subcategory'] = master_row.get('subcategory')
+                    supplier_info['sector'] = master_row.get('sector')
+
+            suppliers.append(supplier_info)
+
+        # Get regional breakdown
+        regional_spend = filtered_data.groupby('Supplier_Region')['Spend_USD'].sum()
+        regions = {
+            region: {
+                'spend': float(spend),
+                'percentage': round(float(spend / total_spend * 100), 2)
+            }
+            for region, spend in regional_spend.items()
+        }
+
+        return {
+            'success': True,
+            'match_type': match_type,
+            'matched_value': matched_value,
+            'hierarchy': hierarchy,
+            'total_spend': total_spend,
+            'supplier_count': len(suppliers),
+            'suppliers': suppliers,
+            'regions': regions,
+            'spend_data': filtered_data
+        }
+
+    def _get_suggestions(self, input_value: str, spend_data: pd.DataFrame) -> List[str]:
+        """
+        Get suggestions when no exact match is found
+        """
+        suggestions = []
+        input_lower = input_value.lower()
+
+        # Get all unique values
+        all_values = set()
+
+        if 'Sector' in spend_data.columns:
+            all_values.update(spend_data['Sector'].dropna().unique())
+        all_values.update(spend_data['Category'].dropna().unique())
+        if 'SubCategory' in spend_data.columns:
+            all_values.update(spend_data['SubCategory'].dropna().unique())
+
+        # Find similar values (simple similarity check)
+        for value in all_values:
+            value_lower = value.lower()
+            # Check for word overlap
+            input_words = set(input_lower.split())
+            value_words = set(value_lower.split())
+
+            if input_words & value_words:  # Any common words
+                suggestions.append(value)
+
+        return suggestions[:5]  # Return top 5 suggestions
+
 
 # Example usage
 if __name__ == "__main__":

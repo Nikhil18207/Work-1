@@ -33,14 +33,55 @@ class DOCXExporter:
     - Matches exact format specification
     - Includes all new sections (Risk Matrix, ROI, Timeline, etc.)
     - Industry-agnostic
+    - Organizes outputs into subfolders by category
     """
-    
+
     def __init__(self, output_dir: str = "./outputs/briefs"):
-        self.output_dir = Path(output_dir)
-        self.output_dir.mkdir(parents=True, exist_ok=True)
-        
+        self.base_output_dir = Path(output_dir)
+        self.base_output_dir.mkdir(parents=True, exist_ok=True)
+        self.output_dir = self.base_output_dir  # Default, will be updated per export
+
         self.HEADER_COLOR = RGBColor(0, 51, 102)
         self.ACCENT_COLOR = RGBColor(0, 102, 153)
+
+    def _get_category_folder(self, brief_data: Dict[str, Any]) -> Path:
+        """
+        Create and return an organized subfolder path based on category hierarchy.
+        Structure: outputs/briefs/{Sector}/{Category}/{SubCategory}/
+        """
+        # Extract hierarchy info
+        sector = brief_data.get('sector', '')
+        category = brief_data.get('category', 'General')
+
+        # Clean names for folder paths (remove special chars, replace spaces)
+        def clean_name(name: str) -> str:
+            if not name:
+                return ''
+            # Replace special characters and spaces with underscores
+            cleaned = name.replace('&', 'and').replace('/', '_').replace('\\', '_')
+            cleaned = cleaned.replace(' ', '_').replace('__', '_')
+            # Remove any remaining special characters
+            cleaned = ''.join(c for c in cleaned if c.isalnum() or c == '_')
+            return cleaned
+
+        # Build folder path
+        folder_parts = []
+
+        if sector:
+            folder_parts.append(clean_name(sector))
+
+        if category:
+            folder_parts.append(clean_name(category))
+
+        if folder_parts:
+            subfolder = self.base_output_dir / '/'.join(folder_parts)
+        else:
+            subfolder = self.base_output_dir / 'General'
+
+        # Create the folder
+        subfolder.mkdir(parents=True, exist_ok=True)
+
+        return subfolder
     
     def _set_margins(self, doc: Document):
         for section in doc.sections:
@@ -421,16 +462,19 @@ class DOCXExporter:
             if isinstance(step, str):
                 doc.add_paragraph(f"{i}. {step}")
         
+        # Get organized subfolder based on category hierarchy
+        output_folder = self._get_category_folder(brief_data)
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         if not filename:
             category_clean = (category or 'Procurement').replace(' ', '_')
             filename = f"Incumbent_Concentration_{category_clean}_{timestamp}.docx"
-        
-        filepath = self.output_dir / filename
+
+        filepath = output_folder / filename
         doc.save(str(filepath))
-        
+
         return str(filepath)
-    
+
     def export_regional_concentration_brief(
         self, 
         brief_data: Dict[str, Any],
@@ -691,12 +735,15 @@ class DOCXExporter:
             if isinstance(step, str):
                 doc.add_paragraph(f"{i}. {step}")
 
+        # Get organized subfolder based on category hierarchy
+        output_folder = self._get_category_folder(brief_data)
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         if not filename:
             category_clean = (category or 'Procurement').replace(' ', '_')
             filename = f"Regional_Concentration_{category_clean}_{timestamp}.docx"
 
-        filepath = self.output_dir / filename
+        filepath = output_folder / filename
         doc.save(str(filepath))
 
         return str(filepath)

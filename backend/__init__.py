@@ -36,6 +36,6 @@ def __getattr__(name):
         from backend.engines.semantic_use_case_matcher import SemanticUseCaseMatcher
         return SemanticUseCaseMatcher
     elif name == 'RuleEngine':
-        from backend.engines.enhanced_rule_engine import EnhancedRuleEngine
-        return EnhancedRuleEngine
+        from backend.engines.rule_evaluation_engine import RuleEvaluationEngine
+        return RuleEvaluationEngine
     raise AttributeError(f"module 'backend' has no attribute '{name}'")

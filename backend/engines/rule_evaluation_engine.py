@@ -34,22 +34,43 @@ class RuleEvaluationEngine:
     def evaluate_all_rules(self, client_id: str, category: str = None) -> Dict[str, Any]:
         """
         Evaluate all applicable rules for a client/category
-        
+
         Args:
             client_id: Client identifier
-            category: Optional category filter
-            
+            category: Optional category filter (can be sector, category, or subcategory)
+
         Returns:
             Dictionary with rule evaluation results
         """
-        # Load all necessary data
-        spend_df = self.data_loader.load_spend_data()
-        
-        # Filter data
-        client_spend = spend_df[spend_df['Client_ID'] == client_id].copy()
+        # Use robust category resolver for any input type (sector/category/subcategory)
         if category:
-            client_spend = client_spend[client_spend['Category'] == category]
-        
+            resolved = self.data_loader.resolve_category_input(category, client_id)
+            if not resolved.get('success', False):
+                # Try without client filter
+                resolved = self.data_loader.resolve_category_input(category)
+
+            if not resolved.get('success', False):
+                return {
+                    'success': False,
+                    'error': resolved.get('error', f"Could not resolve category: {category}"),
+                    'violations': [],
+                    'warnings': [],
+                    'compliant': []
+                }
+
+            client_spend = resolved.get('spend_data', pd.DataFrame()).copy()
+
+            # Update category with resolved value for accurate reporting
+            hierarchy = resolved.get('hierarchy', {})
+            if hierarchy.get('subcategory'):
+                category = hierarchy['subcategory']
+            elif hierarchy.get('category'):
+                category = hierarchy['category']
+        else:
+            # No category specified - use all spend for this client
+            spend_df = self.data_loader.load_spend_data()
+            client_spend = spend_df[spend_df['Client_ID'] == client_id].copy()
+
         if client_spend.empty:
             return {
                 'success': False,
@@ -88,15 +109,10 @@ class RuleEvaluationEngine:
                 'violations_count': len(violations),
                 'warnings_count': len(warnings),
                 'compliant_count': len(compliant),
+                'total_rules_evaluated': len(violations) + len(warnings) + len(compliant),
                 'overall_status': 'CRITICAL' if violations else ('WARNING' if warnings else 'COMPLIANT')
             }
         }
-    
-        if rule_id in evaluators:
-            return evaluators[rule_id](rule, metrics, spend_df)
-        else:
-            # Use generic evaluator for all other rules
-            return self._evaluate_generic_rule(rule, metrics, spend_df)
     
     def _evaluate_generic_rule(self, rule: pd.Series, metrics: Dict[str, Any], spend_df: pd.DataFrame) -> Dict[str, Any]:
         """
@@ -135,7 +151,8 @@ class RuleEvaluationEngine:
                 'High_Risk_Country_Spend', 'Supplier_Cyber_Rating', 'Certified_Suppliers_Percentage',
                 'Months_Since_Last_Audit', 'Backup_Supplier_Count', 'Supplier_Innovation_Score',
                 'Carbon_Footprint', 'Ethical_Certified_Suppliers', 'Low_Spend_Supplier_Count',
-                'Average_Contract_Duration', 'Supplier_Performance_Score'
+                'Average_Contract_Duration', 'Supplier_Performance_Score',
+                'Days_To_Expiry', 'Price_Escalation_Cap', 'Price_Variance_Percentage'
             ]
             
             # Determine the variable being tested
@@ -152,7 +169,10 @@ class RuleEvaluationEngine:
             
             # Perform comparison
             is_violation = False
-            if '>' in logic:
+            if '= None' in logic:
+                # Special case: checking if value is None/missing (violation if no cap exists)
+                is_violation = current_value is None or current_value == 0
+            elif '>' in logic:
                 is_violation = current_value > threshold
             elif '<' in logic:
                 is_violation = current_value < threshold
@@ -276,7 +296,9 @@ class RuleEvaluationEngine:
             'Ethical_Certified_Suppliers': 90.0, # R032
             'Low_Spend_Supplier_Count': 5, # R033
             'Average_Contract_Duration': 2, # R034
-            'Supplier_Performance_Score': 85.0 # R035
+            'Supplier_Performance_Score': 85.0, # R035
+            'Days_To_Expiry': 120, # R004 - days until contract expires (default: no urgent expiry)
+            'Price_Escalation_Cap': 5.0 # R028 - price escalation cap percentage
         }
         
         # Tail spend
@@ -307,12 +329,12 @@ class RuleEvaluationEngine:
             'R023': self._evaluate_r023_supplier_concentration_index,
         }
         
-        # Use specific evaluator if available, otherwise return not applicable
+        # Use specific evaluator if available, otherwise use generic evaluator
         if rule_id in evaluators:
             return evaluators[rule_id](rule, metrics, spend_df)
         else:
-            # For rules we don't have data for yet, mark as not evaluated
-            return None
+            # Use generic evaluator for all other rules (R004-R035 except R023)
+            return self._evaluate_generic_rule(rule, metrics, spend_df)
     
     def _evaluate_r001_regional_concentration(self, rule: pd.Series, metrics: Dict[str, Any], spend_df: pd.DataFrame) -> Dict[str, Any]:
         """R001: Regional Concentration - If >40% of category spend is concentrated in a single region"""

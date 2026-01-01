@@ -29,6 +29,7 @@ if str(root_path) not in sys.path:
 from backend.engines.data_loader import DataLoader
 from backend.engines.rule_evaluation_engine import RuleEvaluationEngine
 from backend.engines.llm_engine import LLMEngine
+# VectorStoreManager imported lazily to avoid ChromaDB Windows segfault
 
 
 class LeadershipBriefGenerator:
@@ -165,21 +166,36 @@ class LeadershipBriefGenerator:
         }
     }
     
-    def __init__(self, data_loader=None, enable_llm: bool = True):
+    def __init__(
+        self,
+        data_loader=None,
+        enable_llm: bool = True,
+        enable_rag: bool = True,
+        use_agents: bool = False
+    ):
         """
-        Initialize brief generator with optional LLM-powered reasoning.
+        Initialize brief generator with RAG-powered reasoning.
 
         Args:
             data_loader: Optional DataLoader instance with custom data.
                          If not provided, creates default DataLoader.
             enable_llm: Enable LLM-powered reasoning for enhanced insights.
                         Defaults to True. Set False for faster template-only mode.
+            enable_rag: Enable RAG for context-aware generation.
+                        When True, retrieves relevant documents before LLM calls.
+                        This REDUCES OpenAI usage by providing better context.
+            use_agents: Use microagent architecture for brief generation.
+                        When True, delegates to BriefOrchestrator which coordinates
+                        specialized agents (DataAnalysis, Risk, Recommendation, Market).
+                        Defaults to False for backward compatibility.
         """
         if data_loader:
             self.data_loader = data_loader
         else:
             self.data_loader = DataLoader()
         self.rule_engine = RuleEvaluationEngine()
+        self.use_agents = use_agents
+        self._orchestrator = None  # Lazy-loaded when use_agents=True
 
         # Initialize LLM engine for AI-powered reasoning
         self.enable_llm = enable_llm
@@ -188,12 +204,53 @@ class LeadershipBriefGenerator:
             try:
                 self.llm_engine = LLMEngine()
                 if self.llm_engine.client is None:
-                    print("⚠️ LLM not available - using template-based reasoning")
+                    print("[WARN] LLM not available - using template-based reasoning")
                     self.enable_llm = False
             except Exception as e:
-                print(f"⚠️ LLM initialization failed: {e} - using template-based reasoning")
+                print(f"[WARN] LLM initialization failed: {e} - using template-based reasoning")
                 self.enable_llm = False
-    
+
+        # Initialize RAG for context-aware generation (using FAISS - Windows compatible)
+        self.enable_rag = enable_rag
+        self.vector_store = None
+        if enable_rag:
+            try:
+                # Use FAISS instead of ChromaDB (Windows compatible)
+                from backend.engines.faiss_vector_store import FAISSVectorStore
+                self.vector_store = FAISSVectorStore(
+                    persist_directory="./data/faiss_db",
+                    embedding_model="text-embedding-3-small"
+                )
+                if self.vector_store.load_index():
+                    print("[OK] FAISS RAG loaded - context-aware generation enabled")
+                else:
+                    print("[WARN] FAISS index not found - run scripts/setup_faiss_rag.py first")
+                    self.enable_rag = False
+                    self.vector_store = None
+            except Exception as e:
+                print(f"[WARN] RAG initialization failed: {e} - using LLM without RAG context")
+                self.enable_rag = False
+                self.vector_store = None
+
+    def _get_orchestrator(self):
+        """Lazy-load the BriefOrchestrator for agent-based generation."""
+        if self._orchestrator is None:
+            try:
+                from backend.agents.brief_orchestrator import BriefOrchestrator
+                self._orchestrator = BriefOrchestrator(
+                    data_loader=self.data_loader,
+                    rule_engine=self.rule_engine,
+                    llm_engine=self.llm_engine,
+                    vector_store=self.vector_store,
+                    enable_llm=self.enable_llm,
+                    enable_rag=self.enable_rag
+                )
+                print("[OK] Agent-based brief generation enabled")
+            except Exception as e:
+                print(f"[WARN] Failed to initialize BriefOrchestrator: {e}")
+                self.use_agents = False
+        return self._orchestrator
+
     def _get_industry_config(self, category: str, product_category: str = None) -> Dict:
         """Get industry-specific configuration based on category"""
         category_lower = (category or '').lower()
@@ -511,15 +568,22 @@ class LeadershipBriefGenerator:
         }
     
     def generate_both_briefs(
-        self, 
-        client_id: str, 
+        self,
+        client_id: str,
         category: str = None
     ) -> Dict[str, Any]:
         """Generate both leadership briefs with enhanced metrics"""
-        
+
+        # Use agent-based generation if enabled
+        if self.use_agents:
+            orchestrator = self._get_orchestrator()
+            if orchestrator:
+                return orchestrator.generate_both_briefs(client_id, category)
+
+        # Fall back to original implementation
         incumbent_brief = self.generate_incumbent_concentration_brief(client_id, category)
         regional_brief = self.generate_regional_concentration_brief(client_id, category)
-        
+
         return {
             'incumbent_concentration_brief': incumbent_brief,
             'regional_concentration_brief': regional_brief,
@@ -527,7 +591,7 @@ class LeadershipBriefGenerator:
             'client_id': client_id,
             'category': category
         }
-    
+
     def generate_incumbent_concentration_brief(
         self,
         client_id: str,
@@ -535,39 +599,44 @@ class LeadershipBriefGenerator:
     ) -> Dict[str, Any]:
         """Generate Incumbent Concentration Brief with all data-driven metrics"""
 
-        spend_df = self.data_loader.load_spend_data()
+        # Use agent-based generation if enabled
+        if self.use_agents:
+            orchestrator = self._get_orchestrator()
+            if orchestrator:
+                return orchestrator.generate_incumbent_concentration_brief(client_id, category)
+
         supplier_df = self.data_loader.load_supplier_master()
 
+        # Use robust category resolver for any input type (sector/category/subcategory)
+        resolved_sector = None
+        resolved_category = None
         if category:
-            # Support hierarchical structure: check SubCategory first, then Category
-            if 'SubCategory' in spend_df.columns:
-                # First try with client filter
-                cat_mask = (
-                    (spend_df['Client_ID'] == client_id) &
-                    ((spend_df['SubCategory'] == category) | (spend_df['Category'] == category))
+            resolved = self.data_loader.resolve_category_input(category, client_id)
+            if not resolved.get('success', False):
+                # Try without client filter
+                resolved = self.data_loader.resolve_category_input(category)
+
+            if not resolved.get('success', False):
+                return self._empty_brief_response(
+                    resolved.get('error', f"Could not resolve category: {category}")
                 )
-                filtered_df = spend_df[cat_mask]
 
-                # If no data for this client, use all data for this category
-                if filtered_df.empty:
-                    cat_mask = (spend_df['SubCategory'] == category) | (spend_df['Category'] == category)
-                    filtered_df = spend_df[cat_mask]
+            spend_df = resolved.get('spend_data', pd.DataFrame())
 
-                spend_df = filtered_df
-            else:
-                cat_mask = (
-                    (spend_df['Client_ID'] == client_id) &
-                    (spend_df['Category'] == category)
-                )
-                filtered_df = spend_df[cat_mask]
-
-                # Fallback to all data for category
-                if filtered_df.empty:
-                    filtered_df = spend_df[spend_df['Category'] == category]
-
-                spend_df = filtered_df
+            # Update category with resolved hierarchy info
+            hierarchy = resolved.get('hierarchy', {})
+            resolved_sector = hierarchy.get('sector')
+            resolved_category = hierarchy.get('category')
+            if hierarchy.get('subcategory'):
+                category = hierarchy['subcategory']
+            elif hierarchy.get('category'):
+                category = hierarchy['category']
         else:
+            spend_df = self.data_loader.load_spend_data()
             spend_df = spend_df[spend_df['Client_ID'] == client_id]
+            # Try to get sector from spend data
+            if not spend_df.empty and 'Sector' in spend_df.columns:
+                resolved_sector = spend_df['Sector'].iloc[0]
 
         if spend_df.empty:
             return self._empty_brief_response("No spend data found")
@@ -601,20 +670,36 @@ class LeadershipBriefGenerator:
         
         current_supplier_names = set(spend_df['Supplier_Name'].unique())
         matching_suppliers = supplier_df[supplier_df['supplier_name'].isin(current_supplier_names)]
-        
+
+        # Get product_category AND subcategory for proper filtering
+        product_category = None
+        subcategory = None
         if not matching_suppliers.empty:
             product_category = matching_suppliers.iloc[0]['product_category']
+            subcategory = matching_suppliers.iloc[0].get('subcategory', None)
         else:
             product_category = category
-        
+
         industry_config = self._get_industry_config(category, product_category)
-        
-        all_suppliers_in_category = supplier_df[
-            supplier_df['product_category'] == product_category
-        ] if product_category else supplier_df
-        
+
+        # Find alternate suppliers - MUST match subcategory if it exists
+        # This ensures Event Management alternates are only Event Management suppliers,
+        # not Business Travel suppliers from the same product_category
+        if subcategory and 'subcategory' in supplier_df.columns:
+            # Filter by both product_category AND subcategory for accurate matching
+            all_suppliers_in_category = supplier_df[
+                (supplier_df['product_category'] == product_category) &
+                (supplier_df['subcategory'] == subcategory)
+            ]
+        elif product_category:
+            all_suppliers_in_category = supplier_df[
+                supplier_df['product_category'] == product_category
+            ]
+        else:
+            all_suppliers_in_category = supplier_df
+
         potential_alternates = set(all_suppliers_in_category['supplier_name'].unique()) - current_supplier_names
-        
+
         alternate_supplier = None
         alternate_regions = []
         if potential_alternates:
@@ -623,7 +708,7 @@ class LeadershipBriefGenerator:
                 (all_suppliers_in_category['quality_rating'] >= 4.0) &
                 (all_suppliers_in_category['delivery_reliability_pct'] >= 90)
             ].sort_values('quality_rating', ascending=False)
-            
+
             if not alternate_candidates.empty:
                 alternate_supplier = alternate_candidates.iloc[0]['supplier_name']
                 alternate_regions = alternate_candidates['country'].unique().tolist()
@@ -680,6 +765,7 @@ class LeadershipBriefGenerator:
             'title': f'LEADERSHIP BRIEF – {(category or "PROCUREMENT").upper()} DIVERSIFICATION',
             'subtitle': 'Supplier Concentration Analysis & Diversification Strategy',
             'total_spend': total_spend,
+            'sector': resolved_sector,
             'category': category,
             'product_category': product_category,
             'generated_date': datetime.now().strftime('%Y-%m-%d'),
@@ -701,7 +787,7 @@ class LeadershipBriefGenerator:
             'risk_statement': self._generate_risk_statement(
                 category, total_spend, num_current_suppliers, current_suppliers_list,
                 dominant_supplier, dominant_supplier_pct, dominant_supplier_spend,
-                supplier_countries, alternate_supplier, alternate_regions, product_category
+                supplier_countries, alternate_supplier, alternate_regions, product_category, subcategory
             ),
             
             'supplier_reduction': {
@@ -787,11 +873,13 @@ class LeadershipBriefGenerator:
             brief['ai_executive_summary'] = self._generate_template_executive_summary(brief, "incumbent")
             brief['ai_risk_analysis'] = brief['risk_reasoning']
             brief['ai_strategic_recommendations'] = brief['recommendation_rationale']
-            brief['ai_market_intelligence'] = f"Market intelligence for {category} sourcing."
+            brief['ai_market_intelligence'] = self._generate_market_intelligence_fallback(
+                category, supplier_countries + new_regions, industry_config
+            )
             brief['llm_enabled'] = False
 
         return brief
-    
+
     def generate_regional_concentration_brief(
         self,
         client_id: str,
@@ -799,39 +887,44 @@ class LeadershipBriefGenerator:
     ) -> Dict[str, Any]:
         """Generate Regional Concentration Brief with all data-driven metrics"""
 
-        spend_df = self.data_loader.load_spend_data()
+        # Use agent-based generation if enabled
+        if self.use_agents:
+            orchestrator = self._get_orchestrator()
+            if orchestrator:
+                return orchestrator.generate_regional_concentration_brief(client_id, category)
+
         supplier_df = self.data_loader.load_supplier_master()
 
+        # Use robust category resolver for any input type (sector/category/subcategory)
+        resolved_sector = None
+        resolved_category = None
         if category:
-            # Support hierarchical structure: check SubCategory first, then Category
-            if 'SubCategory' in spend_df.columns:
-                # First try with client filter
-                cat_mask = (
-                    (spend_df['Client_ID'] == client_id) &
-                    ((spend_df['SubCategory'] == category) | (spend_df['Category'] == category))
+            resolved = self.data_loader.resolve_category_input(category, client_id)
+            if not resolved.get('success', False):
+                # Try without client filter
+                resolved = self.data_loader.resolve_category_input(category)
+
+            if not resolved.get('success', False):
+                return self._empty_brief_response(
+                    resolved.get('error', f"Could not resolve category: {category}")
                 )
-                filtered_df = spend_df[cat_mask]
 
-                # If no data for this client, use all data for this category
-                if filtered_df.empty:
-                    cat_mask = (spend_df['SubCategory'] == category) | (spend_df['Category'] == category)
-                    filtered_df = spend_df[cat_mask]
+            spend_df = resolved.get('spend_data', pd.DataFrame())
 
-                spend_df = filtered_df
-            else:
-                cat_mask = (
-                    (spend_df['Client_ID'] == client_id) &
-                    (spend_df['Category'] == category)
-                )
-                filtered_df = spend_df[cat_mask]
-
-                # Fallback to all data for category
-                if filtered_df.empty:
-                    filtered_df = spend_df[spend_df['Category'] == category]
-
-                spend_df = filtered_df
+            # Update category with resolved hierarchy info
+            hierarchy = resolved.get('hierarchy', {})
+            resolved_sector = hierarchy.get('sector')
+            resolved_category = hierarchy.get('category')
+            if hierarchy.get('subcategory'):
+                category = hierarchy['subcategory']
+            elif hierarchy.get('category'):
+                category = hierarchy['category']
         else:
+            spend_df = self.data_loader.load_spend_data()
             spend_df = spend_df[spend_df['Client_ID'] == client_id]
+            # Try to get sector from spend data
+            if not spend_df.empty and 'Sector' in spend_df.columns:
+                resolved_sector = spend_df['Sector'].iloc[0]
 
         if spend_df.empty:
             return self._empty_brief_response("No spend data found")
@@ -927,6 +1020,7 @@ class LeadershipBriefGenerator:
             'title': f'LEADERSHIP BRIEF – {(category or "PROCUREMENT").upper()} DIVERSIFICATION',
             'subtitle': 'Regional Concentration Analysis & Diversification Strategy',
             'total_spend': total_spend,
+            'sector': resolved_sector,
             'category': category,
             'product_category': product_category,
             'generated_date': datetime.now().strftime('%Y-%m-%d'),
@@ -1007,7 +1101,9 @@ class LeadershipBriefGenerator:
             brief['ai_executive_summary'] = self._generate_template_executive_summary(brief, "regional")
             brief['ai_risk_analysis'] = brief['risk_reasoning']
             brief['ai_strategic_recommendations'] = brief['recommendation_rationale']
-            brief['ai_market_intelligence'] = f"Market intelligence for {category} sourcing."
+            brief['ai_market_intelligence'] = self._generate_market_intelligence_fallback(
+                category, all_countries + new_regions, industry_config
+            )
             brief['llm_enabled'] = False
 
         return brief
@@ -1106,37 +1202,45 @@ class LeadershipBriefGenerator:
         supplier_countries: List[str],
         alternate_supplier: Optional[str],
         alternate_regions: List[str],
-        product_category: Optional[str]
+        product_category: Optional[str],
+        subcategory: Optional[str] = None
     ) -> str:
         """Generate comprehensive risk statement"""
         cat_lower = (category or 'procurement').lower()
         year = datetime.now().year
-        
+
+        # Use subcategory for more specific messaging if available
+        category_label = subcategory or product_category or category or 'this category'
+
         statement = f"Our current {cat_lower} procurement "
-        
+
         if num_suppliers == 1:
             statement += f"is sourced entirely from {dominant_supplier}, representing 100% of the total "
             statement += f"category spend (USD {total_spend:,.0f} in {year}). "
         else:
             statement += f"involves {num_suppliers} suppliers, with {dominant_supplier} as the dominant supplier "
             statement += f"at {dominant_pct:.0f}% of total category spend (USD {dominant_spend:,.0f} of USD {total_spend:,.0f} in {year}). "
-            
+
             other_suppliers = [s for s in all_suppliers if s['name'] != dominant_supplier]
             if other_suppliers:
                 statement += "Other suppliers include: "
                 supplier_list = [f"{s['name']} ({s['pct']:.0f}%)" for s in other_suppliers[:3]]
                 statement += ", ".join(supplier_list) + ". "
-        
+
         if len(supplier_countries) > 1:
             statement += f"While suppliers operate across {', '.join(supplier_countries[:3])}, "
         else:
             country_name = supplier_countries[0] if supplier_countries else 'a single region'
             statement += f"All suppliers operate from {country_name}. "
-        
-        if alternate_supplier and product_category:
+
+        if alternate_supplier:
             statement += f"We currently do not source {cat_lower} from "
-            statement += f"{alternate_supplier}, an already approved {product_category} supplier in our system with "
+            statement += f"{alternate_supplier}, an already approved {category_label} supplier in our system with "
             statement += f"operational presence across {', '.join(alternate_regions[:4])}. "
+        elif subcategory:
+            # No alternate suppliers in the same subcategory
+            statement += f"There are no other qualified {subcategory} suppliers in our approved supplier database. "
+            statement += "New supplier qualification will be required for diversification. "
         elif product_category:
             statement += f"We do not have alternate {product_category} suppliers activated for this category. "
         else:
@@ -1324,8 +1428,195 @@ class LeadershipBriefGenerator:
         return rationale
     
     # ========================================================================
-    # LLM-POWERED REASONING METHODS
-    # These methods use GPT-4 for deep, contextual analysis and insights
+    # RAG CONTEXT RETRIEVAL - STRICT GROUNDING & TRACEABILITY
+    # ZERO HALLUCINATION POLICY:
+    # - LLM can ONLY use facts from RAG context + provided data
+    # - Every claim must cite its source
+    # - If RAG context is weak, fallback to template (no LLM guessing)
+    # ========================================================================
+
+    def _get_rag_context_with_metadata(
+        self,
+        query: str,
+        category: Optional[str] = None,
+        k: int = 5
+    ) -> Dict[str, Any]:
+        """
+        Retrieve RAG context WITH full metadata for traceability.
+
+        Returns structured data with:
+        - context: Formatted text for LLM prompt
+        - sources: List of source documents with citations
+        - confidence: Score (0-1) based on relevance scores
+        - has_strong_context: Boolean for fallback decision
+
+        ZERO HALLUCINATION: If confidence < 0.5, use template instead of LLM.
+        """
+        if not self.enable_rag or not self.vector_store:
+            return {
+                'context': '',
+                'sources': [],
+                'confidence': 0.0,
+                'has_strong_context': False,
+                'source_citations': ''
+            }
+
+        try:
+            # Search vector store (works with both FAISS and ChromaDB)
+            if hasattr(self.vector_store, 'search'):
+                # FAISS interface
+                results = self.vector_store.search(query=query, k=k)
+            else:
+                # ChromaDB/VectorStoreManager interface
+                results = self.vector_store.semantic_search(
+                    query=query,
+                    k=k,
+                    category=category,
+                    verbose=False
+                )
+
+            if not results:
+                return {
+                    'context': '',
+                    'sources': [],
+                    'confidence': 0.0,
+                    'has_strong_context': False,
+                    'source_citations': ''
+                }
+
+            # Format context with numbered citations for traceability
+            context_parts = []
+            sources = []
+            citations = []
+
+            for i, result in enumerate(results, 1):
+                # Handle both FAISS and ChromaDB result formats
+                metadata = result.get('metadata', {})
+                source_file = metadata.get('file_name', metadata.get('source', 'knowledge_base'))
+                source_category = result.get('category', metadata.get('category', 'general'))
+                content = result.get('content', '')
+                score = result.get('score', 0.5)
+
+                # Create numbered citation
+                citation_id = f"[SOURCE-{i}]"
+                context_parts.append(f"{citation_id} ({source_file}):\n{content}")
+
+                sources.append({
+                    'citation_id': citation_id,
+                    'file_name': source_file,
+                    'category': source_category,
+                    'relevance_score': score,
+                    'excerpt': content[:200] + '...' if len(content) > 200 else content
+                })
+
+                citations.append(f"{citation_id}: {source_file}")
+
+            # Calculate confidence score
+            # FAISS returns cosine similarity (higher = better, 0-1 range)
+            # ChromaDB returns distance (lower = better)
+            avg_score = sum(r.get('score', 0.5) for r in results) / len(results)
+
+            # Normalize to 0-1 confidence
+            if avg_score > 1:
+                # ChromaDB distance - convert to similarity
+                confidence = max(0, min(1, 1 - (avg_score / 2)))
+            else:
+                # FAISS similarity - already in 0-1 range
+                confidence = max(0, min(1, avg_score))
+
+            # Strong context threshold: >= 0.4 confidence with >= 2 relevant docs
+            has_strong_context = confidence >= 0.4 and len(results) >= 2
+
+            return {
+                'context': "\n\n".join(context_parts),
+                'sources': sources,
+                'confidence': round(confidence, 2),
+                'has_strong_context': has_strong_context,
+                'source_citations': "\n".join(citations)
+            }
+
+        except Exception as e:
+            print(f"[WARN] RAG context retrieval failed: {e}")
+            return {
+                'context': '',
+                'sources': [],
+                'confidence': 0.0,
+                'has_strong_context': False,
+                'source_citations': ''
+            }
+
+    def _get_rag_context(
+        self,
+        query: str,
+        category: Optional[str] = None,
+        k: int = 3
+    ) -> str:
+        """
+        Simple wrapper for backward compatibility.
+        Returns just the context string.
+        """
+        result = self._get_rag_context_with_metadata(query, category, k)
+        return result['context']
+
+    def _build_strict_grounding_prompt(
+        self,
+        data_section: str,
+        rag_context: Dict[str, Any],
+        task_instruction: str
+    ) -> str:
+        """
+        Build a prompt with STRICT grounding rules to prevent hallucination.
+
+        Rules enforced:
+        1. ONLY use facts from DATA SECTION and RAG CONTEXT
+        2. Cite sources using [SOURCE-N] format
+        3. If information is not in context, say "Based on available data..."
+        4. NEVER invent statistics, percentages, or facts
+        """
+        grounding_rules = """
+STRICT GROUNDING RULES (MUST FOLLOW):
+1. You may ONLY use facts from the DATA SECTION and KNOWLEDGE BASE CONTEXT below
+2. When using information from the knowledge base, cite it as [SOURCE-N]
+3. NEVER invent or guess statistics, percentages, market trends, or industry facts
+4. If specific information is not available, use phrases like "Based on the provided data..."
+5. All numerical claims MUST come from the DATA SECTION
+6. Do NOT make claims about market conditions unless explicitly stated in KNOWLEDGE BASE
+7. Focus on ANALYSIS and SYNTHESIS of provided information, not new information
+"""
+
+        if rag_context.get('has_strong_context'):
+            knowledge_section = f"""
+KNOWLEDGE BASE CONTEXT (cite as [SOURCE-N]):
+{rag_context['context']}
+
+AVAILABLE SOURCES:
+{rag_context['source_citations']}
+"""
+        else:
+            knowledge_section = """
+KNOWLEDGE BASE CONTEXT:
+[No highly relevant documents found in knowledge base]
+Focus ONLY on analyzing the DATA SECTION below. Do not make claims about
+industry trends, market conditions, or best practices that are not in the data.
+"""
+
+        return f"""{grounding_rules}
+{knowledge_section}
+
+DATA SECTION (PRIMARY SOURCE - all numbers from here):
+{data_section}
+
+TASK:
+{task_instruction}
+
+REMEMBER: Cite sources. No hallucination. Only use provided information.
+"""
+
+    # ========================================================================
+    # LLM-POWERED REASONING METHODS - STRICT GROUNDING
+    # ZERO HALLUCINATION: Uses RAG context + data only
+    # FULL TRACEABILITY: Every claim cites its source
+    # SMART FALLBACK: Uses template when RAG context is weak
     # ========================================================================
 
     def _generate_llm_executive_summary(
@@ -1334,34 +1625,144 @@ class LeadershipBriefGenerator:
         brief_type: str = "incumbent"
     ) -> str:
         """
-        Generate AI-powered executive summary using GPT-4.
+        Generate AI-powered executive summary using RAG + GPT-4 with STRICT GROUNDING.
+
+        ZERO HALLUCINATION POLICY:
+        - Retrieves RAG context with confidence scoring
+        - If confidence is LOW, falls back to template (no LLM guessing)
+        - All LLM output must cite sources
+        - Only uses facts from DATA + RAG context
 
         Args:
             brief_data: The complete brief data dictionary
             brief_type: "incumbent" or "regional"
 
         Returns:
-            AI-generated executive summary with strategic insights
+            AI-generated executive summary with source citations
         """
         if not self.enable_llm or not self.llm_engine:
             return self._generate_template_executive_summary(brief_data, brief_type)
 
         try:
-            prompt = self._build_executive_summary_prompt(brief_data, brief_type)
+            # RAG: Retrieve context with full metadata
+            category = brief_data.get('category', 'procurement')
+            rag_query = f"executive summary supplier diversification procurement strategy {category}"
+            rag_result = self._get_rag_context_with_metadata(rag_query, k=5)
+
+            # SMART FALLBACK: If RAG context is weak, use template
+            # This prevents LLM from hallucinating when it doesn't have good context
+            if not rag_result['has_strong_context']:
+                print(f"[INFO] RAG confidence low ({rag_result['confidence']}) - using data-driven template")
+                return self._generate_template_executive_summary(brief_data, brief_type)
+
+            # Build data section from brief_data (all numbers come from here)
+            data_section = self._format_data_for_prompt(brief_data, brief_type)
+
+            # Build task instruction
+            task_instruction = """
+Write an executive summary (3-4 paragraphs) that:
+1. Opens with the critical business issue and its financial magnitude (use exact numbers from DATA)
+2. Explains WHY this concentration is problematic (cite knowledge base if relevant)
+3. Summarizes the recommended diversification strategy
+4. Closes with expected ROI and strategic benefits (use exact numbers from DATA)
+
+TONE: Executive-level, data-driven, action-oriented.
+FORMAT: Flowing paragraphs, no bullet points.
+CITATIONS: Include [SOURCE-N] when referencing knowledge base insights.
+"""
+
+            # Build strictly grounded prompt
+            prompt = self._build_strict_grounding_prompt(data_section, rag_result, task_instruction)
             response = self.llm_engine._generate_openai(prompt)
+
+            # Check for refusal
+            if self._is_llm_refusal(response):
+                return self._generate_template_executive_summary(brief_data, brief_type)
+
+            # Add sources footer for traceability
+            if rag_result['sources']:
+                sources_footer = "\n\n---\nSources: " + ", ".join(
+                    s['file_name'] for s in rag_result['sources'][:3]
+                )
+                response += sources_footer
+
             return response
+
         except Exception as e:
-            print(f"⚠️ LLM executive summary failed: {e}")
+            print(f"[WARN] LLM executive summary failed: {e}")
             return self._generate_template_executive_summary(brief_data, brief_type)
+
+    def _format_data_for_prompt(self, brief_data: Dict[str, Any], brief_type: str) -> str:
+        """Format brief data into a clear data section for the prompt."""
+        category = brief_data.get('category', 'Procurement')
+        total_spend = brief_data.get('total_spend', 0)
+        roi = brief_data.get('roi_projections', {})
+        risk = brief_data.get('risk_matrix', {})
+
+        if brief_type == "incumbent":
+            current_state = brief_data.get('current_state', {})
+            data = f"""
+CATEGORY: {category}
+TOTAL ANNUAL SPEND: ${total_spend:,.0f}
+DOMINANT SUPPLIER: {current_state.get('dominant_supplier', 'Unknown')}
+DOMINANT SUPPLIER SHARE: {current_state.get('spend_share_pct', 0):.1f}%
+DOMINANT SUPPLIER SPEND: ${current_state.get('spend_share_usd', 0):,.0f}
+TOTAL ACTIVE SUPPLIERS: {current_state.get('num_suppliers', 0)}
+CURRENT RISK LEVEL: {risk.get('overall_risk', 'HIGH')}
+KEY RISK: {current_state.get('key_risk', 'High supplier concentration')}
+
+PROJECTED ANNUAL SAVINGS: ${roi.get('annual_cost_savings_min', 0):,.0f} - ${roi.get('annual_cost_savings_max', 0):,.0f}
+PROJECTED ROI: {roi.get('roi_percentage_min', 0):.0f}% - {roi.get('roi_percentage_max', 0):.0f}%
+IMPLEMENTATION COST: ${roi.get('implementation_cost', 0):,.0f}
+3-YEAR NET BENEFIT: ${roi.get('three_year_net_benefit_min', 0):,.0f} - ${roi.get('three_year_net_benefit_max', 0):,.0f}
+
+SUPPLIER BREAKDOWN:
+"""
+            for supplier in current_state.get('all_suppliers', [])[:5]:
+                data += f"- {supplier['name']}: ${supplier['spend']:,.0f} ({supplier['pct']:.1f}%)\n"
+
+        else:  # regional
+            original_concentration = brief_data.get('original_concentration', [])
+            total_high_pct = brief_data.get('total_high_concentration_pct', 0)
+
+            data = f"""
+CATEGORY: {category}
+TOTAL ANNUAL SPEND: ${total_spend:,.0f}
+HIGH CONCENTRATION REGIONS: {total_high_pct:.1f}% of spend
+CURRENT RISK LEVEL: {risk.get('overall_risk', 'HIGH')}
+
+PROJECTED ANNUAL SAVINGS: ${roi.get('annual_cost_savings_min', 0):,.0f} - ${roi.get('annual_cost_savings_max', 0):,.0f}
+PROJECTED ROI: {roi.get('roi_percentage_min', 0):.0f}% - {roi.get('roi_percentage_max', 0):.0f}%
+
+REGIONAL BREAKDOWN:
+"""
+            for region in original_concentration[:5]:
+                data += f"- {region['country']}: ${region['spend_usd']:,.0f} ({region['pct']:.1f}%)\n"
+
+            data += f"\nCONCENTRATION NOTE: {brief_data.get('concentration_note', '')}"
+
+        return data
 
     def _build_executive_summary_prompt(
         self,
         brief_data: Dict[str, Any],
-        brief_type: str
+        brief_type: str,
+        rag_context: str = ""
     ) -> str:
-        """Build prompt for LLM executive summary generation"""
+        """Build prompt for LLM executive summary generation with RAG context"""
         category = brief_data.get('category', 'Procurement')
         total_spend = brief_data.get('total_spend', 0)
+
+        # RAG context section - only included if RAG retrieved relevant docs
+        rag_section = ""
+        if rag_context:
+            rag_section = f"""
+PROCUREMENT BEST PRACTICES (from knowledge base):
+{rag_context}
+
+Use the above best practices to inform your executive summary.
+---
+"""
 
         if brief_type == "incumbent":
             current_state = brief_data.get('current_state', {})
@@ -1372,7 +1773,7 @@ class LeadershipBriefGenerator:
             risk = brief_data.get('risk_matrix', {})
 
             prompt = f"""You are a senior procurement strategist writing an executive summary for leadership.
-
+{rag_section}
 PROCUREMENT DATA ANALYSIS:
 - Category: {category}
 - Total Annual Spend: ${total_spend:,.0f}
@@ -1407,7 +1808,7 @@ DO NOT use bullet points. Write in flowing paragraphs.
             risk = brief_data.get('risk_matrix', {})
 
             prompt = f"""You are a senior procurement strategist writing an executive summary for leadership.
-
+{rag_section}
 REGIONAL CONCENTRATION DATA:
 - Category: {category}
 - Total Annual Spend: ${total_spend:,.0f}
@@ -1489,15 +1890,43 @@ Expected benefits include ${roi.get('annual_cost_savings_min', 0):,.0f} to
 ${roi.get('annual_cost_savings_max', 0):,.0f} in annual cost optimization, improved logistics
 resilience, and reduced exposure to regional disruption events."""
 
+    def _is_llm_refusal(self, response: str) -> bool:
+        """Check if the LLM response is a refusal/error message"""
+        if not response:
+            return True
+        refusal_phrases = [
+            "i'm sorry",
+            "i cannot",
+            "i can't",
+            "i am unable",
+            "i don't have",
+            "cannot provide",
+            "unable to provide",
+            "no specific data",
+            "lacks specific data",
+            "without specific data",
+            "if you can provide",
+            "please provide",
+            "please let me know"
+        ]
+        response_lower = response.lower()
+        return any(phrase in response_lower for phrase in refusal_phrases)
+
     def _generate_llm_risk_analysis(
         self,
         brief_data: Dict[str, Any],
         brief_type: str = "incumbent"
     ) -> str:
         """
-        Generate AI-powered detailed risk analysis using GPT-4.
+        Generate AI-powered detailed risk analysis using RAG + GPT-4 with STRICT GROUNDING.
 
-        Returns deep risk analysis with business context and mitigation strategies.
+        ZERO HALLUCINATION POLICY:
+        - Retrieves risk frameworks from knowledge base with confidence scoring
+        - If confidence LOW, uses template (no LLM inventing risk scenarios)
+        - All claims cite sources
+        - Risk metrics ONLY from provided data
+
+        Returns deep risk analysis with source citations.
         """
         if not self.enable_llm or not self.llm_engine:
             return self._generate_risk_reasoning(
@@ -1508,52 +1937,93 @@ resilience, and reduced exposure to regional disruption events."""
             )
 
         try:
+            # RAG: Retrieve risk management context with metadata
+            category = brief_data.get('category', 'Procurement')
+            rag_query = f"procurement risk management supplier concentration geographic risk {category}"
+            rag_result = self._get_rag_context_with_metadata(rag_query, k=5)
+
+            # SMART FALLBACK: If RAG context is weak, use template
+            if not rag_result['has_strong_context']:
+                print(f"[INFO] RAG confidence low ({rag_result['confidence']}) for risk analysis - using template")
+                return self._generate_risk_reasoning(
+                    brief_data.get('current_state', {}).get('num_suppliers', 1),
+                    brief_data.get('current_state', {}).get('spend_share_pct', 100),
+                    brief_data.get('regional_dependency', {}).get('original_pct', 100),
+                    []
+                )
+
             risk_matrix = brief_data.get('risk_matrix', {})
             rule_violations = brief_data.get('rule_violations', {})
-            category = brief_data.get('category', 'Procurement')
             total_spend = brief_data.get('total_spend', 0)
 
-            prompt = f"""You are a supply chain risk analyst providing a comprehensive risk assessment.
-
+            # Build data section with all risk metrics
+            data_section = f"""
 CATEGORY: {category}
 TOTAL SPEND AT RISK: ${total_spend:,.0f}
 
-RISK MATRIX:
+RISK MATRIX (calculated from actual data):
 - Supply Chain Risk: {risk_matrix.get('supply_chain_risk', 'N/A')}
 - Geographic Risk: {risk_matrix.get('geographic_risk', 'N/A')}
 - Supplier Diversity Risk: {risk_matrix.get('supplier_diversity_risk', 'N/A')}
 - Overall Risk Score: {risk_matrix.get('risk_score', 0)}/4.0
 - Overall Risk Level: {risk_matrix.get('overall_risk', 'HIGH')}
 
-RULE VIOLATIONS:
+RULE COMPLIANCE STATUS:
 - Total Violations: {rule_violations.get('total_violations', 0)}
 - Total Warnings: {rule_violations.get('total_warnings', 0)}
 - Compliance Rate: {rule_violations.get('compliance_rate', 0):.1f}%
 """
             for violation in rule_violations.get('violations', [])[:5]:
-                prompt += f"- VIOLATION: {violation.get('rule_name', 'Unknown')} - {violation.get('message', '')}\n"
+                data_section += f"- VIOLATION: {violation.get('rule_name', 'Unknown')} - {violation.get('message', '')}\n"
 
             for warning in rule_violations.get('warnings', [])[:3]:
-                prompt += f"- WARNING: {warning.get('rule_name', 'Unknown')} - {warning.get('message', '')}\n"
+                data_section += f"- WARNING: {warning.get('rule_name', 'Unknown')} - {warning.get('message', '')}\n"
 
-            prompt += """
+            # Task instruction with strict grounding
+            task_instruction = """
 PROVIDE A DETAILED RISK ANALYSIS (4-5 paragraphs) covering:
 
-1. CURRENT RISK EXPOSURE: Quantify the business impact of current risk levels
-2. RULE VIOLATION ANALYSIS: Explain which procurement rules are violated and why it matters
-3. SCENARIO ANALYSIS: Describe 2-3 realistic disruption scenarios and their potential impact
-4. RISK INTERDEPENDENCIES: How do supplier and geographic risks compound each other?
-5. MITIGATION URGENCY: Why action is needed now vs later
+1. CURRENT RISK EXPOSURE: Use ONLY the risk scores from DATA to quantify impact
+2. RULE VIOLATION ANALYSIS: Explain the specific violations listed in DATA
+3. RISK INTERDEPENDENCIES: How do the calculated risks compound each other?
+4. MITIGATION URGENCY: Why action is needed based on the risk levels shown
 
-Use specific numbers. Be direct about the severity. Explain business consequences.
+IMPORTANT:
+- Use ONLY numbers from the DATA SECTION
+- Cite [SOURCE-N] when referencing risk frameworks from knowledge base
+- Do NOT invent disruption scenarios - only reference scenarios if they appear in KNOWLEDGE BASE
+- Focus on ANALYZING the provided risk metrics, not inventing new ones
 """
 
+            # Build strictly grounded prompt
+            prompt = self._build_strict_grounding_prompt(data_section, rag_result, task_instruction)
             response = self.llm_engine._generate_openai(prompt)
+
+            # Check for refusal and use fallback if needed
+            if self._is_llm_refusal(response):
+                return self._generate_risk_reasoning(
+                    brief_data.get('current_state', {}).get('num_suppliers', 1),
+                    brief_data.get('current_state', {}).get('spend_share_pct', 100),
+                    brief_data.get('regional_dependency', {}).get('original_pct', 100),
+                    []
+                )
+
+            # Add sources footer
+            if rag_result['sources']:
+                response += "\n\n---\nSources: " + ", ".join(
+                    s['file_name'] for s in rag_result['sources'][:3]
+                )
+
             return response
 
         except Exception as e:
-            print(f"⚠️ LLM risk analysis failed: {e}")
-            return brief_data.get('risk_reasoning', 'Risk analysis unavailable')
+            print(f"[WARN] LLM risk analysis failed: {e}")
+            return self._generate_risk_reasoning(
+                brief_data.get('current_state', {}).get('num_suppliers', 1),
+                brief_data.get('current_state', {}).get('spend_share_pct', 100),
+                brief_data.get('regional_dependency', {}).get('original_pct', 100),
+                []
+            )
 
     def _generate_llm_strategic_recommendations(
         self,
@@ -1561,9 +2031,15 @@ Use specific numbers. Be direct about the severity. Explain business consequence
         brief_type: str = "incumbent"
     ) -> str:
         """
-        Generate AI-powered strategic recommendations using GPT-4.
+        Generate AI-powered strategic recommendations using RAG + GPT-4 with STRICT GROUNDING.
 
-        Returns actionable, prioritized recommendations with business justification.
+        ZERO HALLUCINATION POLICY:
+        - Retrieves proven strategies from knowledge base with confidence scoring
+        - If confidence LOW, uses template (no LLM inventing strategies)
+        - Recommendations cite their source documents
+        - ROI/savings numbers ONLY from provided data
+
+        Returns actionable recommendations with source citations.
         """
         if not self.enable_llm or not self.llm_engine:
             return self._generate_recommendation_rationale(
@@ -1574,53 +2050,91 @@ Use specific numbers. Be direct about the severity. Explain business consequence
             )
 
         try:
+            # RAG: Retrieve strategic context with metadata
             category = brief_data.get('category', 'Procurement')
+            rag_query = f"strategic procurement recommendations supplier diversification {category}"
+            rag_result = self._get_rag_context_with_metadata(rag_query, k=5)
+
+            # SMART FALLBACK: If RAG context is weak, use template
+            if not rag_result['has_strong_context']:
+                print(f"[INFO] RAG confidence low ({rag_result['confidence']}) for recommendations - using template")
+                return self._generate_recommendation_rationale(
+                    brief_data.get('category', ''),
+                    brief_data.get('supplier_reduction', {}).get('alternate_supplier', {}).get('name'),
+                    [],
+                    self._get_industry_config(brief_data.get('category', ''), None)
+                )
+
             total_spend = brief_data.get('total_spend', 0)
             roi = brief_data.get('roi_projections', {})
             timeline = brief_data.get('implementation_timeline', [])
             cost_advantages = brief_data.get('cost_advantages', [])
 
-            prompt = f"""You are a strategic procurement consultant advising C-level executives.
-
-PROCUREMENT OPPORTUNITY:
-- Category: {category}
-- Total Spend: ${total_spend:,.0f}
-- Projected Savings: ${roi.get('annual_cost_savings_min', 0):,.0f} - ${roi.get('annual_cost_savings_max', 0):,.0f}
-- Implementation Cost: ${roi.get('implementation_cost', 0):,.0f}
-- 3-Year Net Benefit: ${roi.get('three_year_net_benefit_min', 0):,.0f} - ${roi.get('three_year_net_benefit_max', 0):,.0f}
-- Payback Period: {roi.get('payback_period_months_min', 0):.1f} - {roi.get('payback_period_months_max', 0):.1f} months
+            # Build data section
+            data_section = f"""
+CATEGORY: {category}
+TOTAL SPEND: ${total_spend:,.0f}
+PROJECTED SAVINGS: ${roi.get('annual_cost_savings_min', 0):,.0f} - ${roi.get('annual_cost_savings_max', 0):,.0f}
+IMPLEMENTATION COST: ${roi.get('implementation_cost', 0):,.0f}
+3-YEAR NET BENEFIT: ${roi.get('three_year_net_benefit_min', 0):,.0f} - ${roi.get('three_year_net_benefit_max', 0):,.0f}
+PAYBACK PERIOD: {roi.get('payback_period_months_min', 0):.1f} - {roi.get('payback_period_months_max', 0):.1f} months
 
 COST ADVANTAGES BY REGION:
 """
             for advantage in cost_advantages[:5]:
                 if 'Blended' not in advantage.get('region', ''):
-                    prompt += f"- {advantage['region']}: ${advantage['min_usd']:,.0f} - ${advantage['max_usd']:,.0f} ({advantage['driver']})\n"
+                    data_section += f"- {advantage['region']}: ${advantage['min_usd']:,.0f} - ${advantage['max_usd']:,.0f} ({advantage['driver']})\n"
 
-            prompt += f"""
-IMPLEMENTATION PHASES:
-"""
+            data_section += "\nIMPLEMENTATION PHASES:\n"
             for phase in timeline:
-                prompt += f"- {phase['phase']}: {phase['duration']}\n"
+                data_section += f"- {phase['phase']}: {phase['duration']}\n"
 
-            prompt += """
+            # Task instruction with strict grounding
+            task_instruction = """
 WRITE STRATEGIC RECOMMENDATIONS (5-6 paragraphs) that:
 
-1. IMMEDIATE ACTIONS (Week 1-2): What should procurement do RIGHT NOW?
-2. SHORT-TERM WINS (Month 1-3): Quick wins to build momentum
-3. STRATEGIC INITIATIVES (Month 3-6): Larger transformation efforts
-4. GOVERNANCE & MONITORING: How to track progress and ensure success
-5. RISK MITIGATION: How to execute without disrupting operations
-6. SUCCESS METRICS: How will we know the strategy is working?
+1. IMMEDIATE ACTIONS: What should procurement do first? (cite strategies from knowledge base if available)
+2. SHORT-TERM WINS: Quick wins using the cost advantages listed in DATA
+3. STRATEGIC INITIATIVES: Larger efforts following the implementation phases in DATA
+4. GOVERNANCE & MONITORING: How to track the projected savings in DATA
+5. SUCCESS METRICS: Reference the ROI and payback metrics from DATA
 
-Be specific. Name timeframes. Provide actionable steps. Explain the 'why' behind each recommendation.
+IMPORTANT:
+- All savings/ROI numbers MUST come from DATA SECTION
+- Cite [SOURCE-N] when recommending strategies from knowledge base
+- Do NOT invent best practices - only reference what's in KNOWLEDGE BASE
+- Timeframes should align with IMPLEMENTATION PHASES in DATA
 """
 
+            # Build strictly grounded prompt
+            prompt = self._build_strict_grounding_prompt(data_section, rag_result, task_instruction)
             response = self.llm_engine._generate_openai(prompt)
+
+            # Check for refusal and use fallback if needed
+            if self._is_llm_refusal(response):
+                return self._generate_recommendation_rationale(
+                    brief_data.get('category', ''),
+                    brief_data.get('supplier_reduction', {}).get('alternate_supplier', {}).get('name'),
+                    [],
+                    self._get_industry_config(brief_data.get('category', ''), None)
+                )
+
+            # Add sources footer
+            if rag_result['sources']:
+                response += "\n\n---\nSources: " + ", ".join(
+                    s['file_name'] for s in rag_result['sources'][:3]
+                )
+
             return response
 
         except Exception as e:
-            print(f"⚠️ LLM strategic recommendations failed: {e}")
-            return brief_data.get('recommendation_rationale', 'Recommendations unavailable')
+            print(f"[WARN] LLM strategic recommendations failed: {e}")
+            return self._generate_recommendation_rationale(
+                brief_data.get('category', ''),
+                brief_data.get('supplier_reduction', {}).get('alternate_supplier', {}).get('name'),
+                [],
+                self._get_industry_config(brief_data.get('category', ''), None)
+            )
 
     def _generate_llm_market_intelligence(
         self,
@@ -1629,40 +2143,110 @@ Be specific. Name timeframes. Provide actionable steps. Explain the 'why' behind
         product_category: str = None
     ) -> str:
         """
-        Generate AI-powered market intelligence for the category.
+        Generate AI-powered market intelligence using RAG + GPT-4 with STRICT GROUNDING.
 
-        Provides industry context, market trends, and supplier landscape insights.
+        THIS IS THE MOST CRITICAL METHOD FOR ZERO HALLUCINATION:
+        - Market trends/stats MUST come from knowledge base, not invented
+        - If RAG context is weak, ALWAYS use template (never LLM guessing)
+        - Every market claim must cite its source document
+
+        Returns market intelligence with full source traceability.
         """
+        industry_config = self._get_industry_config(category, product_category)
+
         if not self.enable_llm or not self.llm_engine:
-            return f"Market intelligence for {category} across {', '.join(regions[:3])}."
+            return self._generate_market_intelligence_fallback(category, regions, industry_config)
 
         try:
-            industry_config = self._get_industry_config(category, product_category)
+            # RAG: Retrieve market intelligence with strict confidence requirement
+            rag_query = f"market intelligence {category} {product_category or ''} supplier landscape pricing trends"
+            rag_result = self._get_rag_context_with_metadata(rag_query, k=6)  # Get more docs for market intel
 
-            prompt = f"""You are a procurement market intelligence analyst.
+            # STRICT FALLBACK: Market intelligence requires HIGH confidence
+            # We set a higher bar here because inventing market data is dangerous
+            if not rag_result['has_strong_context'] or rag_result['confidence'] < 0.5:
+                print(f"[INFO] RAG confidence too low ({rag_result['confidence']}) for market intel - using safe template")
+                return self._generate_market_intelligence_fallback(category, regions, industry_config)
 
+            # Build data section (minimal - most info should come from RAG)
+            data_section = f"""
 CATEGORY: {category}
 PRODUCT TYPE: {product_category or category}
 CURRENT SOURCING REGIONS: {', '.join(regions[:5])}
-INDUSTRY LOW-COST REGIONS: {', '.join(industry_config.get('low_cost_regions', [])[:5])}
-TYPICAL SAVINGS RANGE: {industry_config.get('savings_range', (0.05, 0.15))}
 
-PROVIDE MARKET INTELLIGENCE (3-4 paragraphs) covering:
-
-1. INDUSTRY TRENDS: What's happening in this category globally? (demand, supply dynamics, pricing)
-2. REGIONAL ANALYSIS: Strengths and risks of each major sourcing region
-3. SUPPLIER LANDSCAPE: Types of suppliers available, market concentration trends
-4. STRATEGIC CONSIDERATIONS: Key factors for sourcing decisions in this category
-
-Be factual. Reference known industry dynamics. Provide actionable intelligence.
+NOTE: The above is the ONLY factual data. All market trends, pricing dynamics,
+and industry analysis MUST come from the KNOWLEDGE BASE below.
 """
 
+            # Task instruction - VERY strict for market intelligence
+            task_instruction = """
+PROVIDE MARKET INTELLIGENCE (3-4 paragraphs) ONLY using information from KNOWLEDGE BASE.
+
+CRITICAL REQUIREMENTS:
+1. EVERY market trend claim must cite [SOURCE-N]
+2. Do NOT invent statistics, percentages, or market share data
+3. Do NOT make claims about pricing trends unless stated in KNOWLEDGE BASE
+4. If a topic is not covered in KNOWLEDGE BASE, state "Based on available category data..."
+5. Focus on SYNTHESIZING the knowledge base content, not inventing new information
+
+STRUCTURE:
+1. INDUSTRY CONTEXT: What does the knowledge base say about this category?
+2. REGIONAL INSIGHTS: Regional information from knowledge base (cite sources)
+3. SUPPLIER LANDSCAPE: Supplier information from knowledge base (cite sources)
+4. STRATEGIC FACTORS: Key considerations mentioned in knowledge base
+
+REMEMBER: Better to say less than to hallucinate. Cite every claim.
+"""
+
+            # Build strictly grounded prompt
+            prompt = self._build_strict_grounding_prompt(data_section, rag_result, task_instruction)
             response = self.llm_engine._generate_openai(prompt)
+
+            # Check for refusal and use fallback if needed
+            if self._is_llm_refusal(response):
+                return self._generate_market_intelligence_fallback(category, regions, industry_config)
+
+            # Add sources footer
+            if rag_result['sources']:
+                response += "\n\n---\nSources: " + ", ".join(
+                    s['file_name'] for s in rag_result['sources'][:4]
+                )
+
             return response
 
         except Exception as e:
-            print(f"⚠️ LLM market intelligence failed: {e}")
-            return f"Market intelligence for {category} is currently unavailable."
+            print(f"[WARN] LLM market intelligence failed: {e}")
+            return self._generate_market_intelligence_fallback(category, regions, industry_config)
+
+    def _generate_market_intelligence_fallback(
+        self,
+        category: str,
+        regions: List[str],
+        industry_config: Dict[str, Any]
+    ) -> str:
+        """Generate template-based market intelligence when LLM fails"""
+        low_cost_regions = industry_config.get('low_cost_regions', ['Asia Pacific', 'Latin America'])
+        savings_range = industry_config.get('savings_range', (0.05, 0.15))
+
+        regions_text = ', '.join(regions[:3]) if regions else 'multiple regions'
+        low_cost_text = ', '.join(low_cost_regions[:3])
+
+        return f"""The {category} market continues to evolve with shifting global supply dynamics. Current sourcing
+is concentrated in {regions_text}, representing the primary supply corridor for this category.
+
+Regional analysis indicates opportunities for optimization. {low_cost_text} represent emerging
+sourcing alternatives with competitive cost structures. These regions offer potential savings
+of {savings_range[0]*100:.0f}%-{savings_range[1]*100:.0f}% compared to traditional sourcing locations, while maintaining
+quality standards aligned with enterprise requirements.
+
+The supplier landscape in this category ranges from large multinational providers to specialized
+regional players. Market consolidation trends suggest the importance of securing strategic
+supplier relationships while maintaining competitive tension through multi-sourcing strategies.
+
+Key considerations for {category} sourcing include total cost of ownership (including logistics),
+supplier reliability metrics, quality certification requirements, and alignment with sustainability
+objectives. A balanced approach across multiple regions and suppliers optimizes both cost and
+risk exposure."""
 
     def _empty_brief_response(self, message: str) -> Dict[str, Any]:
         """Return empty brief response"""
