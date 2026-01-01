@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python -c:*)",
-      "Bash(./Beroe_Env/Scripts/python:*)",
-      "Bash(ls:*)"
-    ]
-  }
-}
