@@ -22,122 +22,11 @@ st.set_page_config(
     layout="wide"
 )
 
-# CSS with floating chat button and popup
+# Simple CSS
 st.markdown("""
 <style>
     .main { padding: 1rem; }
     .stMetric { background: #f8f9fa; padding: 1rem; border-radius: 8px; }
-
-    /* Floating chat button */
-    .floating-chat-btn {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        transition: all 0.3s ease;
-    }
-    .floating-chat-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-    }
-
-    /* Chat popup container */
-    .chat-popup {
-        position: fixed;
-        bottom: 100px;
-        right: 30px;
-        width: 380px;
-        height: 500px;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        z-index: 9998;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-    .chat-popup-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .chat-popup-header h3 {
-        margin: 0;
-        font-size: 16px;
-        font-weight: 600;
-    }
-    .chat-popup-body {
-        flex: 1;
-        overflow-y: auto;
-        padding: 15px;
-        background: #f8f9fa;
-    }
-    .chat-popup-input {
-        padding: 15px;
-        border-top: 1px solid #e9ecef;
-        background: white;
-    }
-
-    /* Chat message styling */
-    .chat-msg {
-        padding: 10px 14px;
-        border-radius: 18px;
-        margin: 8px 0;
-        max-width: 85%;
-        word-wrap: break-word;
-        font-size: 14px;
-        line-height: 1.4;
-    }
-    .chat-msg-user {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        margin-left: auto;
-        border-bottom-right-radius: 4px;
-    }
-    .chat-msg-assistant {
-        background: white;
-        color: #333;
-        border: 1px solid #e9ecef;
-        border-bottom-left-radius: 4px;
-    }
-
-    /* Suggestion chips */
-    .suggestion-chip {
-        display: inline-block;
-        padding: 8px 12px;
-        margin: 4px;
-        background: white;
-        border: 1px solid #667eea;
-        border-radius: 20px;
-        font-size: 12px;
-        color: #667eea;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    .suggestion-chip:hover {
-        background: #667eea;
-        color: white;
-    }
-
-    /* Hide default streamlit elements in chat area */
-    .chat-section .stButton button {
-        border-radius: 20px;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -766,168 +655,70 @@ def main():
             except Exception as e:
                 st.error(f"Error reading file: {str(e)}")
 
-    # ========== FLOATING CHAT BUTTON & POPUP ==========
-    # Show floating chat button when briefs have been generated
+    # ========== CHAT ASSISTANT (Inline at bottom) ==========
+    # Show chat when briefs have been generated
     if st.session_state.brief_context_loaded:
-        subcategory = st.session_state.chat_assistant.subcategory
+        st.divider()
 
-        # Add chat toggle to sidebar
-        with st.sidebar:
-            st.markdown("---")
-            st.markdown("### 💬 AI Chat Assistant")
-            if st.session_state.chat_open:
-                if st.button("✕ Close Chat", key="close_chat_btn", use_container_width=True):
-                    st.session_state.chat_open = False
-                    st.rerun()
-            else:
-                if st.button("💬 Open Chat", key="open_chat_btn", use_container_width=True, type="primary"):
-                    st.session_state.chat_open = True
-                    st.rerun()
-                st.caption(f"Ask questions about your {subcategory} brief")
-
-        # Floating chat button indicator (bottom right)
-        if not st.session_state.chat_open:
-            st.markdown("""
-            <style>
-                @keyframes pulse {
-                    0% { box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
-                    50% { box-shadow: 0 4px 25px rgba(102, 126, 234, 0.8); }
-                    100% { box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
-                }
-            </style>
-            <div style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; text-align: center;">
-                <div style="
-                    width: 65px;
-                    height: 65px;
-                    border-radius: 50%;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 28px;
-                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-                    animation: pulse 2s infinite;
-                    cursor: pointer;
-                " title="Open chat from sidebar">
-                    💬
-                </div>
-                <p style="font-size: 11px; color: #667eea; margin-top: 8px; font-weight: 500;">Open from<br/>sidebar ↑</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # Chat popup panel (shows when open)
-        if st.session_state.chat_open:
-            st.markdown("""
-            <style>
-                .chat-popup-container {
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
-                    width: 400px;
-                    max-height: 550px;
-                    background: white;
-                    border-radius: 16px;
-                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-                    z-index: 9998;
-                    overflow: hidden;
-                }
-            </style>
-            """, unsafe_allow_html=True)
-
-            # Create chat in a styled container at the bottom
-            st.markdown("---")
-
-            # Chat header
-            st.markdown(f"""
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white; padding: 16px 20px; border-radius: 12px 12px 0 0;
-                        margin-bottom: 0;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <strong style="font-size: 18px;">💬 Brief Assistant</strong><br/>
-                        <span style="font-size: 13px; opacity: 0.9;">Discussing: {subcategory}</span>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-            # Chat body in a container
-            col1, col2 = st.columns([4, 1])
-            with col2:
-                if st.button("🗑️", key="clear_chat", help="Clear chat history"):
-                    st.session_state.chat_messages = []
-                    st.session_state.chat_assistant.clear_history()
-                    st.rerun()
-
-            # Scrollable chat area
-            chat_container = st.container(height=380)
-
-            with chat_container:
-                # Suggested questions (only show if no messages)
-                if len(st.session_state.chat_messages) == 0:
-                    st.markdown("##### 💡 Quick Questions")
-                    suggestions = st.session_state.chat_assistant.get_suggested_questions()
-
-                    cols = st.columns(2)
-                    for i, suggestion in enumerate(suggestions[:4]):
-                        with cols[i % 2]:
-                            if st.button(suggestion, key=f"suggest_{i}", use_container_width=True):
-                                st.session_state.chat_messages.append({
-                                    "role": "user",
-                                    "content": suggestion
-                                })
-                                with st.spinner("Thinking..."):
-                                    response = st.session_state.chat_assistant.chat(suggestion)
-                                    st.session_state.chat_messages.append({
-                                        "role": "assistant",
-                                        "content": response.get('response', 'Sorry, I encountered an error.')
-                                    })
-                                st.rerun()
-                else:
-                    # Display chat messages
-                    for message in st.session_state.chat_messages:
-                        with st.chat_message(message["role"]):
-                            st.markdown(message["content"])
-
-            # Chat input
-            user_input = st.chat_input("Ask about your procurement brief...", key="chat_popup_input")
-
-            if user_input:
-                st.session_state.chat_messages.append({
-                    "role": "user",
-                    "content": user_input
-                })
-
-                with st.spinner("Thinking..."):
-                    response = st.session_state.chat_assistant.chat(user_input)
-                    assistant_message = response.get('response', 'Sorry, I encountered an error.')
-                    st.session_state.chat_messages.append({
-                        "role": "assistant",
-                        "content": assistant_message
-                    })
-
+        # Chat header
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.subheader("💬 Brief Assistant")
+            subcategory = st.session_state.chat_assistant.subcategory
+            st.caption(f"Ask questions about your **{subcategory}** brief")
+        with col2:
+            if st.button("🗑️ Clear Chat", key="clear_chat"):
+                st.session_state.chat_messages = []
+                st.session_state.chat_assistant.clear_history()
                 st.rerun()
 
+        # Suggested questions
+        if len(st.session_state.chat_messages) == 0:
+            st.markdown("**Suggested questions:**")
+            suggestions = st.session_state.chat_assistant.get_suggested_questions()
+            cols = st.columns(2)
+            for i, suggestion in enumerate(suggestions[:4]):
+                with cols[i % 2]:
+                    if st.button(suggestion, key=f"suggest_{i}", use_container_width=True):
+                        st.session_state.chat_messages.append({
+                            "role": "user",
+                            "content": suggestion
+                        })
+                        with st.spinner("Thinking..."):
+                            response = st.session_state.chat_assistant.chat(suggestion)
+                            st.session_state.chat_messages.append({
+                                "role": "assistant",
+                                "content": response.get('response', 'Sorry, I encountered an error.')
+                            })
+                        st.rerun()
+
+        # Display chat messages
+        for message in st.session_state.chat_messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        # Chat input
+        user_input = st.chat_input("Ask about your procurement brief...")
+
+        if user_input:
+            st.session_state.chat_messages.append({
+                "role": "user",
+                "content": user_input
+            })
+
+            with st.spinner("Thinking..."):
+                response = st.session_state.chat_assistant.chat(user_input)
+                assistant_message = response.get('response', 'Sorry, I encountered an error.')
+                st.session_state.chat_messages.append({
+                    "role": "assistant",
+                    "content": assistant_message
+                })
+
+            st.rerun()
+
     elif st.session_state.briefs_generated or st.session_state.user_briefs_generated:
-        # Show disabled indicator when briefs generated but context not loaded
-        st.markdown("""
-        <div style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; text-align: center;">
-            <div style="
-                width: 65px;
-                height: 65px;
-                border-radius: 50%;
-                background: #e9ecef;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 28px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            ">
-                💬
-            </div>
-            <p style="font-size: 10px; color: #999; margin-top: 5px;">Loading...</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.divider()
+        st.info("💬 **Brief Assistant** - Generate briefs to start chatting about your procurement data")
 
 
 if __name__ == "__main__":
