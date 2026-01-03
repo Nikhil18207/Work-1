@@ -46,121 +46,167 @@ class LeadershipBriefGenerator:
     
     INDUSTRY_COST_DRIVERS = {
         'Edible Oils': {
-            'low_cost_regions': ['India', 'Thailand', 'Indonesia', 'Vietnam'],
+            'low_cost_regions': ['India', 'Thailand', 'Indonesia', 'Vietnam', 'Egypt', 'Morocco', 'Turkey'],
             'drivers': {
                 'India': 'Lower raw material input costs + scaling extraction infrastructure',
                 'Thailand': 'Port efficiency + strong processing ecosystem',
                 'Indonesia': 'High production capacity + efficient supply chains',
                 'Vietnam': 'Competitive labor costs + growing export infrastructure',
                 'China': 'Industrial scale processing + pricing leverage',
-                'Malaysia': 'Established supply chains + quality standards'
+                'Malaysia': 'Established supply chains + quality standards',
+                'Egypt': 'Strategic location + growing agri-processing capacity',
+                'Morocco': 'EU proximity + competitive labor costs',
+                'Turkey': 'Bridge between Europe and Asia + established food industry',
+                'Kenya': 'East Africa hub + emerging processing capabilities',
+                'South Africa': 'Regional leader + quality infrastructure'
             },
             'savings_range': (0.08, 0.20)
         },
         'IT Hardware': {
-            'low_cost_regions': ['China', 'Taiwan', 'Vietnam', 'India', 'Mexico'],
+            'low_cost_regions': ['China', 'Taiwan', 'Vietnam', 'India', 'Mexico', 'Morocco', 'Egypt'],
             'drivers': {
                 'China': 'Manufacturing scale + component ecosystem integration',
                 'Taiwan': 'Advanced semiconductor manufacturing capabilities',
                 'Vietnam': 'Competitive labor costs + growing tech manufacturing',
                 'India': 'IT services integration + growing hardware assembly',
                 'Mexico': 'Nearshoring benefits + trade agreements',
-                'USA': 'Premium quality + reduced logistics risk'
+                'USA': 'Premium quality + reduced logistics risk',
+                'Morocco': 'EU proximity + growing tech manufacturing hub',
+                'Egypt': 'Strategic location + skilled workforce',
+                'UAE': 'Regional tech hub + logistics excellence',
+                'South Africa': 'African tech hub + established infrastructure'
             },
             'savings_range': (0.05, 0.15)
         },
         'Cloud Services': {
-            'low_cost_regions': ['USA', 'Ireland', 'Singapore', 'India'],
+            'low_cost_regions': ['USA', 'Ireland', 'Singapore', 'India', 'UAE', 'South Africa'],
             'drivers': {
                 'USA': 'Primary data center infrastructure + innovation hub',
                 'Ireland': 'EU data sovereignty + tax efficiency',
                 'Singapore': 'APAC hub + strong data protection',
                 'India': 'Cost-effective managed services + skilled workforce',
-                'Germany': 'GDPR compliance + data sovereignty'
+                'Germany': 'GDPR compliance + data sovereignty',
+                'UAE': 'Middle East hub + emerging data center market',
+                'South Africa': 'African data sovereignty + growing cloud market',
+                'Saudi Arabia': 'MENA cloud hub + infrastructure investment'
             },
             'savings_range': (0.10, 0.25)
         },
         'Software Licenses': {
-            'low_cost_regions': ['India', 'Eastern Europe', 'Ireland'],
+            'low_cost_regions': ['India', 'Eastern Europe', 'Ireland', 'Egypt', 'Morocco'],
             'drivers': {
                 'USA': 'Primary vendor relationships + support coverage',
                 'India': 'Implementation services + support cost optimization',
                 'Ireland': 'EU licensing optimization + tax benefits',
-                'Germany': 'Enterprise software expertise + local support'
+                'Germany': 'Enterprise software expertise + local support',
+                'Egypt': 'Growing IT sector + cost-effective support',
+                'Morocco': 'Francophone expertise + nearshore capabilities',
+                'South Africa': 'Regional support hub + skilled workforce'
             },
             'savings_range': (0.05, 0.12)
         },
         'Steel': {
-            'low_cost_regions': ['China', 'India', 'Russia', 'Brazil'],
+            'low_cost_regions': ['China', 'India', 'Russia', 'Brazil', 'Turkey', 'Egypt', 'South Africa'],
             'drivers': {
                 'China': 'Massive production capacity + competitive pricing',
                 'India': 'Growing capacity + lower labor costs',
                 'Luxembourg': 'Premium quality + established logistics',
                 'USA': 'Domestic supply security + reduced tariffs',
-                'Brazil': 'Iron ore integration + competitive costs'
+                'Brazil': 'Iron ore integration + competitive costs',
+                'Turkey': 'Strategic location + growing steel industry',
+                'Egypt': 'MENA steel hub + infrastructure development',
+                'South Africa': 'African industrial leader + mining integration',
+                'Saudi Arabia': 'Industrial diversification + infrastructure investment'
             },
             'savings_range': (0.08, 0.18)
         },
         'Pharmaceuticals': {
-            'low_cost_regions': ['India', 'China', 'Ireland'],
+            'low_cost_regions': ['India', 'China', 'Ireland', 'Egypt', 'Morocco', 'South Africa'],
             'drivers': {
                 'USA': 'Innovation hub + regulatory approval speed',
                 'India': 'Generic manufacturing + cost efficiency',
                 'Switzerland': 'Premium quality + R&D capabilities',
                 'Ireland': 'Tax-efficient manufacturing hub',
-                'China': 'API manufacturing + scale benefits'
+                'China': 'API manufacturing + scale benefits',
+                'Egypt': 'MENA pharma hub + growing generics market',
+                'Morocco': 'African pharma leader + EU proximity',
+                'South Africa': 'Regional manufacturing + regulatory expertise',
+                'Jordan': 'Middle East pharma hub + quality standards'
             },
             'savings_range': (0.10, 0.30)
         },
         'Medical Devices': {
-            'low_cost_regions': ['Mexico', 'Ireland', 'Costa Rica', 'China'],
+            'low_cost_regions': ['Mexico', 'Ireland', 'Costa Rica', 'China', 'Morocco', 'Tunisia'],
             'drivers': {
                 'USA': 'Innovation + regulatory expertise',
                 'Germany': 'Precision engineering + quality',
                 'Mexico': 'Nearshoring + skilled labor pool',
                 'Ireland': 'EU market access + manufacturing expertise',
-                'China': 'Scale manufacturing + cost efficiency'
+                'China': 'Scale manufacturing + cost efficiency',
+                'Morocco': 'EU proximity + growing medical device sector',
+                'Tunisia': 'Skilled workforce + cost efficiency',
+                'UAE': 'Regional healthcare hub + quality infrastructure',
+                'South Africa': 'African medical device hub + regulatory alignment'
             },
             'savings_range': (0.08, 0.20)
         },
         'Construction Materials': {
-            'low_cost_regions': ['China', 'India', 'Mexico', 'Turkey'],
+            'low_cost_regions': ['China', 'India', 'Mexico', 'Turkey', 'Egypt', 'Morocco', 'UAE'],
             'drivers': {
                 'Local': 'Reduced transport costs + faster delivery',
                 'China': 'Scale production + competitive pricing',
                 'Mexico': 'Nearshoring + trade agreements',
-                'India': 'Growing capacity + cost efficiency'
+                'India': 'Growing capacity + cost efficiency',
+                'Turkey': 'Cement & materials hub + competitive pricing',
+                'Egypt': 'MENA construction hub + local production',
+                'Morocco': 'African gateway + growing industry',
+                'UAE': 'Regional construction leader + quality standards',
+                'South Africa': 'African infrastructure hub + established supply chains'
             },
             'savings_range': (0.10, 0.25)
         },
         'Marketing Services': {
-            'low_cost_regions': ['India', 'Philippines', 'Eastern Europe'],
+            'low_cost_regions': ['India', 'Philippines', 'Eastern Europe', 'Egypt', 'South Africa', 'Kenya'],
             'drivers': {
                 'USA': 'Strategic expertise + market knowledge',
                 'UK': 'Creative excellence + global reach',
                 'India': 'Digital services + cost optimization',
-                'Philippines': 'English proficiency + cost efficiency'
+                'Philippines': 'English proficiency + cost efficiency',
+                'Egypt': 'Arabic content + MENA market expertise',
+                'South Africa': 'African market expertise + creative talent',
+                'Kenya': 'East Africa hub + digital innovation',
+                'UAE': 'MENA creative hub + regional reach'
             },
             'savings_range': (0.15, 0.35)
         },
         'Logistics': {
-            'low_cost_regions': ['Netherlands', 'Singapore', 'UAE', 'Panama'],
+            'low_cost_regions': ['Netherlands', 'Singapore', 'UAE', 'Panama', 'Morocco', 'Egypt', 'South Africa'],
             'drivers': {
                 'Germany': 'European hub + infrastructure quality',
                 'Netherlands': 'Port efficiency + logistics expertise',
                 'Singapore': 'APAC hub + connectivity',
-                'USA': 'Domestic coverage + technology integration'
+                'USA': 'Domestic coverage + technology integration',
+                'UAE': 'Middle East logistics hub + world-class infrastructure',
+                'Morocco': 'Tanger Med port + African gateway',
+                'Egypt': 'Suez Canal proximity + MENA logistics hub',
+                'South Africa': 'African logistics leader + port infrastructure',
+                'Kenya': 'East Africa gateway + growing logistics sector'
             },
             'savings_range': (0.05, 0.15)
         },
         'DEFAULT': {
-            'low_cost_regions': ['India', 'China', 'Mexico', 'Eastern Europe'],
+            'low_cost_regions': ['India', 'China', 'Mexico', 'Eastern Europe', 'Morocco', 'Egypt', 'South Africa'],
             'drivers': {
                 'India': 'Cost-effective operations + skilled workforce',
                 'China': 'Manufacturing scale + supply chain efficiency',
                 'Mexico': 'Nearshoring benefits + trade agreements',
                 'USA': 'Quality assurance + reduced risk',
-                'Germany': 'Premium quality + reliability'
+                'Germany': 'Premium quality + reliability',
+                'Morocco': 'EU proximity + competitive labor costs',
+                'Egypt': 'Strategic location + growing industrial base',
+                'South Africa': 'African hub + established infrastructure',
+                'UAE': 'Middle East hub + business-friendly environment',
+                'Turkey': 'Europe-Asia bridge + diversified economy'
             },
             'savings_range': (0.08, 0.18)
         }
@@ -171,6 +217,7 @@ class LeadershipBriefGenerator:
         data_loader=None,
         enable_llm: bool = True,
         enable_rag: bool = True,
+        enable_web_search: bool = True,
         use_agents: bool = False
     ):
         """
@@ -184,6 +231,9 @@ class LeadershipBriefGenerator:
             enable_rag: Enable RAG for context-aware generation.
                         When True, retrieves relevant documents before LLM calls.
                         This REDUCES OpenAI usage by providing better context.
+            enable_web_search: Enable web search fallback when RAG has low confidence.
+                        When True, searches the internet if verified sources insufficient.
+                        Cites web sources with URLs. Uses Serper API.
             use_agents: Use microagent architecture for brief generation.
                         When True, delegates to BriefOrchestrator which coordinates
                         specialized agents (DataAnalysis, Risk, Recommendation, Market).
@@ -195,6 +245,7 @@ class LeadershipBriefGenerator:
             self.data_loader = DataLoader()
         self.rule_engine = RuleEvaluationEngine()
         self.use_agents = use_agents
+        self.enable_web_search = enable_web_search
         self._orchestrator = None  # Lazy-loaded when use_agents=True
 
         # Initialize LLM engine for AI-powered reasoning
@@ -243,7 +294,8 @@ class LeadershipBriefGenerator:
                     llm_engine=self.llm_engine,
                     vector_store=self.vector_store,
                     enable_llm=self.enable_llm,
-                    enable_rag=self.enable_rag
+                    enable_rag=self.enable_rag,
+                    enable_web_search=self.enable_web_search
                 )
                 print("[OK] Agent-based brief generation enabled")
             except Exception as e:
@@ -282,12 +334,20 @@ class LeadershipBriefGenerator:
     def _get_dominant_region_name(self, countries: List[str]) -> str:
         """Get dynamic region name based on actual countries"""
         region_mapping = {
-            'SEA': ['Malaysia', 'Vietnam', 'Thailand', 'Indonesia', 'Singapore', 'Philippines'],
-            'East Asia': ['China', 'Japan', 'South Korea', 'Taiwan'],
-            'South Asia': ['India', 'Bangladesh', 'Pakistan', 'Sri Lanka'],
-            'Europe': ['Germany', 'France', 'UK', 'Spain', 'Italy', 'Netherlands', 'Switzerland', 'Luxembourg'],
-            'Americas': ['USA', 'Canada', 'Mexico', 'Brazil', 'Argentina'],
-            'Middle East': ['UAE', 'Saudi Arabia', 'Qatar']
+            'SEA': ['Malaysia', 'Vietnam', 'Thailand', 'Indonesia', 'Singapore', 'Philippines', 'Myanmar', 'Cambodia', 'Laos'],
+            'East Asia': ['China', 'Japan', 'South Korea', 'Taiwan', 'Hong Kong', 'Macau'],
+            'South Asia': ['India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Nepal', 'Bhutan'],
+            'Oceania': ['Australia', 'New Zealand', 'Fiji', 'Papua New Guinea'],
+            'Europe': ['Germany', 'France', 'UK', 'Spain', 'Italy', 'Netherlands', 'Switzerland', 'Luxembourg',
+                      'Belgium', 'Austria', 'Sweden', 'Norway', 'Denmark', 'Finland', 'Poland', 'Czech Republic',
+                      'Portugal', 'Ireland', 'Greece', 'Hungary', 'Romania', 'Ukraine', 'Russia'],
+            'Americas': ['USA', 'Canada', 'Mexico', 'Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru',
+                        'Venezuela', 'Ecuador', 'Uruguay', 'Paraguay', 'Bolivia', 'Costa Rica', 'Panama'],
+            'Middle East': ['UAE', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Bahrain', 'Oman', 'Jordan',
+                           'Israel', 'Turkey', 'Lebanon', 'Iraq', 'Iran', 'Yemen'],
+            'Africa': ['South Africa', 'Egypt', 'Nigeria', 'Kenya', 'Morocco', 'Ghana', 'Ethiopia',
+                      'Tanzania', 'Tunisia', 'Algeria', 'Uganda', 'Senegal', 'Ivory Coast', 'Cameroon',
+                      'Madagascar', 'Botswana', 'Namibia', 'Zambia', 'Zimbabwe', 'Rwanda']
         }
         
         region_counts = {}

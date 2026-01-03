@@ -3,12 +3,16 @@ Microagent Architecture for Brief Generation
 
 This module provides specialized agents for different aspects of procurement brief generation:
 
-- BaseAgent: Common functionality for all agents (RAG, LLM, data access)
+- BaseAgent: Common functionality for all agents (RAG, LLM, Web Search, data access)
 - DataAnalysisAgent: Spend analysis, supplier metrics, concentration calculations
 - RiskAssessmentAgent: Risk evaluation, rule violations, risk scoring
 - RecommendationAgent: Strategic recommendations with business justification
 - MarketIntelligenceAgent: Market context, regional insights, cost drivers
 - BriefOrchestrator: Coordinates all agents to generate complete briefs
+
+Source Priority:
+1. Verified Sources (RAG/FAISS) - cite as [SOURCE-N]
+2. Internet Sources (Serper Web Search) - cite as [WEB-N] with URL
 
 Architecture:
                     +-------------------+
@@ -26,7 +30,14 @@ Architecture:
               |                            |
         +-----v-----+               +------v------+
         | BaseAgent |               | FAISS RAG   |
-        +-----------+               +-------------+
+        +-----+-----+               +------+------+
+              |                            |
+              +------------+---------------+
+                           |
+                    +------v------+
+                    | Web Search  |
+                    | (Fallback)  |
+                    +-------------+
 """
 
 from .base_agent import BaseAgent

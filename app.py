@@ -68,6 +68,12 @@ def main():
             help="Use Retrieval Augmented Generation for context-aware insights from knowledge base."
         )
 
+        enable_web_search = st.toggle(
+            "Enable Web Search Fallback",
+            value=True,
+            help="When verified sources don't have enough context, search the internet and cite sources. Uses Serper API."
+        )
+
         st.divider()
 
         if use_agents:
@@ -79,6 +85,7 @@ def main():
         st.session_state.use_agents = use_agents
         st.session_state.enable_llm = enable_llm
         st.session_state.enable_rag = enable_rag
+        st.session_state.enable_web_search = enable_web_search
 
     # Initialize session state for storing generated files
     if 'sys_incumbent_data' not in st.session_state:
@@ -110,7 +117,7 @@ def main():
     # ========== TAB 1: System Data ==========
     with tab1:
         st.subheader("Generate Briefs from System Data")
-        st.caption("Use our pre-loaded multi-industry procurement data (312 suppliers, 10 sectors)")
+        st.caption("Use our pre-loaded multi-industry procurement data (893 suppliers, 10 sectors, 5 regions including Africa & Middle East)")
 
         df = load_system_data()
 
@@ -185,6 +192,7 @@ def main():
                         generator = LeadershipBriefGenerator(
                             enable_llm=st.session_state.enable_llm,
                             enable_rag=st.session_state.enable_rag,
+                            enable_web_search=st.session_state.enable_web_search,
                             use_agents=st.session_state.use_agents
                         )
                         exporter = DOCXExporter()
@@ -360,6 +368,7 @@ def main():
                                 data_loader=custom_loader,
                                 enable_llm=st.session_state.enable_llm,
                                 enable_rag=st.session_state.enable_rag,
+                                enable_web_search=st.session_state.enable_web_search,
                                 use_agents=st.session_state.use_agents
                             )
                             exporter = DOCXExporter()

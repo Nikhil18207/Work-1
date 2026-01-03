@@ -54,39 +54,9 @@ S052,Madagascar Vanilla,Africa,Food & Beverages,Spices & Seasonings,Vanilla,2024
 S053,Berry Global,Americas,Food & Beverages,Packaging Materials,Food-Grade Plastics,2024-01-08,2026-12-23,30,82,Active
 S054,Owens-Illinois,Americas,Food & Beverages,Packaging Materials,Glass Containers,2024-02-03,2029-01-07,30,81,Active
 S055,Ball Corporation,Americas,Food & Beverages,Packaging Materials,Aluminum Cans,2025-03-25,2026-03-20,60,85,Active
-S1001,McKinsey,Americas,Professional Services,Consulting,Management Consulting,2024-11-26,2028-11-05,60,82,Active
-S1002,BCG,Americas,Professional Services,Consulting,Management Consulting,2024-11-13,2028-10-23,60,80,Active
-S1003,Bain & Company,Americas,Professional Services,Consulting,Management Consulting,2024-03-27,2028-03-06,90,81,Active
-S1004,Accenture,Europe,Professional Services,Consulting,IT Consulting,2025-03-29,2028-03-13,60,81,Active
-S1005,Deloitte Digital,Americas,Professional Services,Consulting,IT Consulting,2024-08-18,2027-08-03,45,80,Active
-S1006,IBM Consulting,Americas,Professional Services,Consulting,IT Consulting,2025-01-29,2029-01-08,75,76,Active
-S1007,Mercer,Americas,Professional Services,Consulting,HR Consulting,2025-04-02,2026-03-28,30,76,Active
-S1008,Korn Ferry,Americas,Professional Services,Consulting,HR Consulting,2024-04-18,2025-04-13,30,80,Expired
-S1009,Baker McKenzie,Americas,Professional Services,Legal Services,Corporate Law,2025-02-21,2030-01-26,60,75,Active
 S101,Dell Technologies,Americas,Information Technology,Hardware,Laptops,2024-08-01,2025-07-27,45,81,Expired
-S1010,DLA Piper,Americas,Professional Services,Legal Services,Corporate Law,2024-07-07,2028-06-16,90,75,Active
-S1011,Clifford Chance,Europe,Professional Services,Legal Services,Corporate Law,2024-09-13,2029-08-18,90,79,Active
-S1012,Fish & Richardson,Americas,Professional Services,Legal Services,Intellectual Property,2024-07-09,2025-07-04,30,84,Expired
-S1013,Finnegan,Americas,Professional Services,Legal Services,Intellectual Property,2024-02-01,2026-01-21,45,77,Active
-S1014,Littler Mendelson,Americas,Professional Services,Legal Services,Employment Law,2024-02-27,2026-02-16,60,76,Active
-S1015,PwC,Americas,Professional Services,Financial Services,Accounting,2024-07-11,2029-06-15,75,80,Active
-S1016,EY,Americas,Professional Services,Financial Services,Accounting,2025-03-09,2028-02-22,30,84,Active
-S1017,KPMG,Americas,Professional Services,Financial Services,Accounting,2024-11-15,2028-10-25,60,83,Active
-S1018,JPMorgan Chase,Americas,Professional Services,Financial Services,Banking,2025-06-08,2030-05-13,60,85,Active
-S1019,Bank of America,Americas,Professional Services,Financial Services,Banking,2024-10-04,2025-09-29,45,77,Expired
 S102,HP Inc,Americas,Information Technology,Hardware,Laptops,2024-09-28,2027-09-13,90,80,Active
-S1020,Marsh McLennan,Americas,Professional Services,Financial Services,Insurance,2024-07-10,2025-07-05,90,77,Expired
-S1021,Aon,Europe,Professional Services,Financial Services,Insurance,2025-02-08,2030-01-13,45,85,Active
-S1022,WPP,Europe,Professional Services,Marketing Services,Advertising,2024-05-20,2025-05-15,45,77,Expired
-S1023,Omnicom,Americas,Professional Services,Marketing Services,Advertising,2025-06-03,2026-05-29,30,83,Active
-S1024,Publicis Groupe,Europe,Professional Services,Marketing Services,Advertising,2024-11-26,2028-11-05,60,81,Active
-S1025,Google Ads,Americas,Professional Services,Marketing Services,Digital Marketing,2024-03-27,2027-03-12,45,77,Active
-S1026,Meta Ads,Americas,Professional Services,Marketing Services,Digital Marketing,2024-06-21,2027-06-06,45,80,Active
-S1027,Nielsen,Americas,Professional Services,Marketing Services,Market Research,2025-04-09,2026-04-04,75,77,Active
-S1028,Ipsos,Europe,Professional Services,Marketing Services,Market Research,2025-01-24,2029-12-29,75,75,Active
-S1029,Edelman,Americas,Professional Services,Marketing Services,PR & Communications,2025-04-12,2028-03-27,45,82,Active
 S103,Lenovo,APAC,Information Technology,Hardware,Laptops,2024-04-26,2028-04-05,60,84,Active
-S1030,Weber Shandwick,Americas,Professional Services,Marketing Services,PR & Communications,2024-04-08,2028-03-18,45,79,Active
 S104,Apple Inc,Americas,Information Technology,Hardware,Laptops,2024-11-26,2029-10-31,75,76,Active
 S105,Dell Desktops,Americas,Information Technology,Hardware,Desktops,2024-07-16,2028-06-25,30,76,Active
 S106,HP Desktops,Americas,Information Technology,Hardware,Desktops,2024-09-17,2029-08-22,90,82,Active
@@ -94,48 +64,13 @@ S107,Cisco Systems,Americas,Information Technology,Hardware,Servers,2024-01-12,2
 S108,HPE Servers,Americas,Information Technology,Hardware,Servers,2024-11-21,2028-10-31,60,84,Active
 S109,Dell EMC,Americas,Information Technology,Hardware,Servers,2025-05-09,2026-05-04,30,78,Active
 S110,IBM Servers,Americas,Information Technology,Hardware,Servers,2024-08-30,2026-08-20,60,77,Active
-S1101,CBRE,Americas,Facilities & Corporate Services,Facilities Management,Building Maintenance,2024-10-16,2027-10-01,90,80,Active
-S1102,JLL,Americas,Facilities & Corporate Services,Facilities Management,Building Maintenance,2025-03-04,2026-02-27,75,82,Active
-S1103,ISS,Europe,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-04-20,2026-04-10,30,77,Active
-S1104,ABM Industries,Americas,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-06-10,2029-05-15,90,78,Active
-S1105,Securitas,Europe,Facilities & Corporate Services,Facilities Management,Security Services,2024-02-08,2029-01-12,75,85,Active
-S1106,Allied Universal,Americas,Facilities & Corporate Services,Facilities Management,Security Services,2024-07-07,2025-07-02,90,81,Expired
-S1107,Staples,Americas,Facilities & Corporate Services,Office Services,Office Supplies,2025-05-22,2029-05-01,30,75,Active
-S1108,Office Depot,Americas,Facilities & Corporate Services,Office Services,Office Supplies,2024-03-21,2025-03-16,90,80,Expired
-S1109,Steelcase,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2024-04-21,2029-03-26,75,81,Active
 S111,Juniper Networks,Americas,Information Technology,Hardware,Network Equipment,2024-05-03,2027-04-18,60,76,Active
-S1110,Herman Miller,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2024-05-16,2025-05-11,45,80,Expired
-S1111,Haworth,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2025-01-10,2029-12-15,75,82,Active
-S1112,FedEx Office,Americas,Facilities & Corporate Services,Office Services,Printing Services,2024-06-29,2025-06-24,90,81,Expired
-S1113,American Express GBT,Americas,Facilities & Corporate Services,Travel & Events,Business Travel,2025-03-18,2027-03-08,90,81,Active
-S1114,BCD Travel,Europe,Facilities & Corporate Services,Travel & Events,Business Travel,2024-05-20,2029-04-24,60,76,Active
-S1115,Maritz Global Events,Americas,Facilities & Corporate Services,Travel & Events,Event Management,2024-05-25,2027-05-10,90,80,Active
 S112,Huawei,APAC,Information Technology,Hardware,Network Equipment,2024-11-20,2027-11-05,75,77,Active
 S113,Arista Networks,Americas,Information Technology,Hardware,Network Equipment,2025-04-17,2030-03-22,90,85,Active
 S114,NetApp,Americas,Information Technology,Hardware,Storage Systems,2025-03-10,2030-02-12,30,83,Active
 S115,Pure Storage,Americas,Information Technology,Hardware,Storage Systems,2024-12-18,2027-12-03,90,80,Active
 S116,Logitech,Europe,Information Technology,Hardware,Peripherals,2025-02-03,2027-01-24,45,76,Active
 S117,LG Electronics,APAC,Information Technology,Hardware,Peripherals,2025-02-05,2028-01-21,45,78,Active
-S1201,Robert Half,Americas,Human Resources,Staffing Services,Permanent Recruitment,2025-01-08,2029-12-13,30,77,Active
-S1202,Hays,Europe,Human Resources,Staffing Services,Permanent Recruitment,2025-04-18,2027-04-08,45,85,Active
-S1203,Randstad,Europe,Human Resources,Staffing Services,Temporary Staffing,2024-02-15,2028-01-25,90,84,Active
-S1204,Adecco,Europe,Human Resources,Staffing Services,Temporary Staffing,2024-04-01,2029-03-06,75,85,Active
-S1205,ManpowerGroup,Americas,Human Resources,Staffing Services,Temporary Staffing,2024-08-08,2027-07-24,90,77,Active
-S1206,Spencer Stuart,Americas,Human Resources,Staffing Services,Executive Search,2024-04-10,2025-04-05,75,82,Expired
-S1207,Heidrick & Struggles,Americas,Human Resources,Staffing Services,Executive Search,2024-04-08,2027-03-24,75,79,Active
-S1208,Workday HR,Americas,Human Resources,HR Technology,HRIS Systems,2025-05-08,2028-04-22,30,83,Active
-S1209,SAP SuccessFactors,Europe,Human Resources,HR Technology,HRIS Systems,2025-04-20,2028-04-04,45,82,Active
-S1210,ADP,Americas,Human Resources,HR Technology,Payroll Services,2024-03-29,2025-03-24,75,75,Expired
-S1211,Paychex,Americas,Human Resources,HR Technology,Payroll Services,2024-06-22,2027-06-07,45,76,Active
-S1212,Benefitfocus,Americas,Human Resources,HR Technology,Benefits Administration,2025-04-03,2030-03-08,45,84,Active
-S1213,Businessolver,Americas,Human Resources,HR Technology,Benefits Administration,2024-02-01,2028-01-11,90,82,Active
-S1214,Dale Carnegie,Americas,Human Resources,Learning & Development,Training Programs,2025-05-23,2029-05-02,90,84,Active
-S1215,Franklin Covey,Americas,Human Resources,Learning & Development,Training Programs,2024-12-24,2027-12-09,90,84,Active
-S1216,Skillsoft,Americas,Human Resources,Learning & Development,E-Learning Platforms,2024-03-04,2029-02-06,75,77,Active
-S1217,LinkedIn Learning,Americas,Human Resources,Learning & Development,E-Learning Platforms,2025-05-02,2029-04-11,45,76,Active
-S1218,Udemy Business,Americas,Human Resources,Learning & Development,E-Learning Platforms,2024-07-18,2025-07-13,75,83,Expired
-S1219,Center for Creative Leadership,Americas,Human Resources,Learning & Development,Leadership Development,2025-01-09,2026-01-04,75,78,Active
-S1220,DDI,Americas,Human Resources,Learning & Development,Leadership Development,2024-04-12,2028-03-22,45,83,Active
 S201,AWS,Americas,Information Technology,Cloud Services,IaaS,2024-01-16,2028-12-20,60,77,Active
 S202,Microsoft Azure,Americas,Information Technology,Cloud Services,IaaS,2024-06-27,2027-06-12,90,79,Active
 S203,Google Cloud,Americas,Information Technology,Cloud Services,IaaS,2024-06-03,2028-05-13,45,80,Active
@@ -311,3 +246,649 @@ S918,Enterprise Fleet,Americas,Logistics & Transportation,Fleet Services,Fleet V
 S919,Ryder Fleet,Americas,Logistics & Transportation,Fleet Services,Fleet Vehicles,2024-06-25,2026-06-15,45,78,Active
 S920,Penske Truck Leasing,Americas,Logistics & Transportation,Fleet Services,Fleet Maintenance,2024-01-30,2028-01-09,90,83,Active
 S921,Samsara,Americas,Logistics & Transportation,Fleet Services,Fleet Telematics,2025-05-24,2026-05-19,90,75,Active
+S1001,McKinsey,Americas,Professional Services,Consulting,Management Consulting,2024-11-26,2028-11-05,60,82,Active
+S1002,BCG,Americas,Professional Services,Consulting,Management Consulting,2024-11-13,2028-10-23,60,80,Active
+S1003,Bain & Company,Americas,Professional Services,Consulting,Management Consulting,2024-03-27,2028-03-06,90,81,Active
+S1004,Accenture,Europe,Professional Services,Consulting,IT Consulting,2025-03-29,2028-03-13,60,81,Active
+S1005,Deloitte Digital,Americas,Professional Services,Consulting,IT Consulting,2024-08-18,2027-08-03,45,80,Active
+S1006,IBM Consulting,Americas,Professional Services,Consulting,IT Consulting,2025-01-29,2029-01-08,75,76,Active
+S1007,Mercer,Americas,Professional Services,Consulting,HR Consulting,2025-04-02,2026-03-28,30,76,Active
+S1008,Korn Ferry,Americas,Professional Services,Consulting,HR Consulting,2024-04-18,2025-04-13,30,80,Expired
+S1009,Baker McKenzie,Americas,Professional Services,Legal Services,Corporate Law,2025-02-21,2030-01-26,60,75,Active
+S1010,DLA Piper,Americas,Professional Services,Legal Services,Corporate Law,2024-07-07,2028-06-16,90,75,Active
+S1011,Clifford Chance,Europe,Professional Services,Legal Services,Corporate Law,2024-09-13,2029-08-18,90,79,Active
+S1012,Fish & Richardson,Americas,Professional Services,Legal Services,Intellectual Property,2024-07-09,2025-07-04,30,84,Expired
+S1013,Finnegan,Americas,Professional Services,Legal Services,Intellectual Property,2024-02-01,2026-01-21,45,77,Active
+S1014,Littler Mendelson,Americas,Professional Services,Legal Services,Employment Law,2024-02-27,2026-02-16,60,76,Active
+S1015,PwC,Americas,Professional Services,Financial Services,Accounting,2024-07-11,2029-06-15,75,80,Active
+S1016,EY,Americas,Professional Services,Financial Services,Accounting,2025-03-09,2028-02-22,30,84,Active
+S1017,KPMG,Americas,Professional Services,Financial Services,Accounting,2024-11-15,2028-10-25,60,83,Active
+S1018,JPMorgan Chase,Americas,Professional Services,Financial Services,Banking,2025-06-08,2030-05-13,60,85,Active
+S1019,Bank of America,Americas,Professional Services,Financial Services,Banking,2024-10-04,2025-09-29,45,77,Expired
+S1020,Marsh McLennan,Americas,Professional Services,Financial Services,Insurance,2024-07-10,2025-07-05,90,77,Expired
+S1021,Aon,Europe,Professional Services,Financial Services,Insurance,2025-02-08,2030-01-13,45,85,Active
+S1022,WPP,Europe,Professional Services,Marketing Services,Advertising,2024-05-20,2025-05-15,45,77,Expired
+S1023,Omnicom,Americas,Professional Services,Marketing Services,Advertising,2025-06-03,2026-05-29,30,83,Active
+S1024,Publicis Groupe,Europe,Professional Services,Marketing Services,Advertising,2024-11-26,2028-11-05,60,81,Active
+S1025,Google Ads,Americas,Professional Services,Marketing Services,Digital Marketing,2024-03-27,2027-03-12,45,77,Active
+S1026,Meta Ads,Americas,Professional Services,Marketing Services,Digital Marketing,2024-06-21,2027-06-06,45,80,Active
+S1027,Nielsen,Americas,Professional Services,Marketing Services,Market Research,2025-04-09,2026-04-04,75,77,Active
+S1028,Ipsos,Europe,Professional Services,Marketing Services,Market Research,2025-01-24,2029-12-29,75,75,Active
+S1029,Edelman,Americas,Professional Services,Marketing Services,PR & Communications,2025-04-12,2028-03-27,45,82,Active
+S1030,Weber Shandwick,Americas,Professional Services,Marketing Services,PR & Communications,2024-04-08,2028-03-18,45,79,Active
+S1101,CBRE,Americas,Facilities & Corporate Services,Facilities Management,Building Maintenance,2024-10-16,2027-10-01,90,80,Active
+S1102,JLL,Americas,Facilities & Corporate Services,Facilities Management,Building Maintenance,2025-03-04,2026-02-27,75,82,Active
+S1103,ISS,Europe,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-04-20,2026-04-10,30,77,Active
+S1104,ABM Industries,Americas,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-06-10,2029-05-15,90,78,Active
+S1105,Securitas,Europe,Facilities & Corporate Services,Facilities Management,Security Services,2024-02-08,2029-01-12,75,85,Active
+S1106,Allied Universal,Americas,Facilities & Corporate Services,Facilities Management,Security Services,2024-07-07,2025-07-02,90,81,Expired
+S1107,Staples,Americas,Facilities & Corporate Services,Office Services,Office Supplies,2025-05-22,2029-05-01,30,75,Active
+S1108,Office Depot,Americas,Facilities & Corporate Services,Office Services,Office Supplies,2024-03-21,2025-03-16,90,80,Expired
+S1109,Steelcase,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2024-04-21,2029-03-26,75,81,Active
+S1110,Herman Miller,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2024-05-16,2025-05-11,45,80,Expired
+S1111,Haworth,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2025-01-10,2029-12-15,75,82,Active
+S1112,FedEx Office,Americas,Facilities & Corporate Services,Office Services,Printing Services,2024-06-29,2025-06-24,90,81,Expired
+S1113,American Express GBT,Americas,Facilities & Corporate Services,Travel & Events,Business Travel,2025-03-18,2027-03-08,90,81,Active
+S1114,BCD Travel,Europe,Facilities & Corporate Services,Travel & Events,Business Travel,2024-05-20,2029-04-24,60,76,Active
+S1115,Maritz Global Events,Americas,Facilities & Corporate Services,Travel & Events,Event Management,2024-05-25,2027-05-10,90,80,Active
+S1201,Robert Half,Americas,Human Resources,Staffing Services,Permanent Recruitment,2025-01-08,2029-12-13,30,77,Active
+S1202,Hays,Europe,Human Resources,Staffing Services,Permanent Recruitment,2025-04-18,2027-04-08,45,85,Active
+S1203,Randstad,Europe,Human Resources,Staffing Services,Temporary Staffing,2024-02-15,2028-01-25,90,84,Active
+S1204,Adecco,Europe,Human Resources,Staffing Services,Temporary Staffing,2024-04-01,2029-03-06,75,85,Active
+S1205,ManpowerGroup,Americas,Human Resources,Staffing Services,Temporary Staffing,2024-08-08,2027-07-24,90,77,Active
+S1206,Spencer Stuart,Americas,Human Resources,Staffing Services,Executive Search,2024-04-10,2025-04-05,75,82,Expired
+S1207,Heidrick & Struggles,Americas,Human Resources,Staffing Services,Executive Search,2024-04-08,2027-03-24,75,79,Active
+S1208,Workday HR,Americas,Human Resources,HR Technology,HRIS Systems,2025-05-08,2028-04-22,30,83,Active
+S1209,SAP SuccessFactors,Europe,Human Resources,HR Technology,HRIS Systems,2025-04-20,2028-04-04,45,82,Active
+S1210,ADP,Americas,Human Resources,HR Technology,Payroll Services,2024-03-29,2025-03-24,75,75,Expired
+S1211,Paychex,Americas,Human Resources,HR Technology,Payroll Services,2024-06-22,2027-06-07,45,76,Active
+S1212,Benefitfocus,Americas,Human Resources,HR Technology,Benefits Administration,2025-04-03,2030-03-08,45,84,Active
+S1213,Businessolver,Americas,Human Resources,HR Technology,Benefits Administration,2024-02-01,2028-01-11,90,82,Active
+S1214,Dale Carnegie,Americas,Human Resources,Learning & Development,Training Programs,2025-05-23,2029-05-02,90,84,Active
+S1215,Franklin Covey,Americas,Human Resources,Learning & Development,Training Programs,2024-12-24,2027-12-09,90,84,Active
+S1216,Skillsoft,Americas,Human Resources,Learning & Development,E-Learning Platforms,2024-03-04,2029-02-06,75,77,Active
+S1217,LinkedIn Learning,Americas,Human Resources,Learning & Development,E-Learning Platforms,2025-05-02,2029-04-11,45,76,Active
+S1218,Udemy Business,Americas,Human Resources,Learning & Development,E-Learning Platforms,2024-07-18,2025-07-13,75,83,Expired
+S1219,Center for Creative Leadership,Americas,Human Resources,Learning & Development,Leadership Development,2025-01-09,2026-01-04,75,78,Active
+S1220,DDI,Americas,Human Resources,Learning & Development,Leadership Development,2024-04-12,2028-03-22,45,83,Active
+S1221,Argentina Drink Masters Corp,Americas,Food & Beverages,Beverages,Coffee,2024-11-23,2025-11-23,30,88,Active
+S1222,Beverage Co Enterprises,Europe,Food & Beverages,Beverages,Coffee,2024-05-20,2026-05-20,45,69,Active
+S1223,Beverage Co International,Middle East,Food & Beverages,Beverages,Tea,2024-11-04,2025-11-04,90,71,Active
+S1224,Premium Drinks Solutions,Europe,Food & Beverages,Beverages,Tea,2024-10-29,2028-10-28,30,65,Active
+S1225,Beverage Co Group,Middle East,Food & Beverages,Beverages,Tea,2024-02-17,2026-02-16,45,81,Active
+S1226,Canada Fresh Brew Solutions,Americas,Food & Beverages,Beverages,Tea,2025-01-12,2026-01-12,90,67,Active
+S1227,Fresh Brew Solutions,Americas,Food & Beverages,Beverages,Tea,2025-01-01,2029-12-31,75,72,Active
+S1228,Japan Milk Masters Co,APAC,Food & Beverages,Dairy Products,Cheese,2024-08-04,2027-08-04,60,69,Active
+S1229,Poland Fresh Dairy Trading,Europe,Food & Beverages,Dairy Products,Cheese,2024-08-17,2029-08-16,60,90,Active
+S1230,Cream Co Inc,APAC,Food & Beverages,Dairy Products,Cheese,2025-03-21,2026-03-21,45,87,Active
+S1231,Cream Co Trading,APAC,Food & Beverages,Dairy Products,Cheese,2024-04-20,2027-04-20,30,67,Active
+S1232,Milk Masters Group,Americas,Food & Beverages,Dairy Products,Cheese,2024-07-13,2025-07-13,60,92,Pending Renewal
+S1233,Farm Dairy Enterprises,APAC,Food & Beverages,Dairy Products,Cheese,2024-06-25,2029-06-24,60,90,Active
+S1234,Australia Fresh Dairy Trading,APAC,Food & Beverages,Dairy Products,Milk & Cream,2024-05-30,2029-05-29,60,83,Active
+S1235,Cream Co Enterprises,Europe,Food & Beverages,Dairy Products,Milk & Cream,2024-01-23,2028-01-22,90,68,Active
+S1236,Ghana Quality Milk Group,Africa,Food & Beverages,Dairy Products,Milk & Cream,2024-04-08,2025-04-08,30,86,Expired
+S1237,Indonesia Dairy Fresh Co,APAC,Food & Beverages,Dairy Products,Milk & Cream,2025-05-13,2029-05-12,30,82,Active
+S1238,Pure Oils Co,APAC,Food & Beverages,Edible Oils,Canola Oil,2024-08-20,2027-08-20,45,76,Active
+S1239,Quality Oils Co,Americas,Food & Beverages,Edible Oils,Canola Oil,2024-04-26,2027-04-26,30,92,Active
+S1240,Select Oils Co,Middle East,Food & Beverages,Edible Oils,Canola Oil,2024-06-30,2026-06-30,60,87,Active
+S1241,Switzerland Pure Oils Group,Europe,Food & Beverages,Edible Oils,Canola Oil,2024-04-29,2025-04-29,75,73,Expired
+S1242,USA Pure Oils Trading,Americas,Food & Beverages,Edible Oils,Coconut Oil,2024-06-15,2025-06-15,45,91,Pending Renewal
+S1243,Switzerland Premium Oils Trading,Europe,Food & Beverages,Edible Oils,Coconut Oil,2024-03-28,2029-03-27,45,70,Active
+S1244,Quality Oils Enterprises,Europe,Food & Beverages,Edible Oils,Coconut Oil,2025-04-24,2026-04-24,90,85,Active
+S1245,Pure Oils Enterprises,Europe,Food & Beverages,Edible Oils,Coconut Oil,2024-11-23,2029-11-22,45,86,Active
+S1246,Global Oils Group,Middle East,Food & Beverages,Edible Oils,Coconut Oil,2024-08-24,2028-08-23,60,94,Active
+S1247,Poland Pure Oils Group,Europe,Food & Beverages,Edible Oils,Olive Oil,2024-02-03,2026-02-02,90,93,Active
+S1248,Argentina Select Oils Ltd,Americas,Food & Beverages,Edible Oils,Olive Oil,2024-05-15,2026-05-15,45,88,Active
+S1249,UK Global Oils Trading,Europe,Food & Beverages,Edible Oils,Olive Oil,2024-01-17,2027-01-16,75,73,Active
+S1250,Global Oils Solutions,APAC,Food & Beverages,Edible Oils,Olive Oil,2025-01-02,2028-01-02,45,85,Active
+S1251,Pure Oils Ltd,Americas,Food & Beverages,Edible Oils,Olive Oil,2024-09-12,2028-09-11,75,69,Active
+S1252,Fresh Oils Enterprises,Middle East,Food & Beverages,Edible Oils,Palm Oil,2024-07-04,2026-07-04,45,81,Active
+S1253,Organic Oils Trading,Africa,Food & Beverages,Edible Oils,Palm Oil,2024-10-14,2029-10-13,60,88,Active
+S1254,Turkey Fresh Oils Solutions,Middle East,Food & Beverages,Edible Oils,Palm Oil,2024-10-26,2028-10-25,90,77,Active
+S1255,Fresh Oils International,Europe,Food & Beverages,Edible Oils,Peanut Oil,2024-12-14,2028-12-13,90,67,Active
+S1256,Germany Select Oils International,Europe,Food & Beverages,Edible Oils,Peanut Oil,2024-09-09,2025-09-09,30,92,Pending Renewal
+S1257,Singapore Fresh Oils Co,APAC,Food & Beverages,Edible Oils,Peanut Oil,2024-02-26,2026-02-25,45,90,Active
+S1258,Select Oils Ltd,APAC,Food & Beverages,Edible Oils,Peanut Oil,2024-07-16,2028-07-15,90,79,Active
+S1259,Belgium Fresh Oils Co,Europe,Food & Beverages,Edible Oils,Rice Bran Oil,2024-09-27,2027-09-27,90,92,Active
+S1260,Fresh Oils Inc,Middle East,Food & Beverages,Edible Oils,Rice Bran Oil,2025-04-27,2026-04-27,30,86,Active
+S1261,Natural Oils Inc,Middle East,Food & Beverages,Edible Oils,Soybean Oil,2025-03-29,2030-03-28,60,89,Active
+S1262,Canada Select Oils International,Americas,Food & Beverages,Edible Oils,Soybean Oil,2024-08-10,2026-08-10,75,65,Active
+S1263,Peru Premium Oils International,Americas,Food & Beverages,Edible Oils,Soybean Oil,2024-11-24,2027-11-24,30,74,Active
+S1264,Fresh Oils Solutions,Europe,Food & Beverages,Edible Oils,Sunflower Oil,2025-05-03,2028-05-02,90,89,Active
+S1265,South Korea Select Oils Co,APAC,Food & Beverages,Edible Oils,Sunflower Oil,2024-04-01,2029-03-31,30,92,Active
+S1266,Prime Harvest Enterprises,Americas,Food & Beverages,Grains & Cereals,Corn/Maize,2024-11-16,2027-11-16,90,84,Active
+S1267,Italy Harvest Co Enterprises,Europe,Food & Beverages,Grains & Cereals,Corn/Maize,2024-03-23,2029-03-22,90,94,Active
+S1268,Agro Trade International,APAC,Food & Beverages,Grains & Cereals,Corn/Maize,2024-01-01,2028-12-30,60,80,Active
+S1269,Golden Grain Enterprises,Middle East,Food & Beverages,Grains & Cereals,Corn/Maize,2024-01-10,2025-01-09,60,93,Expired
+S1270,Poland Harvest Co Solutions,Europe,Food & Beverages,Grains & Cereals,Corn/Maize,2024-04-11,2026-04-11,60,89,Active
+S1271,Agri Corp Inc,Americas,Food & Beverages,Grains & Cereals,Corn/Maize,2025-03-01,2028-02-29,45,66,Active
+S1272,Belgium Farm Fresh Ltd,Europe,Food & Beverages,Grains & Cereals,Rice,2024-09-29,2026-09-29,45,86,Active
+S1273,Farm Fresh Inc,APAC,Food & Beverages,Grains & Cereals,Rice,2024-05-03,2029-05-02,30,67,Active
+S1274,Colombia Agri Corp Corp,Americas,Food & Beverages,Grains & Cereals,Rice,2024-09-27,2029-09-26,75,95,Active
+S1275,Australia Grain Masters Enterprises,APAC,Food & Beverages,Grains & Cereals,Rice,2025-01-09,2029-01-08,30,89,Active
+S1276,Argentina Prime Harvest Corp,Americas,Food & Beverages,Grains & Cereals,Rice,2024-08-31,2029-08-30,45,73,Active
+S1277,Prime Harvest Corp,APAC,Food & Beverages,Grains & Cereals,Wheat,2024-06-08,2028-06-07,60,79,Active
+S1278,Prime Harvest Inc,APAC,Food & Beverages,Grains & Cereals,Wheat,2024-04-18,2029-04-17,45,87,Active
+S1279,Pack Tech Solutions,APAC,Food & Beverages,Packaging Materials,Aluminum Cans,2024-09-20,2026-09-20,60,86,Active
+S1280,UK Box Masters Trading,Europe,Food & Beverages,Packaging Materials,Aluminum Cans,2024-05-06,2026-05-06,30,75,Active
+S1281,Poland Pack Tech International,Europe,Food & Beverages,Packaging Materials,Aluminum Cans,2024-10-28,2026-10-28,30,67,Active
+S1282,Packaging Solutions International,APAC,Food & Beverages,Packaging Materials,Aluminum Cans,2025-04-08,2026-04-08,60,67,Active
+S1283,Container Co Ltd,Europe,Food & Beverages,Packaging Materials,Aluminum Cans,2024-01-11,2029-01-09,90,72,Active
+S1284,Colombia Wrap Inc Trading,Americas,Food & Beverages,Packaging Materials,Aluminum Cans,2024-12-28,2025-12-28,45,67,Active
+S1285,Sweden Wrap Inc Corp,Europe,Food & Beverages,Packaging Materials,Aluminum Cans,2025-04-05,2030-04-04,75,68,Active
+S1286,Packaging Solutions Corp,Europe,Food & Beverages,Packaging Materials,Food-Grade Plastics,2025-01-08,2026-01-08,30,66,Active
+S1287,Colombia Container Co Co,Americas,Food & Beverages,Packaging Materials,Food-Grade Plastics,2024-09-05,2026-09-05,90,69,Active
+S1288,Belgium Container Co International,Europe,Food & Beverages,Packaging Materials,Food-Grade Plastics,2024-05-04,2028-05-03,75,71,Active
+S1289,Pack Pro Inc,Americas,Food & Beverages,Packaging Materials,Food-Grade Plastics,2024-08-04,2028-08-03,75,92,Active
+S1290,Colombia Pack Tech Inc,Americas,Food & Beverages,Packaging Materials,Food-Grade Plastics,2024-02-18,2025-02-17,75,76,Expired
+S1291,Container Co Enterprises,Middle East,Food & Beverages,Packaging Materials,Food-Grade Plastics,2024-07-25,2027-07-25,30,72,Active
+S1292,Box Masters International,APAC,Food & Beverages,Packaging Materials,Food-Grade Plastics,2025-01-05,2030-01-04,90,80,Active
+S1293,Colombia Container Co Inc,Americas,Food & Beverages,Packaging Materials,Glass Containers,2024-03-12,2028-03-11,45,73,Active
+S1294,China Box Masters Corp,APAC,Food & Beverages,Packaging Materials,Glass Containers,2024-08-24,2026-08-24,30,79,Active
+S1295,Box Masters Group,Europe,Food & Beverages,Packaging Materials,Glass Containers,2024-04-08,2026-04-08,90,79,Active
+S1296,Pack Tech Ltd,APAC,Food & Beverages,Packaging Materials,Glass Containers,2025-02-17,2030-02-16,30,66,Active
+S1297,Thailand Container Co Trading,APAC,Food & Beverages,Packaging Materials,Glass Containers,2024-11-29,2029-11-28,30,67,Active
+S1298,Premium Meats Enterprises,APAC,Food & Beverages,Proteins,Beef,2024-09-05,2028-09-04,45,92,Active
+S1299,Select Proteins Trading,Europe,Food & Beverages,Proteins,Beef,2024-07-24,2025-07-24,45,77,Pending Renewal
+S1300,Protein Source Ltd,Europe,Food & Beverages,Proteins,Beef,2025-04-19,2027-04-19,45,78,Active
+S1301,Quality Foods Group,Middle East,Food & Beverages,Proteins,Poultry,2025-02-05,2029-02-04,60,78,Active
+S1302,Thailand Meat Pro Enterprises,APAC,Food & Beverages,Proteins,Poultry,2024-04-07,2027-04-07,45,95,Active
+S1303,Egypt Select Proteins Solutions,Africa,Food & Beverages,Proteins,Poultry,2024-12-22,2029-12-21,75,69,Active
+S1304,Quality Foods Co,Americas,Food & Beverages,Proteins,Poultry,2024-01-02,2028-01-01,60,94,Active
+S1305,Belgium Prime Cuts Solutions,Europe,Food & Beverages,Proteins,Seafood,2024-04-05,2025-04-05,90,67,Expired
+S1306,Fresh Farms Enterprises,APAC,Food & Beverages,Proteins,Seafood,2025-05-06,2030-05-05,30,92,Active
+S1307,Switzerland Fresh Farms Ltd,Europe,Food & Beverages,Proteins,Seafood,2024-10-26,2028-10-25,90,94,Active
+S1308,Nigeria Select Proteins Trading,Africa,Food & Beverages,Proteins,Seafood,2025-01-17,2028-01-17,30,66,Active
+S1309,Ghana Prime Cuts Group,Africa,Food & Beverages,Proteins,Seafood,2025-03-12,2030-03-11,45,66,Active
+S1310,Italy Quality Foods Enterprises,Europe,Food & Beverages,Proteins,Seafood,2024-01-30,2029-01-28,90,66,Active
+S1311,Argentina Seasoning Masters Solutions,Americas,Food & Beverages,Spices & Seasonings,Pepper,2024-12-11,2026-12-11,75,68,Active
+S1312,Herb Gardens International,APAC,Food & Beverages,Spices & Seasonings,Pepper,2024-10-31,2025-10-31,90,67,Active
+S1313,Premium Flavors Solutions,Middle East,Food & Beverages,Spices & Seasonings,Pepper,2024-08-02,2029-08-01,90,81,Active
+S1314,Australia Premium Flavors Inc,APAC,Food & Beverages,Spices & Seasonings,Pepper,2025-04-27,2030-04-26,45,83,Active
+S1315,Seasoning Masters Solutions,Europe,Food & Beverages,Spices & Seasonings,Vanilla,2024-07-21,2026-07-21,60,79,Active
+S1316,Germany Flavor Co Group,Europe,Food & Beverages,Spices & Seasonings,Vanilla,2025-01-01,2028-01-01,45,73,Active
+S1317,Australia Herb Gardens Corp,APAC,Food & Beverages,Spices & Seasonings,Vanilla,2024-06-10,2025-06-10,30,79,Expired
+S1318,Tanzania Flavor Co Trading,Africa,Food & Beverages,Spices & Seasonings,Vanilla,2024-11-14,2029-11-13,30,67,Active
+S1319,Spice World Co,Europe,Food & Beverages,Spices & Seasonings,Vanilla,2024-10-02,2026-10-02,90,73,Active
+S1320,Qatar Exotic Spices International,Middle East,Food & Beverages,Spices & Seasonings,Vanilla,2024-06-10,2027-06-10,45,86,Active
+S1321,Natural Sweet Solutions,Europe,Food & Beverages,Sweeteners,Sugar,2024-05-05,2027-05-05,60,70,Active
+S1322,Quality Sweet Inc,Americas,Food & Beverages,Sweeteners,Sugar,2024-03-08,2027-03-08,30,93,Active
+S1323,France Sky Services Enterprises,Europe,Information Technology,Cloud Services,Cloud Storage,2025-02-22,2030-02-21,60,94,Active
+S1324,France Cloud Pro Enterprises,Europe,Information Technology,Cloud Services,Cloud Storage,2025-02-17,2030-02-16,30,86,Active
+S1325,Cloud Masters Trading,Middle East,Information Technology,Cloud Services,Cloud Storage,2024-12-05,2025-12-05,45,73,Active
+S1326,Virtual Solutions Ltd,Africa,Information Technology,Cloud Services,Cloud Storage,2024-08-12,2029-08-11,60,84,Active
+S1327,Virtual Solutions International,APAC,Information Technology,Cloud Services,IaaS,2024-05-19,2027-05-19,90,71,Active
+S1328,Kuwait Cloud Pro International,Middle East,Information Technology,Cloud Services,IaaS,2024-02-29,2025-02-28,90,69,Expired
+S1329,Switzerland Sky Services Inc,Europe,Information Technology,Cloud Services,PaaS,2024-05-08,2025-05-08,30,85,Expired
+S1330,Belgium Sky Services Enterprises,Europe,Information Technology,Cloud Services,PaaS,2025-01-02,2028-01-02,45,86,Active
+S1331,Ethiopia Cloud Pro Corp,Africa,Information Technology,Cloud Services,PaaS,2024-11-20,2027-11-20,90,80,Active
+S1332,Tech Cloud International,Americas,Information Technology,Cloud Services,SaaS,2024-08-04,2027-08-04,30,65,Active
+S1333,Digital Cloud Corp,APAC,Information Technology,Cloud Services,SaaS,2024-06-19,2026-06-19,60,70,Active
+S1334,Cyber Shield Trading,Americas,Information Technology,Cybersecurity,Endpoint Security,2025-01-14,2029-01-13,90,87,Active
+S1335,France Safe Tech Co,Europe,Information Technology,Cybersecurity,Endpoint Security,2024-02-08,2026-02-07,90,66,Active
+S1336,Mexico Security Masters Inc,Americas,Information Technology,Cybersecurity,Endpoint Security,2024-08-06,2029-08-05,30,68,Active
+S1337,South Africa Safe Tech Corp,Africa,Information Technology,Cybersecurity,Identity Management,2024-02-22,2027-02-21,90,93,Active
+S1338,Chile Secure Pro Corp,Americas,Information Technology,Cybersecurity,Identity Management,2024-03-16,2028-03-15,45,66,Active
+S1339,Ghana Guard Systems Enterprises,Africa,Information Technology,Cybersecurity,Identity Management,2024-06-06,2027-06-06,30,93,Active
+S1340,Digital Defense Inc,Middle East,Information Technology,Cybersecurity,Identity Management,2024-07-02,2026-07-02,45,86,Active
+S1341,Cyber Shield Solutions,APAC,Information Technology,Cybersecurity,Identity Management,2025-03-03,2028-03-02,90,82,Active
+S1342,Digital Defense Corp,Europe,Information Technology,Cybersecurity,Network Security,2025-03-23,2029-03-22,90,88,Active
+S1343,Brazil Secure Pro Solutions,Americas,Information Technology,Cybersecurity,Network Security,2025-02-19,2027-02-19,75,65,Active
+S1344,Belgium Safe Tech Inc,Europe,Information Technology,Cybersecurity,Network Security,2024-03-20,2026-03-20,45,90,Active
+S1345,Digital Defense Enterprises,Europe,Information Technology,Cybersecurity,Security Operations,2025-02-07,2026-02-07,75,92,Active
+S1346,Secure Pro Corp,Europe,Information Technology,Cybersecurity,Security Operations,2025-02-24,2027-02-24,45,65,Active
+S1347,Cyber Shield Corp,Europe,Information Technology,Cybersecurity,Security Operations,2024-01-20,2028-01-19,45,71,Active
+S1348,Kenya Security Masters Solutions,Africa,Information Technology,Cybersecurity,Security Operations,2024-12-08,2026-12-08,60,70,Active
+S1349,Secure Pro Co,Africa,Information Technology,Cybersecurity,Security Operations,2025-02-22,2029-02-21,60,74,Active
+S1350,Guard Systems Group,APAC,Information Technology,Cybersecurity,Security Operations,2024-04-01,2027-04-01,75,90,Active
+S1351,Poland Digital Depot Group,Europe,Information Technology,Hardware,Desktops,2025-03-07,2030-03-06,60,95,Active
+S1352,Belgium Digital Systems International,Europe,Information Technology,Hardware,Desktops,2024-11-24,2029-11-23,75,86,Active
+S1353,Philippines Hardware Solutions Trading,APAC,Information Technology,Hardware,Desktops,2024-12-03,2026-12-03,75,75,Active
+S1354,Hardware Solutions Corp,Africa,Information Technology,Hardware,Desktops,2024-05-22,2025-05-22,60,76,Expired
+S1355,Hardware Solutions Trading,Americas,Information Technology,Hardware,Laptops,2024-01-15,2025-01-14,60,70,Expired
+S1356,Switzerland Digital Systems Inc,Europe,Information Technology,Hardware,Network Equipment,2025-02-06,2028-02-06,75,84,Active
+S1357,Compute Pro Solutions,APAC,Information Technology,Hardware,Network Equipment,2024-11-01,2028-10-31,60,88,Active
+S1358,Compute Pro Corp,Middle East,Information Technology,Hardware,Network Equipment,2024-10-24,2027-10-24,30,68,Active
+S1359,Israel Hardware Solutions Ltd,Middle East,Information Technology,Hardware,Peripherals,2024-10-22,2026-10-22,60,66,Active
+S1360,Turkey Tech Hardware Corp,Middle East,Information Technology,Hardware,Peripherals,2024-12-28,2028-12-27,30,81,Active
+S1361,Germany Tech Mart Inc,Europe,Information Technology,Hardware,Peripherals,2024-09-18,2025-09-18,75,93,Active
+S1362,Compute Pro Co,Europe,Information Technology,Hardware,Servers,2024-08-08,2025-08-08,60,84,Pending Renewal
+S1363,Nigeria Tech Mart Corp,Africa,Information Technology,Hardware,Servers,2025-04-18,2030-04-17,45,76,Active
+S1364,Sweden Digital Depot Enterprises,Europe,Information Technology,Hardware,Storage Systems,2024-04-08,2028-04-07,75,86,Active
+S1365,Digital Depot Group,Europe,Information Technology,Hardware,Storage Systems,2024-06-07,2028-06-06,60,77,Active
+S1366,Malaysia Hardware Solutions International,APAC,Information Technology,Hardware,Storage Systems,2024-12-22,2027-12-22,90,69,Active
+S1367,Digital Systems Ltd,Africa,Information Technology,Hardware,Storage Systems,2024-06-09,2025-06-09,60,81,Expired
+S1368,Tech Apps Enterprises,Middle East,Information Technology,Software,Database Software,2024-01-01,2026-12-31,60,71,Active
+S1369,Soft Solutions Trading,APAC,Information Technology,Software,Database Software,2025-01-18,2027-01-18,90,83,Active
+S1370,Saudi Arabia Soft Solutions Solutions,Middle East,Information Technology,Software,Database Software,2024-06-03,2028-06-02,90,91,Active
+S1371,Indonesia Software Hub Inc,APAC,Information Technology,Software,Development Tools,2024-12-11,2026-12-11,90,80,Active
+S1372,France Software Hub International,Europe,Information Technology,Software,Development Tools,2024-06-13,2028-06-12,75,79,Active
+S1373,App Pro Co,Americas,Information Technology,Software,Development Tools,2024-08-08,2029-08-07,90,85,Active
+S1374,Soft Solutions International,Middle East,Information Technology,Software,Enterprise Software,2025-02-16,2027-02-16,45,65,Active
+S1375,Israel Code Masters Group,Middle East,Information Technology,Software,Enterprise Software,2024-09-20,2029-09-19,60,67,Active
+S1376,Digital Software Corp,APAC,Information Technology,Software,Enterprise Software,2025-02-10,2027-02-10,30,74,Active
+S1377,Switzerland Tech Apps Ltd,Europe,Information Technology,Software,Enterprise Software,2025-02-23,2027-02-23,60,72,Active
+S1378,Digital Software Solutions,APAC,Information Technology,Software,Productivity Software,2024-05-04,2026-05-04,30,93,Active
+S1379,Soft Solutions Co,Africa,Information Technology,Software,Productivity Software,2025-03-29,2030-03-28,45,87,Active
+S1380,Soft Solutions Corp,Europe,Information Technology,Software,Productivity Software,2025-03-11,2026-03-11,75,78,Active
+S1381,Peru Soft Solutions Group,Americas,Information Technology,Software,Productivity Software,2024-01-24,2026-01-23,75,84,Active
+S1382,Peru App Pro International,Americas,Information Technology,Software,Productivity Software,2024-12-22,2028-12-21,75,77,Active
+S1383,Mexico Telecom Pro Inc,Americas,Information Technology,Telecommunications,Internet Services,2025-01-19,2026-01-19,75,72,Active
+S1384,USA Telecom Pro Group,Americas,Information Technology,Telecommunications,Internet Services,2024-10-12,2026-10-12,30,79,Active
+S1385,Signal Masters Group,APAC,Information Technology,Telecommunications,Internet Services,2024-03-31,2029-03-30,75,66,Active
+S1386,Network Solutions Ltd,Middle East,Information Technology,Telecommunications,Internet Services,2024-03-09,2028-03-08,90,82,Active
+S1387,Connect Co Co,Europe,Information Technology,Telecommunications,Mobile Services,2025-02-21,2030-02-20,75,91,Active
+S1388,Network Solutions International,Americas,Information Technology,Telecommunications,Mobile Services,2024-10-31,2027-10-31,75,84,Active
+S1389,Argentina Network Solutions Solutions,Americas,Information Technology,Telecommunications,Mobile Services,2025-04-09,2030-04-08,75,93,Active
+S1390,Israel Comm Tech Corp,Middle East,Information Technology,Telecommunications,Mobile Services,2024-03-22,2028-03-21,75,73,Active
+S1391,Lab Chemicals Enterprises,Africa,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,2025-02-02,2030-02-01,75,85,Active
+S1392,USA Pure Chemicals Co,Americas,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,2025-01-19,2027-01-19,60,89,Active
+S1393,Specialty Chem Solutions,Middle East,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,2024-05-02,2027-05-02,75,67,Active
+S1394,Colombia Specialty Chem Co,Americas,Manufacturing & Industrial,Chemicals,Adhesives & Sealants,2024-12-31,2027-12-31,45,73,Active
+S1395,Specialty Chem Inc,Europe,Manufacturing & Industrial,Chemicals,Industrial Chemicals,2024-12-21,2026-12-21,45,67,Active
+S1396,Chemical Solutions Inc,Middle East,Manufacturing & Industrial,Chemicals,Industrial Chemicals,2024-07-31,2028-07-30,60,82,Active
+S1397,Ghana Pure Chemicals Inc,Africa,Manufacturing & Industrial,Chemicals,Industrial Chemicals,2024-06-20,2027-06-20,90,67,Active
+S1398,Chile Chemical Solutions Enterprises,Americas,Manufacturing & Industrial,Chemicals,Industrial Chemicals,2024-03-11,2026-03-11,45,77,Active
+S1399,Vietnam Industrial Chem Co,APAC,Manufacturing & Industrial,Chemicals,Petrochemicals,2024-08-26,2028-08-25,30,71,Active
+S1400,Specialty Chem Group,APAC,Manufacturing & Industrial,Chemicals,Petrochemicals,2025-03-02,2029-03-01,75,93,Active
+S1401,UAE Specialty Chem Trading,Middle East,Manufacturing & Industrial,Chemicals,Petrochemicals,2024-01-04,2027-01-03,60,89,Active
+S1402,Spain Specialty Chem Solutions,Europe,Manufacturing & Industrial,Chemicals,Petrochemicals,2024-07-18,2028-07-17,90,88,Active
+S1403,Lab Chemicals Co,APAC,Manufacturing & Industrial,Chemicals,Petrochemicals,2025-01-29,2030-01-28,30,92,Active
+S1404,Chile Chemical Solutions Solutions,Americas,Manufacturing & Industrial,Chemicals,Petrochemicals,2025-03-26,2030-03-25,75,80,Active
+S1405,Specialty Chem Enterprises,APAC,Manufacturing & Industrial,Chemicals,Specialty Chemicals,2024-08-11,2028-08-10,30,77,Active
+S1406,Lab Chemicals Ltd,Americas,Manufacturing & Industrial,Chemicals,Specialty Chemicals,2025-01-11,2030-01-10,90,93,Active
+S1407,Nigeria Chem Pro International,Africa,Manufacturing & Industrial,Chemicals,Specialty Chemicals,2024-04-22,2028-04-21,45,73,Active
+S1408,Equipment Masters Group,Europe,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,2024-06-21,2028-06-20,45,91,Active
+S1409,Chile Industrial Machines International,Americas,Manufacturing & Industrial,Equipment & Machinery,Industrial Machinery,2024-08-27,2026-08-27,90,82,Active
+S1410,Belgium Tech Machinery Group,Europe,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,2024-12-05,2025-12-05,30,85,Active
+S1411,France Industrial Machines Trading,Europe,Manufacturing & Industrial,Equipment & Machinery,Manufacturing Equipment,2024-01-14,2028-01-13,90,83,Active
+S1412,Tech Machinery Corp,Americas,Manufacturing & Industrial,Equipment & Machinery,Material Handling,2024-01-26,2027-01-25,75,75,Active
+S1413,Oman Machine Pro Trading,Middle East,Manufacturing & Industrial,Equipment & Machinery,Material Handling,2025-01-24,2029-01-23,60,89,Active
+S1414,Germany Equipment Masters Solutions,Europe,Manufacturing & Industrial,Equipment & Machinery,Material Handling,2024-04-18,2028-04-17,60,75,Active
+S1415,Peru Industrial Machines Ltd,Americas,Manufacturing & Industrial,Equipment & Machinery,Material Handling,2025-05-02,2029-05-01,60,91,Active
+S1416,Machine Pro Solutions,Africa,Manufacturing & Industrial,Equipment & Machinery,Material Handling,2024-08-07,2026-08-07,75,70,Active
+S1417,UK Machine Pro Trading,Europe,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,2024-11-28,2025-11-28,30,89,Active
+S1418,Industrial Machines Solutions,Middle East,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,2024-10-03,2025-10-03,60,72,Active
+S1419,Machine Pro Inc,APAC,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,2024-01-16,2026-01-15,45,91,Active
+S1420,Industrial Machines International,Europe,Manufacturing & Industrial,Equipment & Machinery,Robotics & Automation,2024-02-11,2028-02-10,30,88,Active
+S1421,Germany Industrial Supply Enterprises,Europe,Manufacturing & Industrial,MRO Supplies,Industrial Tools,2024-01-11,2029-01-09,45,72,Active
+S1422,Kuwait Maintenance Co Ltd,Middle East,Manufacturing & Industrial,MRO Supplies,Industrial Tools,2024-03-05,2028-03-04,30,83,Active
+S1423,Argentina MRO Pro Enterprises,Americas,Manufacturing & Industrial,MRO Supplies,Industrial Tools,2025-04-30,2027-04-30,75,87,Active
+S1424,Industrial Supply Inc,Europe,Manufacturing & Industrial,MRO Supplies,Industrial Tools,2024-11-06,2025-11-06,45,95,Active
+S1425,Taiwan Industrial Supply Co,APAC,Manufacturing & Industrial,MRO Supplies,Industrial Tools,2024-05-11,2027-05-11,45,84,Active
+S1426,India MRO Pro Trading,APAC,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,2025-01-30,2028-01-30,90,90,Active
+S1427,Malaysia Supply Masters Enterprises,APAC,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,2025-01-01,2027-01-01,30,83,Active
+S1428,Industrial Supply International,APAC,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,2024-06-08,2025-06-08,90,65,Expired
+S1429,USA Service Supply Enterprises,Americas,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,2025-04-09,2029-04-08,75,95,Active
+S1430,USA Service Supply Solutions,Americas,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,2025-04-20,2028-04-19,90,86,Active
+S1431,USA Industrial Supply Co,Americas,Manufacturing & Industrial,MRO Supplies,Lubricants & Fluids,2024-12-19,2026-12-19,30,87,Active
+S1432,MRO Pro Solutions,APAC,Manufacturing & Industrial,MRO Supplies,Safety Equipment,2025-05-06,2028-05-05,75,87,Active
+S1433,MRO Pro Group,Europe,Manufacturing & Industrial,MRO Supplies,Safety Equipment,2024-09-16,2027-09-16,30,92,Active
+S1434,South Korea MRO Pro Group,APAC,Manufacturing & Industrial,MRO Supplies,Safety Equipment,2024-08-03,2028-08-02,30,78,Active
+S1435,Poland Service Supply International,Europe,Manufacturing & Industrial,MRO Supplies,Safety Equipment,2024-03-02,2029-03-01,30,76,Active
+S1436,Service Supply Group,APAC,Manufacturing & Industrial,MRO Supplies,Safety Equipment,2024-09-29,2028-09-28,60,67,Active
+S1437,Singapore Industrial Supply Ltd,APAC,Manufacturing & Industrial,MRO Supplies,Spare Parts,2024-09-24,2027-09-24,90,90,Active
+S1438,Colombia Parts Pro Ltd,Americas,Manufacturing & Industrial,MRO Supplies,Spare Parts,2025-04-15,2030-04-14,75,79,Active
+S1439,Poland Parts Pro Enterprises,Europe,Manufacturing & Industrial,MRO Supplies,Spare Parts,2024-03-19,2028-03-18,45,88,Active
+S1440,Thailand Service Supply Solutions,APAC,Manufacturing & Industrial,MRO Supplies,Spare Parts,2024-08-11,2029-08-10,60,75,Active
+S1441,USA Metal Pro Co,Americas,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,2025-03-12,2027-03-12,30,73,Active
+S1442,Metal Pro Co,APAC,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,2024-07-13,2027-07-13,30,80,Active
+S1443,Morocco Prime Metals Solutions,Africa,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,2024-08-25,2029-08-24,90,86,Active
+S1444,Sweden Steel Masters Ltd,Europe,Manufacturing & Industrial,Raw Materials - Metals,Aluminum,2025-03-27,2029-03-26,45,89,Active
+S1445,Prime Metals International,Americas,Manufacturing & Industrial,Raw Materials - Metals,Copper,2025-03-11,2028-03-10,45,80,Active
+S1446,Bahrain Metal Pro Co,Middle East,Manufacturing & Industrial,Raw Materials - Metals,Copper,2024-04-18,2027-04-18,60,75,Active
+S1447,Prime Metals Inc,Americas,Manufacturing & Industrial,Raw Materials - Metals,Copper,2024-05-23,2029-05-22,60,82,Active
+S1448,Metal Works Group,Middle East,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2024-01-06,2029-01-04,45,67,Active
+S1449,Steel Masters Corp,Americas,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2024-12-30,2028-12-29,75,90,Active
+S1450,Bahrain Prime Metals Inc,Middle East,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2024-07-26,2026-07-26,60,86,Active
+S1451,Metal Pro Trading,Africa,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2024-01-09,2025-01-08,60,72,Expired
+S1452,Forge Inc Group,Europe,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2025-01-23,2027-01-23,75,85,Active
+S1453,Metal Works International,Europe,Manufacturing & Industrial,Raw Materials - Metals,Nickel,2024-05-03,2028-05-02,75,82,Active
+S1454,Steel Masters Enterprises,Europe,Manufacturing & Industrial,Raw Materials - Metals,Steel,2024-10-24,2027-10-24,75,82,Active
+S1455,Peru Metal Pro Trading,Americas,Manufacturing & Industrial,Raw Materials - Metals,Steel,2024-09-28,2027-09-28,75,88,Active
+S1456,UK Metal Pro Corp,Europe,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-08-20,2027-08-20,60,73,Active
+S1457,Peru Prime Metals Ltd,Americas,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-04-20,2028-04-19,60,88,Active
+S1458,Tanzania Steel Masters Trading,Africa,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-04-28,2025-04-28,45,75,Expired
+S1459,Alloy Co Group,Europe,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-03-02,2029-03-01,45,71,Active
+S1460,Indonesia Alloy Co Corp,APAC,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-02-21,2026-02-20,60,72,Active
+S1461,Canada Forge Inc International,Americas,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-10-28,2029-10-27,90,74,Active
+S1462,Turkey Metal Works Solutions,Middle East,Manufacturing & Industrial,Raw Materials - Metals,Zinc,2024-10-08,2027-10-08,60,87,Active
+S1463,Singapore Polymer Co Corp,APAC,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,2024-12-28,2029-12-27,45,73,Active
+S1464,China Polymer Co Group,APAC,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,2024-07-03,2026-07-03,60,65,Active
+S1465,India Plastic Pro Corp,APAC,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,2025-03-22,2026-03-22,90,74,Active
+S1466,Singapore Polymer Co Ltd,APAC,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,2024-12-23,2026-12-23,75,68,Active
+S1467,Colombia Resin Masters Group,Americas,Manufacturing & Industrial,Raw Materials - Plastics,Engineering Plastics,2024-01-24,2025-01-23,90,74,Expired
+S1468,Qatar Plastic Solutions Solutions,Middle East,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2024-02-03,2028-02-02,75,67,Active
+S1469,Plastic Pro Trading,APAC,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2025-03-17,2029-03-16,30,91,Active
+S1470,Resin Masters Inc,Europe,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2024-05-07,2025-05-07,90,89,Expired
+S1471,Polymer Co Group,Americas,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2024-04-04,2025-04-04,60,95,Expired
+S1472,Poly Tech Enterprises,Americas,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2024-08-28,2028-08-27,75,75,Active
+S1473,Poly Tech Co,Middle East,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2025-02-19,2030-02-18,60,67,Active
+S1474,Plastic Solutions Inc,APAC,Manufacturing & Industrial,Raw Materials - Plastics,PVC,2024-10-22,2025-10-22,45,69,Active
+S1475,UK Poly Tech Ltd,Europe,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,2024-08-01,2029-07-31,90,90,Active
+S1476,Argentina Resin Masters Solutions,Americas,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,2024-11-12,2026-11-12,90,77,Active
+S1477,Netherlands Polymer Co Corp,Europe,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,2024-10-28,2028-10-27,60,83,Active
+S1478,Colombia Resin Masters International,Americas,Manufacturing & Industrial,Raw Materials - Plastics,Polyethylene,2024-08-18,2028-08-17,60,92,Active
+S1479,Plastic Solutions International,Middle East,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,2024-04-18,2027-04-18,30,70,Active
+S1480,Plastic Solutions Ltd,APAC,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,2024-05-02,2026-05-02,90,67,Active
+S1481,Kenya Polymer Co International,Africa,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,2024-11-13,2025-11-13,90,95,Active
+S1482,Poly Tech Corp,Africa,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,2025-01-13,2026-01-13,45,85,Active
+S1483,Polymer Co Corp,Middle East,Manufacturing & Industrial,Raw Materials - Plastics,Polypropylene,2024-03-21,2025-03-21,75,79,Expired
+S1484,Argentina Science Equipment Enterprises,Americas,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,2024-01-17,2026-01-16,60,87,Active
+S1485,Analytical Pro Solutions,APAC,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,2024-05-24,2028-05-23,30,86,Active
+S1486,Analytical Pro Co,Europe,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,2025-02-15,2027-02-15,75,68,Active
+S1487,UK Research Tools Corp,Europe,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,2024-04-29,2027-04-29,90,86,Active
+S1488,Analytical Pro Group,APAC,Healthcare & Life Sciences,Laboratory Equipment,Analytical Instruments,2024-12-18,2029-12-17,75,74,Active
+S1489,Lab Masters Group,Europe,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2025-02-26,2030-02-25,60,79,Active
+S1490,Lab Masters Trading,Americas,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2024-09-09,2028-09-08,30,84,Active
+S1491,Lab Pro Solutions,Middle East,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2024-05-16,2026-05-16,30,66,Active
+S1492,Belgium Lab Masters Corp,Europe,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2024-07-25,2027-07-25,90,82,Active
+S1493,Lab Pro International,Middle East,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2024-03-25,2027-03-25,90,88,Active
+S1494,Canada Research Tools Corp,Americas,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2024-03-04,2028-03-03,60,87,Active
+S1495,Switzerland Analytical Pro International,Europe,Healthcare & Life Sciences,Laboratory Equipment,Lab Automation,2024-10-05,2026-10-05,45,94,Active
+S1496,Australia Med Tech Group,APAC,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,2025-05-07,2030-05-06,90,95,Active
+S1497,Argentina Health Devices Trading,Americas,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,2024-01-21,2028-01-20,60,84,Active
+S1498,Care Tech Co,APAC,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,2024-05-08,2025-05-08,30,72,Expired
+S1499,Malaysia Care Tech Enterprises,APAC,Healthcare & Life Sciences,Medical Devices,Diagnostic Equipment,2024-01-11,2027-01-10,90,66,Active
+S1500,Malaysia Med Tech International,APAC,Healthcare & Life Sciences,Medical Devices,Implants,2025-01-25,2027-01-25,75,81,Active
+S1501,Med Tech Enterprises,Americas,Healthcare & Life Sciences,Medical Devices,Implants,2024-11-29,2028-11-28,60,70,Active
+S1502,Care Tech Trading,Middle East,Healthcare & Life Sciences,Medical Devices,Implants,2024-10-26,2028-10-25,75,67,Active
+S1503,Turkey Med Tech Group,Middle East,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,2024-06-13,2025-06-13,45,75,Expired
+S1504,Device Pro Group,Americas,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,2024-07-29,2028-07-28,60,86,Active
+S1505,Health Devices Inc,Americas,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,2025-04-28,2029-04-27,90,66,Active
+S1506,Health Devices Corp,Americas,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,2024-08-20,2025-08-20,60,73,Pending Renewal
+S1507,Australia Diagnostic Pro Group,APAC,Healthcare & Life Sciences,Medical Devices,Patient Monitoring,2024-08-28,2027-08-28,75,75,Active
+S1508,Switzerland Medical Systems Corp,Europe,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,2024-06-14,2025-06-14,75,92,Expired
+S1509,Diagnostic Pro Corp,Europe,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,2024-09-20,2025-09-20,90,79,Active
+S1510,Colombia Health Devices Trading,Americas,Healthcare & Life Sciences,Medical Devices,Surgical Instruments,2024-07-30,2025-07-30,45,81,Pending Renewal
+S1511,Supply Care Ltd,Americas,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,2024-10-08,2026-10-08,60,79,Active
+S1512,Med Supply Solutions,Europe,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,2024-07-04,2029-07-03,75,85,Active
+S1513,Japan Health Supplies Corp,APAC,Healthcare & Life Sciences,Medical Supplies,Disposable Supplies,2024-08-14,2025-08-14,45,73,Pending Renewal
+S1514,USA Care Supplies Co,Americas,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,2024-03-22,2027-03-22,90,65,Active
+S1515,Med Supply International,Europe,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,2025-03-26,2029-03-25,30,65,Active
+S1516,Health Supplies Group,Middle East,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,2025-05-13,2030-05-12,45,87,Active
+S1517,Health Supplies International,APAC,Healthcare & Life Sciences,Medical Supplies,Lab Supplies,2024-10-09,2028-10-08,30,72,Active
+S1518,Medical Mart Co,Middle East,Healthcare & Life Sciences,Medical Supplies,Wound Care,2024-05-19,2028-05-18,75,80,Active
+S1519,Mexico Med Supply Group,Americas,Healthcare & Life Sciences,Medical Supplies,Wound Care,2025-03-06,2026-03-06,75,95,Active
+S1520,UAE Supply Care Enterprises,Middle East,Healthcare & Life Sciences,Medical Supplies,Wound Care,2024-05-04,2028-05-03,90,69,Active
+S1521,Sweden Care Supplies Corp,Europe,Healthcare & Life Sciences,Medical Supplies,Wound Care,2024-03-01,2026-03-01,75,94,Active
+S1522,Nigeria Health Pro Trading,Africa,Healthcare & Life Sciences,Medical Supplies,Wound Care,2025-01-01,2028-01-01,90,87,Active
+S1523,Health Pharma Co,Americas,Healthcare & Life Sciences,Pharmaceuticals,Biologics,2024-07-15,2026-07-15,90,81,Active
+S1524,Brazil Pharma Pro Trading,Americas,Healthcare & Life Sciences,Pharmaceuticals,Biologics,2025-01-30,2029-01-29,60,94,Active
+S1525,India Med Source Corp,APAC,Healthcare & Life Sciences,Pharmaceuticals,Biologics,2025-01-17,2027-01-17,30,73,Active
+S1526,Life Sciences Inc,Europe,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2025-02-07,2030-02-06,60,91,Active
+S1527,Bio Pharma Trading,Americas,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2024-01-02,2027-01-01,60,91,Active
+S1528,Saudi Arabia Pharma Pro Corp,Middle East,Healthcare & Life Sciences,Pharmaceuticals,Branded Drugs,2024-10-27,2029-10-26,75,92,Active
+S1529,Med Source Solutions,APAC,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2024-06-25,2027-06-25,90,89,Active
+S1530,Belgium Life Sciences Trading,Europe,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2024-06-13,2026-06-13,45,83,Active
+S1531,Medical Solutions International,Middle East,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2024-03-17,2028-03-16,90,80,Active
+S1532,Med Source Corp,Africa,Healthcare & Life Sciences,Pharmaceuticals,Generic Drugs,2024-10-05,2028-10-04,75,94,Active
+S1533,Bio Pharma Enterprises,Europe,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2024-01-19,2026-01-18,90,95,Active
+S1534,Nigeria Life Sciences Group,Africa,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2024-12-05,2026-12-05,75,95,Active
+S1535,Malaysia Medical Solutions Ltd,APAC,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2024-06-11,2028-06-10,75,77,Active
+S1536,Australia Health Pharma Co,APAC,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2024-07-15,2026-07-15,75,66,Active
+S1537,Health Pharma Trading,Americas,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2025-03-08,2029-03-07,30,81,Active
+S1538,Spain Health Pharma Co,Europe,Healthcare & Life Sciences,Pharmaceuticals,OTC Medications,2024-10-29,2027-10-29,30,92,Active
+S1539,Bio Pharma Ltd,Middle East,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,2024-08-28,2027-08-28,60,84,Active
+S1540,Canada Health Pharma Trading,Americas,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,2024-12-20,2028-12-19,30,92,Active
+S1541,Malaysia Medical Solutions Trading,APAC,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,2025-04-11,2029-04-10,30,88,Active
+S1542,Life Sciences Solutions,Europe,Healthcare & Life Sciences,Pharmaceuticals,Vaccines,2024-03-14,2028-03-13,45,67,Active
+S1543,Grid Masters Trading,APAC,Energy & Utilities,Electricity,Backup Power,2024-06-17,2029-06-16,75,95,Active
+S1544,Mexico Electric Solutions Ltd,Americas,Energy & Utilities,Electricity,Backup Power,2024-06-11,2028-06-10,90,66,Active
+S1545,Power Pro Co,APAC,Energy & Utilities,Electricity,Backup Power,2024-12-16,2027-12-16,45,88,Active
+S1546,Energy Co Trading,Europe,Energy & Utilities,Electricity,Backup Power,2024-11-12,2025-11-12,45,85,Active
+S1547,Energy Co Corp,Americas,Energy & Utilities,Electricity,Grid Electricity,2024-02-16,2028-02-15,30,89,Active
+S1548,Energy Plus Inc,APAC,Energy & Utilities,Electricity,Grid Electricity,2024-12-21,2027-12-21,30,66,Active
+S1549,Ethiopia Power Pro Group,Africa,Energy & Utilities,Electricity,Grid Electricity,2024-06-15,2025-06-15,60,76,Pending Renewal
+S1550,Power Pro Ltd,Americas,Energy & Utilities,Electricity,Grid Electricity,2024-11-20,2025-11-20,75,70,Active
+S1551,Colombia Electric Solutions Enterprises,Americas,Energy & Utilities,Electricity,Renewable Electricity,2025-02-09,2027-02-09,45,70,Active
+S1552,Power Source Co,APAC,Energy & Utilities,Electricity,Renewable Electricity,2024-07-10,2028-07-09,45,72,Active
+S1553,Taiwan Grid Masters Solutions,APAC,Energy & Utilities,Electricity,Renewable Electricity,2024-09-28,2028-09-27,90,86,Active
+S1554,Canada Power Fuels Co,Americas,Energy & Utilities,Fuels,Aviation Fuel,2024-08-14,2027-08-14,90,74,Active
+S1555,Fuel Pro Solutions,Middle East,Energy & Utilities,Fuels,Aviation Fuel,2024-02-10,2029-02-08,75,84,Active
+S1556,Turkey Fuel Pro Solutions,Middle East,Energy & Utilities,Fuels,Aviation Fuel,2024-05-27,2029-05-26,45,67,Active
+S1557,Philippines Energy Fuels International,APAC,Energy & Utilities,Fuels,Aviation Fuel,2024-12-15,2026-12-15,75,94,Active
+S1558,Brazil Petro Co Ltd,Americas,Energy & Utilities,Fuels,Aviation Fuel,2024-11-22,2027-11-22,75,73,Active
+S1559,Poland Fuel Solutions Trading,Europe,Energy & Utilities,Fuels,Aviation Fuel,2024-10-25,2026-10-25,45,79,Active
+S1560,Energy Fuels International,APAC,Energy & Utilities,Fuels,Aviation Fuel,2024-12-07,2025-12-07,75,93,Active
+S1561,Fuel Pro Corp,Africa,Energy & Utilities,Fuels,Biofuels,2024-12-03,2028-12-02,60,65,Active
+S1562,Fuel Solutions Group,Europe,Energy & Utilities,Fuels,Biofuels,2024-10-16,2025-10-16,90,88,Active
+S1563,Fuel Solutions Co,Americas,Energy & Utilities,Fuels,Biofuels,2024-11-23,2028-11-22,60,79,Active
+S1564,Germany Power Fuels Ltd,Europe,Energy & Utilities,Fuels,Biofuels,2024-07-14,2029-07-13,60,83,Active
+S1565,Italy Energy Fuels Trading,Europe,Energy & Utilities,Fuels,Biofuels,2025-03-12,2029-03-11,30,72,Active
+S1566,USA Energy Fuels Co,Americas,Energy & Utilities,Fuels,Biofuels,2024-05-31,2027-05-31,30,91,Active
+S1567,Gas Masters Corp,Americas,Energy & Utilities,Fuels,Biofuels,2025-03-08,2028-03-07,45,77,Active
+S1568,Japan Fuel Pro Inc,APAC,Energy & Utilities,Fuels,Diesel,2025-02-14,2028-02-14,45,85,Active
+S1569,Power Fuels Corp,Middle East,Energy & Utilities,Fuels,Diesel,2024-04-07,2029-04-06,60,86,Active
+S1570,Poland Fuel Solutions Enterprises,Europe,Energy & Utilities,Fuels,Diesel,2024-09-11,2027-09-11,45,84,Active
+S1571,Energy Fuels Co,Americas,Energy & Utilities,Fuels,Natural Gas,2024-04-12,2026-04-12,90,93,Active
+S1572,Energy Fuels Ltd,Americas,Energy & Utilities,Fuels,Natural Gas,2024-11-17,2025-11-17,60,90,Active
+S1573,Fuel Solutions Enterprises,Africa,Energy & Utilities,Fuels,Natural Gas,2025-01-09,2027-01-09,30,94,Active
+S1574,Jordan Petro Co Trading,Middle East,Energy & Utilities,Fuels,Natural Gas,2025-01-21,2027-01-21,30,93,Active
+S1575,Energy Fuels Group,Americas,Energy & Utilities,Fuels,Natural Gas,2024-08-13,2025-08-13,90,76,Pending Renewal
+S1576,France Fuel Pro Ltd,Europe,Energy & Utilities,Fuels,Natural Gas,2024-05-31,2027-05-31,75,70,Active
+S1577,Clean Energy Trading,APAC,Energy & Utilities,Renewable Equipment,Battery Storage,2025-04-12,2028-04-11,45,73,Active
+S1578,Renewable Tech Solutions,APAC,Energy & Utilities,Renewable Equipment,Battery Storage,2025-03-21,2028-03-20,30,79,Active
+S1579,Eco Power Ltd,Europe,Energy & Utilities,Renewable Equipment,Battery Storage,2025-04-12,2029-04-11,60,88,Active
+S1580,Sweden Eco Power Corp,Europe,Energy & Utilities,Renewable Equipment,Battery Storage,2025-05-12,2028-05-11,90,81,Active
+S1581,Singapore Green Energy Ltd,APAC,Energy & Utilities,Renewable Equipment,Solar Panels,2025-05-08,2026-05-08,45,89,Active
+S1582,Eco Power International,Americas,Energy & Utilities,Renewable Equipment,Solar Panels,2025-05-09,2027-05-09,75,95,Active
+S1583,Clean Energy Solutions,Middle East,Energy & Utilities,Renewable Equipment,Solar Panels,2025-03-09,2030-03-08,60,67,Active
+S1584,Indonesia Green Energy Solutions,APAC,Energy & Utilities,Renewable Equipment,Wind Turbines,2025-02-08,2029-02-07,30,73,Active
+S1585,Green Energy Inc,Americas,Energy & Utilities,Renewable Equipment,Wind Turbines,2024-10-01,2025-10-01,75,76,Active
+S1586,Brazil Build Pro Trading,Americas,Construction & Real Estate,Building Materials,Cement,2024-12-10,2027-12-10,90,77,Active
+S1587,Singapore Construction Materials Inc,APAC,Construction & Real Estate,Building Materials,Cement,2024-04-29,2028-04-28,30,84,Active
+S1588,Indonesia Build Pro International,APAC,Construction & Real Estate,Building Materials,Cement,2025-02-25,2028-02-25,30,86,Active
+S1589,Structure Co Group,Europe,Construction & Real Estate,Building Materials,Concrete,2024-11-08,2026-11-08,30,85,Active
+S1590,Material Masters Ltd,Europe,Construction & Real Estate,Building Materials,Concrete,2024-07-28,2025-07-28,45,66,Pending Renewal
+S1591,Construction Materials International,Americas,Construction & Real Estate,Building Materials,Concrete,2025-03-28,2030-03-27,60,94,Active
+S1592,Build Pro Group,Americas,Construction & Real Estate,Building Materials,Concrete,2025-02-25,2029-02-24,60,85,Active
+S1593,Material Masters Inc,Middle East,Construction & Real Estate,Building Materials,Concrete,2025-04-29,2026-04-29,60,80,Active
+S1594,USA Construction Materials Ltd,Americas,Construction & Real Estate,Building Materials,Glass,2024-07-08,2029-07-07,75,83,Active
+S1595,UK Structure Co Co,Europe,Construction & Real Estate,Building Materials,Glass,2024-10-02,2026-10-02,75,79,Active
+S1596,Construction Materials Enterprises,Middle East,Construction & Real Estate,Building Materials,Glass,2024-02-29,2025-02-28,45,93,Expired
+S1597,Build Pro Solutions,Middle East,Construction & Real Estate,Building Materials,Lumber,2025-05-01,2027-05-01,60,68,Active
+S1598,Construction Materials Group,Americas,Construction & Real Estate,Building Materials,Lumber,2024-12-17,2027-12-17,90,93,Active
+S1599,Build Solutions Trading,Europe,Construction & Real Estate,Building Materials,Lumber,2025-01-15,2027-01-15,75,85,Active
+S1600,Build Pro Corp,Americas,Construction & Real Estate,Building Materials,Lumber,2024-02-20,2028-02-19,90,78,Active
+S1601,Build Pro Ltd,APAC,Construction & Real Estate,Building Materials,Lumber,2024-07-08,2026-07-08,75,79,Active
+S1602,Canada Build Solutions Ltd,Americas,Construction & Real Estate,Building Materials,Lumber,2025-04-25,2028-04-24,30,87,Active
+S1603,Material Masters Solutions,APAC,Construction & Real Estate,Building Materials,Structural Steel,2025-03-10,2029-03-09,30,86,Active
+S1604,Construction Materials Inc,Americas,Construction & Real Estate,Building Materials,Structural Steel,2025-02-06,2028-02-06,45,69,Active
+S1605,Poland Structure Co Solutions,Europe,Construction & Real Estate,Building Materials,Structural Steel,2024-05-21,2026-05-21,30,95,Active
+S1606,Canada Structure Co Ltd,Americas,Construction & Real Estate,Building Materials,Structural Steel,2025-05-15,2028-05-14,30,77,Active
+S1607,Sweden Build Solutions Inc,Europe,Construction & Real Estate,Building Materials,Structural Steel,2024-04-18,2029-04-17,30,66,Active
+S1608,Heavy Machines Group,APAC,Construction & Real Estate,Construction Equipment,Heavy Equipment,2025-02-06,2030-02-05,45,67,Active
+S1609,Builder Tools International,Americas,Construction & Real Estate,Construction Equipment,Heavy Equipment,2025-03-15,2027-03-15,45,82,Active
+S1610,Chile Builder Tools International,Americas,Construction & Real Estate,Construction Equipment,Heavy Equipment,2025-02-28,2030-02-27,45,83,Active
+S1611,Germany Site Equipment International,Europe,Construction & Real Estate,Construction Equipment,Heavy Equipment,2024-03-16,2029-03-15,30,73,Active
+S1612,Qatar Builder Tools Inc,Middle East,Construction & Real Estate,Construction Equipment,Heavy Equipment,2024-04-20,2026-04-20,60,89,Active
+S1613,Build Equipment Solutions,Middle East,Construction & Real Estate,Construction Equipment,Power Tools,2024-07-02,2026-07-02,90,75,Active
+S1614,USA Construction Pro Enterprises,Americas,Construction & Real Estate,Construction Equipment,Power Tools,2025-03-19,2026-03-19,45,65,Active
+S1615,Netherlands Build Equipment Inc,Europe,Construction & Real Estate,Construction Equipment,Power Tools,2024-01-09,2026-01-08,60,66,Active
+S1616,Construction Pro International,Middle East,Construction & Real Estate,Construction Equipment,Power Tools,2024-05-08,2026-05-08,30,86,Active
+S1617,Italy Heavy Machines International,Europe,Construction & Real Estate,Construction Equipment,Scaffolding,2024-03-05,2028-03-04,90,68,Active
+S1618,Australia Heavy Machines Co,APAC,Construction & Real Estate,Construction Equipment,Scaffolding,2025-02-02,2028-02-02,90,83,Active
+S1619,Poland Build Equipment Solutions,Europe,Construction & Real Estate,Construction Equipment,Scaffolding,2025-04-29,2030-04-28,30,88,Active
+S1620,Ghana Builder Tools Co,Africa,Construction & Real Estate,Construction Equipment,Scaffolding,2024-02-25,2028-02-24,90,72,Active
+S1621,South Korea Build Equipment Group,APAC,Construction & Real Estate,Construction Equipment,Scaffolding,2025-01-16,2026-01-16,75,79,Active
+S1622,Technical Systems Co,Europe,Construction & Real Estate,MEP Systems,Electrical Systems,2025-02-05,2030-02-04,60,79,Active
+S1623,MEP Pro Co,Americas,Construction & Real Estate,MEP Systems,Electrical Systems,2025-03-09,2029-03-08,75,86,Active
+S1624,Building Systems Inc,Africa,Construction & Real Estate,MEP Systems,Electrical Systems,2024-11-25,2025-11-25,30,80,Active
+S1625,UK Systems Masters Enterprises,Europe,Construction & Real Estate,MEP Systems,HVAC Equipment,2024-03-16,2025-03-16,45,73,Expired
+S1626,Install Pro Co,Americas,Construction & Real Estate,MEP Systems,HVAC Equipment,2024-11-15,2029-11-14,90,87,Active
+S1627,MEP Pro Trading,Middle East,Construction & Real Estate,MEP Systems,HVAC Equipment,2025-04-05,2026-04-05,60,84,Active
+S1628,Tanzania Building Systems Solutions,Africa,Construction & Real Estate,MEP Systems,HVAC Equipment,2024-02-25,2028-02-24,75,67,Active
+S1629,Qatar Technical Systems Group,Middle East,Construction & Real Estate,MEP Systems,Plumbing Systems,2024-06-15,2028-06-14,90,81,Active
+S1630,Colombia Technical Systems Corp,Americas,Construction & Real Estate,MEP Systems,Plumbing Systems,2024-05-30,2028-05-29,90,84,Active
+S1631,Bahrain Install Pro Ltd,Middle East,Construction & Real Estate,MEP Systems,Plumbing Systems,2024-08-08,2025-08-08,30,92,Pending Renewal
+S1632,Indonesia Drive Solutions Co,APAC,Logistics & Transportation,Fleet Services,Fleet Maintenance,2024-06-09,2027-06-09,60,95,Active
+S1633,Australia Vehicle Masters Solutions,APAC,Logistics & Transportation,Fleet Services,Fleet Maintenance,2025-01-08,2026-01-08,60,78,Active
+S1634,Netherlands Drive Solutions Co,Europe,Logistics & Transportation,Fleet Services,Fleet Maintenance,2025-03-01,2026-03-01,30,78,Active
+S1635,Mexico Drive Solutions Trading,Americas,Logistics & Transportation,Fleet Services,Fleet Maintenance,2024-12-01,2029-11-30,45,78,Active
+S1636,Vehicle Masters Inc,Europe,Logistics & Transportation,Fleet Services,Fleet Maintenance,2024-03-19,2028-03-18,30,67,Active
+S1637,Drive Solutions Trading,Africa,Logistics & Transportation,Fleet Services,Fleet Maintenance,2025-02-27,2029-02-26,75,78,Active
+S1638,Netherlands Auto Fleet Solutions,Europe,Logistics & Transportation,Fleet Services,Fleet Maintenance,2024-08-19,2026-08-19,75,75,Active
+S1639,Australia Auto Fleet Solutions,APAC,Logistics & Transportation,Fleet Services,Fleet Telematics,2024-06-17,2025-06-17,75,76,Pending Renewal
+S1640,Vehicle Masters Corp,Europe,Logistics & Transportation,Fleet Services,Fleet Telematics,2025-03-23,2029-03-22,30,95,Active
+S1641,Fleet Pro Co,APAC,Logistics & Transportation,Fleet Services,Fleet Telematics,2024-03-20,2028-03-19,45,92,Active
+S1642,Transport Fleet Co,Europe,Logistics & Transportation,Fleet Services,Fleet Telematics,2024-01-31,2029-01-29,90,82,Active
+S1643,Transport Fleet Solutions,Europe,Logistics & Transportation,Fleet Services,Fleet Telematics,2024-05-27,2029-05-26,60,76,Active
+S1644,USA Transport Fleet International,Americas,Logistics & Transportation,Fleet Services,Fleet Telematics,2024-02-23,2029-02-21,90,71,Active
+S1645,Indonesia Transport Fleet Enterprises,APAC,Logistics & Transportation,Fleet Services,Fleet Telematics,2024-02-19,2027-02-18,45,82,Active
+S1646,Kenya Auto Fleet International,Africa,Logistics & Transportation,Fleet Services,Fleet Vehicles,2024-11-25,2029-11-24,30,84,Active
+S1647,Drive Solutions International,Europe,Logistics & Transportation,Fleet Services,Fleet Vehicles,2024-02-28,2027-02-27,90,72,Active
+S1648,Israel Fleet Pro Trading,Middle East,Logistics & Transportation,Fleet Services,Fleet Vehicles,2025-02-17,2029-02-16,90,89,Active
+S1649,Turkey Vehicle Masters Inc,Middle East,Logistics & Transportation,Fleet Services,Fleet Vehicles,2025-02-23,2030-02-22,90,86,Active
+S1650,Fleet Pro Corp,APAC,Logistics & Transportation,Fleet Services,Fleet Vehicles,2024-02-25,2027-02-24,90,76,Active
+S1651,Turkey Transport Solutions Trading,Middle East,Logistics & Transportation,Freight Services,Air Freight,2025-04-20,2028-04-19,30,70,Active
+S1652,Transport Solutions Corp,Americas,Logistics & Transportation,Freight Services,Air Freight,2024-01-04,2026-01-03,45,83,Active
+S1653,Logistics Plus Inc,Americas,Logistics & Transportation,Freight Services,Air Freight,2024-05-19,2027-05-19,60,76,Active
+S1654,Freight Pro Corp,Europe,Logistics & Transportation,Freight Services,Ocean Freight,2024-12-02,2028-12-01,30,69,Active
+S1655,Transport Solutions Inc,APAC,Logistics & Transportation,Freight Services,Ocean Freight,2025-01-14,2026-01-14,30,88,Active
+S1656,Logistics Plus Ltd,Europe,Logistics & Transportation,Freight Services,Rail Freight,2024-06-08,2027-06-08,90,84,Active
+S1657,Ship Co Inc,Europe,Logistics & Transportation,Freight Services,Rail Freight,2024-09-28,2026-09-28,75,78,Active
+S1658,India Logistics Plus Inc,APAC,Logistics & Transportation,Freight Services,Rail Freight,2024-08-20,2027-08-20,45,76,Active
+S1659,Argentina Logistics Plus Trading,Americas,Logistics & Transportation,Freight Services,Road Freight,2024-02-11,2027-02-10,75,86,Active
+S1660,Ship Co International,Americas,Logistics & Transportation,Freight Services,Road Freight,2024-02-13,2025-02-12,45,70,Expired
+S1661,Ship Co Co,Middle East,Logistics & Transportation,Freight Services,Road Freight,2025-01-21,2030-01-20,30,86,Active
+S1662,USA Cargo Masters Corp,Americas,Logistics & Transportation,Freight Services,Road Freight,2024-08-05,2028-08-04,90,79,Active
+S1663,Belgium Storage Masters Corp,Europe,Logistics & Transportation,Warehousing,3PL Services,2024-07-31,2027-07-31,45,89,Active
+S1664,Store Solutions Solutions,Middle East,Logistics & Transportation,Warehousing,3PL Services,2024-02-26,2027-02-25,90,80,Active
+S1665,UK Distribution Pro Co,Europe,Logistics & Transportation,Warehousing,3PL Services,2024-09-19,2025-09-19,60,78,Active
+S1666,France Store Solutions Group,Europe,Logistics & Transportation,Warehousing,3PL Services,2024-04-14,2027-04-14,45,89,Active
+S1667,Distribution Pro Trading,Americas,Logistics & Transportation,Warehousing,3PL Services,2024-07-21,2029-07-20,30,65,Active
+S1668,Australia Distribution Pro Ltd,APAC,Logistics & Transportation,Warehousing,3PL Services,2024-09-26,2027-09-26,30,72,Active
+S1669,Peru Warehouse Pro Enterprises,Americas,Logistics & Transportation,Warehousing,Cold Storage,2024-09-29,2026-09-29,90,82,Active
+S1670,Qatar Warehouse Pro Group,Middle East,Logistics & Transportation,Warehousing,Cold Storage,2024-03-02,2025-03-02,75,88,Expired
+S1671,Warehouse Pro Co,APAC,Logistics & Transportation,Warehousing,Cold Storage,2024-08-08,2026-08-08,45,77,Active
+S1672,Distribution Pro Group,Europe,Logistics & Transportation,Warehousing,Cold Storage,2024-03-11,2027-03-11,60,75,Active
+S1673,Storage Masters Corp,Middle East,Logistics & Transportation,Warehousing,Distribution Centers,2024-08-07,2029-08-06,75,87,Active
+S1674,Ethiopia Storage Masters Group,Africa,Logistics & Transportation,Warehousing,Distribution Centers,2025-03-17,2026-03-17,75,65,Active
+S1675,Colombia Distribution Pro Solutions,Americas,Logistics & Transportation,Warehousing,Distribution Centers,2025-03-02,2028-03-01,30,77,Active
+S1676,France Warehouse Pro Corp,Europe,Logistics & Transportation,Warehousing,Distribution Centers,2024-08-23,2025-08-23,60,83,Pending Renewal
+S1677,Storage Masters Co,Africa,Logistics & Transportation,Warehousing,Distribution Centers,2024-11-23,2028-11-22,60,68,Active
+S1678,Kenya Warehouse Pro Corp,Africa,Logistics & Transportation,Warehousing,Distribution Centers,2024-07-26,2025-07-26,60,70,Pending Renewal
+S1679,Australia Advisory Masters Co,APAC,Professional Services,Consulting,HR Consulting,2025-03-08,2026-03-08,45,78,Active
+S1680,Business Consulting Inc,APAC,Professional Services,Consulting,HR Consulting,2024-07-21,2027-07-21,60,72,Active
+S1681,Mexico Business Consulting International,Americas,Professional Services,Consulting,HR Consulting,2025-02-14,2030-02-13,75,91,Active
+S1682,Advisory Masters Inc,Africa,Professional Services,Consulting,HR Consulting,2024-10-28,2028-10-27,90,67,Active
+S1683,Argentina Strategy Co International,Americas,Professional Services,Consulting,HR Consulting,2024-12-19,2027-12-19,30,78,Active
+S1684,Business Consulting International,Europe,Professional Services,Consulting,IT Consulting,2024-03-15,2027-03-15,45,70,Active
+S1685,Strategy Co Group,Americas,Professional Services,Consulting,IT Consulting,2024-04-09,2027-04-09,60,88,Active
+S1686,Colombia Strategy Co Inc,Americas,Professional Services,Consulting,IT Consulting,2024-06-19,2026-06-19,30,81,Active
+S1687,Expert Advisors Co,Middle East,Professional Services,Consulting,IT Consulting,2024-11-20,2025-11-20,90,81,Active
+S1688,Turkey Advisory Masters Ltd,Middle East,Professional Services,Consulting,IT Consulting,2025-05-05,2027-05-05,45,68,Active
+S1689,Tunisia Business Consulting Group,Africa,Professional Services,Consulting,Management Consulting,2025-05-02,2029-05-01,75,89,Active
+S1690,Philippines Consult Pro Ltd,APAC,Professional Services,Consulting,Management Consulting,2024-11-04,2026-11-04,30,70,Active
+S1691,Strategy Co International,Middle East,Professional Services,Consulting,Management Consulting,2025-04-18,2030-04-17,90,75,Active
+S1692,Saudi Arabia Strategy Co Enterprises,Middle East,Professional Services,Consulting,Management Consulting,2024-10-15,2029-10-14,75,86,Active
+S1693,Finance Pro Ltd,Middle East,Professional Services,Financial Services,Accounting,2025-03-18,2028-03-17,45,79,Active
+S1694,Capital Co Co,Middle East,Professional Services,Financial Services,Accounting,2024-06-04,2027-06-04,90,66,Active
+S1695,Poland Investment Pro Enterprises,Europe,Professional Services,Financial Services,Accounting,2024-02-04,2028-02-03,75,85,Active
+S1696,Investment Pro International,Africa,Professional Services,Financial Services,Accounting,2024-06-29,2029-06-28,30,74,Active
+S1697,Finance Pro International,APAC,Professional Services,Financial Services,Banking,2025-03-18,2026-03-18,90,84,Active
+S1698,Australia Finance Pro Ltd,APAC,Professional Services,Financial Services,Banking,2024-08-24,2028-08-23,30,66,Active
+S1699,Colombia Money Masters International,Americas,Professional Services,Financial Services,Banking,2024-07-07,2027-07-07,30,85,Active
+S1700,Indonesia Financial Solutions Corp,APAC,Professional Services,Financial Services,Insurance,2024-10-10,2025-10-10,75,94,Active
+S1701,Money Masters Solutions,Middle East,Professional Services,Financial Services,Insurance,2025-02-18,2030-02-17,45,75,Active
+S1702,Financial Solutions Trading,Africa,Professional Services,Financial Services,Insurance,2024-09-16,2028-09-15,75,83,Active
+S1703,Tunisia Capital Co Inc,Africa,Professional Services,Financial Services,Insurance,2024-11-05,2028-11-04,90,69,Active
+S1704,Legal Pro Co,Africa,Professional Services,Legal Services,Corporate Law,2024-09-24,2029-09-23,45,76,Active
+S1705,Morocco Legal Pro Trading,Africa,Professional Services,Legal Services,Corporate Law,2025-02-19,2028-02-19,30,81,Active
+S1706,Justice Co Enterprises,APAC,Professional Services,Legal Services,Corporate Law,2025-05-05,2026-05-05,75,68,Active
+S1707,Bahrain Counsel Pro Inc,Middle East,Professional Services,Legal Services,Corporate Law,2024-12-28,2028-12-27,75,81,Active
+S1708,South Africa Legal Pro Trading,Africa,Professional Services,Legal Services,Corporate Law,2024-11-26,2026-11-26,30,72,Active
+S1709,Legal Solutions Trading,APAC,Professional Services,Legal Services,Employment Law,2025-01-31,2028-01-31,90,66,Active
+S1710,Switzerland Legal Solutions Solutions,Europe,Professional Services,Legal Services,Employment Law,2025-02-08,2028-02-08,30,75,Active
+S1711,Canada Legal Solutions Group,Americas,Professional Services,Legal Services,Employment Law,2024-07-09,2027-07-09,75,78,Active
+S1712,Legal Pro Ltd,APAC,Professional Services,Legal Services,Employment Law,2024-02-18,2029-02-16,75,74,Active
+S1713,Legal Pro Enterprises,APAC,Professional Services,Legal Services,Intellectual Property,2024-07-11,2027-07-11,45,86,Active
+S1714,Legal Solutions Solutions,Americas,Professional Services,Legal Services,Intellectual Property,2024-02-11,2029-02-09,45,94,Active
+S1715,Brazil Justice Co Trading,Americas,Professional Services,Legal Services,Intellectual Property,2024-05-09,2029-05-08,45,75,Active
+S1716,Vietnam Legal Solutions International,APAC,Professional Services,Legal Services,Intellectual Property,2024-10-31,2025-10-31,60,82,Active
+S1717,China Legal Solutions Co,APAC,Professional Services,Legal Services,Intellectual Property,2024-06-28,2027-06-28,75,69,Active
+S1718,Brand Masters Ltd,Americas,Professional Services,Marketing Services,Advertising,2024-12-09,2028-12-08,90,76,Active
+S1719,Marketing Pro Corp,Middle East,Professional Services,Marketing Services,Advertising,2024-12-25,2029-12-24,30,85,Active
+S1720,Taiwan Brand Masters Corp,APAC,Professional Services,Marketing Services,Digital Marketing,2024-03-11,2026-03-11,30,74,Active
+S1721,Marketing Pro Solutions,Middle East,Professional Services,Marketing Services,Digital Marketing,2024-01-10,2027-01-09,60,70,Active
+S1722,Ad Solutions Solutions,Americas,Professional Services,Marketing Services,Digital Marketing,2025-05-01,2027-05-01,60,95,Active
+S1723,Ad Solutions Trading,Europe,Professional Services,Marketing Services,Digital Marketing,2025-01-27,2029-01-26,45,72,Active
+S1724,Australia Brand Masters International,APAC,Professional Services,Marketing Services,Market Research,2025-03-08,2026-03-08,90,89,Active
+S1725,South Korea Ad Solutions Solutions,APAC,Professional Services,Marketing Services,Market Research,2024-10-03,2029-10-02,30,86,Active
+S1726,Singapore Ad Solutions International,APAC,Professional Services,Marketing Services,Market Research,2024-06-21,2029-06-20,45,84,Active
+S1727,Creative Co Solutions,APAC,Professional Services,Marketing Services,Market Research,2024-07-11,2026-07-11,45,70,Active
+S1728,Marketing Pro Enterprises,Africa,Professional Services,Marketing Services,PR & Communications,2024-08-12,2025-08-12,75,76,Pending Renewal
+S1729,Mexico Brand Masters Corp,Americas,Professional Services,Marketing Services,PR & Communications,2025-03-01,2030-02-28,45,88,Active
+S1730,USA Creative Co Group,Americas,Professional Services,Marketing Services,PR & Communications,2024-12-12,2026-12-12,75,84,Active
+S1731,Building Services Enterprises,Europe,Facilities & Corporate Services,Facilities Management,Building Maintenance,2025-03-03,2027-03-03,60,86,Active
+S1732,Qatar Site Pro Ltd,Middle East,Facilities & Corporate Services,Facilities Management,Building Maintenance,2024-05-02,2027-05-02,75,93,Active
+S1733,Property Services Inc,Middle East,Facilities & Corporate Services,Facilities Management,Building Maintenance,2025-01-28,2028-01-28,75,81,Active
+S1734,Property Services Enterprises,Americas,Facilities & Corporate Services,Facilities Management,Building Maintenance,2024-05-25,2028-05-24,45,82,Active
+S1735,Singapore Property Services Co,APAC,Facilities & Corporate Services,Facilities Management,Building Maintenance,2025-04-29,2030-04-28,75,79,Active
+S1736,Chile Maintenance Masters Enterprises,Americas,Facilities & Corporate Services,Facilities Management,Cleaning Services,2025-03-09,2030-03-08,30,74,Active
+S1737,Israel Maintenance Masters Enterprises,Middle East,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-04-12,2029-04-11,45,92,Active
+S1738,Tunisia Building Services International,Africa,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-09-27,2028-09-26,45,91,Active
+S1739,Maintenance Masters Trading,Europe,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-05-08,2025-05-08,75,92,Expired
+S1740,Peru Property Services Group,Americas,Facilities & Corporate Services,Facilities Management,Cleaning Services,2024-07-09,2029-07-08,30,87,Active
+S1741,Site Pro Solutions,APAC,Facilities & Corporate Services,Facilities Management,Security Services,2025-04-08,2030-04-07,45,91,Active
+S1742,Spain Facility Pro Corp,Europe,Facilities & Corporate Services,Facilities Management,Security Services,2024-02-12,2026-02-11,60,79,Active
+S1743,Facility Pro Corp,APAC,Facilities & Corporate Services,Facilities Management,Security Services,2024-08-11,2025-08-11,45,91,Pending Renewal
+S1744,Thailand Work Pro International,APAC,Facilities & Corporate Services,Office Services,Office Furniture,2024-01-28,2028-01-27,90,76,Active
+S1745,Workspace Solutions Solutions,Africa,Facilities & Corporate Services,Office Services,Office Furniture,2024-08-18,2027-08-18,30,78,Active
+S1746,Workspace Solutions Group,Americas,Facilities & Corporate Services,Office Services,Office Furniture,2024-04-30,2028-04-29,30,76,Active
+S1747,Malaysia Work Pro Ltd,APAC,Facilities & Corporate Services,Office Services,Office Supplies,2024-04-24,2025-04-24,60,94,Expired
+S1748,Office Masters International,Middle East,Facilities & Corporate Services,Office Services,Office Supplies,2024-05-11,2026-05-11,45,82,Active
+S1749,Philippines Workspace Solutions Corp,APAC,Facilities & Corporate Services,Office Services,Office Supplies,2025-03-01,2027-03-01,75,79,Active
+S1750,Work Pro Trading,Americas,Facilities & Corporate Services,Office Services,Office Supplies,2024-11-11,2025-11-11,30,65,Active
+S1751,Workspace Solutions Corp,Europe,Facilities & Corporate Services,Office Services,Office Supplies,2024-02-20,2027-02-19,45,69,Active
+S1752,Switzerland Workspace Solutions Co,Europe,Facilities & Corporate Services,Office Services,Office Supplies,2024-01-20,2027-01-19,75,87,Active
+S1753,Netherlands Office Pro Trading,Europe,Facilities & Corporate Services,Office Services,Printing Services,2025-01-02,2027-01-02,60,78,Active
+S1754,Workspace Solutions Co,APAC,Facilities & Corporate Services,Office Services,Printing Services,2024-01-09,2029-01-07,90,72,Active
+S1755,Spain Business Services International,Europe,Facilities & Corporate Services,Office Services,Printing Services,2024-02-26,2028-02-25,90,82,Active
+S1756,Workspace Solutions Enterprises,Americas,Facilities & Corporate Services,Office Services,Printing Services,2025-04-26,2030-04-25,90,78,Active
+S1757,Japan Business Services Corp,APAC,Facilities & Corporate Services,Office Services,Printing Services,2024-03-03,2025-03-03,45,78,Expired
+S1758,Office Pro Co,APAC,Facilities & Corporate Services,Office Services,Printing Services,2024-02-26,2027-02-25,45,74,Active
+S1759,Office Masters Group,Americas,Facilities & Corporate Services,Office Services,Printing Services,2024-11-23,2029-11-22,75,67,Active
+S1760,Travel Pro Group,Africa,Facilities & Corporate Services,Travel & Events,Business Travel,2024-02-04,2029-02-02,90,81,Active
+S1761,Journey Co Inc,Americas,Facilities & Corporate Services,Travel & Events,Business Travel,2024-07-18,2028-07-17,30,85,Active
+S1762,Journey Co Corp,APAC,Facilities & Corporate Services,Travel & Events,Business Travel,2025-02-06,2030-02-05,90,65,Active
+S1763,Netherlands Travel Pro Corp,Europe,Facilities & Corporate Services,Travel & Events,Business Travel,2024-10-19,2028-10-18,45,86,Active
+S1764,Event Masters Inc,Americas,Facilities & Corporate Services,Travel & Events,Business Travel,2024-12-08,2025-12-08,90,76,Active
+S1765,Singapore Event Masters Corp,APAC,Facilities & Corporate Services,Travel & Events,Business Travel,2024-01-01,2028-12-30,60,72,Active
+S1766,Colombia Travel Pro Corp,Americas,Facilities & Corporate Services,Travel & Events,Event Management,2024-05-03,2025-05-03,90,88,Expired
+S1767,South Africa Event Masters Trading,Africa,Facilities & Corporate Services,Travel & Events,Event Management,2024-07-17,2027-07-17,60,88,Active
+S1768,Destination Pro Group,Europe,Facilities & Corporate Services,Travel & Events,Event Management,2024-01-09,2027-01-08,30,76,Active
+S1769,Meeting Solutions Inc,APAC,Facilities & Corporate Services,Travel & Events,Event Management,2025-01-22,2028-01-22,45,66,Active
+S1770,Talent Tech International,Africa,Human Resources,HR Technology,Benefits Administration,2024-06-29,2029-06-28,60,91,Active
+S1771,People Systems Corp,Europe,Human Resources,HR Technology,Benefits Administration,2025-01-01,2028-12-31,30,74,Active
+S1772,People Systems Solutions,APAC,Human Resources,HR Technology,Benefits Administration,2024-09-02,2026-09-02,45,67,Active
+S1773,Oman People Systems Enterprises,Middle East,Human Resources,HR Technology,Benefits Administration,2024-11-25,2026-11-25,75,87,Active
+S1774,Kuwait HR Solutions Enterprises,Middle East,Human Resources,HR Technology,HRIS Systems,2024-07-22,2029-07-21,75,73,Active
+S1775,Thailand HR Solutions Group,APAC,Human Resources,HR Technology,HRIS Systems,2024-01-22,2027-01-21,60,81,Active
+S1776,Colombia People Systems Co,Americas,Human Resources,HR Technology,HRIS Systems,2024-04-13,2025-04-13,45,93,Expired
+S1777,Tanzania People Systems Ltd,Africa,Human Resources,HR Technology,Payroll Services,2024-03-04,2027-03-04,75,93,Active
+S1778,Workforce Pro Trading,Europe,Human Resources,HR Technology,Payroll Services,2025-03-17,2026-03-17,60,73,Active
+S1779,HR Solutions Enterprises,Africa,Human Resources,HR Technology,Payroll Services,2024-01-19,2026-01-18,60,76,Active
+S1780,Training Masters Corp,APAC,Human Resources,Learning & Development,E-Learning Platforms,2025-05-13,2027-05-13,75,87,Active
+S1781,Ethiopia Skill Co Corp,Africa,Human Resources,Learning & Development,E-Learning Platforms,2024-07-23,2028-07-22,75,75,Active
+S1782,Sweden Skill Co Solutions,Europe,Human Resources,Learning & Development,Leadership Development,2024-09-11,2027-09-11,90,73,Active
+S1783,Training Masters Solutions,APAC,Human Resources,Learning & Development,Leadership Development,2024-11-04,2028-11-03,45,87,Active
+S1784,Education Solutions Ltd,APAC,Human Resources,Learning & Development,Leadership Development,2024-06-16,2027-06-16,60,79,Active
+S1785,Development Pro International,APAC,Human Resources,Learning & Development,Leadership Development,2024-05-30,2027-05-30,30,67,Active
+S1786,Vietnam Training Masters Co,APAC,Human Resources,Learning & Development,Leadership Development,2025-02-14,2026-02-14,75,67,Active
+S1787,Argentina Learn Pro Solutions,Americas,Human Resources,Learning & Development,Leadership Development,2024-08-08,2029-08-07,45,82,Active
+S1788,Learn Pro Solutions,APAC,Human Resources,Learning & Development,Training Programs,2024-05-20,2025-05-20,30,86,Expired
+S1789,Development Pro Ltd,Europe,Human Resources,Learning & Development,Training Programs,2025-01-07,2028-01-07,90,78,Active
+S1790,Tanzania Education Solutions Enterprises,Africa,Human Resources,Learning & Development,Training Programs,2024-08-15,2027-08-15,75,66,Active
+S1791,Israel Talent Masters Enterprises,Middle East,Human Resources,Staffing Services,Executive Search,2025-03-10,2030-03-09,75,66,Active
+S1792,People Pro Enterprises,APAC,Human Resources,Staffing Services,Executive Search,2024-11-22,2028-11-21,60,81,Active
+S1793,Staff Pro Ltd,Middle East,Human Resources,Staffing Services,Executive Search,2025-02-14,2027-02-14,30,69,Active
+S1794,Japan Talent Masters Group,APAC,Human Resources,Staffing Services,Permanent Recruitment,2024-09-28,2027-09-28,75,75,Active
+S1795,Vietnam Recruit Co Trading,APAC,Human Resources,Staffing Services,Permanent Recruitment,2024-03-19,2028-03-18,60,76,Active
+S1796,Switzerland Talent Masters Trading,Europe,Human Resources,Staffing Services,Permanent Recruitment,2025-05-01,2030-04-30,30,84,Active
+S1797,Recruit Co Group,APAC,Human Resources,Staffing Services,Permanent Recruitment,2024-03-05,2025-03-05,45,89,Expired
+S1798,Staff Pro Corp,Europe,Human Resources,Staffing Services,Permanent Recruitment,2024-11-26,2027-11-26,60,77,Active
+S1799,Talent Masters Ltd,Africa,Human Resources,Staffing Services,Permanent Recruitment,2024-08-15,2025-08-15,90,69,Pending Renewal
+S1800,Peru Recruit Co Ltd,Americas,Human Resources,Staffing Services,Temporary Staffing,2024-02-28,2025-02-27,45,80,Expired
+S1801,Kenya Recruit Co Ltd,Africa,Human Resources,Staffing Services,Temporary Staffing,2024-11-28,2027-11-28,45,95,Active

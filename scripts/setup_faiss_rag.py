@@ -142,20 +142,51 @@ def main():
 Supplier Concentration Risk Management:
 - High supplier concentration (>50% with single supplier) creates significant supply chain risk
 - Best practice is to maintain at least 3-5 qualified suppliers for critical categories
-- Geographic diversification reduces exposure to regional disruptions
+- Geographic diversification across Americas, Europe, APAC, Middle East, and Africa reduces exposure
 - Dual sourcing strategies balance cost efficiency with risk mitigation
+- Consider suppliers from emerging markets like Africa and Middle East for diversification
 """,
             'metadata': {'source': 'domain_knowledge', 'file_name': 'supplier_risk.txt', 'category': 'risk_management'}
         },
         {
             'content': """
-Regional Procurement Strategy:
-- Low-cost regions include India, China, Vietnam, Mexico for manufacturing
+Regional Procurement Strategy - Global Overview:
+- Americas: USA, Canada, Mexico, Brazil - strong infrastructure, established supply chains
+- Europe: Germany, UK, France, Netherlands - quality focus, regulatory compliance
+- APAC: China, India, Vietnam, Thailand - manufacturing scale, cost efficiency
+- Middle East: UAE, Saudi Arabia, Turkey - logistics hub, growing industrial base
+- Africa: South Africa, Egypt, Morocco, Kenya - emerging markets, competitive labor costs
 - Consider total cost of ownership including logistics, quality, and lead times
 - Nearshoring provides faster response and lower logistics costs
-- Currency fluctuation risk should be factored into regional decisions
 """,
             'metadata': {'source': 'domain_knowledge', 'file_name': 'regional_strategy.txt', 'category': 'sourcing'}
+        },
+        {
+            'content': """
+Africa Procurement Opportunities:
+- South Africa: African industrial leader, established infrastructure, regional hub
+- Egypt: Strategic Suez Canal location, growing manufacturing, MENA gateway
+- Morocco: EU proximity, Tanger Med port, competitive labor, growing industries
+- Kenya: East Africa hub, digital innovation, logistics gateway
+- Nigeria: Large market, growing economy, oil & gas expertise
+- Tunisia: Skilled workforce, EU proximity, manufacturing capabilities
+- Ghana: Stable economy, growing tech sector, West Africa hub
+Benefits: Cost efficiency, market access, diversification, emerging talent pools
+""",
+            'metadata': {'source': 'domain_knowledge', 'file_name': 'africa_sourcing.txt', 'category': 'regional'}
+        },
+        {
+            'content': """
+Middle East Procurement Opportunities:
+- UAE (Dubai, Abu Dhabi): World-class logistics hub, business-friendly, regional HQ location
+- Saudi Arabia: Vision 2030 investments, industrial diversification, large market
+- Turkey: Europe-Asia bridge, diverse manufacturing, established industries
+- Qatar: Premium infrastructure, LNG expertise, growing diversification
+- Jordan: Pharma hub, skilled workforce, trade agreements
+- Israel: Technology innovation, R&D capabilities, startup ecosystem
+Benefits: Strategic location, infrastructure investment, growing industrial base
+""",
+            'metadata': {'source': 'domain_knowledge', 'file_name': 'middle_east_sourcing.txt', 'category': 'regional'}
         },
         {
             'content': """
@@ -164,6 +195,7 @@ Procurement ROI Calculations:
 - Implementation costs include qualification, transition, and ongoing management
 - Payback period for diversification initiatives typically 6-18 months
 - 3-year net benefit = (Annual Savings x 3) - Implementation Cost
+- Africa/Middle East expansion can yield 10-25% cost savings in select categories
 """,
             'metadata': {'source': 'domain_knowledge', 'file_name': 'roi_calculations.txt', 'category': 'financial'}
         },
@@ -175,8 +207,23 @@ Supply Chain Risk Assessment:
 - Quality risk: Monitor supplier ratings below 4.0
 - Financial risk: Track supplier financial health indicators
 - Compliance risk: Ensure supplier meets regulatory requirements
+- Geopolitical risk: Diversify across stable regions (Americas, Europe, APAC, GCC)
+- Emerging market risk: Balance growth opportunities with due diligence
 """,
             'metadata': {'source': 'domain_knowledge', 'file_name': 'risk_assessment.txt', 'category': 'risk_management'}
+        },
+        {
+            'content': """
+Global Supplier Database Coverage:
+- 893 qualified suppliers across 5 geographic regions
+- Americas: 332 suppliers (USA, Canada, Mexico, Brazil, Argentina, Chile, Colombia)
+- Europe: 225 suppliers (Germany, UK, France, Netherlands, Switzerland, Italy, Spain)
+- APAC: 185 suppliers (China, India, Japan, South Korea, Singapore, Australia, Thailand)
+- Middle East: 91 suppliers (UAE, Saudi Arabia, Turkey, Qatar, Israel, Jordan)
+- Africa: 60 suppliers (South Africa, Egypt, Morocco, Kenya, Nigeria, Ghana)
+- 10 industry sectors, 41 categories, 140 subcategories covered
+""",
+            'metadata': {'source': 'domain_knowledge', 'file_name': 'supplier_coverage.txt', 'category': 'database'}
         }
     ]
     documents.extend(domain_docs)

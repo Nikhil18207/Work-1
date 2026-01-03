@@ -8,8 +8,9 @@ Enterprise-grade **AI-powered procurement recommendation system** for multi-indu
 - **10 Industry Sectors** - Food & Beverages, IT, Manufacturing, Healthcare, Energy, Construction, Logistics, Professional Services, Facilities, HR
 - **41 Categories** - Across all sectors
 - **140 SubCategories** - Granular product/service classification
-- **312 Suppliers** - Global supplier database
-- **399 Transactions** - $357.7M total spend data
+- **893 Suppliers** - Global supplier database across 5 regions
+- **2,289 Transactions** - $1.53B total spend data
+- **5 Geographic Regions** - Americas, Europe, APAC, Middle East, Africa
 - **35 Procurement Rules** - Comprehensive rule validation (R001-R035)
 
 ---
@@ -104,7 +105,7 @@ Beroe Inc/
 │
 ├── data/
 │   ├── structured/                 # CSV data files
-│   │   ├── spend_data.csv          # 399 transactions, 312 suppliers
+│   │   ├── spend_data.csv          # 2,289 transactions, 893 suppliers
 │   │   ├── supplier_master.csv     # Supplier database
 │   │   ├── supplier_contracts.csv  # Contract terms
 │   │   ├── rule_book.csv           # 35 procurement rules

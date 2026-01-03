@@ -45,7 +45,8 @@ class BriefOrchestrator:
         llm_engine=None,
         vector_store=None,
         enable_llm: bool = True,
-        enable_rag: bool = True
+        enable_rag: bool = True,
+        enable_web_search: bool = True
     ):
         """
         Initialize orchestrator with all required components.
@@ -57,6 +58,7 @@ class BriefOrchestrator:
             vector_store: FAISSVectorStore for RAG
             enable_llm: Enable LLM across all agents
             enable_rag: Enable RAG across all agents
+            enable_web_search: Enable web search fallback when RAG has low confidence
         """
         self.data_loader = data_loader
         self.rule_engine = rule_engine
@@ -64,27 +66,31 @@ class BriefOrchestrator:
         self.vector_store = vector_store
         self.enable_llm = enable_llm
         self.enable_rag = enable_rag
+        self.enable_web_search = enable_web_search
 
-        # Initialize agents with shared LLM and RAG
+        # Initialize agents with shared LLM, RAG, and web search
         self.data_agent = DataAnalysisAgent(
             llm_engine=llm_engine,
             vector_store=vector_store,
             enable_llm=enable_llm,
-            enable_rag=enable_rag
+            enable_rag=enable_rag,
+            enable_web_search=enable_web_search
         )
 
         self.risk_agent = RiskAssessmentAgent(
             llm_engine=llm_engine,
             vector_store=vector_store,
             enable_llm=enable_llm,
-            enable_rag=enable_rag
+            enable_rag=enable_rag,
+            enable_web_search=enable_web_search
         )
 
         self.recommendation_agent = RecommendationAgent(
             llm_engine=llm_engine,
             vector_store=vector_store,
             enable_llm=enable_llm,
-            enable_rag=enable_rag
+            enable_rag=enable_rag,
+            enable_web_search=enable_web_search
         )
 
         self.market_agent = MarketIntelligenceAgent(
@@ -92,10 +98,12 @@ class BriefOrchestrator:
             vector_store=vector_store,
             enable_llm=enable_llm,
             enable_rag=enable_rag,
+            enable_web_search=enable_web_search,
             confidence_threshold=0.5  # Higher threshold for market intelligence
         )
 
-        print("[OK] BriefOrchestrator initialized with all agents")
+        web_status = "enabled" if enable_web_search else "disabled"
+        print(f"[OK] BriefOrchestrator initialized with all agents (web search: {web_status})")
 
     def generate_incumbent_concentration_brief(
         self,
