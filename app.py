@@ -22,11 +22,34 @@ st.set_page_config(
     layout="wide"
 )
 
-# Simple CSS
+# CSS with floating chat button
 st.markdown("""
 <style>
     .main { padding: 1rem; }
     .stMetric { background: #f8f9fa; padding: 1rem; border-radius: 8px; }
+
+    /* Chat container styling */
+    .chat-container {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+    .chat-message {
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        margin: 0.5rem 0;
+        max-width: 85%;
+    }
+    .user-message {
+        background: #007bff;
+        color: white;
+        margin-left: auto;
+    }
+    .assistant-message {
+        background: #e9ecef;
+        color: #333;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -110,6 +133,17 @@ def main():
         st.session_state.user_briefs_generated = False
     if 'last_subcategory' not in st.session_state:
         st.session_state.last_subcategory = None
+
+    # Chat assistant state
+    if 'chat_assistant' not in st.session_state:
+        from backend.engines.brief_chat_assistant import BriefChatAssistant
+        st.session_state.chat_assistant = BriefChatAssistant()
+    if 'chat_messages' not in st.session_state:
+        st.session_state.chat_messages = []
+    if 'chat_open' not in st.session_state:
+        st.session_state.chat_open = False
+    if 'brief_context_loaded' not in st.session_state:
+        st.session_state.brief_context_loaded = False
 
     # Two main options as tabs
     tab1, tab2 = st.tabs(["📁 Use System Data", "📤 Upload Your Data"])
@@ -214,6 +248,17 @@ def main():
                             st.session_state.sys_regional_filename = f"Regional_Concentration_{selected_subcategory.replace(' ', '_')}.docx"
 
                         st.session_state.briefs_generated = True
+
+                        # Load brief context for chat assistant
+                        if 'incumbent_docx' in results or 'regional_docx' in results:
+                            st.session_state.chat_assistant.load_brief_context(
+                                incumbent_path=results.get('incumbent_docx'),
+                                regional_path=results.get('regional_docx'),
+                                subcategory=selected_subcategory
+                            )
+                            st.session_state.brief_context_loaded = True
+                            st.session_state.chat_messages = []  # Reset chat for new brief
+
                         st.success("✅ Briefs generated successfully!")
 
                     except Exception as e:
@@ -489,6 +534,17 @@ def main():
                                 st.session_state.user_regional_filename = f"Regional_Concentration_{selected_user_subcategory.replace(' ', '_')}.docx"
 
                             st.session_state.user_briefs_generated = True
+
+                            # Load brief context for chat assistant
+                            if 'incumbent_docx' in results or 'regional_docx' in results:
+                                st.session_state.chat_assistant.load_brief_context(
+                                    incumbent_path=results.get('incumbent_docx'),
+                                    regional_path=results.get('regional_docx'),
+                                    subcategory=selected_user_subcategory
+                                )
+                                st.session_state.brief_context_loaded = True
+                                st.session_state.chat_messages = []  # Reset chat for new brief
+
                             st.success("✅ Briefs generated from your data!")
 
                         except Exception as e:
@@ -621,6 +677,80 @@ def main():
 
             except Exception as e:
                 st.error(f"Error reading file: {str(e)}")
+
+    # ========== CHAT ASSISTANT (Floating Panel) ==========
+    # Show chat only when briefs have been generated
+    if st.session_state.brief_context_loaded:
+        st.divider()
+        st.markdown("---")
+
+        # Chat header
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.subheader("💬 Brief Assistant")
+            subcategory = st.session_state.chat_assistant.subcategory
+            st.caption(f"Ask questions about your **{subcategory}** brief")
+        with col2:
+            if st.button("🗑️ Clear Chat", key="clear_chat"):
+                st.session_state.chat_messages = []
+                st.session_state.chat_assistant.clear_history()
+                st.rerun()
+
+        # Suggested questions
+        if len(st.session_state.chat_messages) == 0:
+            st.markdown("**Suggested questions:**")
+            suggestions = st.session_state.chat_assistant.get_suggested_questions()
+            cols = st.columns(2)
+            for i, suggestion in enumerate(suggestions[:4]):
+                with cols[i % 2]:
+                    if st.button(suggestion, key=f"suggest_{i}", use_container_width=True):
+                        # Add suggestion as user message
+                        st.session_state.chat_messages.append({
+                            "role": "user",
+                            "content": suggestion
+                        })
+                        # Get response
+                        with st.spinner("Thinking..."):
+                            response = st.session_state.chat_assistant.chat(suggestion)
+                            st.session_state.chat_messages.append({
+                                "role": "assistant",
+                                "content": response.get('response', 'Sorry, I encountered an error.')
+                            })
+                        st.rerun()
+
+        # Display chat messages
+        chat_container = st.container()
+        with chat_container:
+            for message in st.session_state.chat_messages:
+                with st.chat_message(message["role"]):
+                    st.markdown(message["content"])
+
+        # Chat input
+        user_input = st.chat_input("Ask about your procurement brief...")
+
+        if user_input:
+            # Add user message
+            st.session_state.chat_messages.append({
+                "role": "user",
+                "content": user_input
+            })
+
+            # Get assistant response
+            with st.spinner("Thinking..."):
+                response = st.session_state.chat_assistant.chat(user_input)
+                assistant_message = response.get('response', 'Sorry, I encountered an error.')
+
+                st.session_state.chat_messages.append({
+                    "role": "assistant",
+                    "content": assistant_message
+                })
+
+            st.rerun()
+
+    elif st.session_state.briefs_generated or st.session_state.user_briefs_generated:
+        # Briefs were generated but context not loaded (edge case)
+        st.divider()
+        st.info("💬 **Brief Assistant** - Generate briefs to start chatting about your procurement data")
 
 
 if __name__ == "__main__":
