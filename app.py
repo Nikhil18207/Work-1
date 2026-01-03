@@ -247,6 +247,107 @@ def main():
                         key="sys_reg_download"
                     )
 
+            # ========== VERIFICATION SECTION ==========
+            st.divider()
+            st.subheader("🔍 Verify Briefs Against Source Data")
+            st.caption("Use Perplexity AI to fact-check generated briefs against actual data")
+
+            if st.button("🔍 Verify Briefs", type="secondary", key="sys_verify"):
+                with st.spinner("Verifying briefs with Perplexity AI..."):
+                    try:
+                        from backend.engines.brief_verifier import BriefVerifier
+                        from backend.engines.data_loader import DataLoader
+
+                        verifier = BriefVerifier()
+                        loader = DataLoader()
+                        source_df = loader.load_spend_data()
+
+                        # Get the file paths from session state filenames
+                        # We need to find the actual paths
+                        import glob
+                        subcat_safe = selected_subcategory.replace(' ', '_')
+                        incumbent_files = glob.glob(f"outputs/briefs/**/Incumbent_*{subcat_safe}*.docx", recursive=True)
+                        regional_files = glob.glob(f"outputs/briefs/**/Regional_*{subcat_safe}*.docx", recursive=True)
+
+                        incumbent_path = incumbent_files[-1] if incumbent_files else None
+                        regional_path = regional_files[-1] if regional_files else None
+
+                        if incumbent_path or regional_path:
+                            results = verifier.verify_both_briefs(
+                                incumbent_path,
+                                regional_path,
+                                source_df,
+                                selected_subcategory
+                            )
+
+                            # Display results
+                            st.markdown("### Verification Results")
+
+                            # Overall status
+                            status_color = "green" if results['overall_status'] == 'PASS' else "orange"
+                            st.markdown(f"**Overall Status:** :{status_color}[{results['overall_status']}]")
+
+                            # Incumbent brief
+                            with st.expander("📄 Incumbent Brief Verification", expanded=True):
+                                inc_result = results.get('incumbent', {})
+                                inc_status = inc_result.get('overall_status', 'ERROR')
+                                inc_color = "green" if inc_status == 'PASS' else "red"
+                                st.markdown(f"**Status:** :{inc_color}[{inc_status}]")
+                                st.markdown(f"**Accuracy Score:** {inc_result.get('accuracy_score', 0)}%")
+
+                                if inc_result.get('discrepancies'):
+                                    st.warning("Discrepancies Found:")
+                                    for d in inc_result['discrepancies']:
+                                        st.markdown(f"- **{d['field']}**: DOCX={d['docx_value']}, Expected={d['expected_value']}")
+                                else:
+                                    st.success("No discrepancies found!")
+
+                                if inc_result.get('llm_analysis', {}).get('analysis'):
+                                    st.markdown("**AI Analysis:**")
+                                    st.info(inc_result['llm_analysis']['analysis'])
+
+                            # Regional brief
+                            with st.expander("📄 Regional Brief Verification", expanded=True):
+                                reg_result = results.get('regional', {})
+                                reg_status = reg_result.get('overall_status', 'ERROR')
+                                reg_color = "green" if reg_status == 'PASS' else "red"
+                                st.markdown(f"**Status:** :{reg_color}[{reg_status}]")
+                                st.markdown(f"**Accuracy Score:** {reg_result.get('accuracy_score', 0)}%")
+
+                                if reg_result.get('discrepancies'):
+                                    st.warning("Discrepancies Found:")
+                                    for d in reg_result['discrepancies']:
+                                        st.markdown(f"- **{d['field']}**: DOCX={d['docx_value']}, Expected={d['expected_value']}")
+                                else:
+                                    st.success("No discrepancies found!")
+
+                                if reg_result.get('llm_analysis', {}).get('analysis'):
+                                    st.markdown("**AI Analysis:**")
+                                    st.info(reg_result['llm_analysis']['analysis'])
+
+                            # Expected vs Actual comparison
+                            with st.expander("📊 Expected Values from Source Data"):
+                                expected = results.get('incumbent', {}).get('expected_values', {})
+                                if expected and 'error' not in expected:
+                                    col1, col2, col3 = st.columns(3)
+                                    with col1:
+                                        st.metric("Total Spend", f"${expected.get('total_spend', 0):,.0f}")
+                                    with col2:
+                                        st.metric("Suppliers", expected.get('num_suppliers', 0))
+                                    with col3:
+                                        st.metric("Transactions", expected.get('num_transactions', 0))
+
+                                    st.markdown(f"**Dominant Supplier:** {expected.get('dominant_supplier', 'N/A')} ({expected.get('dominant_supplier_pct', 0):.1f}%)")
+                                    st.markdown(f"**Dominant Region:** {expected.get('dominant_region', 'N/A')} ({expected.get('dominant_region_pct', 0):.1f}%)")
+
+                        else:
+                            st.error("Could not find generated brief files. Please generate briefs first.")
+
+                    except Exception as e:
+                        st.error(f"Verification failed: {str(e)}")
+                        import traceback
+                        st.code(traceback.format_exc())
+
     # ========== TAB 2: Upload Data ==========
     with tab2:
         st.subheader("Upload Your Own Data")
@@ -420,6 +521,103 @@ def main():
                                 mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                                 key="user_reg_download"
                             )
+
+                    # ========== VERIFICATION SECTION (Upload Tab) ==========
+                    st.divider()
+                    st.subheader("🔍 Verify Briefs Against Your Data")
+                    st.caption("Use Perplexity AI to fact-check generated briefs against your uploaded data")
+
+                    if st.button("🔍 Verify Briefs", type="secondary", key="user_verify"):
+                        with st.spinner("Verifying briefs with Perplexity AI..."):
+                            try:
+                                from backend.engines.brief_verifier import BriefVerifier
+
+                                verifier = BriefVerifier()
+
+                                # Get the file paths
+                                import glob
+                                subcat_safe = selected_user_subcategory.replace(' ', '_')
+                                incumbent_files = glob.glob(f"outputs/briefs/**/Incumbent_*{subcat_safe}*.docx", recursive=True)
+                                regional_files = glob.glob(f"outputs/briefs/**/Regional_*{subcat_safe}*.docx", recursive=True)
+
+                                incumbent_path = incumbent_files[-1] if incumbent_files else None
+                                regional_path = regional_files[-1] if regional_files else None
+
+                                if incumbent_path or regional_path:
+                                    results = verifier.verify_both_briefs(
+                                        incumbent_path,
+                                        regional_path,
+                                        user_df,  # Use the uploaded dataframe
+                                        selected_user_subcategory
+                                    )
+
+                                    # Display results
+                                    st.markdown("### Verification Results")
+
+                                    # Overall status
+                                    status_color = "green" if results['overall_status'] == 'PASS' else "orange"
+                                    st.markdown(f"**Overall Status:** :{status_color}[{results['overall_status']}]")
+
+                                    # Incumbent brief
+                                    with st.expander("📄 Incumbent Brief Verification", expanded=True):
+                                        inc_result = results.get('incumbent', {})
+                                        inc_status = inc_result.get('overall_status', 'ERROR')
+                                        inc_color = "green" if inc_status == 'PASS' else "red"
+                                        st.markdown(f"**Status:** :{inc_color}[{inc_status}]")
+                                        st.markdown(f"**Accuracy Score:** {inc_result.get('accuracy_score', 0)}%")
+
+                                        if inc_result.get('discrepancies'):
+                                            st.warning("Discrepancies Found:")
+                                            for d in inc_result['discrepancies']:
+                                                st.markdown(f"- **{d['field']}**: DOCX={d['docx_value']}, Expected={d['expected_value']}")
+                                        else:
+                                            st.success("No discrepancies found!")
+
+                                        if inc_result.get('llm_analysis', {}).get('analysis'):
+                                            st.markdown("**AI Analysis:**")
+                                            st.info(inc_result['llm_analysis']['analysis'])
+
+                                    # Regional brief
+                                    with st.expander("📄 Regional Brief Verification", expanded=True):
+                                        reg_result = results.get('regional', {})
+                                        reg_status = reg_result.get('overall_status', 'ERROR')
+                                        reg_color = "green" if reg_status == 'PASS' else "red"
+                                        st.markdown(f"**Status:** :{reg_color}[{reg_status}]")
+                                        st.markdown(f"**Accuracy Score:** {reg_result.get('accuracy_score', 0)}%")
+
+                                        if reg_result.get('discrepancies'):
+                                            st.warning("Discrepancies Found:")
+                                            for d in reg_result['discrepancies']:
+                                                st.markdown(f"- **{d['field']}**: DOCX={d['docx_value']}, Expected={d['expected_value']}")
+                                        else:
+                                            st.success("No discrepancies found!")
+
+                                        if reg_result.get('llm_analysis', {}).get('analysis'):
+                                            st.markdown("**AI Analysis:**")
+                                            st.info(reg_result['llm_analysis']['analysis'])
+
+                                    # Expected vs Actual comparison
+                                    with st.expander("📊 Expected Values from Your Data"):
+                                        expected = results.get('incumbent', {}).get('expected_values', {})
+                                        if expected and 'error' not in expected:
+                                            col1, col2, col3 = st.columns(3)
+                                            with col1:
+                                                st.metric("Total Spend", f"${expected.get('total_spend', 0):,.0f}")
+                                            with col2:
+                                                st.metric("Suppliers", expected.get('num_suppliers', 0))
+                                            with col3:
+                                                st.metric("Transactions", expected.get('num_transactions', 0))
+
+                                            st.markdown(f"**Dominant Supplier:** {expected.get('dominant_supplier', 'N/A')} ({expected.get('dominant_supplier_pct', 0):.1f}%)")
+                                            st.markdown(f"**Dominant Region:** {expected.get('dominant_region', 'N/A')} ({expected.get('dominant_region_pct', 0):.1f}%)")
+
+                                else:
+                                    st.error("Could not find generated brief files. Please generate briefs first.")
+
+                            except Exception as e:
+                                st.error(f"Verification failed: {str(e)}")
+                                import traceback
+                                st.code(traceback.format_exc())
 
             except Exception as e:
                 st.error(f"Error reading file: {str(e)}")

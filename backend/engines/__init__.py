@@ -9,6 +9,7 @@ Includes:
 - DOCXExporter: Document export
 - FAISSVectorStore: RAG vector database
 - WebSearchEngine: Internet search fallback with source citation
+- BriefVerifier: LLM-based verification using Perplexity API
 """
 
 # Core engines
@@ -16,6 +17,7 @@ from .data_loader import DataLoader
 from .rule_evaluation_engine import RuleEvaluationEngine
 from .llm_engine import LLMEngine
 from .web_search_engine import WebSearchEngine
+from .brief_verifier import BriefVerifier
 
 # Document and export engines
 from .leadership_brief_generator import LeadershipBriefGenerator
@@ -32,6 +34,7 @@ __all__ = [
     'RuleEvaluationEngine',
     'LLMEngine',
     'WebSearchEngine',
+    'BriefVerifier',
     'LeadershipBriefGenerator',
     'DOCXExporter',
     'get_faiss_vector_store',
