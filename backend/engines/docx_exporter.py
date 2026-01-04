@@ -317,7 +317,7 @@ class DOCXExporter:
             self._add_section_heading(doc, 'SUPPLIER PERFORMANCE METRICS')
             
             perf_rows = []
-            for sp in supplier_perf[:5]:
+            for sp in supplier_perf[:15]:
                 if isinstance(sp, dict):
                     perf_rows.append([
                         sp.get('supplier', 'N/A'),

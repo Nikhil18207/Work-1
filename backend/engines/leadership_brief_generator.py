@@ -425,9 +425,12 @@ class LeadershipBriefGenerator:
         """Calculate supplier performance metrics from actual data including proof points"""
         metrics = []
 
-        supplier_names = spend_df['Supplier_Name'].unique()
+        # Calculate total spend per supplier and sort descending to identify top suppliers
+        supplier_spend_series = spend_df.groupby('Supplier_Name')['Spend_USD'].sum().sort_values(ascending=False)
+        supplier_names = supplier_spend_series.index.tolist()
 
-        for supplier_name in supplier_names[:5]:
+        # Process top 15 suppliers (increased from 5 to ensure coverage)
+        for supplier_name in supplier_names[:15]:
             supplier_info = supplier_df[supplier_df['supplier_name'] == supplier_name]
             supplier_spend = spend_df[spend_df['Supplier_Name'] == supplier_name]['Spend_USD'].sum()
 

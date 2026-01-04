@@ -240,9 +240,11 @@ class DataAnalysisAgent(BaseAgent):
     ) -> List[Dict[str, Any]]:
         """Calculate supplier performance metrics."""
         metrics = []
-        supplier_names = spend_df['Supplier_Name'].unique()
+        # Calculate total spend per supplier and sort descending
+        supplier_spend_series = spend_df.groupby('Supplier_Name')['Spend_USD'].sum().sort_values(ascending=False)
+        supplier_names = supplier_spend_series.index.tolist()
 
-        for supplier_name in supplier_names[:5]:
+        for supplier_name in supplier_names[:15]:
             supplier_info = supplier_df[supplier_df['supplier_name'] == supplier_name]
             supplier_spend = spend_df[spend_df['Supplier_Name'] == supplier_name]['Spend_USD'].sum()
 
