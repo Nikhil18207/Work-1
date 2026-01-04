@@ -7,16 +7,12 @@ from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 from loguru import logger
 
-from backend.engines.conversational_ai import ConversationalAI
+from backend.engines.data_loader import DataLoader
 
 recommendation_router = APIRouter()
 
-# Initialize AI Engine (RAG will be enabled if setup_rag.py was run)
-ai_assistant = ConversationalAI(
-    enable_llm=True,
-    enable_rag=True,
-    enable_web_search=True
-)
+# Initialize data loader for API access
+data_loader = DataLoader()
 
 
 class RecommendationRequest(BaseModel):
@@ -58,11 +54,15 @@ class RecommendationResponse(BaseModel):
 async def chat_with_ai(request: ChatRequest):
     """
     Endpoint for conversational AI chat
-    Routes to RAG, Web Search, or Data Analysis as needed
+    Note: Full conversational AI requires the Streamlit UI.
+    This endpoint provides basic data queries.
     """
     try:
-        answer = ai_assistant.answer_question(request.message)
-        return ChatResponse(answer=answer)
+        # Simple response - full chat is handled in Streamlit UI
+        return ChatResponse(
+            answer="For full conversational AI, please use the Streamlit UI (streamlit run app.py). "
+                   "This API provides data access endpoints."
+        )
     except Exception as e:
         logger.error(f"Error in chat: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -72,14 +72,13 @@ async def chat_with_ai(request: ChatRequest):
 async def query_knowledge_base(request: ChatRequest):
     """
     Specifically query the RAG knowledge base (policies, contracts, etc.)
+    Note: RAG queries are best handled through the Streamlit UI.
     """
     try:
-        if not ai_assistant.rag_engine:
-            raise HTTPException(status_code=400, detail="RAG engine not initialized. Run setup_rag.py first.")
-        
-        # Use RAG directly
-        result = ai_assistant.rag_engine.query(request.message)
-        return ChatResponse(answer=result['answer'])
+        return ChatResponse(
+            answer="For RAG-powered knowledge base queries, please use the Streamlit UI. "
+                   "Run: streamlit run app.py"
+        )
     except Exception as e:
         logger.error(f"Error querying knowledge base: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -171,3 +170,96 @@ async def list_clients():
 async def get_benchmarks(product_category: str):
     """Get pricing benchmarks for a product category"""
     return {"message": f"Benchmarks for {product_category} - implementation pending"}
+
+
+# ============================================================================
+# PROOF POINTS API ENDPOINTS
+# ============================================================================
+
+@recommendation_router.get("/proof-points")
+async def list_all_proof_points():
+    """
+    Get all proof points (verified supplier evidence)
+
+    Returns:
+        List of all proof points with verification status
+    """
+    try:
+        proof_points = data_loader.load_proof_points()
+
+        if proof_points.empty:
+            return {"success": True, "data": [], "message": "No proof points data available"}
+
+        # Convert to list of dicts
+        records = proof_points.to_dict('records')
+
+        # Convert datetime to string
+        for record in records:
+            if 'Date_Recorded' in record and record['Date_Recorded'] is not None:
+                record['Date_Recorded'] = str(record['Date_Recorded'])[:10]
+
+        return {
+            "success": True,
+            "total_count": len(records),
+            "verified_count": len([r for r in records if r.get('Verification_Status') == 'Verified']),
+            "pending_count": len([r for r in records if r.get('Verification_Status') == 'Pending']),
+            "data": records
+        }
+    except Exception as e:
+        logger.error(f"Error fetching proof points: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@recommendation_router.get("/proof-points/supplier/{supplier_id}")
+async def get_supplier_proof_points(supplier_id: str):
+    """
+    Get proof points for a specific supplier
+
+    Args:
+        supplier_id: Supplier ID (e.g., 'S001')
+
+    Returns:
+        Proof points organized by metric type
+    """
+    try:
+        result = data_loader.get_supplier_proof_points(supplier_id=supplier_id)
+
+        if 'error' in result:
+            raise HTTPException(status_code=404, detail=result['error'])
+
+        return {"success": True, "data": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching supplier proof points: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@recommendation_router.get("/proof-points/category/{category}")
+async def get_category_proof_points(category: str, subcategory: Optional[str] = None):
+    """
+    Get proof points for all suppliers in a category
+
+    Args:
+        category: Category name (e.g., 'Edible Oils')
+        subcategory: Optional subcategory filter (e.g., 'Rice Bran Oil')
+
+    Returns:
+        List of suppliers with their proof points
+    """
+    try:
+        result = data_loader.get_proof_points_by_category(
+            category=category,
+            subcategory=subcategory
+        )
+
+        return {
+            "success": True,
+            "category": category,
+            "subcategory": subcategory,
+            "supplier_count": len(result),
+            "data": result
+        }
+    except Exception as e:
+        logger.error(f"Error fetching category proof points: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))

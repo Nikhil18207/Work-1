@@ -130,7 +130,7 @@ class DataLoader:
     def load_industry_benchmarks(self, force_reload: bool = False) -> pd.DataFrame:
         """
         Load industry benchmarks
-        
+
         Returns:
             DataFrame with columns: Category, Metric, Industry_Benchmark, Our_Performance,
                                    Gap, Unit, Benchmark_Source, Last_Updated
@@ -142,8 +142,134 @@ class DataLoader:
             self._cache['industry_benchmarks']['Last_Updated'] = pd.to_datetime(
                 self._cache['industry_benchmarks']['Last_Updated']
             )
-        
+
         return self._cache['industry_benchmarks'].copy()
+
+    def load_proof_points(self, force_reload: bool = False) -> pd.DataFrame:
+        """
+        Load proof points (verified supplier evidence and performance metrics)
+
+        Returns:
+            DataFrame with columns: Proof_Point_ID, Sector, Category, SubCategory,
+                                   Supplier_ID, Supplier_Name, Metric_Type, Metric_Value,
+                                   Unit, Date_Recorded, Verification_Status, Source_Document
+        """
+        if 'proof_points' not in self._cache or force_reload:
+            file_path = self.data_dir / 'proof_points.csv'
+            if file_path.exists():
+                self._cache['proof_points'] = pd.read_csv(file_path)
+                # Convert date column
+                if 'Date_Recorded' in self._cache['proof_points'].columns:
+                    self._cache['proof_points']['Date_Recorded'] = pd.to_datetime(
+                        self._cache['proof_points']['Date_Recorded']
+                    )
+            else:
+                self._cache['proof_points'] = pd.DataFrame()
+
+        return self._cache['proof_points'].copy()
+
+    def get_supplier_proof_points(self, supplier_id: str = None, supplier_name: str = None) -> Dict[str, Any]:
+        """
+        Get verified proof points for a specific supplier
+
+        Args:
+            supplier_id: Supplier ID (e.g., 'S001')
+            supplier_name: Supplier name (alternative to supplier_id)
+
+        Returns:
+            Dictionary with supplier proof points organized by metric type
+        """
+        proof_points = self.load_proof_points()
+
+        if proof_points.empty:
+            return {"error": "No proof points data available"}
+
+        # Filter by supplier
+        if supplier_id:
+            supplier_data = proof_points[proof_points['Supplier_ID'] == supplier_id]
+        elif supplier_name:
+            supplier_data = proof_points[proof_points['Supplier_Name'] == supplier_name]
+        else:
+            return {"error": "Please provide supplier_id or supplier_name"}
+
+        if supplier_data.empty:
+            return {"error": f"No proof points found for supplier"}
+
+        # Organize by metric type
+        metrics = {}
+        for _, row in supplier_data.iterrows():
+            metric_type = row['Metric_Type']
+            metrics[metric_type] = {
+                'value': row['Metric_Value'],
+                'unit': row['Unit'],
+                'date_recorded': str(row['Date_Recorded'].date()) if pd.notna(row['Date_Recorded']) else None,
+                'verification_status': row['Verification_Status'],
+                'source_document': row['Source_Document']
+            }
+
+        return {
+            'supplier_id': supplier_data.iloc[0]['Supplier_ID'],
+            'supplier_name': supplier_data.iloc[0]['Supplier_Name'],
+            'sector': supplier_data.iloc[0].get('Sector'),
+            'category': supplier_data.iloc[0].get('Category'),
+            'subcategory': supplier_data.iloc[0].get('SubCategory'),
+            'metrics': metrics,
+            'verified_count': len(supplier_data[supplier_data['Verification_Status'] == 'Verified']),
+            'pending_count': len(supplier_data[supplier_data['Verification_Status'] == 'Pending']),
+            'total_proof_points': len(supplier_data)
+        }
+
+    def get_proof_points_by_category(self, category: str = None, subcategory: str = None) -> List[Dict[str, Any]]:
+        """
+        Get all proof points for suppliers in a category/subcategory
+
+        Args:
+            category: Category name
+            subcategory: SubCategory name (more specific)
+
+        Returns:
+            List of supplier proof point summaries
+        """
+        proof_points = self.load_proof_points()
+
+        if proof_points.empty:
+            return []
+
+        # Filter by category
+        if subcategory:
+            filtered = proof_points[proof_points['SubCategory'] == subcategory]
+        elif category:
+            filtered = proof_points[proof_points['Category'] == category]
+        else:
+            filtered = proof_points
+
+        if filtered.empty:
+            return []
+
+        # Group by supplier
+        suppliers = []
+        for supplier_id in filtered['Supplier_ID'].unique():
+            supplier_data = filtered[filtered['Supplier_ID'] == supplier_id]
+
+            # Build metrics dict
+            metrics = {}
+            for _, row in supplier_data.iterrows():
+                metrics[row['Metric_Type']] = {
+                    'value': row['Metric_Value'],
+                    'unit': row['Unit'],
+                    'verified': row['Verification_Status'] == 'Verified'
+                }
+
+            suppliers.append({
+                'supplier_id': supplier_id,
+                'supplier_name': supplier_data.iloc[0]['Supplier_Name'],
+                'metrics': metrics,
+                'verified_count': len(supplier_data[supplier_data['Verification_Status'] == 'Verified']),
+                'total_proof_points': len(supplier_data)
+            })
+
+        # Sort by verified count (most verified first)
+        return sorted(suppliers, key=lambda x: x['verified_count'], reverse=True)
     
     def get_benchmark_analysis(self, category: str = None) -> Dict[str, Any]:
         """
@@ -327,6 +453,40 @@ class DataLoader:
     # HIERARCHICAL INDUSTRY TAXONOMY METHODS
     # Support for Sector > Category > SubCategory structure
     # ========================================================================
+
+    def load_inventory_metrics(self, force_reload: bool = False) -> pd.DataFrame:
+        """
+        Load inventory metrics for inventory-related rules (R012, R014, R022)
+
+        Returns:
+            DataFrame with columns: sector, category, subcategory, moq_months_of_demand,
+                                   foreign_currency_spend_pct, inventory_turnover, etc.
+        """
+        if 'inventory_metrics' not in self._cache or force_reload:
+            file_path = self.data_dir / 'inventory_metrics.csv'
+            if file_path.exists():
+                self._cache['inventory_metrics'] = pd.read_csv(file_path)
+            else:
+                self._cache['inventory_metrics'] = pd.DataFrame()
+
+        return self._cache['inventory_metrics'].copy()
+
+    def load_category_metrics(self, force_reload: bool = False) -> pd.DataFrame:
+        """
+        Load category-level metrics for aggregated rules (R015, R016, R017, R018, etc.)
+
+        Returns:
+            DataFrame with columns: sector, category, subcategory, diverse_supplier_pct,
+                                   innovation_supplier_pct, local_content_pct, etc.
+        """
+        if 'category_metrics' not in self._cache or force_reload:
+            file_path = self.data_dir / 'category_metrics.csv'
+            if file_path.exists():
+                self._cache['category_metrics'] = pd.read_csv(file_path)
+            else:
+                self._cache['category_metrics'] = pd.DataFrame()
+
+        return self._cache['category_metrics'].copy()
 
     def load_industry_taxonomy(self, force_reload: bool = False) -> pd.DataFrame:
         """

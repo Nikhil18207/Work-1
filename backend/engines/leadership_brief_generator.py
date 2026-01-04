@@ -418,19 +418,22 @@ class LeadershipBriefGenerator:
         return advantages
     
     def _calculate_supplier_performance_metrics(
-        self, 
-        spend_df: pd.DataFrame, 
+        self,
+        spend_df: pd.DataFrame,
         supplier_df: pd.DataFrame
     ) -> List[Dict]:
-        """Calculate supplier performance metrics from actual data"""
+        """Calculate supplier performance metrics from actual data including proof points"""
         metrics = []
-        
+
         supplier_names = spend_df['Supplier_Name'].unique()
-        
+
         for supplier_name in supplier_names[:5]:
             supplier_info = supplier_df[supplier_df['supplier_name'] == supplier_name]
             supplier_spend = spend_df[spend_df['Supplier_Name'] == supplier_name]['Spend_USD'].sum()
-            
+
+            # Get proof points for this supplier
+            proof_points_data = self._get_supplier_proof_points(supplier_name)
+
             if not supplier_info.empty:
                 info = supplier_info.iloc[0]
                 metrics.append({
@@ -440,7 +443,8 @@ class LeadershipBriefGenerator:
                     'delivery_reliability': float(info.get('delivery_reliability_pct', 0)),
                     'sustainability_score': float(info.get('sustainability_score', 0)),
                     'years_in_business': int(info.get('years_in_business', 0)),
-                    'certifications': str(info.get('certifications', '')).split('|')
+                    'certifications': str(info.get('certifications', '')).split('|'),
+                    'proof_points': proof_points_data
                 })
             else:
                 metrics.append({
@@ -450,10 +454,60 @@ class LeadershipBriefGenerator:
                     'delivery_reliability': 0,
                     'sustainability_score': 0,
                     'years_in_business': 0,
-                    'certifications': []
+                    'certifications': [],
+                    'proof_points': proof_points_data
                 })
-        
+
         return metrics
+
+    def _get_supplier_proof_points(self, supplier_name: str) -> Dict[str, Any]:
+        """
+        Get verified proof points for a supplier
+
+        Args:
+            supplier_name: Name of the supplier
+
+        Returns:
+            Dictionary with proof points data or empty dict if none found
+        """
+        try:
+            proof_points = self.data_loader.load_proof_points()
+
+            if proof_points.empty:
+                return {'has_proof_points': False}
+
+            supplier_data = proof_points[proof_points['Supplier_Name'] == supplier_name]
+
+            if supplier_data.empty:
+                return {'has_proof_points': False}
+
+            # Organize metrics by type
+            verified_metrics = {}
+            pending_metrics = {}
+
+            for _, row in supplier_data.iterrows():
+                metric_info = {
+                    'value': row['Metric_Value'],
+                    'unit': row['Unit'],
+                    'date': str(row['Date_Recorded'].date()) if pd.notna(row.get('Date_Recorded')) else None,
+                    'source': row.get('Source_Document', 'N/A')
+                }
+
+                if row['Verification_Status'] == 'Verified':
+                    verified_metrics[row['Metric_Type']] = metric_info
+                else:
+                    pending_metrics[row['Metric_Type']] = metric_info
+
+            return {
+                'has_proof_points': True,
+                'verified_metrics': verified_metrics,
+                'pending_metrics': pending_metrics,
+                'verified_count': len(verified_metrics),
+                'pending_count': len(pending_metrics),
+                'total_proof_points': len(supplier_data)
+            }
+        except Exception as e:
+            return {'has_proof_points': False, 'error': str(e)}
     
     def _calculate_risk_matrix(
         self,
