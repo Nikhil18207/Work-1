@@ -156,3 +156,6 @@ temp/
 
 # Claude
 .claude/
+
+# Output files (generated briefs)
+outputs/
