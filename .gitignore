@@ -137,6 +137,7 @@ Thumbs.db
 # Project specific
 data/calculated/*
 !data/calculated/.gitkeep
+!data/calculated/*.csv
 data/vector_db/*
 !data/vector_db/.gitkeep
 logs/*
