@@ -1,5 +1,5 @@
 """
-Beroe Procurement AI - FastAPI Backend
+Procurement AI - FastAPI Backend
 Main Application Entry Point with rate limiting and security middleware
 """
 
@@ -80,7 +80,7 @@ rate_limiter = RateLimiter(requests_per_minute=settings.RATE_LIMIT_REQUESTS)
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="Beroe Procurement AI",
+    title="Procurement AI",
     description="AI-powered procurement recommendation system for multi-industry sourcing intelligence",
     version="2.0.0",
     docs_url="/docs" if not settings.is_production else None,  # Disable docs in production
@@ -197,7 +197,7 @@ async def root():
     """Health check endpoint"""
     return {
         "status": "healthy",
-        "service": "Beroe Procurement AI",
+        "service": "Procurement AI",
         "version": "2.0.0",
         "features": {
             "llm_enabled": settings.is_llm_enabled,
@@ -258,7 +258,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 if __name__ == "__main__":
     logger.info(
-        f"Starting Beroe Procurement AI on {settings.APP_HOST}:{settings.APP_PORT} "
+        f"Starting Procurement AI on {settings.APP_HOST}:{settings.APP_PORT} "
         f"(Environment: {settings.APP_ENV})"
     )
     uvicorn.run(

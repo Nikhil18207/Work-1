@@ -1,5 +1,5 @@
 """
-Beroe Procurement AI - Streamlit UI
+Procurement AI - Streamlit UI
 Simple, clean interface for procurement analysis and brief generation
 
 Supports:
@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).parent
 
 # Page config
 st.set_page_config(
-    page_title="Beroe Procurement AI",
+    page_title="Procurement AI",
     page_icon="📊",
     layout="wide"
 )
@@ -806,7 +806,7 @@ def render_chat_assistant():
 
 def main():
     """Main application entry point"""
-    st.title("📊 Beroe Procurement AI")
+    st.title("📊 Procurement AI")
 
     # Initialize session state
     initialize_session_state()

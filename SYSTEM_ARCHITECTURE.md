@@ -1,4 +1,4 @@
-# Beroe Universal Procurement AI - System Architecture & End-to-End Workflow
+# Procurement AI - System Architecture & End-to-End Workflow
 
 ## 1. SYSTEM OVERVIEW
 

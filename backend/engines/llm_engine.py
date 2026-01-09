@@ -143,7 +143,7 @@ class LLMEngine:
 
     def _get_default_system_prompt(self) -> str:
         """Get default system prompt for procurement AI"""
-        return """You are the Beroe Inc Supply Chain Recommendation AI, an enterprise-grade procurement intelligence system.
+        return """You are the Procurement AI Supply Chain Recommendation System, an enterprise-grade procurement intelligence system.
 
 CRITICAL RULES:
 1. ZERO HALLUCINATION: Never invent data, suppliers, or numbers

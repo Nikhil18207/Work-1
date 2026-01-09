@@ -1,4 +1,4 @@
-# Beroe Procurement AI - Multi-Industry Sourcing Intelligence
+# Procurement AI - Multi-Industry Sourcing Intelligence
 
 ## Overview
 
@@ -252,4 +252,4 @@ briefs = generator.generate_both_briefs("YOUR_CLIENT", "Your SubCategory")
 MIT License
 
 ## Author
-Beroe Inc - Procurement Intelligence Platform
+Procurement AI - Procurement Intelligence Platform
