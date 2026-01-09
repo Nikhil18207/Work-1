@@ -120,22 +120,29 @@ def main():
 
     documents = []
 
-    # Load knowledge base documents
-    print("\n[1/4] Loading knowledge base documents...")
-    kb_path = root_path / "data" / "knowledge_base"
-    kb_docs = load_documents_from_directory(kb_path)
-    documents.extend(kb_docs)
-    print(f"  Loaded {len(kb_docs)} knowledge base documents")
+    # Load UNSTRUCTURED documents (policies, best practices, risk assessments)
+    print("\n[1/5] Loading UNSTRUCTURED documents (policies, best practices)...")
+    unstructured_path = root_path / "data" / "unstructured"
+    unstructured_docs = load_documents_from_directory(unstructured_path)
+    documents.extend(unstructured_docs)
+    print(f"  ✅ Loaded {len(unstructured_docs)} unstructured documents")
 
-    # Load structured data descriptions
-    print("\n[2/4] Creating structured data descriptions...")
+    # Load STRUCTURED data descriptions (CSVs)
+    print("\n[2/5] Loading STRUCTURED data (CSV files)...")
     structured_path = root_path / "data" / "structured"
     struct_docs = load_structured_data_descriptions(structured_path)
     documents.extend(struct_docs)
-    print(f"  Created {len(struct_docs)} data descriptions")
+    print(f"  ✅ Created {len(struct_docs)} structured data descriptions")
+
+    # Load CALCULATED data
+    print("\n[3/5] Loading CALCULATED data...")
+    calculated_path = root_path / "data" / "calculated"
+    calculated_docs = load_structured_data_descriptions(calculated_path)
+    documents.extend(calculated_docs)
+    print(f"  ✅ Created {len(calculated_docs)} calculated data descriptions")
 
     # Add procurement domain knowledge
-    print("\n[3/4] Adding procurement domain knowledge...")
+    print("\n[4/5] Adding procurement domain knowledge...")
     domain_docs = [
         {
             'content': """
@@ -227,16 +234,16 @@ Global Supplier Database Coverage:
         }
     ]
     documents.extend(domain_docs)
-    print(f"  Added {len(domain_docs)} domain knowledge documents")
+    print(f"  ✅ Added {len(domain_docs)} domain knowledge documents")
 
-    print(f"\n  TOTAL DOCUMENTS: {len(documents)}")
+    print(f"\n  📊 TOTAL DOCUMENTS: {len(documents)}")
 
     if not documents:
         print("\n[ERROR] No documents found to index!")
         return
 
     # Create FAISS index
-    print("\n[4/4] Creating FAISS index...")
+    print("\n[5/5] Creating FAISS index...")
     faiss_store = FAISSVectorStore(
         persist_directory="./data/faiss_db",
         embedding_model="text-embedding-3-small"

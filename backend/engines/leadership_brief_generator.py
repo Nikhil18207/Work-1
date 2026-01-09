@@ -28,7 +28,9 @@ if str(root_path) not in sys.path:
 
 from backend.engines.data_loader import DataLoader
 from backend.engines.rule_evaluation_engine import RuleEvaluationEngine
+from backend.engines.rule_orchestrator import RuleOrchestrator
 from backend.engines.llm_engine import LLMEngine
+from backend.engines.web_search_engine import WebSearchEngine
 # VectorStoreManager imported lazily to avoid ChromaDB Windows segfault
 
 
@@ -243,7 +245,8 @@ class LeadershipBriefGenerator:
             self.data_loader = data_loader
         else:
             self.data_loader = DataLoader()
-        self.rule_engine = RuleEvaluationEngine()
+        self.rule_engine = RuleEvaluationEngine(data_loader=self.data_loader)
+        self.rule_orchestrator = RuleOrchestrator()  # For conflict-aware rule resolution
         self.use_agents = use_agents
         self.enable_web_search = enable_web_search
         self._orchestrator = None  # Lazy-loaded when use_agents=True
@@ -282,6 +285,18 @@ class LeadershipBriefGenerator:
                 print(f"[WARN] RAG initialization failed: {e} - using LLM without RAG context")
                 self.enable_rag = False
                 self.vector_store = None
+
+        # Initialize Web Search Engine for supplier data fallback
+        self.web_search_engine = None
+        if enable_web_search:
+            try:
+                self.web_search_engine = WebSearchEngine()
+                if self.web_search_engine.enabled:
+                    print("[OK] Web Search Engine initialized for supplier fallback")
+                else:
+                    print("[WARN] Web search not configured - supplier fallback disabled")
+            except Exception as e:
+                print(f"[WARN] Web search initialization failed: {e}")
 
     def _get_orchestrator(self):
         """Lazy-load the BriefOrchestrator for agent-based generation."""
@@ -420,9 +435,24 @@ class LeadershipBriefGenerator:
     def _calculate_supplier_performance_metrics(
         self,
         spend_df: pd.DataFrame,
-        supplier_df: pd.DataFrame
+        supplier_df: pd.DataFrame,
+        category: str = None
     ) -> List[Dict]:
-        """Calculate supplier performance metrics from actual data including proof points"""
+        """
+        Calculate supplier performance metrics from actual data including proof points.
+        
+        Uses Database-First, Web-Fallback pattern:
+        1. First check supplier_master.csv (database)
+        2. If not found, fetch from web search
+        
+        Args:
+            spend_df: Spend data DataFrame
+            supplier_df: Supplier master DataFrame
+            category: Optional category for web search context
+            
+        Returns:
+            List of supplier metrics dictionaries
+        """
         metrics = []
 
         # Calculate total spend per supplier and sort descending to identify top suppliers
@@ -438,6 +468,7 @@ class LeadershipBriefGenerator:
             proof_points_data = self._get_supplier_proof_points(supplier_name)
 
             if not supplier_info.empty:
+                # CASE 1: Supplier found in database - use DB data
                 info = supplier_info.iloc[0]
                 metrics.append({
                     'supplier': supplier_name,
@@ -447,18 +478,24 @@ class LeadershipBriefGenerator:
                     'sustainability_score': float(info.get('sustainability_score', 0)),
                     'years_in_business': int(info.get('years_in_business', 0)),
                     'certifications': str(info.get('certifications', '')).split('|'),
-                    'proof_points': proof_points_data
+                    'proof_points': proof_points_data,
+                    'data_source': 'database'
                 })
             else:
+                # CASE 2: Supplier NOT in database - try web search fallback
+                web_info = self._get_supplier_info_from_web(supplier_name, category)
+                
                 metrics.append({
                     'supplier': supplier_name,
                     'spend_usd': supplier_spend,
-                    'quality_rating': 0,
-                    'delivery_reliability': 0,
-                    'sustainability_score': 0,
-                    'years_in_business': 0,
-                    'certifications': [],
-                    'proof_points': proof_points_data
+                    'quality_rating': web_info.get('quality_rating', 0),
+                    'delivery_reliability': web_info.get('delivery_reliability', 0),
+                    'sustainability_score': web_info.get('sustainability_score', 0),
+                    'years_in_business': web_info.get('years_in_business', 0),
+                    'certifications': web_info.get('certifications', []),
+                    'proof_points': proof_points_data,
+                    'data_source': web_info.get('source', 'not_found'),
+                    'web_sources': web_info.get('web_sources', [])
                 })
 
         return metrics
@@ -511,6 +548,160 @@ class LeadershipBriefGenerator:
             }
         except Exception as e:
             return {'has_proof_points': False, 'error': str(e)}
+
+    def _get_supplier_info_from_web(self, supplier_name: str, category: str = None) -> Dict[str, Any]:
+        """
+        Fetch supplier information from the web when not found in database.
+        
+        This is a FALLBACK mechanism - only called when supplier is NOT in supplier_master.csv
+        
+        Args:
+            supplier_name: Name of the supplier to search for
+            category: Optional category context for better search results
+            
+        Returns:
+            Dictionary with supplier metrics (estimated from web data) or empty values
+        """
+        if not self.web_search_engine or not self.web_search_engine.enabled:
+            return {
+                'source': 'not_found',
+                'quality_rating': 0,
+                'delivery_reliability': 0,
+                'sustainability_score': 0,
+                'years_in_business': 0,
+                'certifications': []
+            }
+        
+        try:
+            # Build search query for supplier
+            query_parts = [supplier_name]
+            if category:
+                query_parts.append(category)
+            query_parts.extend(['company', 'supplier', 'profile', 'rating', 'review'])
+            query = " ".join(query_parts)
+            
+            # Search the web
+            search_result = self.web_search_engine.search(query, num_results=3)
+            
+            if not search_result.get('success') or not search_result.get('results'):
+                return {
+                    'source': 'web_search_failed',
+                    'quality_rating': 0,
+                    'delivery_reliability': 0,
+                    'sustainability_score': 0,
+                    'years_in_business': 0,
+                    'certifications': []
+                }
+            
+            # Extract information from search results
+            # Note: These are estimates based on web context, not verified data
+            web_context = search_result.get('context', '')
+            sources = search_result.get('results', [])
+            
+            # Use LLM to extract structured info if available
+            if self.llm_engine and self.llm_engine.client:
+                extracted_info = self._extract_supplier_info_with_llm(
+                    supplier_name, web_context, sources
+                )
+                if extracted_info:
+                    extracted_info['source'] = 'web_search'
+                    extracted_info['web_sources'] = [s.get('url', '') for s in sources[:3]]
+                    return extracted_info
+            
+            # Fallback: Return partial info with web source citation
+            return {
+                'source': 'web_search',
+                'quality_rating': 0,  # Cannot estimate without LLM
+                'delivery_reliability': 0,
+                'sustainability_score': 0,
+                'years_in_business': 0,
+                'certifications': [],
+                'web_context': web_context[:500],  # First 500 chars for reference
+                'web_sources': [s.get('url', '') for s in sources[:3]]
+            }
+            
+        except Exception as e:
+            print(f"[WARN] Web search failed for {supplier_name}: {e}")
+            return {
+                'source': 'error',
+                'error': str(e),
+                'quality_rating': 0,
+                'delivery_reliability': 0,
+                'sustainability_score': 0,
+                'years_in_business': 0,
+                'certifications': []
+            }
+
+    def _extract_supplier_info_with_llm(
+        self, 
+        supplier_name: str, 
+        web_context: str, 
+        sources: List[Dict]
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Use LLM to extract structured supplier info from web search results.
+        
+        Args:
+            supplier_name: Name of the supplier
+            web_context: Combined text from web search
+            sources: List of source URLs
+            
+        Returns:
+            Extracted supplier info or None if extraction fails
+        """
+        if not self.llm_engine or not self.llm_engine.client:
+            return None
+            
+        prompt = f"""Based on the following web search results about "{supplier_name}", extract supplier information.
+
+WEB SEARCH RESULTS:
+{web_context}
+
+INSTRUCTIONS:
+1. Extract ONLY information explicitly mentioned in the search results
+2. If information is not available, use 0 or empty values
+3. Be conservative with ratings - only assign high values if clearly supported
+4. Return a JSON object with these fields:
+   - quality_rating: 0-5 scale (0 if not mentioned)
+   - delivery_reliability: 0-100 percentage (0 if not mentioned)
+   - sustainability_score: 0-100 (0 if not mentioned)
+   - years_in_business: integer (0 if not mentioned)
+   - certifications: list of certification names found (empty list if none)
+   - company_description: brief description if found
+
+Return ONLY valid JSON, no other text."""
+
+        try:
+            response = self.llm_engine.generate(
+                prompt=prompt,
+                max_tokens=500,
+                temperature=0.1  # Low temperature for structured extraction
+            )
+            
+            if response:
+                import json
+                # Try to parse JSON from response
+                # Handle case where response might have markdown code blocks
+                response_text = response.strip()
+                if response_text.startswith('```'):
+                    response_text = response_text.split('```')[1]
+                    if response_text.startswith('json'):
+                        response_text = response_text[4:]
+                    response_text = response_text.strip()
+                
+                extracted = json.loads(response_text)
+                return {
+                    'quality_rating': float(extracted.get('quality_rating', 0)),
+                    'delivery_reliability': float(extracted.get('delivery_reliability', 0)),
+                    'sustainability_score': float(extracted.get('sustainability_score', 0)),
+                    'years_in_business': int(extracted.get('years_in_business', 0)),
+                    'certifications': extracted.get('certifications', []),
+                    'company_description': extracted.get('company_description', '')
+                }
+        except Exception as e:
+            print(f"[WARN] LLM extraction failed for {supplier_name}: {e}")
+            
+        return None
     
     def _calculate_risk_matrix(
         self,
@@ -570,6 +761,10 @@ class LeadershipBriefGenerator:
             total_rules = len(violations) + len(warnings) + len(compliant)
             compliance_rate = round(len(compliant) / max(total_rules, 1) * 100, 1)
             
+            # Use RuleOrchestrator for conflict-aware analysis
+            conflict_analysis = self.rule_orchestrator.resolve_conflicts(violations)
+            action_plan = self.rule_orchestrator.generate_action_plan(violations)
+            
             return {
                 'violations': violations,
                 'warnings': warnings,
@@ -577,7 +772,11 @@ class LeadershipBriefGenerator:
                 'total_violations': len(violations),
                 'total_warnings': len(warnings),
                 'compliance_rate': compliance_rate,
-                'overall_status': results.get('summary', {}).get('overall_status', 'UNKNOWN')
+                'overall_status': results.get('summary', {}).get('overall_status', 'UNKNOWN'),
+                # Conflict-aware additions
+                'conflict_warnings': conflict_analysis.get('conflict_warnings', []),
+                'resolution_plan': conflict_analysis.get('resolution_plan', []),
+                'action_plan_text': action_plan
             }
         except Exception as e:
             return {
@@ -861,7 +1060,7 @@ class LeadershipBriefGenerator:
             category, product_category, total_spend, new_regions
         )
         
-        supplier_performance = self._calculate_supplier_performance_metrics(spend_df, supplier_df)
+        supplier_performance = self._calculate_supplier_performance_metrics(spend_df, supplier_df, category)
         
         risk_matrix = self._calculate_risk_matrix(
             dominant_supplier_pct, dominant_region_pct, num_current_suppliers
@@ -1123,7 +1322,7 @@ class LeadershipBriefGenerator:
         )
         
         timeline = self._generate_implementation_timeline(category)
-        supplier_performance = self._calculate_supplier_performance_metrics(spend_df, supplier_df)
+        supplier_performance = self._calculate_supplier_performance_metrics(spend_df, supplier_df, category)
         rule_violations = self._evaluate_rule_violations(client_id, category)
         
         if len(high_concentration_countries) >= 2:

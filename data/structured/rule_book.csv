@@ -1,6 +1,6 @@
 Rule_ID,Rule_Name,Rule_Description,Threshold_Value,Comparison_Logic,Risk_Level,Action_Recommendation,Category
 R001,Regional Concentration,If more than 40% of category spend is concentrated in a single region,40%,Spend_Region_Percentage > Threshold,Critical,Diversify sourcing across 3-4 regions minimum to reduce geographic risk,Supply Chain Risk
-R002,Tail Spend Fragmentation,If bottom 20% of spend is distributed across too many suppliers,10 suppliers,Low_Spend_Supplier_Count > Threshold,Medium,Consolidate tail spend suppliers from 20 to 5 for 10-20% savings,Cost Management
+R002,Tail Spend Fragmentation,If bottom 20% of spend is distributed across more than 15 suppliers,15 suppliers,Low_Spend_Supplier_Count > Threshold,Medium,Consolidate tail spend suppliers to 5-10 for operational efficiency and 10-20% savings,Cost Management
 R003,Single Supplier Dependency,If more than 60% of category spend is with a single supplier,60%,Single_Supplier_Percentage > Threshold,Critical,Qualify 2-3 alternative suppliers to reduce dependency risk,Supply Chain Risk
 R004,Contract Expiry Warning,Contracts expiring within 90 days without renewal plan,90 days,Days_To_Expiry < Threshold,High,Initiate contract renewal negotiations immediately,Contract Management
 R005,ESG Compliance Score,Supplier ESG score below minimum acceptable threshold,60,Supplier_ESG_Score < Threshold,High,Engage suppliers on ESG improvement or find alternatives,Sustainability
@@ -31,6 +31,6 @@ R029,Backup Supplier Availability,Critical categories without qualified backup s
 R030,Innovation Score,Supplier innovation score below target for strategic categories,60,Supplier_Innovation_Score < Threshold,Low,Engage suppliers on innovation roadmap or find alternatives,Innovation
 R031,Carbon Footprint,Supplier carbon footprint exceeds sustainability target,1000 kg CO2/unit,Carbon_Footprint > Threshold,Medium,Work with supplier on carbon reduction or find greener alternatives,Sustainability
 R032,Ethical Sourcing Compliance,Suppliers without ethical sourcing certification,100%,Ethical_Certified_Suppliers < Threshold,High,Require ethical certifications (SA8000 Fair Trade) from all suppliers,Compliance
-R033,Tail Spend Consolidation,Number of low-spend suppliers exceeds efficient threshold,20 suppliers,Low_Spend_Supplier_Count > Threshold,Low,Consolidate to 5 preferred suppliers for operational efficiency,Cost Management
+R033,Supplier Relationship Tenure,Average supplier relationship duration below optimal tenure threshold,5 years,Average_Supplier_Tenure < Threshold,Medium,Develop strategic partnerships with key suppliers to improve relationship stability,Supplier Relationship
 R034,Long-term Contract Coverage,Strategic spend without long-term contract coverage,3 years,Average_Contract_Duration < Threshold,Medium,Negotiate long-term agreements for strategic categories,Contract Management
 R035,Supplier Performance Score,Composite supplier performance score below threshold,75,Supplier_Performance_Score < Threshold,High,Implement supplier development program or replace underperformers,Supplier Relationship

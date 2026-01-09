@@ -4,11 +4,15 @@ Evaluates all 35 procurement rules from rule_book.csv
 """
 
 import sys
+import logging
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+
+# Configure logger
+logger = logging.getLogger(__name__)
 
 root_path = Path(__file__).parent.parent.parent
 if str(root_path) not in sys.path:
@@ -16,14 +20,24 @@ if str(root_path) not in sys.path:
 
 from backend.engines.data_loader import DataLoader
 
+# Import settings for externalized configuration
+try:
+    from backend.config.settings import settings
+    HIGH_RISK_COUNTRIES = settings.high_risk_countries_list
+    ELEVATED_RISK_COUNTRIES = settings.elevated_risk_countries_list
+except ImportError:
+    # Fallback if settings not available
+    HIGH_RISK_COUNTRIES = ['Russia', 'Iran', 'North Korea', 'Venezuela', 'Belarus', 'Syria', 'Cuba']
+    ELEVATED_RISK_COUNTRIES = ['China', 'Ukraine', 'Myanmar', 'Afghanistan', 'Yemen', 'Libya', 'Sudan']
+
 
 class RuleEvaluationEngine:
     """
     Comprehensive engine for evaluating all procurement rules
     """
     
-    def __init__(self):
-        self.data_loader = DataLoader()
+    def __init__(self, data_loader: DataLoader = None):
+        self.data_loader = data_loader if data_loader else DataLoader()
         self.rule_book = self._load_rule_book()
         
     def _load_rule_book(self) -> pd.DataFrame:
@@ -342,8 +356,9 @@ class RuleEvaluationEngine:
             avg_performance = 80.0
 
         # R024: Geopolitical Risk (from spend_df country)
-        high_risk_countries = ['Russia', 'China', 'Iran', 'North Korea', 'Venezuela', 'Ukraine', 'Belarus']
-        high_risk_spend = spend_df[spend_df['Supplier_Country'].isin(high_risk_countries)]['Spend_USD'].sum()
+        # Use externalized high-risk countries from settings
+        all_risk_countries = HIGH_RISK_COUNTRIES + ELEVATED_RISK_COUNTRIES
+        high_risk_spend = spend_df[spend_df['Supplier_Country'].isin(all_risk_countries)]['Spend_USD'].sum()
         high_risk_pct = (high_risk_spend / total_spend * 100) if total_spend > 0 else 0
 
         # R004: Days to Contract Expiry (from supplier_contracts)
@@ -390,7 +405,10 @@ class RuleEvaluationEngine:
                 today = pd.Timestamp.now()
                 merged['months_since_audit'] = ((today - merged['last_audit_date']).dt.days / 30).round(0)
                 max_months_since_audit = merged['months_since_audit'].max()
-            except:
+                if pd.isna(max_months_since_audit):
+                    max_months_since_audit = 6
+            except (ValueError, TypeError) as e:
+                logger.warning(f"Error calculating months since audit: {e}")
                 max_months_since_audit = 6
         else:
             max_months_since_audit = 6

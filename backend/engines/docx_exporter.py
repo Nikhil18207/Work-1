@@ -2,8 +2,18 @@
 Enhanced DOCX & PDF Exporter
 Converts leadership brief dictionaries to professional DOCX and PDF files
 Matches exact format specification with additional insights
+
+Features:
+- Secure path handling with sanitization
+- Automatic cleanup of failed exports
+- Proper logging
 """
 
+import os
+import re
+import logging
+import tempfile
+import shutil
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor, Cm
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
@@ -15,6 +25,9 @@ from pathlib import Path
 from datetime import datetime
 import numpy as np
 
+# Configure logger
+logger = logging.getLogger(__name__)
+
 try:
     from reportlab.lib import colors
     from reportlab.lib.pagesizes import A4, letter
@@ -25,6 +38,11 @@ try:
     PDF_AVAILABLE = True
 except ImportError:
     PDF_AVAILABLE = False
+
+
+class DOCXExportError(Exception):
+    """Exception raised for DOCX export errors"""
+    pass
 
 
 class DOCXExporter:
@@ -44,42 +62,112 @@ class DOCXExporter:
         self.HEADER_COLOR = RGBColor(0, 51, 102)
         self.ACCENT_COLOR = RGBColor(0, 102, 153)
 
+    @staticmethod
+    def sanitize_filename(name: str, max_length: int = 100) -> str:
+        """
+        Securely sanitize a string for use in file/folder names.
+        Prevents path traversal attacks and invalid characters.
+
+        Args:
+            name: The string to sanitize
+            max_length: Maximum length of the result
+
+        Returns:
+            Sanitized string safe for filesystem use
+        """
+        if not name:
+            return 'unknown'
+
+        # First, normalize unicode and strip whitespace
+        cleaned = name.strip()
+
+        # Replace common special chars with readable alternatives
+        replacements = {
+            '&': 'and',
+            '/': '_',
+            '\\': '_',
+            ':': '_',
+            '*': '',
+            '?': '',
+            '"': '',
+            '<': '',
+            '>': '',
+            '|': '_',
+            ' ': '_',
+            '.': '_',
+            '..': '_',  # Prevent path traversal
+        }
+
+        for old, new in replacements.items():
+            cleaned = cleaned.replace(old, new)
+
+        # Remove any remaining non-alphanumeric characters except underscore and hyphen
+        cleaned = re.sub(r'[^\w\-]', '', cleaned)
+
+        # Collapse multiple underscores
+        cleaned = re.sub(r'_+', '_', cleaned)
+
+        # Remove leading/trailing underscores
+        cleaned = cleaned.strip('_')
+
+        # Truncate to max length
+        if len(cleaned) > max_length:
+            cleaned = cleaned[:max_length]
+
+        # Ensure we have something
+        return cleaned or 'unnamed'
+
     def _get_category_folder(self, brief_data: Dict[str, Any]) -> Path:
         """
         Create and return an organized subfolder path based on category hierarchy.
-        Structure: outputs/briefs/{Sector}/{Category}/{SubCategory}/
+        Structure: outputs/briefs/{Sector}/{Category}/
+
+        Uses secure path sanitization to prevent path traversal attacks.
         """
         # Extract hierarchy info
         sector = brief_data.get('sector', '')
         category = brief_data.get('category', 'General')
 
-        # Clean names for folder paths (remove special chars, replace spaces)
-        def clean_name(name: str) -> str:
-            if not name:
-                return ''
-            # Replace special characters and spaces with underscores
-            cleaned = name.replace('&', 'and').replace('/', '_').replace('\\', '_')
-            cleaned = cleaned.replace(' ', '_').replace('__', '_')
-            # Remove any remaining special characters
-            cleaned = ''.join(c for c in cleaned if c.isalnum() or c == '_')
-            return cleaned
-
-        # Build folder path
+        # Build folder path with sanitized names
         folder_parts = []
 
         if sector:
-            folder_parts.append(clean_name(sector))
+            sanitized_sector = self.sanitize_filename(sector)
+            if sanitized_sector:
+                folder_parts.append(sanitized_sector)
 
         if category:
-            folder_parts.append(clean_name(category))
+            sanitized_category = self.sanitize_filename(category)
+            if sanitized_category:
+                folder_parts.append(sanitized_category)
 
         if folder_parts:
-            subfolder = self.base_output_dir / '/'.join(folder_parts)
+            # Use Path properly to avoid path traversal
+            subfolder = self.base_output_dir
+            for part in folder_parts:
+                subfolder = subfolder / part
         else:
             subfolder = self.base_output_dir / 'General'
 
+        # Verify the path is within base_output_dir (prevent path traversal)
+        try:
+            subfolder = subfolder.resolve()
+            base_resolved = self.base_output_dir.resolve()
+            if not str(subfolder).startswith(str(base_resolved)):
+                logger.warning(f"Path traversal attempt detected: {subfolder}")
+                subfolder = self.base_output_dir / 'General'
+        except (OSError, ValueError) as e:
+            logger.warning(f"Path resolution error: {e}")
+            subfolder = self.base_output_dir / 'General'
+
         # Create the folder
-        subfolder.mkdir(parents=True, exist_ok=True)
+        try:
+            subfolder.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            logger.error(f"Failed to create output folder: {e}")
+            # Fall back to base directory
+            subfolder = self.base_output_dir
+            subfolder.mkdir(parents=True, exist_ok=True)
 
         return subfolder
     
@@ -319,8 +407,12 @@ class DOCXExporter:
             perf_rows = []
             for sp in supplier_perf[:15]:
                 if isinstance(sp, dict):
+                    # Add data source indicator
+                    data_source = sp.get('data_source', 'database')
+                    source_indicator = '🌐' if data_source == 'web_search' else ''
+                    
                     perf_rows.append([
-                        sp.get('supplier', 'N/A'),
+                        f"{sp.get('supplier', 'N/A')} {source_indicator}".strip(),
                         f"${sp.get('spend_usd', 0):,.0f}",
                         f"{sp.get('quality_rating', 0):.1f}/5.0",
                         f"{sp.get('delivery_reliability', 0):.0f}%",
@@ -333,6 +425,15 @@ class DOCXExporter:
                     ['Supplier', 'Spend (USD)', 'Quality Rating', 'Delivery %', 'Sustainability'],
                     perf_rows
                 )
+                
+                # Add legend if any web sources were used
+                has_web_sources = any(sp.get('data_source') == 'web_search' for sp in supplier_perf if isinstance(sp, dict))
+                if has_web_sources:
+                    legend_para = doc.add_paragraph()
+                    legend_run = legend_para.add_run("🌐 = Data sourced from web search (supplier not in database)")
+                    legend_run.font.size = Pt(8)
+                    legend_run.font.italic = True
+                    
             doc.add_paragraph()
         
         rule_violations = brief_data.get('rule_violations', {})
@@ -366,7 +467,23 @@ class DOCXExporter:
                     if isinstance(v, dict):
                         rule_id = v.get('rule_id', 'N/A')
                         rule_name = v.get('rule_name', 'Unknown')
-                        doc.add_paragraph(f"{rule_id}: {rule_name}", style='List Bullet')
+                        current_val = v.get('current_value', '')
+                        threshold = v.get('threshold', '')
+                        
+                        # Build the "why violated" explanation
+                        why_violated = ""
+                        if current_val and threshold:
+                            why_violated = f" (Current: {current_val} vs Threshold: {threshold})"
+                        
+                        # Add rule with explanation
+                        bullet_para = doc.add_paragraph(style='List Bullet')
+                        rule_run = bullet_para.add_run(f"{rule_id}: {rule_name}")
+                        rule_run.font.bold = True
+                        
+                        if why_violated:
+                            why_run = bullet_para.add_run(why_violated)
+                            why_run.font.italic = True
+                            why_run.font.size = Pt(9)
             
             doc.add_paragraph()
         

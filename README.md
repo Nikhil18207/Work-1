@@ -11,7 +11,7 @@ Enterprise-grade **AI-powered procurement recommendation system** for multi-indu
 - **893 Suppliers** - Global supplier database across 5 regions
 - **2,289 Transactions** - $1.53B total spend data
 - **5 Geographic Regions** - Americas, Europe, APAC, Middle East, Africa
-- **35 Procurement Rules** - Comprehensive rule validation (R001-R035)
+- **34 Procurement Rules** - Comprehensive rule validation with conflict-aware orchestration (R001-R035, excluding R033)
 
 ---
 
@@ -77,6 +77,22 @@ Generates two executive-level DOCX documents:
 - Diversification targets
 - Cost advantage drivers
 
+### ⚡ NEW: Conflict-Aware Rule Orchestration
+Intelligent rule conflict detection and resolution:
+
+**Features:**
+- **Automatic Conflict Detection** - Identifies when fixing one rule might break another
+- **4-Tier Priority System** - Critical (1-5) → High Risk (6-15) → Medium (16-25) → Strategic (26-34)
+- **Smart Action Plans** - Step-by-step resolution strategies that consider dependencies
+- **29 Conflict Mappings** - Comprehensive coverage of rule interactions
+
+**Example Conflicts Resolved:**
+- R001 ↔ R003: Diversification Paradox (add suppliers in different regions simultaneously)
+- R009 ↔ R014: Payment vs Currency (hedge currency before extending payment terms)
+- R015 ↔ R005: Diversity vs ESG (find diverse suppliers with high ESG scores)
+
+**See:** `SYSTEM_UPDATE_CONFLICT_RESOLUTION.md` for full documentation
+
 ---
 
 ## Project Structure
@@ -93,7 +109,8 @@ Beroe Inc/
 │   │   ├── leadership_brief_generator.py  # Brief generation
 │   │   ├── docx_exporter.py              # DOCX export
 │   │   ├── data_loader.py                # Data loading & caching
-│   │   ├── rule_evaluation_engine.py     # 35 rule validation
+│   │   ├── rule_evaluation_engine.py     # 34 rule validation
+│   │   ├── rule_orchestrator.py          # NEW: Conflict-aware rule resolution
 │   │   ├── r001_optimization_workflow.py # Regional optimization
 │   │   ├── conversational_ai.py          # Chatbot orchestrator
 │   │   ├── llm_engine.py                 # OpenAI GPT-4 integration
@@ -108,7 +125,8 @@ Beroe Inc/
 │   │   ├── spend_data.csv          # 2,289 transactions, 893 suppliers
 │   │   ├── supplier_master.csv     # Supplier database
 │   │   ├── supplier_contracts.csv  # Contract terms
-│   │   ├── rule_book.csv           # 35 procurement rules
+│   │   ├── rule_book.csv           # 34 procurement rules (R001-R035, excluding R033)
+│   │   ├── rule_dependency_matrix.csv  # NEW: 29 rule conflict mappings
 │   │   ├── industry_taxonomy.csv   # Sector/Category hierarchy
 │   │   ├── industry_benchmarks.csv # Performance metrics
 │   │   └── ...
@@ -118,9 +136,9 @@ Beroe Inc/
 │   │   ├── market_intelligence/    # Market analysis
 │   │   └── risk_assessments/       # Risk reports
 │   └── calculated/                 # Derived data
-│
+
 ├── rules/
-│   └── rule_book.json              # 35 business rules
+│   └── rule_book.json              # 34 business rules (legacy)
 ├── outputs/
 │   └── briefs/                     # Generated DOCX briefs
 ├── scripts/                        # Utility scripts

@@ -1,172 +1,415 @@
 """
 Data Loader
-Loads and manages all data sources for the recommendation system
+Loads and manages all data sources for the recommendation system.
+Features:
+- LRU cache with configurable size limit
+- TTL-based cache expiration
+- Proper error handling and logging
 """
 
 import pandas as pd
 import os
-from typing import Dict, Any, List, Optional
+import logging
+import time
+from typing import Dict, Any, List, Optional, Tuple
 from pathlib import Path
+from collections import OrderedDict
+from datetime import datetime
+
+# Configure logger
+logger = logging.getLogger(__name__)
+
+# Import settings for configuration
+try:
+    from backend.config.settings import settings
+    CACHE_MAX_SIZE = settings.CACHE_MAX_SIZE
+    CACHE_TTL_SECONDS = settings.CACHE_TTL_SECONDS
+except ImportError:
+    CACHE_MAX_SIZE = 1000
+    CACHE_TTL_SECONDS = 3600  # 1 hour default
+
+
+class CacheEntry:
+    """Represents a cached data entry with timestamp"""
+    def __init__(self, data: Any, ttl_seconds: int = CACHE_TTL_SECONDS):
+        self.data = data
+        self.timestamp = time.time()
+        self.ttl_seconds = ttl_seconds
+        self.access_count = 0
+        self.last_accessed = time.time()
+
+    def is_expired(self) -> bool:
+        """Check if the cache entry has expired"""
+        return (time.time() - self.timestamp) > self.ttl_seconds
+
+    def touch(self):
+        """Update access time and count"""
+        self.access_count += 1
+        self.last_accessed = time.time()
+
+
+class LRUCache:
+    """
+    LRU (Least Recently Used) cache with TTL expiration.
+    Provides bounded memory usage and automatic cleanup.
+    """
+
+    def __init__(self, max_size: int = CACHE_MAX_SIZE, default_ttl: int = CACHE_TTL_SECONDS):
+        self._cache: OrderedDict[str, CacheEntry] = OrderedDict()
+        self.max_size = max_size
+        self.default_ttl = default_ttl
+        self._hits = 0
+        self._misses = 0
+
+    def get(self, key: str) -> Optional[Any]:
+        """
+        Get item from cache, returning None if not found or expired.
+        Moves accessed items to end (most recently used).
+        """
+        if key not in self._cache:
+            self._misses += 1
+            return None
+
+        entry = self._cache[key]
+
+        # Check expiration
+        if entry.is_expired():
+            del self._cache[key]
+            self._misses += 1
+            logger.debug(f"Cache entry expired: {key}")
+            return None
+
+        # Move to end (most recently used)
+        self._cache.move_to_end(key)
+        entry.touch()
+        self._hits += 1
+        return entry.data
+
+    def set(self, key: str, value: Any, ttl: int = None):
+        """
+        Add item to cache, evicting LRU items if necessary.
+        """
+        ttl = ttl or self.default_ttl
+
+        # Remove oldest items if at capacity
+        while len(self._cache) >= self.max_size:
+            oldest_key = next(iter(self._cache))
+            del self._cache[oldest_key]
+            logger.debug(f"Cache evicted (LRU): {oldest_key}")
+
+        # Add new entry
+        self._cache[key] = CacheEntry(value, ttl)
+        self._cache.move_to_end(key)
+
+    def delete(self, key: str):
+        """Remove item from cache"""
+        if key in self._cache:
+            del self._cache[key]
+
+    def clear(self):
+        """Clear all cached items"""
+        self._cache.clear()
+        self._hits = 0
+        self._misses = 0
+
+    def cleanup_expired(self):
+        """Remove all expired entries"""
+        expired_keys = [k for k, v in self._cache.items() if v.is_expired()]
+        for key in expired_keys:
+            del self._cache[key]
+        if expired_keys:
+            logger.debug(f"Cleaned up {len(expired_keys)} expired cache entries")
+
+    @property
+    def stats(self) -> Dict[str, Any]:
+        """Get cache statistics"""
+        total_requests = self._hits + self._misses
+        hit_rate = (self._hits / total_requests * 100) if total_requests > 0 else 0
+        return {
+            'size': len(self._cache),
+            'max_size': self.max_size,
+            'hits': self._hits,
+            'misses': self._misses,
+            'hit_rate_percent': round(hit_rate, 2)
+        }
+
+
+class DataLoaderError(Exception):
+    """Base exception for DataLoader errors"""
+    pass
+
+
+class DataFileNotFoundError(DataLoaderError):
+    """Raised when a required data file is not found"""
+    pass
+
+
+class DataParseError(DataLoaderError):
+    """Raised when data cannot be parsed"""
+    pass
 
 
 class DataLoader:
     """
-    Loads and caches data from all sources:
-    - Structured data (CSV files)
-    - Supplier contracts
-    - Rule book
+    Loads and caches data from all sources with:
+    - LRU caching with configurable limits
+    - TTL-based cache expiration
+    - Proper error handling
+    - Data validation
     """
 
-    def __init__(self, data_dir: str = None):
+    def __init__(self, data_dir: str = None, cache_max_size: int = None, cache_ttl: int = None):
         """
         Initialize data loader
-        
+
         Args:
             data_dir: Path to data directory (defaults to project data dir)
+            cache_max_size: Maximum number of items in cache
+            cache_ttl: Cache time-to-live in seconds
         """
         if data_dir is None:
             # Get project root
             current_file = Path(__file__)
             project_root = current_file.parent.parent.parent
             data_dir = project_root / 'data' / 'structured'
-        
+
         self.data_dir = Path(data_dir)
-        self._cache = {}
+        self._cache = LRUCache(
+            max_size=cache_max_size or CACHE_MAX_SIZE,
+            default_ttl=cache_ttl or CACHE_TTL_SECONDS
+        )
+
+        # Verify data directory exists
+        if not self.data_dir.exists():
+            logger.warning(f"Data directory does not exist: {self.data_dir}")
+
+    def _load_csv_safe(self, file_path: Path, parse_dates: List[str] = None) -> pd.DataFrame:
+        """
+        Safely load CSV with proper error handling.
+
+        Args:
+            file_path: Path to CSV file
+            parse_dates: List of columns to parse as dates
+
+        Returns:
+            DataFrame or empty DataFrame if file not found
+
+        Raises:
+            DataParseError: If file exists but cannot be parsed
+        """
+        if not file_path.exists():
+            logger.warning(f"Data file not found: {file_path}")
+            return pd.DataFrame()
+
+        try:
+            df = pd.read_csv(file_path)
+
+            # Parse date columns if specified
+            if parse_dates:
+                for col in parse_dates:
+                    if col in df.columns:
+                        df[col] = pd.to_datetime(df[col], errors='coerce')
+
+            logger.debug(f"Loaded {len(df)} rows from {file_path.name}")
+            return df
+
+        except pd.errors.EmptyDataError:
+            logger.warning(f"Empty data file: {file_path}")
+            return pd.DataFrame()
+        except pd.errors.ParserError as e:
+            logger.error(f"Parse error in {file_path}: {e}")
+            raise DataParseError(f"Could not parse {file_path.name}: {e}") from e
+        except PermissionError as e:
+            logger.error(f"Permission denied reading {file_path}: {e}")
+            raise DataLoaderError(f"Permission denied: {file_path.name}") from e
+        except Exception as e:
+            logger.error(f"Unexpected error loading {file_path}: {e}")
+            raise DataLoaderError(f"Error loading {file_path.name}: {e}") from e
     
     def set_spend_data(self, df: pd.DataFrame):
         """
-        Inject custom spend data DataFrame (for user uploads)
+        Inject custom spend data DataFrame (for user uploads).
         This overrides the default CSV file loading.
         """
         # Ensure date column is datetime
         if 'Transaction_Date' in df.columns:
-            df['Transaction_Date'] = pd.to_datetime(df['Transaction_Date'])
-        self._cache['spend_data'] = df
-    
+            df['Transaction_Date'] = pd.to_datetime(df['Transaction_Date'], errors='coerce')
+        self._cache.set('spend_data', df)
+        logger.info(f"Custom spend data loaded: {len(df)} rows")
+
     def set_supplier_master(self, df: pd.DataFrame):
         """
-        Inject custom supplier master DataFrame (for user uploads)
+        Inject custom supplier master DataFrame (for user uploads).
         This overrides the default CSV file loading.
         """
-        self._cache['supplier_master'] = df
+        self._cache.set('supplier_master', df)
+        logger.info(f"Custom supplier master loaded: {len(df)} rows")
 
     def load_spend_data(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load spend data (Rice Bran Oil transactions)
-        
+        Load spend data with caching.
+
         Returns:
             DataFrame with columns: Client_ID, Category, Supplier_ID, Supplier_Name,
                                    Supplier_Country, Supplier_Region, Transaction_Date, Spend_USD
         """
-        if 'spend_data' not in self._cache or force_reload:
-            file_path = self.data_dir / 'spend_data.csv'
-            self._cache['spend_data'] = pd.read_csv(file_path)
-            # Convert date column
-            self._cache['spend_data']['Transaction_Date'] = pd.to_datetime(
-                self._cache['spend_data']['Transaction_Date']
-            )
-        
-        return self._cache['spend_data'].copy()
+        cache_key = 'spend_data'
+
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        # Load from file
+        file_path = self.data_dir / 'spend_data.csv'
+        df = self._load_csv_safe(file_path, parse_dates=['Transaction_Date'])
+
+        if not df.empty:
+            self._cache.set(cache_key, df)
+
+        return df.copy() if not df.empty else df
 
     def load_supplier_contracts(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load supplier contract data
-        
+        Load supplier contract data with caching.
+
         Returns:
             DataFrame with columns: Supplier_ID, Supplier_Name, Region, Product_Type,
                                    Contract_Start, Contract_End, Payment_Terms_Days, ESG_Score
         """
-        if 'supplier_contracts' not in self._cache or force_reload:
-            file_path = self.data_dir / 'supplier_contracts.csv'
-            self._cache['supplier_contracts'] = pd.read_csv(file_path)
-            # Convert date columns
-            self._cache['supplier_contracts']['Contract_Start'] = pd.to_datetime(
-                self._cache['supplier_contracts']['Contract_Start']
-            )
-            self._cache['supplier_contracts']['Contract_End'] = pd.to_datetime(
-                self._cache['supplier_contracts']['Contract_End']
-            )
-        
-        return self._cache['supplier_contracts'].copy()
+        cache_key = 'supplier_contracts'
+
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'supplier_contracts.csv'
+        df = self._load_csv_safe(file_path, parse_dates=['Contract_Start', 'Contract_End'])
+
+        if not df.empty:
+            self._cache.set(cache_key, df)
+
+        return df.copy() if not df.empty else df
 
     def load_rule_book(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load rule book
-        
+        Load rule book with caching.
+
         Returns:
             DataFrame with columns: Rule_ID, Rule_Name, Rule_Description,
                                    Threshold_Value, Comparison_Logic, Risk_Level, Action_Recommendation
         """
-        if 'rule_book' not in self._cache or force_reload:
-            file_path = self.data_dir / 'rule_book.csv'
-            self._cache['rule_book'] = pd.read_csv(file_path)
-        
-        return self._cache['rule_book'].copy()
+        cache_key = 'rule_book'
+
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'rule_book.csv'
+        df = self._load_csv_safe(file_path)
+
+        if not df.empty:
+            self._cache.set(cache_key, df)
+
+        return df.copy() if not df.empty else df
 
     def load_client_master(self, force_reload: bool = False) -> pd.DataFrame:
-        """Load client master data"""
-        if 'client_master' not in self._cache or force_reload:
-            file_path = self.data_dir / 'client_master.csv'
-            self._cache['client_master'] = pd.read_csv(file_path)
-        
-        return self._cache['client_master'].copy()
+        """Load client master data with caching."""
+        cache_key = 'client_master'
+
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'client_master.csv'
+        df = self._load_csv_safe(file_path)
+
+        if not df.empty:
+            self._cache.set(cache_key, df)
+
+        return df.copy() if not df.empty else df
 
     def load_supplier_master(self, force_reload: bool = False) -> pd.DataFrame:
-        """Load supplier master data"""
-        if 'supplier_master' not in self._cache or force_reload:
-            file_path = self.data_dir / 'supplier_master.csv'
-            self._cache['supplier_master'] = pd.read_csv(file_path)
-        
-        return self._cache['supplier_master'].copy()
+        """Load supplier master data with caching."""
+        cache_key = 'supplier_master'
+
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'supplier_master.csv'
+        df = self._load_csv_safe(file_path)
+
+        if not df.empty:
+            self._cache.set(cache_key, df)
+
+        return df.copy() if not df.empty else df
 
     def load_pricing_benchmarks(self, force_reload: bool = False) -> pd.DataFrame:
-        """Load pricing benchmarks"""
-        if 'pricing_benchmarks' not in self._cache or force_reload:
-            file_path = self.data_dir / 'pricing_benchmarks.csv'
-            self._cache['pricing_benchmarks'] = pd.read_csv(file_path)
-        
-        return self._cache['pricing_benchmarks'].copy()
+        """Load pricing benchmarks with caching."""
+        cache_key = 'pricing_benchmarks'
+
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'pricing_benchmarks.csv'
+        df = self._load_csv_safe(file_path)
+
+        if not df.empty:
+            self._cache.set(cache_key, df)
+
+        return df.copy() if not df.empty else df
 
     def load_industry_benchmarks(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load industry benchmarks
+        Load industry benchmarks with caching.
 
         Returns:
             DataFrame with columns: Category, Metric, Industry_Benchmark, Our_Performance,
                                    Gap, Unit, Benchmark_Source, Last_Updated
         """
-        if 'industry_benchmarks' not in self._cache or force_reload:
-            file_path = self.data_dir / 'industry_benchmarks.csv'
-            self._cache['industry_benchmarks'] = pd.read_csv(file_path)
-            # Convert date column
-            self._cache['industry_benchmarks']['Last_Updated'] = pd.to_datetime(
-                self._cache['industry_benchmarks']['Last_Updated']
-            )
+        cache_key = 'industry_benchmarks'
 
-        return self._cache['industry_benchmarks'].copy()
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'industry_benchmarks.csv'
+        df = self._load_csv_safe(file_path, parse_dates=['Last_Updated'])
+
+        if not df.empty:
+            self._cache.set(cache_key, df)
+
+        return df.copy() if not df.empty else df
 
     def load_proof_points(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load proof points (verified supplier evidence and performance metrics)
+        Load proof points (verified supplier evidence and performance metrics).
 
         Returns:
             DataFrame with columns: Proof_Point_ID, Sector, Category, SubCategory,
                                    Supplier_ID, Supplier_Name, Metric_Type, Metric_Value,
                                    Unit, Date_Recorded, Verification_Status, Source_Document
         """
-        if 'proof_points' not in self._cache or force_reload:
-            file_path = self.data_dir / 'proof_points.csv'
-            if file_path.exists():
-                self._cache['proof_points'] = pd.read_csv(file_path)
-                # Convert date column
-                if 'Date_Recorded' in self._cache['proof_points'].columns:
-                    self._cache['proof_points']['Date_Recorded'] = pd.to_datetime(
-                        self._cache['proof_points']['Date_Recorded']
-                    )
-            else:
-                self._cache['proof_points'] = pd.DataFrame()
+        cache_key = 'proof_points'
 
-        return self._cache['proof_points'].copy()
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'proof_points.csv'
+        df = self._load_csv_safe(file_path, parse_dates=['Date_Recorded'])
+
+        self._cache.set(cache_key, df)
+        return df.copy() if not df.empty else df
 
     def get_supplier_proof_points(self, supplier_id: str = None, supplier_name: str = None) -> Dict[str, Any]:
         """
@@ -447,7 +690,16 @@ class DataLoader:
 
     def clear_cache(self):
         """Clear all cached data"""
-        self._cache = {}
+        self._cache.clear()
+        logger.info("Data cache cleared")
+
+    def get_cache_stats(self) -> Dict[str, Any]:
+        """Get cache performance statistics"""
+        return self._cache.stats
+
+    def cleanup_expired_cache(self):
+        """Remove expired cache entries"""
+        self._cache.cleanup_expired()
 
     # ========================================================================
     # HIERARCHICAL INDUSTRY TAXONOMY METHODS
@@ -456,56 +708,67 @@ class DataLoader:
 
     def load_inventory_metrics(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load inventory metrics for inventory-related rules (R012, R014, R022)
+        Load inventory metrics for inventory-related rules (R012, R014, R022).
 
         Returns:
             DataFrame with columns: sector, category, subcategory, moq_months_of_demand,
                                    foreign_currency_spend_pct, inventory_turnover, etc.
         """
-        if 'inventory_metrics' not in self._cache or force_reload:
-            file_path = self.data_dir / 'inventory_metrics.csv'
-            if file_path.exists():
-                self._cache['inventory_metrics'] = pd.read_csv(file_path)
-            else:
-                self._cache['inventory_metrics'] = pd.DataFrame()
+        cache_key = 'inventory_metrics'
 
-        return self._cache['inventory_metrics'].copy()
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'inventory_metrics.csv'
+        df = self._load_csv_safe(file_path)
+
+        self._cache.set(cache_key, df)
+        return df.copy() if not df.empty else df
 
     def load_category_metrics(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load category-level metrics for aggregated rules (R015, R016, R017, R018, etc.)
+        Load category-level metrics for aggregated rules (R015, R016, R017, R018, etc.).
 
         Returns:
             DataFrame with columns: sector, category, subcategory, diverse_supplier_pct,
                                    innovation_supplier_pct, local_content_pct, etc.
         """
-        if 'category_metrics' not in self._cache or force_reload:
-            file_path = self.data_dir / 'category_metrics.csv'
-            if file_path.exists():
-                self._cache['category_metrics'] = pd.read_csv(file_path)
-            else:
-                self._cache['category_metrics'] = pd.DataFrame()
+        cache_key = 'category_metrics'
 
-        return self._cache['category_metrics'].copy()
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'category_metrics.csv'
+        df = self._load_csv_safe(file_path)
+
+        self._cache.set(cache_key, df)
+        return df.copy() if not df.empty else df
 
     def load_industry_taxonomy(self, force_reload: bool = False) -> pd.DataFrame:
         """
-        Load industry taxonomy (Sector > Category > SubCategory hierarchy)
+        Load industry taxonomy (Sector > Category > SubCategory hierarchy).
 
         Returns:
             DataFrame with columns: Sector_ID, Sector_Name, Category_ID, Category_Name,
                                    SubCategory_ID, SubCategory_Name, Description,
                                    Risk_Profile, Strategic_Importance
         """
-        if 'industry_taxonomy' not in self._cache or force_reload:
-            file_path = self.data_dir / 'industry_taxonomy.csv'
-            if file_path.exists():
-                self._cache['industry_taxonomy'] = pd.read_csv(file_path)
-            else:
-                # Return empty DataFrame if file doesn't exist
-                self._cache['industry_taxonomy'] = pd.DataFrame()
+        cache_key = 'industry_taxonomy'
 
-        return self._cache['industry_taxonomy'].copy()
+        if not force_reload:
+            cached = self._cache.get(cache_key)
+            if cached is not None:
+                return cached.copy()
+
+        file_path = self.data_dir / 'industry_taxonomy.csv'
+        df = self._load_csv_safe(file_path)
+
+        self._cache.set(cache_key, df)
+        return df.copy() if not df.empty else df
 
     def get_all_sectors(self) -> List[Dict[str, Any]]:
         """

@@ -32,6 +32,7 @@ class DataAnalysisAgent(BaseAgent):
     - HHI calculation
     - Supplier performance metrics
     - Tail spend analysis
+    - Web search fallback for unknown suppliers (inherited from BaseAgent)
     """
 
     @property
@@ -76,9 +77,9 @@ class DataAnalysisAgent(BaseAgent):
             # HHI calculation
             hhi = self._calculate_hhi(supplier_analysis['supplier_spend_pct'])
 
-            # Supplier performance (if master data available)
+            # Supplier performance (if master data available) with web fallback
             performance_metrics = self._calculate_performance_metrics(
-                spend_df, supplier_df
+                spend_df, supplier_df, category
             )
 
             # Tail spend analysis
@@ -236,41 +237,236 @@ class DataAnalysisAgent(BaseAgent):
     def _calculate_performance_metrics(
         self,
         spend_df: pd.DataFrame,
-        supplier_df: pd.DataFrame
+        supplier_df: pd.DataFrame,
+        category: str = None
     ) -> List[Dict[str, Any]]:
-        """Calculate supplier performance metrics."""
+        """
+        Calculate supplier performance metrics using Database-First, Web-Fallback pattern.
+        
+        Args:
+            spend_df: Spend data DataFrame
+            supplier_df: Supplier master DataFrame
+            category: Optional category for web search context
+            
+        Returns:
+            List of supplier metrics dictionaries
+        """
         metrics = []
         # Calculate total spend per supplier and sort descending
         supplier_spend_series = spend_df.groupby('Supplier_Name')['Spend_USD'].sum().sort_values(ascending=False)
         supplier_names = supplier_spend_series.index.tolist()
 
         for supplier_name in supplier_names[:15]:
-            supplier_info = supplier_df[supplier_df['supplier_name'] == supplier_name]
-            supplier_spend = spend_df[spend_df['Supplier_Name'] == supplier_name]['Spend_USD'].sum()
+            supplier_spend_data = spend_df[spend_df['Supplier_Name'] == supplier_name]
+            supplier_spend = supplier_spend_data['Spend_USD'].sum()
 
-            if not supplier_info.empty:
-                info = supplier_info.iloc[0]
+            # PRIORITY 1: Check if ratings exist in spend_df itself (uploaded CSV)
+            has_quality_in_spend = 'Quality_Rating' in spend_df.columns
+            has_delivery_in_spend = 'Delivery_Rating' in spend_df.columns
+            
+            if has_quality_in_spend or has_delivery_in_spend:
+                # Use ratings from uploaded spend data
+                quality_rating = float(supplier_spend_data['Quality_Rating'].mean()) if has_quality_in_spend else 0
+                delivery_rating = float(supplier_spend_data['Delivery_Rating'].mean()) if has_delivery_in_spend else 0
+                
+                # Convert delivery rating (1-5 scale) to percentage (0-100)
+                delivery_pct = (delivery_rating / 5.0) * 100 if delivery_rating > 0 else 0
+                
                 metrics.append({
                     'supplier': supplier_name,
                     'spend_usd': float(supplier_spend),
-                    'quality_rating': float(info.get('quality_rating', 0)),
-                    'delivery_reliability': float(info.get('delivery_reliability_pct', 0)),
-                    'sustainability_score': float(info.get('sustainability_score', 0)),
-                    'years_in_business': int(info.get('years_in_business', 0)),
-                    'certifications': str(info.get('certifications', '')).split('|')
+                    'quality_rating': quality_rating,
+                    'delivery_reliability': delivery_pct,
+                    'sustainability_score': 0,  # Not in uploaded data
+                    'years_in_business': 0,  # Not in uploaded data
+                    'certifications': [],
+                    'data_source': 'uploaded_csv'
                 })
             else:
-                metrics.append({
-                    'supplier': supplier_name,
-                    'spend_usd': float(supplier_spend),
+                # PRIORITY 2: Check supplier_master.csv database
+                supplier_info = supplier_df[supplier_df['supplier_name'] == supplier_name]
+                
+                if not supplier_info.empty:
+                    # CASE 2: Supplier found in database - use DB data
+                    info = supplier_info.iloc[0]
+                    metrics.append({
+                        'supplier': supplier_name,
+                        'spend_usd': float(supplier_spend),
+                        'quality_rating': float(info.get('quality_rating', 0)),
+                        'delivery_reliability': float(info.get('delivery_reliability_pct', 0)),
+                        'sustainability_score': float(info.get('sustainability_score', 0)),
+                        'years_in_business': int(info.get('years_in_business', 0)),
+                        'certifications': str(info.get('certifications', '')).split('|'),
+                        'data_source': 'database'
+                    })
+                else:
+                    # CASE 3: Supplier NOT in database - try web search fallback
+                    web_info = self._get_supplier_info_from_web(supplier_name, category)
+                    
+                    metrics.append({
+                        'supplier': supplier_name,
+                        'spend_usd': float(supplier_spend),
+                        'quality_rating': web_info.get('quality_rating', 0),
+                        'delivery_reliability': web_info.get('delivery_reliability', 0),
+                        'sustainability_score': web_info.get('sustainability_score', 0),
+                        'years_in_business': web_info.get('years_in_business', 0),
+                        'certifications': web_info.get('certifications', []),
+                        'data_source': web_info.get('source', 'not_found'),
+                        'web_sources': web_info.get('web_sources', [])
+                    })
+
+        return metrics
+
+    def _get_supplier_info_from_web(self, supplier_name: str, category: str = None) -> Dict[str, Any]:
+        """
+        Fetch supplier information from the web when not found in database.
+        
+        This is a FALLBACK mechanism - only called when supplier is NOT in supplier_master.csv
+        Uses LLM (if available) to extract structured info from web search results.
+        
+        Args:
+            supplier_name: Name of the supplier to search for
+            category: Optional category context for better search results
+            
+        Returns:
+            Dictionary with supplier metrics (estimated from web data) or empty values
+        """
+        if not self.web_search_engine:
+            return {
+                'source': 'not_found',
+                'quality_rating': 0,
+                'delivery_reliability': 0,
+                'sustainability_score': 0,
+                'years_in_business': 0,
+                'certifications': []
+            }
+        
+        try:
+            # Build search query for supplier
+            query_parts = [supplier_name]
+            if category:
+                query_parts.append(category)
+            query_parts.extend(['company', 'supplier', 'profile'])
+            query = " ".join(query_parts)
+            
+            # Search the web
+            search_result = self.web_search_engine.search(query, num_results=3)
+            
+            if not search_result.get('success') or not search_result.get('results'):
+                return {
+                    'source': 'web_search_failed',
                     'quality_rating': 0,
                     'delivery_reliability': 0,
                     'sustainability_score': 0,
                     'years_in_business': 0,
                     'certifications': []
-                })
+                }
+            
+            # Extract info using LLM if available
+            sources = search_result.get('results', [])
+            web_context = search_result.get('context', '')
+            
+            if self.llm_engine and self.enable_llm:
+                extracted_info = self._extract_supplier_info_with_llm(
+                    supplier_name, web_context, sources
+                )
+                if extracted_info:
+                    extracted_info['source'] = 'web_search'
+                    extracted_info['web_sources'] = [s.get('url', '') for s in sources[:3]]
+                    return extracted_info
+            
+            # Return basic info with web sources for citation
+            return {
+                'source': 'web_search',
+                'quality_rating': 0,  # Cannot reliably extract without LLM
+                'delivery_reliability': 0,
+                'sustainability_score': 0,
+                'years_in_business': 0,
+                'certifications': [],
+                'web_context': web_context[:500],
+                'web_sources': [s.get('url', '') for s in sources[:3]]
+            }
+            
+        except Exception as e:
+            self.log(f"Web search failed for {supplier_name}: {e}", "WARN")
+            return {
+                'source': 'error',
+                'quality_rating': 0,
+                'delivery_reliability': 0,
+                'sustainability_score': 0,
+                'years_in_business': 0,
+                'certifications': []
+            }
 
-        return metrics
+    def _extract_supplier_info_with_llm(
+        self, 
+        supplier_name: str, 
+        web_context: str, 
+        sources: list
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Use LLM to extract structured supplier info from web search results.
+        
+        Args:
+            supplier_name: Name of the supplier
+            web_context: Combined text from web search
+            sources: List of source URLs
+            
+        Returns:
+            Extracted supplier info or None if extraction fails
+        """
+        if not self.llm_engine:
+            return None
+            
+        prompt = f"""Based on the following web search results about "{supplier_name}", extract supplier information.
+
+WEB SEARCH RESULTS:
+{web_context}
+
+INSTRUCTIONS:
+1. Extract ONLY information explicitly mentioned in the search results
+2. If information is not available, use 0 or empty values
+3. Be conservative with ratings - only assign high values if clearly supported
+4. Return a JSON object with these fields:
+   - quality_rating: 0-5 scale (0 if not mentioned)
+   - delivery_reliability: 0-100 percentage (0 if not mentioned)
+   - sustainability_score: 0-100 (0 if not mentioned)
+   - years_in_business: integer (0 if not mentioned)
+   - certifications: list of certification names found (empty list if none)
+   - company_description: brief description if found
+
+Return ONLY valid JSON, no other text."""
+
+        try:
+            response = self.llm_engine.generate(
+                prompt=prompt,
+                max_tokens=500,
+                temperature=0.1  # Low temperature for structured extraction
+            )
+            
+            if response:
+                import json
+                # Try to parse JSON from response
+                response_text = response.strip()
+                if response_text.startswith('```'):
+                    response_text = response_text.split('```')[1]
+                    if response_text.startswith('json'):
+                        response_text = response_text[4:]
+                    response_text = response_text.strip()
+                
+                extracted = json.loads(response_text)
+                return {
+                    'quality_rating': float(extracted.get('quality_rating', 0)),
+                    'delivery_reliability': float(extracted.get('delivery_reliability', 0)),
+                    'sustainability_score': float(extracted.get('sustainability_score', 0)),
+                    'years_in_business': int(extracted.get('years_in_business', 0)),
+                    'certifications': extracted.get('certifications', []),
+                    'company_description': extracted.get('company_description', '')
+                }
+        except Exception as e:
+            self.log(f"LLM extraction failed for {supplier_name}: {e}", "WARN")
+            
+        return None
 
     def _analyze_tail_spend(
         self,
